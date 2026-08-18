@@ -8,6 +8,7 @@
 
 - 継続改善: `furikaeri`、`skill-eval`
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`
+- .NET専門workflow: `dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
 - 横断workflow: `repo-onboarding`、`debug`
 
@@ -21,6 +22,7 @@
 | `modern-cs`、`type-perf`、`cs-concurrency`、`.NET setup` | `dotnet/references/` | .NET作業中に必要時だけ読む詳細知識 |
 | WPF MVVM、secure config | `wpf/references/` | WPFという一つの利用目的を分割しすぎない |
 | Tauri setup、sidecar、Windows distribution | `tauri/references/` | 同じ配布経路の段階差 |
+| local NuGet pack／consume leaf | `nuget-local/references/` | producer／consumer modeは一つのlocal package検証目的に属する |
 | `empirical-prompt-tuning` | `skill-eval/references/prompt-evaluation.md` | behavioral評価という同じ利用目的の高度なmode |
 
 ## 移植しないもの
