@@ -84,6 +84,8 @@ bootstrap の不足が今の slice を壊すなら修正します。関係ない
 3. **REFACTOR**: 振る舞いを変えずに読みやすさ、重複、境界を整える。
 4. 次の test が必要なら同じ slice 内で繰り返す。
 
+既存コードの保守性改善が主目的の場合は、[safe-refactoring.md](references/safe-refactoring.md)を読み、守る振る舞いと比較手段を先に固定する。
+
 TDD の規律:
 
 - 1 test → 1 minimal implementation を守る
@@ -142,5 +144,6 @@ handoff に残すもの:
 
 - `references/interactive-app-bootstrap-checklist.md` — interactive app の bootstrap 前提
 - `references/interactive-app-comparable-harness-contract.md` — interactive app の比較前提
+- `references/safe-refactoring.md` — 振る舞いを維持した小さい改善単位
 - `checkpoints/contract_verify.py` — 複数リポ環境での contract 検証
 - `plugins/happy-coding/skills/implementation-eval-gate/SKILL.md` — 必要時の独立評価

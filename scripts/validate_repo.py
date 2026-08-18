@@ -14,6 +14,34 @@ LINK_RE = re.compile(r"\[[^]]+\]\(([^)]+)\)")
 SECRET_RE = re.compile(
     r"(?:gh" + r"p_|github_" + r"pat_|s" + r"k-[A-Za-z0-9_-]{20,}|AK" + r"IA[0-9A-Z]{16})"
 )
+REQUIRED_CODING_SKILLS = {
+    "ci-debug",
+    "debug",
+    "deep-review",
+    "design-and-plan",
+    "domain-modeling",
+    "dotnet",
+    "implement",
+    "implementation-eval-gate",
+    "interview-with-docs",
+    "python",
+    "repo-onboarding",
+    "rust",
+    "tauri",
+    "to-prd",
+    "typescript",
+    "wpf",
+}
+REQUIRED_CORE_SKILLS = {
+    "deep-edit",
+    "draft-writing",
+    "furikaeri",
+    "home-bootstrap",
+    "interview-me",
+    "skill-eval",
+    "workspace-bootstrap",
+    "writing-plan",
+}
 
 
 def fail(message: str, failures: list[str]) -> None:
@@ -45,7 +73,30 @@ def validate_json(failures: list[str]) -> None:
 
 
 def validate_skills(failures: list[str]) -> None:
-    for skill_file in ROOT.glob("plugins/*/skills/*/SKILL.md"):
+    skill_files = list(ROOT.glob("plugins/*/skills/*/SKILL.md"))
+    coding_skills = {
+        skill_file.parent.name
+        for skill_file in skill_files
+        if skill_file.parts[-4] == "happy-coding"
+    }
+    missing = REQUIRED_CODING_SKILLS - coding_skills
+    if missing:
+        fail(f"happy-coding: missing required skills {sorted(missing)}", failures)
+
+    core_skills = {
+        skill_file.parent.name
+        for skill_file in skill_files
+        if skill_file.parts[-4] == "happy-core"
+    }
+    missing_core = REQUIRED_CORE_SKILLS - core_skills
+    if missing_core:
+        fail(f"happy-core: missing required skills {sorted(missing_core)}", failures)
+
+    incubator_skills = list((ROOT / "incubator").rglob("SKILL.md"))
+    if incubator_skills:
+        fail("incubator must not contain discoverable SKILL.md files", failures)
+
+    for skill_file in skill_files:
         text = skill_file.read_text(encoding="utf-8")
         folder_name = skill_file.parent.name
         if not NAME_RE.fullmatch(folder_name):
