@@ -10,7 +10,9 @@
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`
 - .NET専門workflow: `dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
-- 横断workflow: `repo-onboarding`、`debug`
+- 横断workflow: `repo-onboarding`、`debug-and-fix`
+- 明示オーケストレーション: `coding`
+- 開発成果物: `to-prd`、`technical-design`、`implementation-plan`、`implement`
 
 ## 既存skillへ統合したもの
 
@@ -24,6 +26,13 @@
 | Tauri setup、sidecar、Windows distribution | `tauri/references/` | 同じ配布経路の段階差 |
 | local NuGet pack／consume leaf | `nuget-local/references/` | producer／consumer modeは一つのlocal package検証目的に属する |
 | `empirical-prompt-tuning` | `skill-eval/references/prompt-evaluation.md` | behavioral評価という同じ利用目的の高度なmode |
+| `implementation-eval-gate` | `implement/references/eval-checklist.md`と動的subagent | slice評価は実装工程内のroleであり、独立した利用目的ではない |
+
+## Workflow再編
+
+- 旧`design-and-plan`は、構造判断を行う`technical-design`と、実行順を作る`implementation-plan`へ分割した。
+- 旧`debug`は、原因説明で止まらず元症状をgreenへ戻す`debug-and-fix`へ置換した。
+- `coding`以外は暗黙選択を維持する。書込みskillの安全性はskill discoveryを無効化せず、実際の操作前の権限確認で守る。
 
 ## 移植しないもの
 

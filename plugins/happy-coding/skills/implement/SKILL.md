@@ -2,12 +2,12 @@
 name: implement
 description: >
   実装契約を受け取り、bootstrap 確認、vertical slice 分割、TDD loop、slice gate、completion handoff まで進める。
-  interview-with-docs / design-and-plan / issue / plan から実装可能な契約を受け取り、PR やふりかえりではなくローカル実装を完了したいとき。
+  technical-design / implementation-plan / issue から実装可能な契約を受け取り、PR やふりかえりではなくローカル実装を完了したいとき。
 ---
 
 # implement — TDD で実装して閉じる
 
-実装契約を、観測可能な vertical slice に分け、各 slice を TDD で通してから handoff します。
+実装契約を、観測可能な vertical slice ごとに TDD で通してから handoff します。`implementation-plan` がある場合はそのslice境界を維持し、planを省略した単一の明確な変更だけをここでslice化します。
 この skill は実装フェーズだけを扱います。PR 作成、PR review 対応、pre-PR review、furikaeri は別 skill に任せます。
 
 ## こんなときに使う
@@ -35,7 +35,7 @@ implementation contract
 
 ### ステップ 1 — 実装契約を確認する
 
-次が揃っていれば実装に入ります。不足が実装判断をブロックする場合は、`interview-with-docs` または `design-and-plan` に戻します。
+次が揃っていれば実装に入ります。不足が要求をブロックする場合は `interview-with-docs`、構造判断なら `technical-design`、順序やslice分割なら `implementation-plan` に戻します。
 
 - 目的、対象、非対象
 - 受け入れ条件
@@ -55,13 +55,13 @@ implementation contract
 - build / test / launch command
 - interactive app なら `references/interactive-app-bootstrap-checklist.md`
 - 複数リポで `plan.md` の `dependencies.contracts.requires` がある場合だけ、`checkpoints/contract_verify.py` で required artifact を検証する
-- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `design-and-plan` に戻す。`artifacts: conversation-only`、または旧形式でフィールド自体が無い場合はこの確認をスキップする
+- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す。`artifacts: conversation-only`、または旧形式でフィールド自体が無い場合はこの確認をスキップする
 
 bootstrap の不足が今の slice を壊すなら修正します。関係ない整備は実装 scope に混ぜません。
 
 ### ステップ 3 — slice contract を固定する
 
-1 受け入れ条件、または 1 ユーザー行動を 1 vertical slice として切ります。最初の slice は tracer bullet として、必要な層を薄く縦断します。
+planがある場合はslice境界を変更せず、直前にcontractを再確認します。planを意図的に省略した単一の明確な変更だけ、1受け入れ条件または1ユーザー行動を1 vertical sliceとして切ります。slice境界の変更が必要なら実装を始めず `REPLAN_REQUIRED` として `implementation-plan` へ戻します。最初のsliceはtracer bulletとして必要な層を薄く縦断します。
 
 各 slice で必ず短く固定すること:
 
@@ -101,6 +101,8 @@ docs-only / config-only など RED が成立しない slice では、TDD を装�
 
 各 slice の最後に、実装者の自己正当化ではなく証拠として gate を通します。
 
+詳細観点が必要なら[eval-checklist.md](references/eval-checklist.md)から関係する項目だけを使います。
+
 - RED を実際に見たか
 - RED の失敗理由は対象振る舞いと一致したか
 - GREEN を実際に見たか
@@ -113,9 +115,23 @@ verdict:
 
 - `PASS`: 次の slice へ進む
 - `FAIL`: 同じ slice の実装に戻る
-- `REPLAN_REQUIRED`: `interview-with-docs` または `design-and-plan` に戻る
+- `REPLAN_REQUIRED`: `technical-design` または `implementation-plan` に戻る。要求自体が曖昧なら `interview-with-docs` に戻る
 
-必要なら `plugins/happy-coding/skills/implementation-eval-gate/SKILL.md` を独立評価として使います。ただし、この skill 内では slice gate を最小の必須評価として扱います。
+次に該当する場合は、利用可能なら実装者とは別の動的subagentへ、slice contract、差分、RED/GREEN/acceptance evidenceだけを渡して独立評価を依頼します。
+
+- GUIやinteractive runtimeの観測が必要
+- trust boundary、migration、data loss、concurrency等の高risk変更
+- 回帰範囲が広い
+- 実装者の自己評価だけではevidenceが弱い
+- ユーザーが独立評価を指定
+
+独立評価者は修正せず、先に `PASS / FAIL / REPLAN_REQUIRED` と根拠を返します。並列実装は行わず、verdict確定後に単一writerが修正します。subagentが利用できない場合は、実装時の推論から離れてchecklistと差分を読み直します。
+
+interactive evidenceが必要な場合だけ、対応するtemplateを読みます。
+
+- web: [playwright.md](references/runtime-evidence/playwright.md)
+- Windows desktop: [flaui.md](references/runtime-evidence/flaui.md)
+- Python GUI / pygame: [python-gui.md](references/runtime-evidence/python-gui.md)
 
 ### ステップ 6 — completion handoff で閉じる
 
@@ -145,5 +161,6 @@ handoff に残すもの:
 - `references/interactive-app-bootstrap-checklist.md` — interactive app の bootstrap 前提
 - `references/interactive-app-comparable-harness-contract.md` — interactive app の比較前提
 - `references/safe-refactoring.md` — 振る舞いを維持した小さい改善単位
+- `references/eval-checklist.md` — slice gateの詳細観点
+- `references/runtime-evidence/` — interactive appで必要時だけ使うevidence template
 - `checkpoints/contract_verify.py` — 複数リポ環境での contract 検証
-- `plugins/happy-coding/skills/implementation-eval-gate/SKILL.md` — 必要時の独立評価

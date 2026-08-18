@@ -38,11 +38,14 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 
 ### happy-coding
 
-- 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`design-and-plan`、`implement`
+- 明示オーケストレーション: `$coding`（通常依頼には暗黙発火しない）
+- 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
-- 調査: `repo-onboarding`、`debug`
-- 品質: `implementation-eval-gate`、`deep-review`、`ci-debug`
+- 調査・修正: `repo-onboarding`、`debug-and-fix`
+- 品質: `deep-review`、`ci-debug`
+
+`coding`は必要な工程だけを選ぶrouterです。PRD、technical design、implementation planを常に全部作るのではなく、入力artifactとriskに応じて省略します。
 
 旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
 

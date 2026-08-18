@@ -18,7 +18,7 @@ description: .NET Framework 4.xのlegacy実装を残しながらモダン.NETへ
 
 ## 境界
 
-- 完全書き換えや大規模process分割は`design-and-plan`へ渡す。
+- 完全書き換えや大規模process分割は`technical-design`へ渡す。
 - WPFの画面構造は`wpf`、一般的なSDK／project診断は`dotnet`を使う。
 - 共有層を便利な共通libraryへ肥大化させない。
 - direct DLL referenceを恒久的なarchitectureとして曖昧に残さない。

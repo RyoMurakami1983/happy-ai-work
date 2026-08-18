@@ -1,6 +1,6 @@
 # Work Artifacts
 
-`interview-with-docs` から `design-and-plan`、`implement` へ渡る成果物の既定構造です。
+`interview-with-docs`、`to-prd`、`technical-design`、`implementation-plan`、`implement`の間で渡す成果物の既定構造です。
 
 ## Canonical doc structure
 
@@ -8,6 +8,8 @@
 docs/
   grill_results/
     001_GRILL_WITH_DOCS_RESULT.md
+  prd/
+    001_PRD.md
   design/
     001_TECHNICAL_DESIGN.md
   plan/
@@ -18,13 +20,14 @@ docs/
 
 ## Numbering rules
 
-- `grill_results` / `design` / `plan` は同じ案件番号 `NNN` を共有する
+- `grill_results` / `prd` / `design` / `plan` は同じ案件番号 `NNN` を共有する
 - ADR は `docs/adr/0001-short-slug.md` の独立連番を使う
 
 ## Write timing
 
 - `CONTEXT.md` は用語解決ごとに inline 更新する
 - `docs/grill_results/NNN_GRILL_WITH_DOCS_RESULT.md` は grill 完了時に保存する
+- `docs/prd/NNN_PRD.md` は要求をsource of truthとして保存する価値がある場合、またはユーザーがPRDの保存を明示した場合に保存する
 - `docs/design/NNN_TECHNICAL_DESIGN.md` は設計判断を後で読み返す価値がある場合、またはユーザーが設計書の保存を明示した場合に保存する
 - `docs/plan/NNN_PLAN.md` は implementation handoff を checklist として追いたい場合、またはユーザーが計画書の保存を明示した場合に作る
 - `implement` の completion handoff まで終わったら、必要に応じて `docs/plan/NNN_PLAN_DONE.md` へリネームする
@@ -37,78 +40,9 @@ handoff には必ず `artifacts:` フィールドを含めます。値は `artif
 
 multirepository fleet の contract verification が読む repo root の `plan.md` YAML front-matter とは別物として扱います。
 
-## Technical Design template
-
-```markdown
-# Technical Design NNN: [Project / Feature]
-
-## Goal
-
-## Success Criteria
-
-## Out of Scope
-
-## Context / Source of Truth
-
-## Structure Decisions
-
-## Public Interfaces / Test Surface
-
-## Data Flow
-
-## Security Boundary
-
-## Behavior List
-
-## Vertical Slices
-
-| Slice | HITL/AFK | Done | First Test | RED Expectation | Commands |
-|---|---|---|---|---|---|
-
-## Risks / Unknowns
-
-## ADR
-
-## Implementation Handoff
-
-### Goal
-
-### Success Criteria
-
-### Out of Scope
-
-### Structure Decisions
-
-### Behavior List
-
-### Vertical Slices
-
-### Artifacts
-
-```markdown
-### Artifacts
-
-artifacts: conversation-only
-```
-
-または:
-
-```markdown
-### Artifacts
-
-artifacts:
-  - docs/design/NNN_TECHNICAL_DESIGN.md
-  - docs/plan/NNN_PLAN.md
-```
-
-### Commands
-
-### Return Conditions
-```
-
 ## PLAN template
 
-PLAN の正本テンプレートは `assets/NNN_PLAN_TEMPLATE.md` に置きます。
+PLANの正本テンプレートは`../assets/NNN_PLAN_TEMPLATE.md`に置きます。
 PLAN は進捗を追う補助であり、重い工程表ではありません。
 
 含めるもの:
@@ -116,11 +50,13 @@ PLAN は進捗を追う補助であり、重い工程表ではありません。
 - `GOAL`
 - `Success Criteria`
 - `Out of Scope`
-- `Structure Decisions`
+- `Design Artifacts`と実装で守る既決の構造判断
 - `Behavior List`
 - `Vertical Slices`
 - 各 slice の `HITL / AFK`
 - 各 slice の `First test`
+- 各 slice の `Test surface`
+- `RED command`
 - `RED expectation`
 - `GREEN command`
 - `Acceptance command`

@@ -166,7 +166,7 @@ def _build_failure_result(
                 f"\n    Expected: {expected}"
                 f"\n    Actual:   {actual}"
                 f"\n    Action: Upstream artifact changed since design handoff"
-                f"\n    Remediation: Contact upstream team or re-run design-and-plan"
+                f"\n    Remediation: Contact upstream team or re-run technical-design and implementation-plan"
             )
 
     if verified_count > 0:
