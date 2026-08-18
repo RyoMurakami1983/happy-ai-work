@@ -43,4 +43,4 @@ command 名まで完全一致しなくてもよいですが、handoff / test / e
 
 - この contract は interactive app pilot の **comparable surface** を揃えるためのもの
 - build / test / launch command の固定や `git init` 確認は bootstrap checklist の担当
-- `PASS` / `FAIL` / `REPLAN_REQUIRED` の判定は `implementation-eval-gate` の担当
+- `PASS` / `FAIL` / `REPLAN_REQUIRED` の判定は `implement` 内のslice gateが担当

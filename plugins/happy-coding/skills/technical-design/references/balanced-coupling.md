@@ -1,11 +1,4 @@
----
-name: balanced-coupling-design
-description: >
-  multi-repo、所有境界、shared library、service split、分散モノリス疑いがあるとき、結合の3次元で設計を評価し implementation handoff に変える。
-  通常の standard 設計では統合距離、変動性、共有知識のリスクを扱いきれないとき。
----
-
-# Balanced Coupling Design
+# Balanced Coupling
 
 結合の 3 次元（統合強度・距離・変動性）で、multi-repo や境界設計のリスクを確認します。
 これは標準ルートでは重い場合にだけ使う optional route です。
@@ -19,9 +12,9 @@ description: >
 - 共有 model や shared database が増えているとき
 - 変更時に複数チーム・複数 deploy を同期する必要があるとき
 
-単一 repo の通常機能追加なら `standard` に戻ります。
+単一repoの通常機能追加なら、通常の`technical-design`手順に戻ります。
 
-## ワークフロー: Balanced Coupling を implementation handoff に変える
+## ワークフロー: Balanced Couplingをtechnical designへ反映する
 
 ### ステップ 1 — context と ownership を整理する
 
@@ -61,9 +54,9 @@ description: >
 - 低強度 + 低距離: 分けすぎの可能性を見る
 - Generic で高強度統合: provider lock-in と置換コストを見る
 
-### ステップ 4 — implementation handoff へ落とす
+### ステップ 4 — technical designへ落とす
 
-standard と同じ handoff に、multi-repo の contract 情報を追加します。
+通常のtechnical designに、multi-repoのcontract情報を追加します。
 
 追加するもの:
 
@@ -71,26 +64,16 @@ standard と同じ handoff に、multi-repo の contract 情報を追加しま�
 - 依存順序
 - contract artifact path
 - checksum や version が必要な artifact
-- 各 repo の vertical slices
-- HITL / AFK
 - 統合 test / contract test の確認 command
-- `artifacts:` フィールド（`artifacts: conversation-only`、または保存した design / plan artifact path の列挙）
+- `artifacts:` フィールド（`artifacts: conversation-only`、または保存したdesign artifact path）
 
 `docs/design/NNN_TECHNICAL_DESIGN.md` が必要なら保存します。
-複数リポで `implement/checkpoints/contract_verify.py` を使う場合は、repo root の `plan.md` front-matter に required artifact を明示します。
-ユーザーが設計書 / 計画書の保存を明示した場合は、repo 内 artifact を保存して handoff に列挙します。
+複数repoの実装順、vertical slices、HITL / AFKは`implementation-plan`へ渡します。
+ユーザーが設計書の保存を明示した場合は、repo内artifactを保存してhandoffに列挙します。
 
 ## 注意点
 
 - Balanced Coupling を毎回使わない。
 - 3 次元評価を機械判定にしない。設計判断の会話を短くするための lens として使う。
-- モジュールテスト仕様をここで詳細化しすぎない。`implement` に渡す behavior list と first test 観点までに留める。
+- モジュールテスト仕様や実装順をここで詳細化しない。
 - contract が不明なら、推測で実装順序を決めず `interview-with-docs` に戻す。
-
-## 関連リソース
-
-- `plugins/happy-coding/skills/design-and-plan/sub_skills/standard/SKILL.md`
-- `plugins/happy-coding/skills/design-and-plan/_foundation/DDD_GLOSSARY.md`
-- `plugins/happy-coding/skills/design-and-plan/_foundation/IMPLEMENTATION_HEURISTICS.md`
-- `plugins/happy-coding/skills/implement/SKILL.md`
-- `docs/local_references/balanced-coupling/README.md`

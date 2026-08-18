@@ -24,4 +24,4 @@ description: >
 - ゴールや判断軸が曖昧なら `interview-me` に戻る。
 - 用語や境界が曖昧なら `domain-modeling` に戻る。
 - 実装判断に影響しない好みは、推奨を示して保留可能にする。
-- 合意済みなら `to-prd` または `design-and-plan` へ渡す。
+- 要求をPRDとして合意・保存するなら `to-prd`、構造判断が必要なら `technical-design` へ渡す。

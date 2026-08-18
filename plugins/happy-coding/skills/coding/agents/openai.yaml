@@ -1,0 +1,7 @@
+interface:
+  display_name: "Coding"
+  short_description: "必要な開発工程だけを選び、検証済み成果まで進める"
+  default_prompt: "$coding を使って、必要な開発工程だけを選び、検証済みの完了まで進めてください。"
+
+policy:
+  allow_implicit_invocation: false

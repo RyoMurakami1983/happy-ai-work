@@ -9,4 +9,4 @@
 5. 公開API、serialization、data、timing、exception、performanceが本当に不変か確認する。
 6. 同じ振る舞いと改善された点を別々に説明する。
 
-確認手段がなく広範囲を動かす必要がある場合は、refactorを始めず`design-and-plan`または`debug`へ戻る。
+確認手段がなく広範囲を動かす必要がある場合は、refactorを始めず`technical-design`または`debug-and-fix`へ戻る。

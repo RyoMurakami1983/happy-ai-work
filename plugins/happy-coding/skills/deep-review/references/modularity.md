@@ -16,4 +16,4 @@ module、package、project、service間の結合を、次の3軸で評価する�
 - contract導入、module統合、境界再定義、translation layer等の候補
 - 判断に不足する情報
 
-レビューでは診断と修正候補までに留める。大規模な再設計や移動は`design-and-plan`へ渡す。
+レビューでは診断と修正候補までに留める。大規模な再設計や移動は`technical-design`へ渡す。

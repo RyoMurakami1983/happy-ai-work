@@ -49,7 +49,7 @@
 ## 6. Fallback rule
 
 - ここで不足が見つかったら、実装で埋めながら進めるのではなく bootstrap task として先に補う
-- どうしても未整備のまま進める場合は、`implementation-eval-gate` に evidence gap として引き渡す
+- どうしても未整備のまま進める場合は、slice gateへevidence gapとして引き渡す
 - bootstrap 完了は少なくとも次の 3 点を満たす
   - target repo への template / instructions 配布
   - `git init` 済み

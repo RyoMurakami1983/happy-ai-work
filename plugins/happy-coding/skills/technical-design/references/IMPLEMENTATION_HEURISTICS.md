@@ -109,4 +109,4 @@ balanced-coupling-design ワークフローのステップ 1（サブドメイ�
 
 ## 出典
 
-Vlad Khononov の著作を参考にした独自のまとめです。概念を参照し独自表現で記述しています。詳細は `docs/local_references/balanced-coupling/README.md` を参照してください。
+Vlad Khononov の著作を参考にした独自のまとめです。概念を参照し独自表現で記述しています。multi-repoやownership境界の判断は同skillの `balanced-coupling.md` を参照してください。
