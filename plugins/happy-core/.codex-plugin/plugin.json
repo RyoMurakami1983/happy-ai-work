@@ -1,0 +1,18 @@
+{
+  "name": "happy-core",
+  "version": "0.1.0",
+  "description": "仕事・学習・ライティングを継続的に改善する Codex skills",
+  "author": {
+    "name": "RyoMurakami1983"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Happy Core",
+    "shortDescription": "仕事・学習・文章作成を支える再利用可能な skills",
+    "longDescription": "Happy Core は、Codex のホーム／workspace初期化、文章の構成・下書き・推敲を安全に再利用できる形で提供します。",
+    "developerName": "RyoMurakami1983",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": "Happy Core を使って、今回の作業を整理して進めてください。"
+  }
+}

@@ -1,0 +1,26 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab
+
+[*.{cs,csproj,sln}]
+indent_size = 4
+
+# Rust は rustfmt の既定に合わせて 4 スペースで統一する
+[*.rs]
+indent_size = 4
+
+# C 系は 4 スペースを既定にして、言語ごとの見た目を揃える
+[*.{c,h,cc,cpp,hpp,hh,cxx}]
+indent_size = 4
