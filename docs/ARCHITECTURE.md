@@ -10,6 +10,18 @@ repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗�
 - repo共通方針: repoルートの `AGENTS.md`
 - サブツリー固有方針: 必要なディレクトリの `AGENTS.md`
 - 繰り返しworkflow: plugin内の `skills/<name>/SKILL.md`
+- 条件付きの詳細知識: 各skillの`references/`
+- target repoへ導入する短い規約: 各言語skillの`assets/AGENTS.fragment.md`
+- 機械的な強制: target repoのformatter、linter、analyzer、test、CI
+
+CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式がないため、言語固有知識をskillへ、常時必要なrepo契約を最寄りの`AGENTS.md`へ分けます。
+
+## Skill境界
+
+- 公開skillは独立した利用目的と検証境界を持つものに限定します。
+- 一つの目的の詳細modeは公開leaf skillではなく`references/`へ置きます。
+- 未完成候補は`incubator/`へ置き、pluginから配布しません。
+- portfolio判断は[SKILL-PORTFOLIO.md](SKILL-PORTFOLIO.md)を正本とします。
 
 ## レビュー
 

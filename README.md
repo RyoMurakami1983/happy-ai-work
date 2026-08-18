@@ -9,7 +9,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 | plugin | 用途 |
 | --- | --- |
 | `happy-core` | home／workspace初期化、文章の構成・下書き・推敲 |
-| `happy-coding` | インタビュー、PRD、設計、実装、評価、レビュー、CIデバッグ |
+| `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 
 ## 導入
 
@@ -17,8 +17,8 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 ```powershell
 codex plugin marketplace add .
-codex plugin install happy-core@happy-ai-work-marketplace
-codex plugin install happy-coding@happy-ai-work-marketplace
+codex plugin add happy-core@happy-ai-work-marketplace
+codex plugin add happy-coding@happy-ai-work-marketplace
 ```
 
 Codexアプリではplugin画面から `Happy AI Work` を開き、必要なpluginを導入します。
@@ -33,17 +33,22 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - `writing-plan`: 読者と目的から文章構成を設計
 - `draft-writing`: 合意済み構成から日本語初稿を作成
 - `deep-edit`: 主張・構成・論理・読みやすさ・正確性の順に推敲
+- `furikaeri`: 作業の事実・学び・摩擦を次の小さな改善へ整理
+- `skill-eval`: 既存skillのtriggerと振る舞いをrealistic scenarioで評価
 
 ### happy-coding
 
-- `interview-with-docs`
-- `domain-modeling`
-- `to-prd`
-- `design-and-plan`
-- `implement`
-- `implementation-eval-gate`
-- `deep-review`
-- `ci-debug`
+- 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`design-and-plan`、`implement`
+- 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
+- framework: `wpf`、`tauri`
+- 調査: `repo-onboarding`、`debug`
+- 品質: `implementation-eval-gate`、`deep-review`、`ci-debug`
+
+旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
+
+## 作成途中のworkflow
+
+未完成の案はplugin外の[incubator/](incubator/)で扱います。ここにある候補はインストールされません。旧`pptx`は移植せず、将来のwriting deliverablesを実利用から新規設計します。
 
 ## home用AGENTS.md
 

@@ -1,7 +1,7 @@
 {
   "name": "happy-coding",
-  "version": "0.1.0",
-  "description": "要件整理・設計・実装・評価・レビュー・CI対応をつなぐ Codex skills",
+  "version": "0.2.0",
+  "description": "要件整理・設計・実装・言語支援・デバッグ・評価・レビュー・CI対応をつなぐ Codex skills",
   "author": {
     "name": "RyoMurakami1983"
   },
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Coding",
     "shortDescription": "要件から検証済み実装までをつなぐ開発 skills",
-    "longDescription": "Happy Coding は、インタビュー、PRD、設計、実装、評価、独立レビュー、CIデバッグを Codex 向けに提供します。",
+    "longDescription": "Happy Coding は、インタビュー、PRD、設計、実装、.NET・Python・TypeScript・Rust・WPF・Tauri支援、デバッグ、評価、独立レビュー、CI対応を Codex 向けに提供します。",
     "developerName": "RyoMurakami1983",
     "category": "DeveloperTools",
     "capabilities": [],
