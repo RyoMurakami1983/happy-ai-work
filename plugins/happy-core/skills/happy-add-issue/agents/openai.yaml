@@ -1,0 +1,4 @@
+interface:
+  display_name: "Happy Add Issue"
+  short_description: "Happy AI Workへの改善要望を母艦Issueへ安全に残す"
+  default_prompt: "Use $happy-add-issue to draft and, after confirmation, submit this feedback to Happy AI Work."

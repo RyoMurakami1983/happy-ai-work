@@ -28,12 +28,15 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 ### happy-core
 
 - `interview-me`: 重要な意思決定を具体例・反例まで質問で深掘り
-- `home-bootstrap`: `~/.codex/AGENTS.md` の管理対象部分を安全に導入・更新
+- `home-bootstrap`: `~/.codex/AGENTS.md` の管理対象部分を安全に導入・更新し、Git指示とHooksの初期設定を案内
 - `workspace-bootstrap`: repo用 `AGENTS.md` と最小基盤を対話的に準備
+- `github-issue`: 現repoの後続作業を実行可能なGitHub Issueへ整理
+- `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
 - `writing-plan`: 読者と目的から文章構成を設計
 - `draft-writing`: 合意済み構成から日本語初稿を作成
 - `deep-edit`: 主張・構成・論理・読みやすさ・正確性の順に推敲
-- `furikaeri`: 作業の事実・学び・摩擦を次の小さな改善へ整理
+- `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
+- `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
 - `skill-eval`: 既存skillのtriggerと振る舞いをrealistic scenarioで評価
 
 ### happy-coding
@@ -58,6 +61,8 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 Codex全体へ適用する指示は、通常 `~/.codex/AGENTS.md` に置きます。Windowsでは `%USERPROFILE%\.codex\AGENTS.md` です。
 
 `home-bootstrap` は既存内容を全置換せず、管理対象マーカー内だけを更新します。最初に必ずdry-runします。
+
+適用時にはCodexのGit設定へ貼り付ける3つの指示文と自動マージの設定を案内します。Hooksは未設定を許容し、候補の影響と差分を確認してから明示承認された項目だけを設定します。
 
 ```powershell
 python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run

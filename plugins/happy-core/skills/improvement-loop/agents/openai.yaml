@@ -1,0 +1,4 @@
+interface:
+  display_name: "Improvement Loop"
+  short_description: "選択済みの改善候補を実験・検証・次の行動へつなぐ"
+  default_prompt: "Use $improvement-loop to turn this selected improvement into a bounded, testable next action."

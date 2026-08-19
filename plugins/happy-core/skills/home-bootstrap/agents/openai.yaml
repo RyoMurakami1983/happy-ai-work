@@ -1,3 +1,4 @@
 interface:
   display_name: "Home Bootstrap"
-  short_description: "Help with Home Bootstrap tasks"
+  short_description: "Codexホーム、Git指示、Hooksを安全に初期設定"
+  default_prompt: "Use $home-bootstrap to review and safely configure my Codex home settings."
