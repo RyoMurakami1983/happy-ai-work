@@ -6,7 +6,8 @@
 
 ## 今回追加した公開skill
 
-- 継続改善: `furikaeri`、`skill-eval`
+- 継続改善: `furikaeri`、`improvement-loop`、`skill-eval`
+- Issue intake: `github-issue`、`happy-add-issue`
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`
 - .NET専門workflow: `dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
@@ -39,7 +40,7 @@
 - `copilot-authoring`: 公式`skill-creator`と競合し、Copilot instructions／agent前提が残る。
 - `pptx`: 大きな旧資産を移植せず、将来のwriting deliverablesとして新規設計する。
 - `knowledge-capture`: 利用実績が薄く、`domain-modeling`、repo docs、外部knowledge pluginと重なる。
-- GitHub PR／Issue／CI wrapper: 公式または導入済みGitHub pluginと重なる。
+- GitHub PR／CI wrapper: 公式または導入済みGitHub pluginと重なる。IssueはAPI wrapperを再実装せず、現repoの実装backlogとHappy AI Workへの軽いfeedbackという異なるintake判断だけを公開skillとして持つ。
 - 固定custom agent: Codexの動的subagentまたは独立再読を使う。
 
 ## 将来の昇格条件

@@ -1,0 +1,4 @@
+interface:
+  display_name: "GitHub Issue"
+  short_description: "現repoの後続作業を実行可能なGitHub Issueへ整理"
+  default_prompt: "Use $github-issue to draft and, after confirmation, create an actionable issue in the current repository."

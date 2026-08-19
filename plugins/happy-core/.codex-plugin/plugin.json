@@ -1,15 +1,15 @@
 {
   "name": "happy-core",
-  "version": "0.2.0",
-  "description": "仕事・学習・ライティングを継続的に改善する Codex skills",
+  "version": "0.2.0+codex.20260819150824",
+  "description": "仕事・学習・ライティングと自己改善ループを支える Codex skills",
   "author": {
     "name": "RyoMurakami1983"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "Happy Core",
-    "shortDescription": "仕事・学習・文章作成を支える再利用可能な skills",
-    "longDescription": "Happy Core は、Codexのホーム／workspace初期化、文章の構成・下書き・推敲、ふりかえり、skill評価を安全に再利用できる形で提供します。",
+    "shortDescription": "仕事・学習・文章作成・改善ループを支える再利用可能なskills",
+    "longDescription": "Happy Core は、Codexのホーム／workspace初期化、文章の構成・下書き・推敲、ふりかえり、次のタスクへの改善ループ、Issue捕捉、skill評価を安全に再利用できる形で提供します。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],
