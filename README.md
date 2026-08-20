@@ -13,13 +13,15 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 ## 導入
 
-このrepoをcloneし、repoルートをmarketplaceとして登録します。
+GitHub上のrepoをmarketplaceとして登録し、必要なpluginを導入します。事前のcloneは不要です。
 
 ```powershell
-codex plugin marketplace add .
+codex plugin marketplace add https://github.com/RyoMurakami1983/happy-ai-work
 codex plugin add happy-core@happy-ai-work-marketplace
 codex plugin add happy-coding@happy-ai-work-marketplace
 ```
+
+repoをclone済みの場合は、repoルートで `codex plugin marketplace add .` を実行してローカルのmarketplaceを登録することもできます。
 
 Codexアプリではplugin画面から `Happy AI Work` を開き、必要なpluginを導入します。
 
