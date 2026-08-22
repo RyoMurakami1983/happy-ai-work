@@ -8,6 +8,8 @@ import re
 import sys
 from pathlib import Path
 
+import validate_constitution
+
 ROOT = Path(__file__).resolve().parent.parent
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LINK_RE = re.compile(r"\[[^]]+\]\(([^)]+)\)")
@@ -164,6 +166,12 @@ def main() -> int:
     validate_json(failures)
     validate_skills(failures)
     validate_links_and_secrets(failures)
+    try:
+        constitution_sync = validate_constitution.load_sync()
+        for item in validate_constitution.validate_local(constitution_sync):
+            fail(f"constitution: {item}", failures)
+    except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
+        fail(f"constitution: {exc}", failures)
     if failures:
         print("validation failed:")
         for item in failures:

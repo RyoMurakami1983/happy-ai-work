@@ -7,6 +7,8 @@ description: 既存skillや再利用promptの実際の振る舞いをrealistic s
 
 skillの文章を好みで採点せず、期待する起動、期待しない起動、成果物の要件を固定して挙動を比較する。新規作成・通常の更新は公式`skill-creator`へ任せる。
 
+評価基準のversion、Constitutionとの関係、過去結果の再評価、緊急例外を扱う場合は[評価governance](references/evaluation-governance.md)を先に読む。
+
 ## ワークフロー
 
 1. 評価する問いを一つに絞る。trigger精度、workflow遵守、成果物品質、旧版との差、曖昧さを混ぜない。

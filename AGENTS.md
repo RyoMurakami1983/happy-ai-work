@@ -7,6 +7,8 @@
 ## Source of truth
 
 - 利用者向け入口: `README.md`
+- 公式upstreamの判断原則と統治境界: `CONSTITUTION.md`
+- 日常のConstitution参照: `docs/CONSTITUTION_SUMMARY.md`
 - 製品・用語・境界: `CONTEXT.md`
 - 配布物: `plugins/happy-core/`、`plugins/happy-coding/`
 - marketplace: `.agents/plugins/marketplace.json`
@@ -24,6 +26,7 @@ PythonがPATHにないWindows環境では、repo内の開発手順に従って `
 
 ## Boundaries
 
+- 通常改善、Constitution amendment、governance driftは`CONSTITUTION.md`と日常summaryに従って区別する。安全、評価整合性、人間の所有権、修復可能性を利便性で緩和しない。
 - Copilot固有のagentファイルや`copilot-authoring`は移植しない。skill作成・更新は公式`skill-creator`を使う。
 - Copilot由来のskillは意図を保ち、Codexの `AGENTS.md`、skills、plugins、subagentsへ再設計する。
 - 固定 `agents/*.agent.md` を増やさない。独立レビューは必要時に動的subagentで行う。
