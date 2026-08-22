@@ -340,9 +340,7 @@ def validate_local(sync: dict[str, Any], *, now: datetime | None = None) -> list
         failures.append("CONSTITUTION.md changed without a reconciled sync record")
 
     constitution_revision = sync.get("constitution_revision")
-    if constitution_revision is not None and (
-        not isinstance(constitution_revision, str) or not SHA_RE.fullmatch(constitution_revision)
-    ):
+    if not isinstance(constitution_revision, str) or not SHA_RE.fullmatch(constitution_revision):
         failures.append("constitution_revision must be a lowercase Git SHA")
 
     philosophy = sync.get("personal_philosophy", {})

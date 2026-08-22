@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "constitution_version": "1.0.0",
-  "constitution_revision": null,
-  "constitution_sha256": "e281e6b4d2ca32ad89d2039e8701eb4d592240fb2414b55464b6027a9c51f18a",
+  "constitution_revision": "1e5e9eca9a401e33060a413a33935ca2c9b21b14",
+  "constitution_sha256": "61a9f2e813f78cc240e21c15800c85bd04e36e56f64edaed4e1680a97253129a",
   "personal_philosophy": {
     "url": "https://github.com/RyoMurakami1983/RyoMurakami1983/blob/main/README.md",
     "revision": "a607f6d27843962fddd0882f7f00d7710bdc5f29",

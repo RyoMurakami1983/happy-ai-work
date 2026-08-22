@@ -43,6 +43,7 @@ class ConstitutionContractTests(unittest.TestCase):
         self.assertEqual(sync["schema_version"], 1)
         self.assertEqual(sync["constitution_version"], "1.0.0")
         self.assertRegex(sync["constitution_sha256"], r"^[0-9a-f]{64}$")
+        self.assertRegex(sync["constitution_revision"], r"^[0-9a-f]{40}$")
         self.assertRegex(sync["personal_philosophy"]["revision"], r"^[0-9a-f]{40}$")
         self.assertTrue(sync["personal_philosophy"]["url"].startswith("https://github.com/"))
         self.assertIn(sync["resolution"], {"reflected", "not-applicable", "pending"})

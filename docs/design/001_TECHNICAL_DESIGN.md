@@ -57,6 +57,7 @@
 {
   "schema_version": 1,
   "constitution_version": "1.0.0",
+  "constitution_revision": "<exact-reconciled-commit-sha>",
   "constitution_sha256": "<sha256>",
   "personal_philosophy": {
     "url": "https://github.com/RyoMurakami1983/RyoMurakami1983/blob/main/README.md",
@@ -70,6 +71,10 @@
   "reason": "<short rationale>"
 }
 ```
+
+`constitution_revision`は、照合済み`CONSTITUTION.md`を含む厳密なcommitを指す。Constitution導入時は実装commit後に得たSHAをmetadata commitで記録し、以後の照合では同一contentへのrevertではなく、このcommit以後の最古変更をdrift起点にする。
+
+anchorを記録する変更は、対象commitをmainの祖先として保持するmerge commit方式で統合する。squash／rebase mergeはanchorを失うため使わない。履歴上でanchorを確認できない場合、validatorは判定不能Bとして停止し、main上のdurable commitを記録するremediationへ送る。
 
 ### Validator CLI
 
