@@ -10,7 +10,7 @@ description: Pythonリポジトリの環境・依存・lint・型検査・テス
 ## ワークフロー
 
 1. `pyproject.toml`、lockfile、tool設定、README、CIからPython versionと実行入口を確定する。
-2. 既存環境がある場合はその入口を使う。新規構築を依頼された場合だけ[project-setup.md](references/project-setup.md)から最小構成を選ぶ。
+2. 既存環境がある場合はその入口を使う。Windows sandboxでPython／uvの起動やcache pathが失敗した場合は[windows-sandbox-and-uv.md](references/windows-sandbox-and-uv.md)を読み、実行入口の変更を一度のpreflightで判断する。新規構築を依頼された場合だけ[project-setup.md](references/project-setup.md)から最小構成を選ぶ。
 3. 型境界、例外処理、I/O分離、path操作を変更内容に合わせて確認する。詳細は[coding-practices.md](references/coding-practices.md)を読む。
 4. formatter、lint、type check、focused testをrepoの順序で実行し、必要なら全体testへ広げる。
 5. CLIやscriptでは終了コード、標準出力／標準エラー、文字コード、Windows／WSLのpath差を確認する。
