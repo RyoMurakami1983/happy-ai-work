@@ -52,7 +52,7 @@ description: 合意済みの要求から、module責務、public interface、dat
 
 ### 3. 選択肢とtrade-offを記録する
 
-重大な判断だけ、採用案、却下案、理由、既知riskを残す。長期的な判断であればrepoの規約に従ってADRを作る。
+重大な判断だけ、採用案、却下案、理由、既知riskを残す。long-lived structure、compatibility、migration、operationsに影響する判断は、repoの規約に従ってADRを必ず作る。
 
 ### 4. 実装可能性を確認する
 
@@ -65,7 +65,7 @@ description: 合意済みの要求から、module責務、public interface、dat
 
 ## 出力
 
-会話だけで十分なら `artifacts: conversation-only` とする。設計判断を後で参照する価値がある場合、またはユーザーが保存を求めた場合は `docs/design/NNN_TECHNICAL_DESIGN.md` へ保存する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。
+成果物は保存を既定（saved-by-default）とし、`docs/design/NNN_TECHNICAL_DESIGN.md` へ必ず保存する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
 
 ```markdown
 # Technical Design NNN: [Name]
@@ -83,7 +83,7 @@ description: 合意済みの要求から、module責務、public interface、dat
 ## Artifacts
 ```
 
-handoffには、設計artifact、実装で守る構造判断、未決定事項、次の戻り先を含める。保存済み成果物がある場合は既知のpathをすべて列挙し、保存しない場合だけconversation-onlyとする。
+handoffには、設計artifact、実装で守る構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
 
 ```yaml
 artifacts:

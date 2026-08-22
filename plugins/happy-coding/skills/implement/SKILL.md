@@ -40,7 +40,7 @@ implementation contract
 - 目的、対象、非対象
 - 受け入れ条件
 - 主要な user-visible behavior または外から観測できる contract
-- handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か `conversation-only` か）
+- handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か、例外理由付きの `conversation-only` か）
 - 実行する test / build / launch command
 - 失敗時の戻り先: `FAIL` は実装修正、`REPLAN_REQUIRED` は前段へ戻す
 
@@ -55,7 +55,8 @@ implementation contract
 - build / test / launch command
 - interactive app なら `references/interactive-app-bootstrap-checklist.md`
 - 複数リポで `plan.md` の `dependencies.contracts.requires` がある場合だけ、`checkpoints/contract_verify.py` で required artifact を検証する
-- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す。`artifacts: conversation-only`、または旧形式でフィールド自体が無い場合はこの確認をスキップする
+- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す
+- `artifacts: conversation-only` の場合は `exception reason:` があり、利用者の明示指定またはsmall one-sliceの例外条件を満たすことを確認する。複数repo、複数slice、public contract、migration / operationsを伴う場合は `REPLAN_REQUIRED` とする
 
 bootstrap の不足が今の slice を壊すなら修正します。関係ない整備は実装 scope に混ぜません。
 

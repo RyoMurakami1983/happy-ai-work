@@ -79,9 +79,9 @@ artifacts:
 
 上はplanだけを保存した例である。保存済みPRD / design等が実在する場合だけ、そのpathも追加する。
 
-保存済み成果物がある場合は既知のpathをすべて列挙する。どの成果物も保存しない場合だけ `artifacts: conversation-only` とする。
+成果物は保存を既定（saved-by-default）とし、[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使って `docs/plan/NNN_PLAN.md` へ必ず保存する。保存済み成果物の実在するpathをすべて列挙する。
 
-進捗をrepoで追う価値がある場合、またはユーザーが保存を求めた場合は[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使い、`docs/plan/NNN_PLAN.md`へ保存する。成果物の番号とpathは[WORK_ARTIFACTS.md](references/WORK_ARTIFACTS.md)に従う。
+conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。成果物の番号とpathは[WORK_ARTIFACTS.md](references/WORK_ARTIFACTS.md)に従う。
 
 ## 注意点
 
