@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "constitution_version": "1.0.0",
+  "constitution_revision": "1e5e9eca9a401e33060a413a33935ca2c9b21b14",
+  "constitution_sha256": "61a9f2e813f78cc240e21c15800c85bd04e36e56f64edaed4e1680a97253129a",
+  "personal_philosophy": {
+    "url": "https://github.com/RyoMurakami1983/RyoMurakami1983/blob/main/README.md",
+    "revision": "a607f6d27843962fddd0882f7f00d7710bdc5f29",
+    "committed_at": "2026-05-28T00:42:29Z"
+  },
+  "reconciled_at": "2026-08-22T00:00:00+09:00",
+  "drift_started_at": null,
+  "drift_source": null,
+  "resolution": "reflected",
+  "reason": "現行profileの中心原則を確認し、公式repo向けの統治境界としてConstitution 1.0.0へ再確立した。"
+}

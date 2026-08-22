@@ -4,6 +4,10 @@
 
 CodexデスクトップアプリとCodex CLIで再利用するワークフローを、2つのpluginとして管理します。
 
+## Constitution
+
+公式`happy-ai-work`の開発・評価・配布判断は[CONSTITUTION.md](CONSTITUTION.md)を正本とし、日常判断では[Constitution Summary](docs/CONSTITUTION_SUMMARY.md)を入口にします。個人philosophy、repo固有Mission、public利用先のdownstream Constitutionを分離し、村上さん固有の価値観をplugin利用先へ暗黙適用しません。
+
 ## Plugins
 
 | plugin | 用途 |

@@ -6,6 +6,9 @@ repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗�
 
 ## 指示の配置
 
+- 公式upstreamの原則と統治境界: root `CONSTITUTION.md`
+- AIの日常参照と停止条件: `docs/CONSTITUTION_SUMMARY.md`
+- 文脈依存の価値比較: `docs/governance/UPSTREAM_DECISION_PROFILE.md`
 - home共通方針: `~/.codex/AGENTS.md`
 - repo共通方針: repoルートの `AGENTS.md`
 - サブツリー固有方針: 必要なディレクトリの `AGENTS.md`
@@ -15,6 +18,8 @@ repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗�
 - 機械的な強制: target repoのformatter、linter、analyzer、test、CI
 
 CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式がないため、言語固有知識をskillへ、常時必要なrepo契約を最寄りの`AGENTS.md`へ分けます。
+
+個人philosophyの全文、repo固有Mission、skill手順、評価scenarioはConstitutionへ混在させません。plugin利用先ではdownstream Constitutionを尊重し、存在しない場合もupstream固有価値を暗黙適用しません。
 
 ## Skill境界
 
