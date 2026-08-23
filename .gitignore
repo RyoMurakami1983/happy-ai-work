@@ -146,8 +146,10 @@ docs/local_skill_evals/*
 docs/local_skill_evals/**/runs/
 docs/local_skill_evals/**/viewer.html
 
-# PrivateEval reusable cases may live in evals/, but raw artifacts stay local
+# Public upstream/common-safety evals may live in evals/, but private/raw artifacts stay local
 evals/**/runs/
 evals/**/viewer.html
 evals/**/*transcript*
 evals/**/*raw*
+evals/**/*sealed*
+evals/**/*holdout*

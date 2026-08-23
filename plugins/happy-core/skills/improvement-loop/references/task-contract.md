@@ -9,6 +9,17 @@
 - 反証条件: どんな結果なら改善案を棄却するか
 - 機会費用: 今これを行う価値が他のタスクより高いか
 
+## 責任帰属
+
+失敗原因が未確定なら、少なくとも次の層を分ける。
+
+- repo: 対象revision、設定、依存、fixture
+- harness: runner、prompt注入、artifact収集、grader接続
+- environment: OS、権限、network、toolchain、外部状態
+- skill behavior: trigger、指示理解、判断、handoff
+
+観測事実と推測を分け、各仮説のconfidenceと未確認事項を示す。一度に一層だけを変える最小判別実験を選び、結果が出る前に責任をskillやharnessへ固定しない。
+
 ## Notionの最小項目
 
 ### Properties

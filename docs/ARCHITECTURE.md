@@ -21,6 +21,8 @@ CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式が�
 
 個人philosophyの全文、repo固有Mission、skill手順、評価scenarioはConstitutionへ混在させません。plugin利用先ではdownstream Constitutionを尊重し、存在しない場合もupstream固有価値を暗黙適用しません。
 
+公開評価資産は`evals/`でversion管理し、raw runとsealed hold-outはrepo外に保ちます。case／schema／sanitize済みrecordの所有境界は[EVALUATION_ASSETS.md](EVALUATION_ASSETS.md)を正本とします。
+
 ## Skill境界
 
 - 公開skillは独立した利用目的と検証境界を持つものに限定します。

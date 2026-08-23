@@ -8,6 +8,8 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 公式`happy-ai-work`の開発・評価・配布判断は[CONSTITUTION.md](CONSTITUTION.md)を正本とし、日常判断では[Constitution Summary](docs/CONSTITUTION_SUMMARY.md)を入口にします。個人philosophy、repo固有Mission、public利用先のdownstream Constitutionを分離し、村上さん固有の価値観をplugin利用先へ暗黙適用しません。
 
+公開評価case、private eval、sealed hold-out、sanitize済み履歴の境界は[Evaluation assets](docs/EVALUATION_ASSETS.md)を参照してください。
+
 ## Plugins
 
 | plugin | 用途 |
