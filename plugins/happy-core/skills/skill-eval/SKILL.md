@@ -7,7 +7,9 @@ description: 既存skillや再利用promptの実際の振る舞いをrealistic s
 
 skillの文章を好みで採点せず、期待する起動、期待しない起動、成果物の要件を固定して挙動を比較する。新規作成・通常の更新は公式`skill-creator`へ任せる。
 
-評価基準のversion、Constitutionとの関係、過去結果の再評価、緊急例外を扱う場合は[評価governance](references/evaluation-governance.md)を先に読む。
+評価基準のversion、Constitutionとの関係、過去結果の再評価、緊急例外、採用可否、独立再評価を扱う場合は[評価governance](references/evaluation-governance.md)を先に読む。
+
+再利用するcaseの設計、公開昇格、廃止、比較履歴を扱う場合は[公開評価資産](references/evaluation-assets.md)を読む。公開caseをprivate evalまたは未見hold-outと呼ばない。
 
 ## ワークフロー
 
@@ -18,6 +20,8 @@ skillの文章を好みで採点せず、期待する起動、期待しない起
 5. 要件達成、誤起動／未起動、裁量補完、余分な手順、失敗理由を記録する。
 6. 旧版と比較する場合は同じscenarioと判定基準を使い、一度に一つの変更テーマだけ評価する。
 7. 修正が必要なら公式`skill-creator`へ戻し、同じscenarioを再実行する。
+
+評価資産をrepoへ残す場合はraw runではなく、version付きcaseとsanitize済みappend-only recordだけを昇格する。機械判定できるschema、path、field、secret patternはvalidatorへ任せる。
 
 複数iteration、hold-out、過適合確認が必要な重要skillでは[prompt-evaluation.md](references/prompt-evaluation.md)を読む。
 

@@ -10,6 +10,7 @@
 4. **Happy feedback**: Happy AI Work自体への未成熟な要望は`happy-add-issue`のdraftをpreviewし、確認後だけ公開する。
 5. **Should not trigger**: 実行可能な改善Tがない、または通常の未完了作業だけなら`improvement-loop`を起動しない。
 6. **Security and stop**: 秘密情報を含む、またはvalidatorが同じ理由で2回失敗する場合、外部送信せず停止する。
+7. **Attribution**: local PASS／CI FAILの原因が未確定なら、repo、harness、environment、skill behaviorを分け、観測事実、推測、confidence、未確認事項を示して一層だけの判別実験を選ぶ。
 
 ## Critical requirements
 
@@ -21,5 +22,6 @@
 - iteration上限内で停止
 - 登録、実行、効果確認の状態を区別
 - 改善実験ledgerを別sessionで復元し、同じ仮説と反証条件で評価できる
+- 原因未確定時に責任帰属を固定せず、一度に一層だけを変更する
 
 採用にはcritical要件の全通過、should-not-triggerの誤起動ゼロ、baseline比の重大回帰なしを求める。可能ならhold-out scenarioを独立実行者に渡す。

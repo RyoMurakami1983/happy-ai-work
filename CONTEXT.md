@@ -29,9 +29,10 @@
 - **downstream Constitution**: clone、fork、plugin利用先の所有者が、自身のphilosophyと優先順位を定義する判断基準。upstream固有の価値観を置換できるが、安全・評価整合性は緩和できない。
 - **Constitution resolution**: 利用先ではdownstream Constitution、既存のrepo方針、共通の安全・評価整合性の順に責務を分けて判断すること。downstream Constitutionがなくてもupstream固有の価値観を暗黙適用しない。
 - **判断プロファイル（トレードオフプロファイル）**: Constitutionを変更せず、特定の文脈で原則間の相対的な重み、尺度のanchor、具体例、判断理由を表すversion付きの基準。単一の点数や評価結果ではない。
-- **private eval**: 組織固有の目的に対する「何が良いか」をscenario、rubric、期待結果、実測履歴として所有・管理し、AIの改善を測る評価資産。判断プロファイルそのものとは区別する。
+- **private eval**: 利用者または組織固有の目的に対する「何が良いか」をscenario、rubric、期待結果、実測履歴として非公開領域で所有・管理する評価資産。判断プロファイルやpublicなupstream evalとは区別する。
 - **upstream eval**: リポジトリ所有者が公開を承認し、公式`happy-ai-work`の改善を測る実評価。public repoに置けるが、plugin配布先では既定で適用しない。
 - **共通安全eval**: 個人philosophyに依存せず、安全・評価整合性の共通境界を検証する公開評価。upstream／downstreamの双方へ適用する。
+- **sealed hold-out**: 実行前に内容と基準を固定し、実装担当者へ開示せずsession限定または利用者管理の非公開領域で扱う未見評価case。publicへ昇格した時点からhold-outではない。
 - **通常の運用改善**: 現行Constitutionの価値観と優先順位を変えず、観測、手順、表現、再現性を改善する変更。Happyが自律的に判断できる。
 - **Constitution amendment**: 原則の追加、削除、意味、優先順位、または安全・独立性の境界を変える変更。リポジトリ所有者の明示判断を必要とする。
 - **Constitution vNext**: 現行Constitutionを置き換える前の改訂案。旧基準との影響比較を伴い、壁打ちと明示承認が終わるまでは判断基準として有効にならない。

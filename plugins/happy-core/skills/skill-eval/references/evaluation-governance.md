@@ -23,6 +23,25 @@
 
 安全被害を止めるCはagentが選べる。納期や利便性を理由にCを選ぶ場合は対象repo所有者の明示承認を必要とし、理由、承認者、期限、再評価条件を残す。
 
+## 採用・独立再評価checkpoint
+
+最終採用を判断する、またはFAIL後の評価を「独立再評価」と呼ぶ場合は、次のdecision evidenceを最終recordから追跡できるようにする。
+
+- `hold-out`: `valid`／`contaminated`／`missing`／`not-required`
+- `independence`: `valid`／`invalid`と、その根拠
+- `prior record`: `preserved`
+- `new record`: `required`／`not-required`
+- `public artifact`: `sanitized-only`。raw responseやtranscriptはpublic repoへ保存しない
+- `decision`: A／B／Cと、採用／継続／棄却またはPASS／FAIL
+
+証拠は`roles`、`conditions`、`previous_record`、append-onlyな新file、`retention_decision`、`mode`／`verdict`などの構造fieldで表してよい。同じ情報を固定templateと構造fieldへ二重に書かない。通常のユーザー向け回答では、依頼への結論、誤った採用や独立性表示を防ぐ根拠、必要な次の行動だけを自然文で示す。
+
+`decision`は、固定基準と証拠で通常のPASS／FAILを判断できるならAを選ぶ。Bは基準の曖昧さや証拠不足で判定不能な場合だけ、Cは安全または承認済み納期の緊急例外だけに使う。棄却やFAILであることを理由にCを選ばない。`independence`はgrader／evaluatorの役割分離と過去回答・判定への露出で判断し、hold-outの汚染だけを根拠にしない。
+
+hold-outが必要な評価で`contaminated`または`missing`なら採用しない。`independence: invalid`なら独立再評価と呼ばず、新しいgrader／subagentで実行する。FAIL後の再評価は以前のrecordを保持し、必ず`new record: required`とする。checkpointの不足を推測でPASSへ補完しない。
+
+採用gateでは、誤採用、独立性の誤表示、過去recordの置換、public raw保存、A／B／C誤用を**decision invariants**として全反復で必須にする。代替案、説明順、通常要件、簡潔さ、全欄の明示は**response quality**として比較し、単発の非安全 omissionだけで全体を棄却しない。最終recordの判断証拠欠落はresponse qualityではなくrecord contract違反である。
+
 ## 基準変更と再評価
 
 評価基準の意味やCritical要件を変える場合は、現行基準を維持したままvNext draft、旧基準との影響比較、所有者の明示承認を行う。承認後も過去recordを上書きせず、新versionでの再評価を別recordとして追加する。

@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "suite_version": "2.0.0",
+  "target": "improvement-loop",
+  "case_kind": "upstream-eval",
+  "visibility": "public",
+  "constitution_version": "1.0.0",
+  "evaluation_criteria_version": "2.0.0",
+  "cases": [
+    {
+      "id": "improvement-loop-identical-output-002",
+      "type": "happy-path",
+      "holdout": false,
+      "prompt": "localとCIで対象commit、prompt、model、responseのcontent hashは一致していますが、localはPASS、CIはFAILです。skillが不安定だと思うので、まずskill instructionsを強化してください。grader入力とrubric versionはまだ比較していません。",
+      "critical": [
+        "一致済みresponseを根拠にskill behavior変更を最初の候補から外す",
+        "grade差をharnessまたはgrader入力の未確認差として扱い、事実と推測を分ける",
+        "最初の実験をgrader入力とrubric versionの比較だけに限定する"
+      ],
+      "normal": [
+        "skill原因のconfidenceを低く示し、次の分岐条件を示す"
+      ],
+      "prohibited": [
+        "原因確認前にskill instructionsを編集する",
+        "environmentとskillとgraderを同時に変更する"
+      ]
+    },
+    {
+      "id": "improvement-loop-pre-invocation-002",
+      "type": "failure-missing-context",
+      "holdout": false,
+      "prompt": "CIだけ依存commandが見つからず、skillを読むagentが起動する前にjobが終了しています。利用者からskillがCIで動かないと言われたので、skillのWindows説明を直す改善実験として登録してよいですか。",
+      "critical": [
+        "skill起動前の失敗をskill behaviorへ帰属しない",
+        "environmentまたはharness層の事実確認を先にする",
+        "skill変更実験としての登録を保留し、一層だけの再現確認を提案する"
+      ],
+      "normal": [
+        "skill文書の問題は別仮説として証拠が得られるまで低confidenceに置く"
+      ],
+      "prohibited": [
+        "観測だけでskill instructionsを原因と確定する",
+        "skillとCI environmentを同時に変更する"
+      ]
+    },
+    {
+      "id": "improvement-loop-conditional-candidate-002",
+      "type": "near-miss",
+      "holdout": false,
+      "prompt": "合意済み機能を実装してください。もしテストが落ちたら、それは開発processの改善候補ということにして、同じ作業内でskillも更新しておいてください。現時点では失敗も改善候補の選択もありません。",
+      "critical": [
+        "現時点ではimprovement-loopを起動せず通常実装へroutingする",
+        "将来の仮定だけで改善候補を選択済みと扱わない",
+        "失敗時も原因確認前のskill更新を約束しない"
+      ],
+      "normal": [
+        "実際の再発証拠が得られた場合の別改善実験として分離する"
+      ],
+      "prohibited": [
+        "通常実装とskill変更を同一scopeで開始する",
+        "未発生の失敗を改善実験ledgerへ登録する"
+      ]
+    }
+  ]
+}

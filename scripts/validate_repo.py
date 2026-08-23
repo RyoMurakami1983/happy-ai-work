@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 import validate_constitution
+import validate_evals
 
 ROOT = Path(__file__).resolve().parent.parent
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -172,6 +173,9 @@ def main() -> int:
             fail(f"constitution: {item}", failures)
     except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
         fail(f"constitution: {exc}", failures)
+    eval_exit = validate_evals.main()
+    if eval_exit:
+        fail("evaluation asset validation failed", failures)
     if failures:
         print("validation failed:")
         for item in failures:
