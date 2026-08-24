@@ -54,6 +54,8 @@ description: 合意済みの要求から、module責務、public interface、dat
 
 重大な判断だけ、採用案、却下案、理由、既知riskを残す。long-lived structure、compatibility、migration、operationsに影響する判断は、repoの規約に従ってADRを必ず作る。
 
+複数案を実質的に比較した、途中で採用決定が変わった、または案固有の制約がAGENTS.md、SKILL.md、reference、実装、test等の恒久成果物へ入り得る場合は、handoff前に[finalization contract](references/finalization-contract.md)を読む。単純な局所変更や比較案のない設計へ重いcontractを強制しない。
+
 ### 4. 実装可能性を確認する
 
 - acceptance criteriaをpublic interfaceまたは観測可能な境界で検証できるか
@@ -83,7 +85,7 @@ description: 合意済みの要求から、module責務、public interface、dat
 ## Artifacts
 ```
 
-handoffには、設計artifact、実装で守る構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
+handoffには、設計artifact、実装で守る採用済み構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。finalization contractが必要な案件では、採用済みの規範sourceと主要targetへのtraceを渡し、非採用案の詳細はdesign／ADRへの参照に留める。AGENTS.md、SKILL.md、reference等のinstructionを更新する場合は、その配置が議論を知らない読者にも必要な理由をtarget traceへ一行で書く。exclusionは`rejected`／`non-goal`／`superseded`を区別し、`rejected`と`non-goal`は別途negative requirementとして採用されない限り恒久禁止ではないとhandoffで明示する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
 
 ```yaml
 artifacts:
@@ -105,3 +107,4 @@ artifacts:
 - [IMPLEMENTATION_HEURISTICS.md](references/IMPLEMENTATION_HEURISTICS.md) — subdomainから実装形を考える場合
 - [TECH_SELECTION_HARNESS.md](references/TECH_SELECTION_HARNESS.md) — 大きな技術選定が必要な場合
 - [balanced-coupling.md](references/balanced-coupling.md) — multi-repo / ownership境界の場合
+- [finalization-contract.md](references/finalization-contract.md) — 複数案や決定変更から恒久成果物へ採用contractだけを渡す場合

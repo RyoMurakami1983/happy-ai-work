@@ -16,6 +16,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 - acceptance criteriaまたはbehavior list
 - 既存repoのbuild / test / launch command
 - 構造判断が必要な変更では、`technical-design`のhandoffまたは同等の決定
+- design handoffに`finalized_contract`がある場合は、採用済みのnormative source、exclusions、unknowns、主要target trace
 - 保存済みartifactのpath
 
 要求が不足していれば `interview-with-docs` または `to-prd`、構造判断が不足していれば `technical-design` へ戻す。単一の明確なsliceなら、重いplanを作らず短いimplementation handoffだけでよい。
@@ -25,6 +26,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 ### 1. Behaviorと依存を整理する
 
 - acceptance criteriaを外部から観測可能なbehaviorへ対応付ける。
+- `finalized_contract`がある場合は、各sliceと追加する主要な恒久targetを少なくとも一つのnormative sourceへ対応付ける。非採用案やNon-goalの詳細をplanへ再展開しない。
 - schema、contract、migration、consumer / provider等の実依存だけを列挙する。
 - 依存しない作業と、順序を守る必要がある作業を分ける。
 
@@ -61,6 +63,7 @@ DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける�
 
 ### Goal / Success Criteria / Out of Scope
 ### Design Artifacts
+### Finalized Contract / Target Trace（design handoffにある場合だけ）
 ### Behavior List
 ### Dependencies
 ### Vertical Slices
@@ -79,7 +82,7 @@ artifacts:
 
 上はplanだけを保存した例である。保存済みPRD / design等が実在する場合だけ、そのpathも追加する。
 
-成果物は保存を既定（saved-by-default）とし、[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使って `docs/plan/NNN_PLAN.md` へ必ず保存する。保存済み成果物の実在するpathをすべて列挙する。
+成果物は保存を既定（saved-by-default）とし、[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使って `docs/plan/NNN_PLAN.md` へ必ず保存する。保存済み成果物の実在するpathをすべて列挙する。finalized contractのnormative sourceまたは主要targetの根拠が不明なら、実行順で補わず`technical-design`へ戻す。
 
 conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。成果物の番号とpathは[WORK_ARTIFACTS.md](references/WORK_ARTIFACTS.md)に従う。
 

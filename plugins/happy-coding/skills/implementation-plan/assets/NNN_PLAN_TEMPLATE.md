@@ -26,6 +26,10 @@
 - [触らない境界]
 - [public interface / test surface]
 
+## Finalized Contract / Target Trace（該当時だけ）
+
+設計handoffに`finalized_contract`がある場合だけ、採用済みnormative source、短いexclusion ID、主要な恒久targetからsourceへの対応を記録する。比較案のない局所変更ではこのsectionを省略する。
+
 ## Behavior List
 
 - [ ] [public interface 経由で観測する振る舞い]

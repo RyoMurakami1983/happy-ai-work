@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "record_id": "instruction-finalization-adoption-004",
+  "target_revision": "ed96ec7 plus artifacts frozen by evals/pilot/006/TARGET.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "adopted",
+  "evaluated_at": "2026-08-24T22:40:10.7628345+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "The comparison used the public non-holdout suite; no unseen-holdout or overfitting-resistance claim is made."
+  },
+  "previous_record": {
+    "status": "preserved",
+    "record_id": "instruction-finalization-adoption-003"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "current_quartz": "/root/p6_current_1",
+      "current_topaz": "/root/p6_current_2",
+      "baseline_orion_reused": "/root/p3_base_1",
+      "baseline_pine_reused": "/root/p3_base_2"
+    },
+    "blind_grader": "/root/p6_blind_grader",
+    "evaluator": "/root/p6_final_evaluator",
+    "independence": {
+      "status": "valid",
+      "reason": "The evaluator was distinct from the implementer, all generators, the blind grader, the independent DeepReview reviewer, and all prior evaluators."
+    }
+  },
+  "conditions": {
+    "baseline": {
+      "blind_labels": ["Orion", "Pine"],
+      "definition": "Unchanged Pilot 003 baseline evidence, reused by hash and preserved record."
+    },
+    "current": {
+      "blind_labels": ["Quartz", "Topaz"],
+      "definition": "Final multi-layer workflow with explicit reader-unaware placement rationale and compact exclusion semantics at the technical-design handoff boundary."
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/pilot/006/TARGET.json",
+      "case_suite": "evals/instruction-finalization/cases.v1.json",
+      "previous_record": "instruction-finalization-adoption-003",
+      "new_record": "required",
+      "deterministic_gate": "pass"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline-orion",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline-pine",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-quartz",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-topaz",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/pilot/006/TARGET.json": "6adfb14874a66115e759fe108cc5d9d318f2e368259a4e594c3699834913b7a1",
+    "evals/records/instruction-finalization-adoption-003.json": "c8c689691a7d2c5aa06147f53c0e387bc17e1a3db4cea8c2ffd22fc1761d3be5",
+    "evals/instruction-finalization/cases.v1.json": "104303ab726685cbf6e84502bc9ed6ed671c22808295f375fb27e58c9aca1741",
+    "evals/pilot/002/BASELINE.md": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/pilot/006/TARGET.json",
+      "evals/records/instruction-finalization-adoption-001.json",
+      "evals/records/instruction-finalization-adoption-002.json",
+      "evals/records/instruction-finalization-adoption-003.json",
+      "evals/records/instruction-finalization-adoption-004.json",
+      "evals/instruction-finalization/cases.v1.json",
+      "evals/pilot/002/BASELINE.md"
+    ],
+    "session_only_not_persisted": [
+      "condition responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "decision_summary": "Adopt Pilot 006 correction: both blind-labeled current repetitions passed all 11 Critical and all 5 Normal requirements with no prohibited action or major false trigger; the unchanged baseline was reused by preserved hash, repository validation and independent DeepReview re-review passed, all prior records remain preserved, and no unseen-holdout claim is made."
+}

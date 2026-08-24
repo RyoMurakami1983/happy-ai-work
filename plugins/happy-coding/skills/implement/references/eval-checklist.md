@@ -30,6 +30,13 @@
 - 非対象を勝手に広げていない
 - 受け入れ条件のどれを満たしたか説明できる
 
+## Instruction / Artifact Finalization（finalized contractがある場合）
+
+- 追加した主要な恒久instruction、実装責務、testがnormative sourceへ追跡できる
+- 非採用案やNon-goal由来の文言だけでなく、責務、抽象化、validation branch、mock、test seamが残っていない
+- 採用案にも必要なrepo規約、外部contract、安全invariantを過剰な最小化で削除していない
+- source不明、decision変更、実装を左右するUnknownは`REPLAN_REQUIRED`として前段へ戻している
+
 ## Behavioral Correctness
 
 - public interface 経由で確認している

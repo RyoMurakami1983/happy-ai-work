@@ -33,3 +33,4 @@ uv run --script scripts/validate_quality.py
 - home設定を無断で変更しない。`home-bootstrap` はdry-run、差分、backup、明示承認を必須とする。
 - 日本語を正本とし、英語版を必須にしない。
 - 変更範囲に合うfocused checkを先に実行する。
+- 恒久的な実行規約を追加するときは、採用済みAcceptance Criteria、decision、既存repo規約、外部contract、安全invariantのいずれかへ根拠を持たせる。検討過程、非採用案、一時的な環境事情は実行規約へ混ぜず、必要な判断理由だけをdesign／ADRへ残す。

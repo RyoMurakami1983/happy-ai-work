@@ -1,0 +1,83 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-24T21:39:48.2386881+09:00",
+  "base_revision": "ed96ec7",
+  "previous_target": {
+    "path": "evals/pilot/002/TARGET.json",
+    "status": "preserved-invalid-provenance",
+    "reason": "The prior target named decision profile 1.1.0, which does not exist in the base or current repository. Criteria, cases, condition artifacts, and gates are unchanged."
+  },
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_criteria_version": "1.0.0",
+  "schema_version": 1,
+  "evaluation_question": "Does the multi-layer finalization workflow keep rejected alternatives out of durable normative artifacts while preserving independently necessary constraints and avoiding heavy gates for simple changes?",
+  "change_theme": "Separate normative contract, decision history, implementation admission, actual-diff checks, and independent review without duplicating one long rule across skills.",
+  "owner_direction": "Use decision-time finalization as the primary control, actual-diff and DeepReview as distinct backstops, and behavioral evaluation for both contamination and over-minimization.",
+  "conditions": {
+    "baseline": {
+      "definition": "The ed96ec7 workflow records alternatives and checks requirement fit but has no explicit finalized contract or semantic promotion gate.",
+      "artifact": "evals/pilot/002/BASELINE.md",
+      "sha256": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd"
+    },
+    "current": {
+      "definition": "Technical design owns a conditional finalized contract; plan, implement, and DeepReview consume or verify it at distinct boundaries.",
+      "artifacts": {
+        "AGENTS.md": "4a3e1f38164ba16d3115d8df800ae1cab82a85daeff0b0e3981c4afe5fbc5cbf",
+        "plugins/happy-coding/skills/technical-design/SKILL.md": "0b13558c3e4bcae6e825d4bcae73d1e26f4b2d0471b838d90c7a8f74230356bb",
+        "plugins/happy-coding/skills/technical-design/references/finalization-contract.md": "5da0dfb31e288608a7fddedf53d385f2e7888cfe2a0cb393014b5372e7a130ee",
+        "plugins/happy-coding/skills/implementation-plan/SKILL.md": "b32966a63c9c853572a193a7b9f9fb66a1d7c43c6305264eb2663bdad95835b1",
+        "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "7cdd3f3b58c41e63c689e13fa3989e2abb975666d83f91f60b9ede10520f215c",
+        "plugins/happy-coding/skills/implement/SKILL.md": "e5ebec59403e78a9f95fe40edbdb3466da1385022d6d950c383a298d4c620d21",
+        "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+        "plugins/happy-coding/skills/deep-review/SKILL.md": "48696da24a13d5c2158016c93bcf75528e05fdab14d46297872b90e5ca33658b",
+        "plugins/happy-coding/skills/deep-review/references/preflight.md": "68901ee3fc8ab5bd3299c32bbf59d8193e3575d4680c545bcbac541c8c760cd5"
+      }
+    }
+  },
+  "execution": {
+    "independent_repetitions_per_condition": 2,
+    "generator_isolation": "Each new generator receives one condition and the same three public prompts, but no rubric, expected result, other output, design document, or condition label.",
+    "blind_grading": "Outputs receive opaque labels; condition mapping is withheld from the grader.",
+    "evaluator_separation": "The final evaluator differs from implementer, generators, blind grader, and the pilot 002 evaluator.",
+    "maximum_correction_iterations": 0
+  },
+  "gate": {
+    "hard_invariants": "Every Critical item passes in each current repetition.",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "required_bidirectional_result": "Current prevents rejected-alternative residue and preserves independently necessary constraints.",
+    "response_quality_floor": "Each current repetition passes at least half of Normal items and is not below the baseline average.",
+    "target_noninferiority": "Current hard-invariant total is not below baseline and adds no prohibited action or major false trigger.",
+    "maintenance_result": "One detailed conditional reference, with role-specific consumer checks rather than duplicated full rules.",
+    "overall_adopted": "Behavioral and deterministic layers both satisfy their gates."
+  },
+  "retention": {
+    "public_keep": [
+      "this corrected self-contained target manifest",
+      "the preserved invalid-provenance pilot 002 target",
+      "the public case suite and baseline instruction snapshot",
+      "one sanitized append-only adoption record"
+    ],
+    "session_only": [
+      "condition responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "artifact_hashes": {
+    "evals/instruction-finalization/cases.v1.json": "104303ab726685cbf6e84502bc9ed6ed671c22808295f375fb27e58c9aca1741",
+    "evals/pilot/002/BASELINE.md": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd",
+    "AGENTS.md": "4a3e1f38164ba16d3115d8df800ae1cab82a85daeff0b0e3981c4afe5fbc5cbf",
+    "plugins/happy-coding/skills/technical-design/SKILL.md": "0b13558c3e4bcae6e825d4bcae73d1e26f4b2d0471b838d90c7a8f74230356bb",
+    "plugins/happy-coding/skills/technical-design/references/finalization-contract.md": "5da0dfb31e288608a7fddedf53d385f2e7888cfe2a0cb393014b5372e7a130ee",
+    "plugins/happy-coding/skills/implementation-plan/SKILL.md": "b32966a63c9c853572a193a7b9f9fb66a1d7c43c6305264eb2663bdad95835b1",
+    "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "7cdd3f3b58c41e63c689e13fa3989e2abb975666d83f91f60b9ede10520f215c",
+    "plugins/happy-coding/skills/implement/SKILL.md": "e5ebec59403e78a9f95fe40edbdb3466da1385022d6d950c383a298d4c620d21",
+    "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+    "plugins/happy-coding/skills/deep-review/SKILL.md": "48696da24a13d5c2158016c93bcf75528e05fdab14d46297872b90e5ca33658b",
+    "plugins/happy-coding/skills/deep-review/references/preflight.md": "68901ee3fc8ab5bd3299c32bbf59d8193e3575d4680c545bcbac541c8c760cd5"
+  }
+}

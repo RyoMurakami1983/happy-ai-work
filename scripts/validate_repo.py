@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 import validate_constitution
+import validate_eval_manifest_links
 import validate_evals
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -223,6 +224,8 @@ def main() -> int:
     eval_exit = validate_evals.main()
     if eval_exit:
         fail("evaluation asset validation failed", failures)
+    for item in validate_eval_manifest_links.validate_records(ROOT):
+        fail(f"evaluation manifest: {item}", failures)
     if failures:
         print("validation failed:")
         for item in failures:
