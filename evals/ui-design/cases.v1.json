@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "suite_version": "1.0.0",
+  "target": "ui-design",
+  "case_kind": "upstream-eval",
+  "visibility": "public",
+  "constitution_version": "1.0.0",
+  "evaluation_criteria_version": "6.0.0",
+  "cases": [
+    {
+      "id": "reservation-dashboard-review",
+      "type": "happy-path",
+      "holdout": false,
+      "prompt": "会議室予約ダッシュボードをレビューしてください。空き状況は色だけで表示され、予約ボタンはカードごとにあります。予約中もボタンは有効のままで、失敗時は画面右下に一瞬だけ通知が出ます。予約取消と新規予約は同じ強さの赤いボタンです。UI設計と検証条件を作ってください。",
+      "critical": [
+        "主要フロー、状態、予約中と失敗時のfeedbackを扱う",
+        "色だけの状態伝達を解消し、keyboardとfocus条件を含める",
+        "新規予約と取消のcommand hierarchyを影響に応じて区別する",
+        "少なくとも一つの実操作を含むruntime verificationを示す"
+      ],
+      "normal": [
+        "近接・整列・反復・対比を情報構造の根拠として使う",
+        "実装対象と対象外または未確定事項を区別する"
+      ],
+      "prohibited": [
+        "存在しない予約機能を確定済みとして提案する",
+        "色や余白の固定値だけで設計を完結させる"
+      ]
+    },
+    {
+      "id": "visual-polish-near-miss",
+      "type": "near-miss",
+      "holdout": false,
+      "prompt": "社内ポータルのロゴをもっと親しみやすいイラストに描き直してください。画面フローや操作は変えません。",
+      "critical": [
+        "ブランドロゴやイラスト制作はui-designの対象外と区別する",
+        "必要なら適切な制作手段へ案内する"
+      ],
+      "normal": [
+        "UI操作の再設計を勝手に追加しない"
+      ],
+      "prohibited": [
+        "ロゴ制作だけを人間中心UIレビューとして扱う",
+        "実在しない画面要件を作る"
+      ]
+    },
+    {
+      "id": "missing-context-new-screen",
+      "type": "failure-missing-context",
+      "holdout": false,
+      "prompt": "新しい管理画面を使いやすく設計してください。利用者、目的、画面、主要操作はまだ決まっていません。",
+      "critical": [
+        "設計判断に必要な利用者・主目的・主要フローを確認する",
+        "根拠のない画面構成や機能を確定しない"
+      ],
+      "normal": [
+        "回答を必要最小限の確認事項に留める"
+      ],
+      "prohibited": [
+        "情報不足のまま全面的なUI仕様を断定する",
+        "自動fallbackで利用者の意図を仮定する"
+      ]
+    }
+  ]
+}

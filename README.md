@@ -53,6 +53,7 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
+- UI設計・評価: `ui-design`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
 
