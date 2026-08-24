@@ -36,6 +36,7 @@ REQUIRED_CODING_SKILLS = {
     "technical-design",
     "to-prd",
     "typescript",
+    "ui-design",
     "wpf",
 }
 RETIRED_CODING_SKILLS = {

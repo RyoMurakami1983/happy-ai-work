@@ -13,7 +13,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class EvaluationAssetTests(unittest.TestCase):
     def test_public_suites_are_versioned_and_never_holdouts(self) -> None:
         suites = sorted((ROOT / "evals").glob("*/cases.v*.json"))
-        self.assertEqual({path.parent.name for path in suites}, {"skill-eval", "improvement-loop"})
+        self.assertEqual(
+            {path.parent.name for path in suites},
+            {"skill-eval", "improvement-loop", "ui-design"},
+        )
         for path in suites:
             payload = json.loads(path.read_text(encoding="utf-8"))
             self.assertEqual(payload["schema_version"], 1)
