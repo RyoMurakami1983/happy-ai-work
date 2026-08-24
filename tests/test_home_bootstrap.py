@@ -9,8 +9,9 @@ SCRIPT = (
     ROOT / "plugins" / "happy-core" / "skills" / "home-bootstrap" / "scripts" / "home_bootstrap.py"
 )
 SPEC = importlib.util.spec_from_file_location("home_bootstrap", SCRIPT)
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError("could not load home bootstrap module")
 MODULE = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
 SPEC.loader.exec_module(MODULE)
 
 
