@@ -56,7 +56,7 @@ class DriftResult:
     remediation: str | None = None
 
 
-def parse_datetime(value: str) -> datetime:
+def parse_datetime(value: object) -> datetime:
     if not isinstance(value, str):
         raise TypeError("datetime must be a string")
     parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))

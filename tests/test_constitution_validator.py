@@ -1,5 +1,6 @@
 import unittest
 from datetime import UTC, datetime, timedelta
+from typing import Any, cast
 
 from scripts import validate_constitution
 
@@ -93,7 +94,10 @@ class ConstitutionValidatorTests(unittest.TestCase):
         history = validate_constitution.profile_history_from_commits(commits, "a" * 40)
 
         self.assertEqual(history.latest.sha, "c" * 40)
-        self.assertEqual(history.oldest_unreconciled.sha, "b" * 40)
+        oldest_unreconciled = history.oldest_unreconciled
+        self.assertIsNotNone(oldest_unreconciled)
+        assert oldest_unreconciled is not None
+        self.assertEqual(oldest_unreconciled.sha, "b" * 40)
         result = validate_constitution.evaluate_remote_drift(
             {
                 "personal_philosophy": {"revision": "a" * 40},
@@ -118,7 +122,7 @@ class ConstitutionValidatorTests(unittest.TestCase):
         self.assertTrue(any("future" in failure for failure in failures))
 
     def test_remote_failure_is_evaluation_mode_b(self) -> None:
-        def unavailable() -> validate_constitution.ProfileRevision:
+        def unavailable() -> validate_constitution.ProfileHistory:
             raise OSError("network unavailable")
 
         result = validate_constitution.run_remote_check(
@@ -169,7 +173,9 @@ class ConstitutionValidatorTests(unittest.TestCase):
         self.assertFalse(any("changed without" in failure for failure in failures))
 
     def test_local_validation_reports_malformed_schema_without_traceback(self) -> None:
-        failures = validate_constitution.validate_local([], now=datetime(2026, 8, 23, tzinfo=UTC))  # type: ignore[arg-type]
+        failures = validate_constitution.validate_local(
+            cast(Any, []), now=datetime(2026, 8, 23, tzinfo=UTC)
+        )
         self.assertEqual(failures, ["sync record root must be a JSON object"])
 
         sync = validate_constitution.load_sync()

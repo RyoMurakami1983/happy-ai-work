@@ -12,6 +12,31 @@ import validate_constitution
 import validate_evals
 
 ROOT = Path(__file__).resolve().parent.parent
+OWNED_ROOTS = (
+    ".agents",
+    ".github",
+    "docs",
+    "evals",
+    "incubator",
+    "plugins",
+    "scripts",
+    "tests",
+)
+EXCLUDED_DIRECTORY_NAMES = {
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "site-packages",
+}
+EXCLUDED_RELATIVE_PREFIXES = (
+    Path("docs/local_references"),
+    Path("docs/local_skill_evals"),
+)
+VALIDATED_SUFFIXES = {".md", ".py", ".json", ".yaml", ".yml", ".toml"}
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LINK_RE = re.compile(r"\[[^]]+\]\(([^)]+)\)")
 SECRET_RE = re.compile(
@@ -61,6 +86,31 @@ REQUIRED_CORE_SKILLS = {
 
 def fail(message: str, failures: list[str]) -> None:
     failures.append(message)
+
+
+def is_excluded(relative_path: Path) -> bool:
+    if any(part in EXCLUDED_DIRECTORY_NAMES for part in relative_path.parts):
+        return True
+    return any(
+        relative_path == prefix or prefix in relative_path.parents
+        for prefix in EXCLUDED_RELATIVE_PREFIXES
+    )
+
+
+def iter_owned_files(root: Path = ROOT):
+    for path in sorted(root.iterdir()):
+        if path.is_file() and path.suffix.lower() in VALIDATED_SUFFIXES:
+            yield path
+    for root_name in OWNED_ROOTS:
+        owned_root = root / root_name
+        if not owned_root.is_dir():
+            continue
+        for path in sorted(owned_root.rglob("*")):
+            if not path.is_file() or path.suffix.lower() not in VALIDATED_SUFFIXES:
+                continue
+            if is_excluded(path.relative_to(root)):
+                continue
+            yield path
 
 
 def validate_json(failures: list[str]) -> None:
@@ -146,11 +196,7 @@ def validate_skills(failures: list[str]) -> None:
 
 
 def validate_links_and_secrets(failures: list[str]) -> None:
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".git" in path.parts:
-            continue
-        if path.suffix.lower() not in {".md", ".py", ".json", ".yaml", ".yml", ".toml"}:
-            continue
+    for path in iter_owned_files():
         text = path.read_text(encoding="utf-8")
         if SECRET_RE.search(text):
             fail(f"{path}: possible secret", failures)

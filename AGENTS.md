@@ -17,12 +17,10 @@
 ## 基本コマンド
 
 ```powershell
-python scripts/validate_repo.py
-python -m unittest discover -s tests -v
-ruff check .
+uv run --script scripts/validate_quality.py
 ```
 
-PythonがPATHにないWindows環境では、repo内の開発手順に従って `uv run` を使います。
+この入口をPython version、tool version、実行順の正本とし、一時uv環境からrepo validator、unit test、lint、type check、`git diff --check`を実行します。対象repoへdependencyやlockfileを追加しません。
 
 ## Boundaries
 

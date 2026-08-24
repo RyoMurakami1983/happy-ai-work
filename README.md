@@ -74,16 +74,16 @@ Codex全体へ適用する指示は、通常 `~/.codex/AGENTS.md` に置きま�
 適用時にはCodexのGit設定へ貼り付ける3つの指示文と自動マージの設定を案内します。Hooksは未設定を許容し、候補の影響と差分を確認してから明示承認された項目だけを設定します。
 
 ```powershell
-python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run
+uv run --no-project --python 3.14 python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run
 ```
 
 ## 開発
 
 ```powershell
-python scripts/validate_repo.py
-python -m unittest discover -s tests -v
-ruff check .
+uv run --script scripts/validate_quality.py
 ```
+
+検証入口はPython 3.14と一時環境のPyYAML、Ruff、tyを固定versionで使用します。詳細は [repo quality validation](docs/development/QUALITY_VALIDATION.md) を参照してください。
 
 WSL2の確認範囲は [docs/WSL2.md](docs/WSL2.md) を参照してください。
 
