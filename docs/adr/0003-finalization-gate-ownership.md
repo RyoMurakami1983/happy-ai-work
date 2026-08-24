@@ -1,0 +1,3 @@
+# Finalization gateを設計handoffと実装・reviewの多層で所有する
+
+非採用案の制約を恒久成果物へ混入させない主責務は、採用決定を実装契約へ圧縮する`technical-design`のhandoff境界に置く。`implementation-plan`はfinalized contractだけを受け取り、`implement`は実際のdiff、`deep-review`は独立した出口、`skill-eval`はbehavioral adoptionをそれぞれ異なる証拠で確認する。議論開始時の一律削除は必要制約を失い、DeepReviewだけでは発見が遅いため採用しない。非採用案のうち再検討防止に価値がある理由はdesign／ADRへ残すが、規範handoffへ再展開しない。

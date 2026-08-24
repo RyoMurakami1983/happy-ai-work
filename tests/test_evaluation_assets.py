@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 from unittest import mock
 
-from scripts import validate_evals
+from scripts import validate_eval_manifest_links, validate_evals
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,7 +15,7 @@ class EvaluationAssetTests(unittest.TestCase):
         suites = sorted((ROOT / "evals").glob("*/cases.v*.json"))
         self.assertEqual(
             {path.parent.name for path in suites},
-            {"skill-eval", "improvement-loop", "ui-design"},
+            {"skill-eval", "improvement-loop", "instruction-finalization", "ui-design"},
         )
         for path in suites:
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -209,6 +209,57 @@ class EvaluationAssetTests(unittest.TestCase):
             validate_evals.validate_record(fixture, stale, schema)
         self.assertTrue(any("string does not match pattern" in item for item in malformed))
         self.assertTrue(any("artifact hash mismatch" in item for item in stale))
+
+    def test_record_hashes_must_match_the_frozen_artifact_manifest(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            fixture_root = Path(directory)
+            manifest_path = fixture_root / "evals" / "pilot" / "001" / "TARGET.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest = {"conditions": {"current": {"artifacts": {"artifact.md": "a" * 64}}}}
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            record_path = fixture_root / "evals" / "records" / "test-record.json"
+            record_path.parent.mkdir(parents=True)
+            record = {
+                "conditions": {
+                    "evaluation_context": {"artifact_manifest": "evals/pilot/001/TARGET.json"}
+                },
+                "artifact_hashes": {
+                    "evals/pilot/001/TARGET.json": validate_eval_manifest_links.hashlib.sha256(
+                        manifest_path.read_bytes()
+                    ).hexdigest(),
+                    "artifact.md": "b" * 64,
+                },
+            }
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            failures = validate_eval_manifest_links.validate_records(fixture_root)
+        self.assertTrue(any("record hash differs from artifact manifest" in item for item in failures))
+
+    def test_target_rejects_conflicting_duplicate_artifact_hashes(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            fixture_root = Path(directory)
+            manifest_path = fixture_root / "evals" / "pilot" / "001" / "TARGET.json"
+            manifest_path.parent.mkdir(parents=True)
+            manifest = {
+                "artifact_hashes": {"artifact.md": "a" * 64},
+                "conditions": {"current": {"artifacts": {"artifact.md": "b" * 64}}},
+            }
+            manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+            record_path = fixture_root / "evals" / "records" / "test-record.json"
+            record_path.parent.mkdir(parents=True)
+            record = {
+                "conditions": {
+                    "evaluation_context": {"artifact_manifest": "evals/pilot/001/TARGET.json"}
+                },
+                "artifact_hashes": {
+                    "evals/pilot/001/TARGET.json": validate_eval_manifest_links.hashlib.sha256(
+                        manifest_path.read_bytes()
+                    ).hexdigest(),
+                    "artifact.md": "b" * 64,
+                },
+            }
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            failures = validate_eval_manifest_links.validate_records(fixture_root)
+        self.assertTrue(any("conflicting frozen hashes" in item for item in failures))
 
     def test_docs_define_public_private_and_role_boundaries(self) -> None:
         text = (ROOT / "docs" / "EVALUATION_ASSETS.md").read_text(encoding="utf-8")

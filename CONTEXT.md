@@ -49,6 +49,9 @@
 - **改善実験**: 選択済みの改善候補を、改善仮説、反対仮説、最小実験、反証条件、完了条件を持つ次のタスクへ具体化したもの。
 - **改善済み**: タスク登録や変更実行ではなく、効果を評価し、採用、継続、破棄、保留の判断まで終えた状態。
 - **技術課題の正本**: repoで継続追跡する課題はGitHub Issueを正本とする。NotionにはIssue本文を複製せず、リンクとその日に実行する一歩を置く。
+- **finalized contract**: 規範部分には採用済みAcceptance Criteria、decision、恒久repo規約、外部contract、安全invariantだけを持つhandoff。非採用案とUnknownは規範入力へ混ぜず、昇格防止と戻り先を示す非規範status metadataとして分離する。
+- **decision history**: 採用・非採用・保留と理由を将来の再検討のために残す記録。designやADRに置き、AGENTS.md、SKILL.md、test等の実行規約とは区別する。
+- **finalization gate**: 採用決定から恒久成果物へ内容を昇格する境界で、根拠、寿命、配置、必要制約の保持を確認する工程。単なる禁止語検索や議論の削除ではない。
 
 ## Distribution
 

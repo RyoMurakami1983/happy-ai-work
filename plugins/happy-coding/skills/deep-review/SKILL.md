@@ -7,7 +7,7 @@ description: 実装者と独立した視点で差分をレビューし、再現�
 
 固定された agent ファイルには依存しない。subagent が利用可能なら、差分と最小限の要件だけを渡して独立レビューを依頼する。利用できない場合は、新しいレビュー観点でローカル差分を読み直す。Copilot CLI はユーザーが明示した場合だけ実験的な追加レビュアーとして使い、その結果も必ずコードとテストで再検証する。
 
-変更前の準備、source of truth、非破壊性、配布経路を確認する必要がある場合は[preflight.md](references/preflight.md)を読む。既存システムのmodule境界や結合構造そのものが主題なら[modularity.md](references/modularity.md)を読む。
+変更前の準備、source of truth、非破壊性、配布経路を確認する必要がある場合は[preflight.md](references/preflight.md)を読む。複数案や決定変更を経てAGENTS.md、SKILL.md、reference、README、実装、test等の恒久成果物を変更した場合もpreflightを読み、instruction finalizationを独立確認する。既存システムのmodule境界や結合構造そのものが主題なら[modularity.md](references/modularity.md)を読む。
 
 ## レビュー手順
 

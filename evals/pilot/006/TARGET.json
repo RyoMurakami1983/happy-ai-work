@@ -1,0 +1,88 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-24T22:16:18.3367018+09:00",
+  "base_revision": "ed96ec7",
+  "previous_evaluation": {
+    "target": "evals/pilot/005/TARGET.json",
+    "record": "evals/records/instruction-finalization-adoption-003.json",
+    "record_sha256": "c8c689691a7d2c5aa06147f53c0e387bc17e1a3db4cea8c2ffd22fc1761d3be5",
+    "status": "preserved-rejected",
+    "reason": "Both Pilot 005 repetitions preserved every Critical item, but neither exposed the reader-unaware placement rationale and one also omitted the Non-goal versus evergreen-prohibition distinction."
+  },
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_criteria_version": "1.0.0",
+  "schema_version": 1,
+  "evaluation_question": "Does making the technical-design handoff explicitly own placement rationale and exclusion semantics satisfy the frozen Normal floor while preserving Critical behavior and the lightweight near-miss?",
+  "change_theme": "Require only finalization-applicable instruction handoffs to state one-line reader-unaware placement rationale and compact rejected/non-goal prohibition semantics.",
+  "conditions": {
+    "baseline": {
+      "definition": "The unchanged ed96ec7 baseline and its independent Pilot 003 results are reused by hash and preserved record.",
+      "artifact": "evals/pilot/002/BASELINE.md",
+      "sha256": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd",
+      "evidence_record": "evals/records/instruction-finalization-adoption-001.json",
+      "blind_labels": ["Orion", "Pine"]
+    },
+    "current": {
+      "definition": "Pilot 005 current workflow with placement rationale and exclusion semantics made explicit at the technical-design handoff boundary.",
+      "artifacts": {
+        "AGENTS.md": "c6a6f50bd293e7568e12104080f2eaf60256927dbb74b3cd5317b9271fde31f7",
+        "plugins/happy-coding/skills/technical-design/SKILL.md": "7f5defe95088a1171ec12a479e95d2a5c008a59ae24f73152dd6492a5c101c31",
+        "plugins/happy-coding/skills/technical-design/references/finalization-contract.md": "0d9e60a89aeed69b8512e4ac044333cdf8ba9ca33ca8142d19a8ede8fd18b0ac",
+        "plugins/happy-coding/skills/implementation-plan/SKILL.md": "b32966a63c9c853572a193a7b9f9fb66a1d7c43c6305264eb2663bdad95835b1",
+        "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "7cdd3f3b58c41e63c689e13fa3989e2abb975666d83f91f60b9ede10520f215c",
+        "plugins/happy-coding/skills/implement/SKILL.md": "e5ebec59403e78a9f95fe40edbdb3466da1385022d6d950c383a298d4c620d21",
+        "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+        "plugins/happy-coding/skills/deep-review/SKILL.md": "48696da24a13d5c2158016c93bcf75528e05fdab14d46297872b90e5ca33658b",
+        "plugins/happy-coding/skills/deep-review/references/preflight.md": "68901ee3fc8ab5bd3299c32bbf59d8193e3575d4680c545bcbac541c8c760cd5"
+      }
+    }
+  },
+  "execution": {
+    "baseline_reuse": "Pilot 003 baseline artifacts, cases, rubric, and independent results are unchanged and referenced through the preserved adoption record.",
+    "new_current_repetitions": 2,
+    "generator_isolation": "Each new current generator receives the current instruction condition and the same three public prompts, but no rubric, expected result, prior output, design document, or condition label.",
+    "blind_grading": "The two new current outputs receive opaque labels and are graded without condition history.",
+    "evaluator_separation": "The final evaluator differs from implementer, all generators, graders, DeepReview agents, and prior evaluators."
+  },
+  "gate": {
+    "hard_invariants": "Every Critical item passes in each Pilot 006 current repetition.",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "baseline_comparison": "Reuse Pilot 003 baseline 10/11 Critical and 5/5 Normal per repetition without changing its evidence.",
+    "response_quality_floor": "Each Pilot 006 current repetition passes 5/5 Normal items.",
+    "target_noninferiority": "Current remains 11/11 Critical, reaches 5/5 Normal, and adds no prohibited action or major false trigger.",
+    "deterministic_gate": "Repository validation and independent re-review pass after the correction.",
+    "overall_adopted": "Behavioral and deterministic layers satisfy all frozen gates, and all prior records remain preserved."
+  },
+  "retention": {
+    "public_keep": [
+      "this correction target manifest",
+      "all prior targets and append-only records",
+      "the public case suite and baseline snapshot",
+      "one new sanitized append-only record"
+    ],
+    "session_only": [
+      "new current responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "artifact_hashes": {
+    "evals/pilot/005/TARGET.json": "700447035a7e7941b26843f26f721a13eb9d291f699fac61eabc1f59a5288fce",
+    "evals/records/instruction-finalization-adoption-003.json": "c8c689691a7d2c5aa06147f53c0e387bc17e1a3db4cea8c2ffd22fc1761d3be5",
+    "evals/instruction-finalization/cases.v1.json": "104303ab726685cbf6e84502bc9ed6ed671c22808295f375fb27e58c9aca1741",
+    "evals/pilot/002/BASELINE.md": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd",
+    "AGENTS.md": "c6a6f50bd293e7568e12104080f2eaf60256927dbb74b3cd5317b9271fde31f7",
+    "plugins/happy-coding/skills/technical-design/SKILL.md": "7f5defe95088a1171ec12a479e95d2a5c008a59ae24f73152dd6492a5c101c31",
+    "plugins/happy-coding/skills/technical-design/references/finalization-contract.md": "0d9e60a89aeed69b8512e4ac044333cdf8ba9ca33ca8142d19a8ede8fd18b0ac",
+    "plugins/happy-coding/skills/implementation-plan/SKILL.md": "b32966a63c9c853572a193a7b9f9fb66a1d7c43c6305264eb2663bdad95835b1",
+    "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "7cdd3f3b58c41e63c689e13fa3989e2abb975666d83f91f60b9ede10520f215c",
+    "plugins/happy-coding/skills/implement/SKILL.md": "e5ebec59403e78a9f95fe40edbdb3466da1385022d6d950c383a298d4c620d21",
+    "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+    "plugins/happy-coding/skills/deep-review/SKILL.md": "48696da24a13d5c2158016c93bcf75528e05fdab14d46297872b90e5ca33658b",
+    "plugins/happy-coding/skills/deep-review/references/preflight.md": "68901ee3fc8ab5bd3299c32bbf59d8193e3575d4680c545bcbac541c8c760cd5"
+  }
+}

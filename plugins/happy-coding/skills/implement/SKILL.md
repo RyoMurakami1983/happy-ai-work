@@ -40,6 +40,7 @@ implementation contract
 - 目的、対象、非対象
 - 受け入れ条件
 - 主要な user-visible behavior または外から観測できる contract
+- handoffに`finalized_contract`がある場合は、採用済みnormative source、exclusions、unknowns、主要target trace
 - handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か、例外理由付きの `conversation-only` か）
 - 実行する test / build / launch command
 - 失敗時の戻り先: `FAIL` は実装修正、`REPLAN_REQUIRED` は前段へ戻す
@@ -73,6 +74,8 @@ planがある場合はslice境界を変更せず、直前にcontractを再確認
 - `RED` を確認する command と期待する失敗理由
 - `GREEN` を確認する command
 - acceptance command
+
+`finalized_contract`がある場合は、そのsliceと追加する主要な恒久targetがどのnormative sourceに対応するかも確認します。exclusion由来の新しい責務が必要になった、sourceが不明、または採用decisionが変わった場合は実装で補完せず`REPLAN_REQUIRED`とします。
 
 層ごとに「DB だけ」「UI だけ」「テストだけ」を横に広げる horizontal slice は避けます。
 
@@ -145,6 +148,7 @@ handoff に残すもの:
 - 変更した主な file / artifact
 - 確認に使った design / plan artifact path
 - 残件、または明示的に対象外にしたもの
+- `finalized_contract`がある場合は、追加した主要な恒久targetとnormative sourceの対応、およびexclusion由来の残骸がない確認結果
 - 次に開く file または確認 command
 - 戻り先 skill がある場合はその理由
 
