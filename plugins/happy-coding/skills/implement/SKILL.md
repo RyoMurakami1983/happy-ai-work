@@ -75,6 +75,8 @@ planがある場合はslice境界を変更せず、直前にcontractを再確認
 - `GREEN` を確認する command
 - acceptance command
 
+planでHITL review contractが指定されたinteractive sliceでは、reviewable milestone、launch方法、代表操作、期待結果、再開条件も固定する。人間の主観判断や実端末・外部app確認がacceptanceに含まれる場合、その判断を自動testの成功で代替しない。
+
 `finalized_contract`がある場合は、そのsliceと追加する主要な恒久targetがどのnormative sourceに対応するかも確認します。exclusion由来の新しい責務が必要になった、sourceが不明、または採用decisionが変わった場合は実装で補完せず`REPLAN_REQUIRED`とします。
 
 層ごとに「DB だけ」「UI だけ」「テストだけ」を横に広げる horizontal slice は避けます。
@@ -137,6 +139,22 @@ interactive evidenceが必要な場合だけ、対応するtemplateを読みま�
 - Windows desktop: [flaui.md](references/runtime-evidence/flaui.md)
 - Python GUI / pygame: [python-gui.md](references/runtime-evidence/python-gui.md)
 
+### HITL review gate（必要なsliceのみ）
+
+自動gateを通過して利用者が直接触れられる状態になったら、HITL review contractがあるsliceだけを明示的なreview milestoneとして渡す。
+
+- 同じbuildを起動するcommandまたは手順
+- 利用者が行う1〜5個の代表操作
+- 各操作で期待する表示、状態遷移、操作感
+- 自動確認済みの範囲と、人間の判断が残る範囲
+- feedback受領、承認、または`REPLAN_REQUIRED`となる再開条件
+
+状態は`code complete`、`runtime verified`、`user validated`を区別する。build/testと自動runtime evidenceだけで`user validated`と報告しない。feedbackで不具合が見つかった場合は再現loopを作れるなら`debug-and-fix`、contractの誤りなら前段へ戻る。
+
+HITLの結果がsliceのacceptanceに含まれる場合は、自動gateが通っても`HITL pending`として保持し、feedbackまたは承認を得るまでsliceを`PASS`やcompletion handoffに進めない。HITLが完成後の探索的な製品評価でありacceptanceをブロックしない場合だけ、`user validated`が未完了であることを残してローカル実装フェーズを閉じられる。
+
+HITL review contractがなく、自動runtime evidenceでacceptanceを確定できるsliceは、利用者入力を待つためだけに停止しない。
+
 ### ステップ 6 — completion handoff で閉じる
 
 全 slice が `PASS` したら、実装フェーズを閉じます。
@@ -151,6 +169,7 @@ handoff に残すもの:
 - `finalized_contract`がある場合は、追加した主要な恒久targetとnormative sourceの対応、およびexclusion由来の残骸がない確認結果
 - 次に開く file または確認 command
 - 戻り先 skill がある場合はその理由
+- interactive UIでは`code complete`、`runtime verified`、`user validated`の到達状況と、残っているHITL review gate
 
 `docs/plan/NNN_PLAN.md` が今回の実装 plan なら、完了時に `docs/plan/NNN_PLAN_DONE.md` へリネームします。未完了項目が残る場合は、次の plan または handoff に切り出します。
 

@@ -38,6 +38,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 
 - done条件と対象外
 - HITL / AFK
+- interactive UIをHITLにする場合は、利用者が直接触れられるreviewable milestone、launch方法、代表操作、期待結果、再開条件
 - 使用するpublic interface / test surface
 - first testまたはdocs/config変更のverification
 - RED command
@@ -45,6 +46,8 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 - GREEN command
 - acceptance command
 - 前提と依存slice
+
+HITLは、主観的な操作感、実端末、外部appとの互換性など、自動化だけではacceptanceを確定できない境界に置く。interactive UIだからという理由だけですべてのsliceを停止点にせず、自動runtime evidenceで十分なsliceはAFKのまま進める。
 
 DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける。
 
@@ -71,6 +74,14 @@ DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける�
 | Slice | HITL/AFK | Depends on | Done | Test Surface | First Test | RED Command | RED Expectation | GREEN Command | Acceptance Command | Slice Out of Scope |
 |---|---|---|---|---|---|---|---|---|---|---|
 
+### HITL Review Contracts（必要なsliceのみ）
+
+- Reviewable milestone: 利用者が何を直接操作できる状態か
+- Launch: 利用者が同じbuildを起動する方法
+- Review actions: 代表操作と確認する状態遷移
+- Expected observations: 利用者の予測と一致すべき結果
+- Resume condition: feedback、承認、または再計画のどれで再開するか
+
 ### Artifacts
 
 artifacts:
@@ -91,7 +102,7 @@ conversation-only は利用者が明示的に文書不要とした場合、ま�
 - 設計案を作り直さない。構造判断が必要なら `technical-design` へ戻す。
 - 実装を始めない。
 - planを詳細な作業日記にしない。
-- PR、review、furikaeriを実装sliceへ混ぜない。
+- PR作成やreview実行そのものを実装sliceへ混ぜない。人間の判断が必要なruntime review contractはHITL境界として計画し、外部操作は上位workflowへ渡す。
 
 ## 関連リソース
 

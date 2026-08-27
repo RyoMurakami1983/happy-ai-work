@@ -41,6 +41,10 @@ return path:
 5. 複数の依存slice、HITL/AFK分離、実行順の合意が必要なら `implementation-plan` を使う。単一sliceなら省略する。
 6. `implement` で実装し、内蔵eval gateを各sliceで通す。
 
+interactive UIでHITL review contractがある場合は、最初のreviewable milestone以降を人間のruntime reviewへ渡す。PR作成が明示的に許可されているときだけ、PRを完成報告ではなくreview surfaceとして開くか更新できる。その場合は、PR URL、`code complete`／`runtime verified`／`user validated`の状態、残存review gate、merge前条件を直ちに利用者へ伝える。
+
+人間のruntime reviewと自動または独立reviewは、同じ変更を別観点から確認でき、互いをブロックしない場合は並行してよい。runtime feedbackで再現可能な不具合が見つかったら`debug-and-fix`、差分全体の指摘は`deep-review`へ渡し、修正後に該当gateを再実行する。
+
 ### Bug
 
 `debug-and-fix` へ渡す。原因が要求の曖昧さなら `interview-with-docs`、構造上の問題なら `technical-design` へ戻り、修正可能な契約になったら `debug-and-fix` または `implement` を再開する。
@@ -70,6 +74,8 @@ GitHub Actionsの失敗なら `ci-debug` を優先する。CI外でも同じ失�
 - 変更範囲、残存risk、明示した対象外が説明できる。
 - 保存したartifactがある場合はpathが存在する。
 - PR作成や外部公開など、依頼されていない外部操作を勝手に追加していない。
+- interactive UIでHITL reviewが必要なら、`user validated`または未完了gateとして明示されている。
+- PRが開いていることだけを完成またはmerge許可とみなしていない。mergeは明示的な権限があり、runtime feedbackの反映（指摘がある場合）、要求されたreview、最終検証が完了した場合だけ行う。
 
 ## 注意点
 
