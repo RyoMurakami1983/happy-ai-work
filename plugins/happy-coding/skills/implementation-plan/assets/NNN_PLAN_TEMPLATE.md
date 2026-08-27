@@ -51,6 +51,14 @@
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
 
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
+
 ### Slice 2: [slice 名]
 
 - Type: [HITL / AFK]
@@ -63,6 +71,14 @@
 - GREEN command: `[command]`
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
+
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
 
 ## Order Rationale
 
