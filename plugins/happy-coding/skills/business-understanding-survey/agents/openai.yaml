@@ -1,0 +1,3 @@
+interface:
+  display_name: "業務理解アンケート"
+  short_description: "資料の未知を目的に合う質問形式へ変換する"

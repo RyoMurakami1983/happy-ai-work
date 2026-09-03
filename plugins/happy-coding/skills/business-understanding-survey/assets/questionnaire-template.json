@@ -1,0 +1,114 @@
+{
+  "metadata": {
+    "title": "{{業務名}}の理解確認アンケート",
+    "purpose": "{{回答によって決めること}}",
+    "respondent_roles": ["{{回答者の役割}}"],
+    "source_paths": ["{{根拠資料の場所}}"],
+    "glossary_path": "{{CONTEXT.mdなどの用語集}}",
+    "response_handling": "{{保存先・閲覧者・保管期間}}"
+  },
+  "sections": [
+    {
+      "id": "confirmed_facts",
+      "title": "現時点の理解の確認",
+      "questions": [
+        {
+          "id": "fact-001",
+          "topic": "{{確認する業務上の事実}}",
+          "type": "fact_confirmation",
+          "status": "inferred",
+          "prompt": "{{資料から読み取った理解}}。この理解で合っていますか。",
+          "why_it_matters": "{{回答によって更新する判断}}",
+          "evidence_refs": ["{{文書名・節・レコード番号など}}"],
+          "model_mapping": {
+            "category": "constraint",
+            "symbol_or_field": "{{対応する制約・項目}}"
+          },
+          "required": true,
+          "choices": [
+            {"code": "confirm", "label": "この理解で合っている"},
+            {"code": "correction", "label": "修正が必要"},
+            {"code": "unknown", "label": "分からない／判断できない"}
+          ],
+          "correction_prompt": "正しい内容と、判断できる人または資料を教えてください。"
+        }
+      ]
+    },
+    {
+      "id": "business_rules",
+      "title": "業務ルールと制約",
+      "questions": [
+        {
+          "id": "rule-001",
+          "topic": "{{未決定の業務ルール}}",
+          "type": "single_choice_rule",
+          "status": "unknown",
+          "prompt": "{{実際の業務では、どの扱いにするかを具体的に尋ねる質問}}",
+          "why_it_matters": "{{ハード制約またはソフト制約の決定に使う}}",
+          "evidence_refs": ["source-gap: {{資料で確認できなかった内容}}"],
+          "model_mapping": {
+            "category": "hard_constraint",
+            "symbol_or_field": "{{対応する制約}}"
+          },
+          "required": true,
+          "choices": [
+            {"code": "rule_a", "label": "{{具体的な扱いA}}"},
+            {"code": "rule_b", "label": "{{具体的な扱いB}}"},
+            {"code": "depends", "label": "条件によって変わる"},
+            {"code": "unknown", "label": "分からない／判断できない"}
+          ],
+          "conditional_note_prompt": "条件によって変わる場合、その条件と扱いを教えてください。"
+        }
+      ]
+    },
+    {
+      "id": "objectives_preferences",
+      "title": "目的と優先順位",
+      "questions": [
+        {
+          "id": "tradeoff-001",
+          "topic": "{{競合する価値の優先順位}}",
+          "type": "tradeoff_comparison",
+          "status": "unknown",
+          "prompt": "他の条件が同じ場合、どちらを選びますか。",
+          "why_it_matters": "{{主目的・副目的・同点時の選好を決める}}",
+          "evidence_refs": ["{{手作業の例・議事録など}}"],
+          "model_mapping": {
+            "category": "objective_or_preference",
+            "symbol_or_field": "{{対応する目的または選好}}"
+          },
+          "required": true,
+          "decision_axis": "{{費用と作業の複雑さなど、一つの比較軸}}",
+          "choices": [
+            {"code": "case_a", "label": "{{価値1を優先した具体案}}"},
+            {"code": "case_b", "label": "{{価値2を優先した具体案}}"},
+            {"code": "depends", "label": "差の大きさや条件によって変わる"},
+            {"code": "unknown", "label": "分からない／判断できない"}
+          ],
+          "reason_prompt": "選んだ理由と、どの程度の差なら判断が変わるかを教えてください。"
+        }
+      ]
+    },
+    {
+      "id": "exceptions",
+      "title": "例外と経験則",
+      "questions": [
+        {
+          "id": "exception-001",
+          "topic": "{{通常ルールでは扱えないケース}}",
+          "type": "free_text_example",
+          "status": "unknown",
+          "prompt": "通常のルールどおりに判断するとうまくいかないケースはありますか。",
+          "why_it_matters": "{{自動採用を止める条件や人の確認事項を決める}}",
+          "evidence_refs": ["{{経験則への言及またはsource-gap}}"],
+          "model_mapping": {
+            "category": "exception_or_human_review",
+            "symbol_or_field": "{{対応する例外・確認工程}}"
+          },
+          "required": false,
+          "example_prompt": "状況、見た情報、行った判断、結果の順に、具体例を教えてください。"
+        }
+      ]
+    }
+  ]
+}

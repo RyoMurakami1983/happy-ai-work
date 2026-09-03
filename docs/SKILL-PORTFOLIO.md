@@ -13,6 +13,7 @@
 - framework: `wpf`、`tauri`
 - 横断workflow: `repo-onboarding`、`debug-and-fix`
 - 明示オーケストレーション: `coding`
+- 業務理解の構造化収集: `business-understanding-survey`
 - 開発成果物: `to-prd`、`technical-design`、`implementation-plan`、`implement`
 
 ## 既存skillへ統合したもの

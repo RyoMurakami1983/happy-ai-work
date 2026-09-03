@@ -34,7 +34,7 @@ return path:
 
 ### Feature / Change
 
-1. 実装を左右する未知があれば `interview-with-docs` を使う。
+1. 実装を左右する未知があれば `interview-with-docs` を使う。複数の現場関係者から非同期に事実、目的、制約、例外を集める必要があれば `business-understanding-survey` へ渡す。
 2. 利用者、目的、scope、acceptance criteriaを合意・保存する必要があれば `to-prd` を使う。小さなrepo内変更で契約が明確なら省略する。
 3. 用語、境界、不変条件の曖昧さが設計を左右する場合だけ `domain-modeling` を使う。
 4. module責務、interface、data flow、security boundary、技術選定の判断が必要なら `technical-design` を使う。既存構造内の局所変更なら省略する。
@@ -60,7 +60,7 @@ GitHub Actionsの失敗なら `ci-debug` を優先する。CI外でも同じ失�
 - `PASS`: 次のsliceまたは次工程へ進む。
 - `FAIL`: 契約を変えず、同じ実装・修正工程へ戻る。
 - `REPLAN_REQUIRED`: `technical-design`または`implementation-plan`へ戻る。
-- 要求が未確定: 探索が必要なら `interview-with-docs`、PRDのscopeやacceptance criteriaが誤っていたなら `to-prd` へ戻る。
+- 要求が未確定: 対話で探索するなら `interview-with-docs`、複数回答者から構造化して収集するなら `business-understanding-survey`、PRDのscopeやacceptance criteriaが誤っていたなら `to-prd` へ戻る。
 - blocker、権限が必要な操作、HITL判断がなければ、工程名を報告するためだけに停止しない。
 
 ## 完了条件

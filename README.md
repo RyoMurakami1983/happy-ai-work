@@ -44,7 +44,8 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 ### happy-coding
 
 - 明示オーケストレーション: `$coding`（通常依頼には暗黙発火しない）
-- 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
+- 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
+- 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
