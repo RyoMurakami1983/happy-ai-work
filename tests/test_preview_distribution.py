@@ -11,6 +11,20 @@ import validate_repo  # noqa: E402
 
 
 class PreviewDistributionTests(unittest.TestCase):
+    def test_unreadable_marketplace_is_reported_without_crashing(self) -> None:
+        for contents in (None, "{invalid json"):
+            with self.subTest(contents=contents), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                if contents is not None:
+                    marketplace = root / ".agents/plugins/marketplace.json"
+                    marketplace.parent.mkdir(parents=True)
+                    marketplace.write_text(contents, encoding="utf-8")
+                with patch.object(validate_repo, "ROOT", root):
+                    failures: list[str] = []
+                    validate_repo.validate_json(failures)
+                self.assertEqual(len(failures), 1)
+                self.assertTrue(failures[0].startswith("cannot read marketplace: "))
+
     def test_preview_requires_opt_in(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

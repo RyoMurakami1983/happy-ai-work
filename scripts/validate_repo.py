@@ -116,7 +116,11 @@ def iter_owned_files(root: Path = ROOT):
 
 def validate_json(failures: list[str]) -> None:
     marketplace_path = ROOT / ".agents" / "plugins" / "marketplace.json"
-    marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    try:
+        marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as error:
+        fail(f"cannot read marketplace: {error}", failures)
+        return
     if not isinstance(marketplace, dict):
         fail("marketplace must be an object", failures)
         return
