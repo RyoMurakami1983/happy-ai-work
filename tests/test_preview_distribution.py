@@ -57,6 +57,32 @@ class PreviewDistributionTests(unittest.TestCase):
                 "marketplace entry: name must be a valid plugin name",
             ])
 
+    def test_invalid_policy_is_reported_without_crashing(self) -> None:
+        original = json.loads(
+            (validate_repo.ROOT / ".agents/plugins/marketplace.json").read_text(encoding="utf-8")
+        )
+        for invalid_policy in (None, [], "AVAILABLE", 42):
+            with self.subTest(policy=invalid_policy), tempfile.TemporaryDirectory() as temporary:
+                root = Path(temporary)
+                for entry in original["plugins"]:
+                    manifest = root / "plugins" / entry["name"] / ".codex-plugin/plugin.json"
+                    manifest.parent.mkdir(parents=True)
+                    manifest.write_text(json.dumps({
+                        "name": entry["name"], "skills": "./skills/"
+                    }), encoding="utf-8")
+                original["plugins"][-1]["policy"] = invalid_policy
+                marketplace = root / ".agents/plugins/marketplace.json"
+                marketplace.parent.mkdir(parents=True)
+                marketplace.write_text(json.dumps(original), encoding="utf-8")
+                with patch.object(validate_repo, "ROOT", root):
+                    failures: list[str] = []
+                    validate_repo.validate_json(failures)
+                self.assertEqual(failures, [
+                    "happy-preview: marketplace policy must be an object",
+                    "happy-preview: installation must be opt-in (AVAILABLE)",
+                    "happy-preview: marketplace policy is incomplete",
+                ])
+
     def test_preview_cannot_duplicate_regular_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
