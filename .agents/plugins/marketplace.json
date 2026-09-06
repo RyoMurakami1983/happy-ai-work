@@ -27,6 +27,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "DeveloperTools"
+    },
+    {
+      "name": "happy-preview",
+      "source": {
+        "source": "local",
+        "path": "./plugins/happy-preview"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
     }
   ]
 }

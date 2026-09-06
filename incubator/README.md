@@ -7,7 +7,7 @@
 - `plugins/*/skills/`へ置く前の仮説、利用scenario、観測結果だけを扱う。
 - ここに完成品を装った`SKILL.md`を置かない。自動検出や配布対象と誤解させないためです。
 - marketplace、plugin manifest、READMEの公開skill一覧から参照しない。
-- 実際の反復利用、独立したtrigger、既存skillでは代替できない理由が揃ったらpluginへ昇格する。
+- 独立した目的・triggerと実行手順、基本検証、既知の制約が揃ったら、[ADR 0004](../docs/adr/0004-preview-plugin-distribution.md)に従い`happy-preview`で試用できる。実際の反復利用から価値を確認し、通常pluginへの採用を判断する。
 - 利用されない候補は保持し続けず、削除または通常docsへ戻す。
 - secret、個人data、実案件の未加工artifactを保存しない。
 

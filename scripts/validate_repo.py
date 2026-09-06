@@ -116,22 +116,53 @@ def iter_owned_files(root: Path = ROOT):
 
 def validate_json(failures: list[str]) -> None:
     marketplace_path = ROOT / ".agents" / "plugins" / "marketplace.json"
-    marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    try:
+        marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as error:
+        fail(f"cannot read marketplace: {error}", failures)
+        return
+    if not isinstance(marketplace, dict):
+        fail("marketplace must be an object", failures)
+        return
     if marketplace.get("name") != "happy-ai-work-marketplace":
         fail("marketplace name is incorrect", failures)
     entries = marketplace.get("plugins", [])
-    if [entry.get("name") for entry in entries] != ["happy-core", "happy-coding"]:
+    if not isinstance(entries, list):
+        fail("marketplace plugins must be a list", failures)
+        return
+    if [entry.get("name") if isinstance(entry, dict) else None for entry in entries] != [
+        "happy-core", "happy-coding", "happy-preview"
+    ]:
         fail("marketplace plugin order or names are incorrect", failures)
     for entry in entries:
-        name = entry["name"]
+        if not isinstance(entry, dict):
+            fail("marketplace entry must be an object", failures)
+            continue
+        name = entry.get("name")
+        if not isinstance(name, str) or not NAME_RE.fullmatch(name):
+            fail("marketplace entry: name must be a valid plugin name", failures)
+            continue
         expected_path = f"./plugins/{name}"
-        if entry.get("source", {}).get("path") != expected_path:
+        source = entry.get("source")
+        if not isinstance(source, dict) or source.get("path") != expected_path:
             fail(f"{name}: marketplace source path must be {expected_path}", failures)
         policy = entry.get("policy", {})
+        if not isinstance(policy, dict):
+            fail(f"{name}: marketplace policy must be an object", failures)
+            policy = {}
+        if name == "happy-preview" and policy.get("installation") != "AVAILABLE":
+            fail("happy-preview: installation must be opt-in (AVAILABLE)", failures)
         if not {"installation", "authentication"} <= policy.keys():
             fail(f"{name}: marketplace policy is incomplete", failures)
         manifest_path = ROOT / "plugins" / name / ".codex-plugin" / "plugin.json"
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            fail(f"{name}: cannot read plugin manifest: {error}", failures)
+            continue
+        if not isinstance(manifest, dict):
+            fail(f"{name}: plugin manifest must be an object", failures)
+            continue
         if manifest.get("name") != name:
             fail(f"{name}: folder and manifest names differ", failures)
         if manifest.get("skills") != "./skills/":
@@ -140,6 +171,15 @@ def validate_json(failures: list[str]) -> None:
 
 def validate_skills(failures: list[str]) -> None:
     skill_files = list(ROOT.glob("plugins/*/skills/*/SKILL.md"))
+    preview_names = {
+        path.parent.name for path in skill_files if path.parts[-4] == "happy-preview"
+    }
+    regular_names = {
+        path.parent.name for path in skill_files if path.parts[-4] != "happy-preview"
+    }
+    duplicates = preview_names & regular_names
+    if duplicates:
+        fail(f"preview and regular plugins duplicate skills: {sorted(duplicates)}", failures)
     coding_skills = {
         skill_file.parent.name
         for skill_file in skill_files

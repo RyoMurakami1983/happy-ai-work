@@ -10,7 +10,7 @@
 - 公式upstreamの判断原則と統治境界: `CONSTITUTION.md`
 - 日常のConstitution参照: `docs/CONSTITUTION_SUMMARY.md`
 - 製品・用語・境界: `CONTEXT.md`
-- 配布物: `plugins/happy-core/`、`plugins/happy-coding/`
+- 配布物: `plugins/happy-core/`、`plugins/happy-coding/`、試用用`plugins/happy-preview/`
 - marketplace: `.agents/plugins/marketplace.json`
 - 品質契約: `scripts/validate_repo.py` と `.github/workflows/`
 
@@ -29,7 +29,7 @@ uv run --script scripts/validate_quality.py
 - Copilot由来のskillは意図を保ち、Codexの `AGENTS.md`、skills、plugins、subagentsへ再設計する。
 - 固定 `agents/*.agent.md` を増やさない。独立レビューは必要時に動的subagentで行う。
 - 公開skillは1つのprimary purposeに絞る。詳細知識は`references/`へ置き、独立した利用目的がないleaf skillを増やさない。
-- 未完成案はplugin外の`incubator/`で扱い、`SKILL.md`やmarketplace entryを置かない。
+- 構想段階の未完成案はplugin外の`incubator/`で扱い、`SKILL.md`やmarketplace entryを置かない。基本検証を通った試用skillは`happy-preview`で任意配布し、通常配布への昇格は`docs/adr/0004-preview-plugin-distribution.md`に従う。
 - home設定を無断で変更しない。`home-bootstrap` はdry-run、差分、backup、明示承認を必須とする。
 - 日本語を正本とし、英語版を必須にしない。
 - 変更範囲に合うfocused checkを先に実行する。
