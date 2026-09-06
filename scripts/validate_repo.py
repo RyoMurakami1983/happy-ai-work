@@ -125,7 +125,10 @@ def validate_json(failures: list[str]) -> None:
     ]:
         fail("marketplace plugin order or names are incorrect", failures)
     for entry in entries:
-        name = entry["name"]
+        name = entry.get("name")
+        if not isinstance(name, str) or not NAME_RE.fullmatch(name):
+            fail("marketplace entry: name must be a valid plugin name", failures)
+            continue
         expected_path = f"./plugins/{name}"
         if entry.get("source", {}).get("path") != expected_path:
             fail(f"{name}: marketplace source path must be {expected_path}", failures)

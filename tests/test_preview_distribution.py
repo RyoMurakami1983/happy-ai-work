@@ -41,7 +41,21 @@ class PreviewDistributionTests(unittest.TestCase):
                 if installation == "AVAILABLE":
                     self.assertEqual(failures, [])
                 else:
-                    self.assertTrue(any("opt-in" in failure for failure in failures))
+                    self.assertEqual(failures, [
+                        "happy-preview: installation must be opt-in (AVAILABLE)"
+                    ])
+
+            del entries[-1]["name"]
+            marketplace.write_text(json.dumps({
+                "name": "happy-ai-work-marketplace", "plugins": entries
+            }), encoding="utf-8")
+            with patch.object(validate_repo, "ROOT", root):
+                failures = []
+                validate_repo.validate_json(failures)
+            self.assertEqual(failures, [
+                "marketplace plugin order or names are incorrect",
+                "marketplace entry: name must be a valid plugin name",
+            ])
 
     def test_preview_cannot_duplicate_regular_skill(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
