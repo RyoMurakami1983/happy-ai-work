@@ -2,7 +2,7 @@
 
 ## 配布モデル
 
-repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗黙依存させず、利用可能なら別skillへhandoffする形にします。
+repo内marketplaceが通常配布の`happy-core`、`happy-coding`と試用用`happy-preview`を配布します。plugin間でskillを暗黙依存させず、利用可能なら別skillへhandoffする形にします。プレビューの分離と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従います。
 
 ## 指示の配置
 
@@ -27,7 +27,7 @@ CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式が�
 
 - 公開skillは独立した利用目的と検証境界を持つものに限定します。
 - 一つの目的の詳細modeは公開leaf skillではなく`references/`へ置きます。
-- 未完成候補は`incubator/`へ置き、pluginから配布しません。
+- 構想段階の候補は`incubator/`へ置きます。基本検証を通った試用skillは`happy-preview`で任意配布し、実利用確認後に通常pluginへの採用を判断します。
 - portfolio判断は[SKILL-PORTFOLIO.md](SKILL-PORTFOLIO.md)を正本とします。
 
 ## Workflow orchestration

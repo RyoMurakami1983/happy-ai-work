@@ -120,7 +120,9 @@ def validate_json(failures: list[str]) -> None:
     if marketplace.get("name") != "happy-ai-work-marketplace":
         fail("marketplace name is incorrect", failures)
     entries = marketplace.get("plugins", [])
-    if [entry.get("name") for entry in entries] != ["happy-core", "happy-coding"]:
+    if [entry.get("name") for entry in entries] != [
+        "happy-core", "happy-coding", "happy-preview"
+    ]:
         fail("marketplace plugin order or names are incorrect", failures)
     for entry in entries:
         name = entry["name"]
@@ -128,6 +130,8 @@ def validate_json(failures: list[str]) -> None:
         if entry.get("source", {}).get("path") != expected_path:
             fail(f"{name}: marketplace source path must be {expected_path}", failures)
         policy = entry.get("policy", {})
+        if name == "happy-preview" and policy.get("installation") != "AVAILABLE":
+            fail("happy-preview: installation must be opt-in (AVAILABLE)", failures)
         if not {"installation", "authentication"} <= policy.keys():
             fail(f"{name}: marketplace policy is incomplete", failures)
         manifest_path = ROOT / "plugins" / name / ".codex-plugin" / "plugin.json"
@@ -140,6 +144,15 @@ def validate_json(failures: list[str]) -> None:
 
 def validate_skills(failures: list[str]) -> None:
     skill_files = list(ROOT.glob("plugins/*/skills/*/SKILL.md"))
+    preview_names = {
+        path.parent.name for path in skill_files if path.parts[-4] == "happy-preview"
+    }
+    regular_names = {
+        path.parent.name for path in skill_files if path.parts[-4] != "happy-preview"
+    }
+    duplicates = preview_names & regular_names
+    if duplicates:
+        fail(f"preview and regular plugins duplicate skills: {sorted(duplicates)}", failures)
     coding_skills = {
         skill_file.parent.name
         for skill_file in skill_files

@@ -15,7 +15,7 @@
 - Windowsを第一対象とし、Ubuntu CIとWSL2の早期検証を行う。
 - `happy-core` は仕事・学習・ライティング・環境初期化・ふりかえり・改善ループ・Issue intake・skill評価を扱う。Issue操作自体を再実装せず、実装backlogと軽いfeedbackの行き先を判断する。
 - `happy-coding` は明示オーケストレーション、要件整理、technical design、implementation plan、実装、言語／framework支援、debug-and-fix、レビュー、CI対応を扱う。
-- 未完成候補はplugin外の`incubator/`へ置き、実利用で価値を確認するまで配布しない。
+- 構想段階の候補はplugin外の`incubator/`へ置く。基本検証を通った試用skillは`happy-preview`で任意配布し、実利用で価値を確認してから通常pluginへ移す。
 - Copilot CLI連携は初版の必須機能にしない。
 
 ## Domain language
@@ -55,4 +55,4 @@
 
 ## Distribution
 
-`happy-ai-work-marketplace` から `happy-core` と `happy-coding` を個別に導入する。各pluginのmanifestを正本とし、marketplaceは配布順と導入policyを管理する。
+`happy-ai-work-marketplace` から `happy-core`、`happy-coding`と試用用`happy-preview`を個別に導入する。各pluginのmanifestを正本とし、marketplaceは配布順と導入policyを管理する。プレビューは[ADR 0004](docs/adr/0004-preview-plugin-distribution.md)に従い、通常pluginとの重複配布を避ける。
