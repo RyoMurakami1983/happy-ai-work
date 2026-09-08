@@ -1,0 +1,11 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-22T15:38:38.3025371Z",
+  "base_revision": "d6c3b78a26cd4bede3ab61fe0d745dfd1db32bfc",
+  "purpose": "independent final review of Constitution drift enforcement fixes",
+  "artifacts": {
+    ".github/workflows/quality.yml": "8632f6cde318e7d8f590425e443cb5ab799105a700827f74384be7e61bce36e8",
+    "scripts/validate_constitution.py": "fb23e81ac9d4cef36ccb1056c6b599c0f49152547e8e7c54b3ad55994173ab52",
+    "tests/test_constitution_validator.py": "62245b4c125c3c63dad5b7427fc956c9a47a9cbda33115ab50c58f50cb664f76"
+  }
+}

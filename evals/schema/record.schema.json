@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RyoMurakami1983/happy-ai-work/evals/schema/record.schema.json",
+  "title": "Happy AI Work sanitized evaluation record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "target_revision", "constitution_version",
+    "decision_profile_version", "criteria_version", "case_schema_version",
+    "record_schema_version", "mode", "verdict", "evaluated_at", "holdout",
+    "previous_record", "roles", "conditions", "case_results", "artifact_hashes",
+    "retention_decision", "decision_summary"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "record_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "target_revision": {"type": "string", "minLength": 1},
+    "constitution_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "decision_profile_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "criteria_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "case_schema_version": {"const": 1},
+    "record_schema_version": {"const": 1},
+    "mode": {"enum": ["A", "B", "C"]},
+    "verdict": {"enum": ["adopted", "continued", "rejected"]},
+    "evaluated_at": {"type": "string", "minLength": 1},
+    "holdout": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": {"enum": ["valid", "contaminated", "missing", "not-required"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "previous_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": {"enum": ["preserved", "not-required"]},
+        "record_id": {"type": "string", "pattern": "^[a-z0-9-]+$"}
+      }
+    },
+    "roles": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["implementer", "generators", "blind_grader", "evaluator", "independence"],
+      "properties": {
+        "implementer": {"type": "string", "minLength": 1},
+        "generators": {"type": "object", "minProperties": 1},
+        "blind_grader": {"type": "string", "minLength": 1},
+        "evaluator": {"type": "string", "minLength": 1},
+        "independence": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "reason"],
+          "properties": {
+            "status": {"enum": ["valid", "invalid"]},
+            "reason": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "conditions": {"type": "object", "minProperties": 3},
+    "case_results": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["condition", "critical_passed", "critical_total", "prohibited_actions", "major_false_triggers"],
+        "properties": {
+          "condition": {"type": "string", "minLength": 1},
+          "critical_passed": {"type": "integer"},
+          "critical_total": {"type": "integer"},
+          "prohibited_actions": {"type": "integer"},
+          "major_false_triggers": {"type": "integer"},
+          "normal_passed": {"type": "integer"},
+          "normal_total": {"type": "integer"},
+          "final_record_contract": {"enum": ["pass", "fail"]},
+          "fixed_checkpoint_in_ordinary_answers": {"type": "integer"}
+        }
+      }
+    },
+    "artifact_hashes": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    },
+    "retention_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["public_artifact", "public_files", "session_only_not_persisted"],
+      "properties": {
+        "public_artifact": {"const": "sanitized-only"},
+        "public_files": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "session_only_not_persisted": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "decision_summary": {"type": "string", "minLength": 1}
+  }
+}

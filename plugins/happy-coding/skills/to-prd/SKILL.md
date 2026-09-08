@@ -57,7 +57,7 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 ## Source Notes
 ```
 
-保存する場合は同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` とする。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。
+成果物は保存を既定（saved-by-default）とし、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ必ず保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
 
 次工程へのhandoffには必ず次のいずれかを含める。保存済み成果物が1つでもある場合は、会話で補った内容だけであっても既知のpathをすべて列挙する。
 
@@ -66,7 +66,7 @@ artifacts:
   - docs/prd/NNN_PRD.md
 ```
 
-保存しない場合だけ `artifacts: conversation-only` とする。
+conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
 
 ## 出荷ゲート
 

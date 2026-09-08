@@ -8,7 +8,36 @@ import re
 import sys
 from pathlib import Path
 
+import validate_constitution
+import validate_eval_manifest_links
+import validate_evals
+
 ROOT = Path(__file__).resolve().parent.parent
+OWNED_ROOTS = (
+    ".agents",
+    ".github",
+    "docs",
+    "evals",
+    "incubator",
+    "plugins",
+    "scripts",
+    "tests",
+)
+EXCLUDED_DIRECTORY_NAMES = {
+    ".git",
+    ".mypy_cache",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "node_modules",
+    "site-packages",
+}
+EXCLUDED_RELATIVE_PREFIXES = (
+    Path("docs/local_references"),
+    Path("docs/local_skill_evals"),
+)
+VALIDATED_SUFFIXES = {".md", ".py", ".json", ".yaml", ".yml", ".toml"}
 NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 LINK_RE = re.compile(r"\[[^]]+\]\(([^)]+)\)")
 SECRET_RE = re.compile(
@@ -33,6 +62,7 @@ REQUIRED_CODING_SKILLS = {
     "technical-design",
     "to-prd",
     "typescript",
+    "ui-design",
     "wpf",
 }
 RETIRED_CODING_SKILLS = {
@@ -59,24 +89,80 @@ def fail(message: str, failures: list[str]) -> None:
     failures.append(message)
 
 
+def is_excluded(relative_path: Path) -> bool:
+    if any(part in EXCLUDED_DIRECTORY_NAMES for part in relative_path.parts):
+        return True
+    return any(
+        relative_path == prefix or prefix in relative_path.parents
+        for prefix in EXCLUDED_RELATIVE_PREFIXES
+    )
+
+
+def iter_owned_files(root: Path = ROOT):
+    for path in sorted(root.iterdir()):
+        if path.is_file() and path.suffix.lower() in VALIDATED_SUFFIXES:
+            yield path
+    for root_name in OWNED_ROOTS:
+        owned_root = root / root_name
+        if not owned_root.is_dir():
+            continue
+        for path in sorted(owned_root.rglob("*")):
+            if not path.is_file() or path.suffix.lower() not in VALIDATED_SUFFIXES:
+                continue
+            if is_excluded(path.relative_to(root)):
+                continue
+            yield path
+
+
 def validate_json(failures: list[str]) -> None:
     marketplace_path = ROOT / ".agents" / "plugins" / "marketplace.json"
-    marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    try:
+        marketplace = json.loads(marketplace_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as error:
+        fail(f"cannot read marketplace: {error}", failures)
+        return
+    if not isinstance(marketplace, dict):
+        fail("marketplace must be an object", failures)
+        return
     if marketplace.get("name") != "happy-ai-work-marketplace":
         fail("marketplace name is incorrect", failures)
     entries = marketplace.get("plugins", [])
-    if [entry.get("name") for entry in entries] != ["happy-core", "happy-coding"]:
+    if not isinstance(entries, list):
+        fail("marketplace plugins must be a list", failures)
+        return
+    if [entry.get("name") if isinstance(entry, dict) else None for entry in entries] != [
+        "happy-core", "happy-coding", "happy-preview"
+    ]:
         fail("marketplace plugin order or names are incorrect", failures)
     for entry in entries:
-        name = entry["name"]
+        if not isinstance(entry, dict):
+            fail("marketplace entry must be an object", failures)
+            continue
+        name = entry.get("name")
+        if not isinstance(name, str) or not NAME_RE.fullmatch(name):
+            fail("marketplace entry: name must be a valid plugin name", failures)
+            continue
         expected_path = f"./plugins/{name}"
-        if entry.get("source", {}).get("path") != expected_path:
+        source = entry.get("source")
+        if not isinstance(source, dict) or source.get("path") != expected_path:
             fail(f"{name}: marketplace source path must be {expected_path}", failures)
         policy = entry.get("policy", {})
+        if not isinstance(policy, dict):
+            fail(f"{name}: marketplace policy must be an object", failures)
+            policy = {}
+        if name == "happy-preview" and policy.get("installation") != "AVAILABLE":
+            fail("happy-preview: installation must be opt-in (AVAILABLE)", failures)
         if not {"installation", "authentication"} <= policy.keys():
             fail(f"{name}: marketplace policy is incomplete", failures)
         manifest_path = ROOT / "plugins" / name / ".codex-plugin" / "plugin.json"
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            fail(f"{name}: cannot read plugin manifest: {error}", failures)
+            continue
+        if not isinstance(manifest, dict):
+            fail(f"{name}: plugin manifest must be an object", failures)
+            continue
         if manifest.get("name") != name:
             fail(f"{name}: folder and manifest names differ", failures)
         if manifest.get("skills") != "./skills/":
@@ -85,6 +171,15 @@ def validate_json(failures: list[str]) -> None:
 
 def validate_skills(failures: list[str]) -> None:
     skill_files = list(ROOT.glob("plugins/*/skills/*/SKILL.md"))
+    preview_names = {
+        path.parent.name for path in skill_files if path.parts[-4] == "happy-preview"
+    }
+    regular_names = {
+        path.parent.name for path in skill_files if path.parts[-4] != "happy-preview"
+    }
+    duplicates = preview_names & regular_names
+    if duplicates:
+        fail(f"preview and regular plugins duplicate skills: {sorted(duplicates)}", failures)
     coding_skills = {
         skill_file.parent.name
         for skill_file in skill_files
@@ -142,11 +237,7 @@ def validate_skills(failures: list[str]) -> None:
 
 
 def validate_links_and_secrets(failures: list[str]) -> None:
-    for path in ROOT.rglob("*"):
-        if not path.is_file() or ".git" in path.parts:
-            continue
-        if path.suffix.lower() not in {".md", ".py", ".json", ".yaml", ".yml", ".toml"}:
-            continue
+    for path in iter_owned_files():
         text = path.read_text(encoding="utf-8")
         if SECRET_RE.search(text):
             fail(f"{path}: possible secret", failures)
@@ -164,6 +255,17 @@ def main() -> int:
     validate_json(failures)
     validate_skills(failures)
     validate_links_and_secrets(failures)
+    try:
+        constitution_sync = validate_constitution.load_sync()
+        for item in validate_constitution.validate_local(constitution_sync):
+            fail(f"constitution: {item}", failures)
+    except (OSError, json.JSONDecodeError, TypeError, ValueError) as exc:
+        fail(f"constitution: {exc}", failures)
+    eval_exit = validate_evals.main()
+    if eval_exit:
+        fail("evaluation asset validation failed", failures)
+    for item in validate_eval_manifest_links.validate_records(ROOT):
+        fail(f"evaluation manifest: {item}", failures)
     if failures:
         print("validation failed:")
         for item in failures:

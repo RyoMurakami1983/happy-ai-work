@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "record_id": "instruction-finalization-adoption-003",
+  "target_revision": "ed96ec7 plus artifacts frozen by evals/pilot/005/TARGET.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "rejected",
+  "evaluated_at": "2026-08-24T22:14:50.0642956+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "The comparison used the public non-holdout suite; no unseen-holdout claim is made."
+  },
+  "previous_record": {
+    "status": "preserved",
+    "record_id": "instruction-finalization-adoption-002"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "current_indigo": "/root/p5_current_1",
+      "current_marble": "/root/p5_current_2",
+      "baseline_orion_reused": "/root/p3_base_1",
+      "baseline_pine_reused": "/root/p3_base_2"
+    },
+    "blind_grader": "/root/p5_blind_grader",
+    "evaluator": "pending-after-correction",
+    "independence": {
+      "status": "valid",
+      "reason": "The implementer, current generators, and blind grader were distinct; the frozen response-quality floor failed before a final adoption evaluator was needed."
+    }
+  },
+  "conditions": {
+    "baseline": {
+      "blind_labels": ["Orion", "Pine"],
+      "definition": "Unchanged Pilot 003 baseline evidence, reused by hash and preserved record."
+    },
+    "current": {
+      "blind_labels": ["Indigo", "Marble"],
+      "definition": "Pilot 004 current workflow plus conditional reader-unaware placement rationale and explicit exclusion status."
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/pilot/005/TARGET.json",
+      "case_suite": "evals/instruction-finalization/cases.v1.json",
+      "previous_record": "instruction-finalization-adoption-002",
+      "new_record": "required",
+      "deterministic_gate": "not-evaluated-after-behavioral-rejection"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline-orion",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline-pine",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-indigo",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 3,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-marble",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 4,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/pilot/005/TARGET.json": "700447035a7e7941b26843f26f721a13eb9d291f699fac61eabc1f59a5288fce",
+    "evals/pilot/004/TARGET.json": "1c1b6470903d0443a0855e4fdc0797bd6252152b25dd50cd9ef8fa12ba3d005e",
+    "evals/records/instruction-finalization-adoption-002.json": "87a152c34ee8018addfa2c6eaaf1913719aebace80033291646179708aa58995",
+    "evals/instruction-finalization/cases.v1.json": "104303ab726685cbf6e84502bc9ed6ed671c22808295f375fb27e58c9aca1741"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/pilot/005/TARGET.json",
+      "evals/pilot/004/TARGET.json",
+      "evals/records/instruction-finalization-adoption-002.json",
+      "evals/records/instruction-finalization-adoption-003.json",
+      "evals/instruction-finalization/cases.v1.json"
+    ],
+    "session_only_not_persisted": [
+      "current responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "decision_summary": "Reject Pilot 005 current for adoption: both repetitions preserved all Critical behavior with no prohibited action or major false trigger, but neither made the reader-unaware placement rationale observable and one also omitted the Non-goal versus evergreen-prohibition distinction."
+}

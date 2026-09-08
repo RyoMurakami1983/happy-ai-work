@@ -2,7 +2,13 @@
 
 > 仕事・学習・ライティング・コーディングを継続的に改善する Codex 用 skills／plugins／workspace template の母艦。
 
-CodexデスクトップアプリとCodex CLIで再利用するワークフローを、2つのpluginとして管理します。
+CodexデスクトップアプリとCodex CLIで再利用するワークフローを、通常配布の2つのpluginと試用用pluginとして管理します。
+
+## Constitution
+
+公式`happy-ai-work`の開発・評価・配布判断は[CONSTITUTION.md](CONSTITUTION.md)を正本とし、日常判断では[Constitution Summary](docs/CONSTITUTION_SUMMARY.md)を入口にします。個人philosophy、repo固有Mission、public利用先のdownstream Constitutionを分離し、村上さん固有の価値観をplugin利用先へ暗黙適用しません。
+
+公開評価case、private eval、sealed hold-out、sanitize済み履歴の境界は[Evaluation assets](docs/EVALUATION_ASSETS.md)を参照してください。
 
 ## Plugins
 
@@ -10,6 +16,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 | --- | --- |
 | `happy-core` | home／workspace初期化、文章の構成・下書き・推敲 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
+| `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
 ## 導入
 
@@ -48,12 +55,24 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
+- UI設計・評価: `ui-design`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
 
 `coding`は必要な工程だけを選ぶrouterです。PRD、technical design、implementation planを常に全部作るのではなく、入力artifactとriskに応じて省略します。
 
 旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
+
+### happy-preview（試用版）
+
+試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
+
+- [video-game-design](plugins/happy-preview/skills/video-game-design/SKILL.md): 宮本茂を軸に14名の知見から遊び・試作・観察を設計
+- [unity-beginner-development](plugins/happy-preview/skills/unity-beginner-development/SKILL.md): Unity初心者の実装・Scene接続・動作確認
+
+初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
+
+実利用と修正後の確認を経て、採用したskillは通常pluginへ移します。移動先と導入変更はその際に案内します。配布・正式化・公式機能への移行方針は[ADR 0004](docs/adr/0004-preview-plugin-distribution.md)を参照してください。
 
 ## 作成途中のworkflow
 
@@ -68,16 +87,16 @@ Codex全体へ適用する指示は、通常 `~/.codex/AGENTS.md` に置きま�
 適用時にはCodexのGit設定へ貼り付ける3つの指示文と自動マージの設定を案内します。Hooksは未設定を許容し、候補の影響と差分を確認してから明示承認された項目だけを設定します。
 
 ```powershell
-python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run
+uv run --no-project --python 3.14 python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run
 ```
 
 ## 開発
 
 ```powershell
-python scripts/validate_repo.py
-python -m unittest discover -s tests -v
-ruff check .
+uv run --script scripts/validate_quality.py
 ```
+
+検証入口はPython 3.14と一時環境のPyYAML、Ruff、tyを固定versionで使用します。詳細は [repo quality validation](docs/development/QUALITY_VALIDATION.md) を参照してください。
 
 WSL2の確認範囲は [docs/WSL2.md](docs/WSL2.md) を参照してください。
 

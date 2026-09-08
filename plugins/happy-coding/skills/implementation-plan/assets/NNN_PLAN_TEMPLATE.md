@@ -26,6 +26,10 @@
 - [触らない境界]
 - [public interface / test surface]
 
+## Finalized Contract / Target Trace（該当時だけ）
+
+設計handoffに`finalized_contract`がある場合だけ、採用済みnormative source、短いexclusion ID、主要な恒久targetからsourceへの対応を記録する。比較案のない局所変更ではこのsectionを省略する。
+
 ## Behavior List
 
 - [ ] [public interface 経由で観測する振る舞い]
@@ -47,6 +51,14 @@
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
 
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
+
 ### Slice 2: [slice 名]
 
 - Type: [HITL / AFK]
@@ -59,6 +71,14 @@
 - GREEN command: `[command]`
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
+
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
 
 ## Order Rationale
 

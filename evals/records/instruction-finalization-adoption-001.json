@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "record_id": "instruction-finalization-adoption-001",
+  "target_revision": "ed96ec7 plus artifacts frozen by evals/pilot/003/TARGET.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "adopted",
+  "evaluated_at": "2026-08-24T21:52:28.8435977+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "The comparison used the public non-holdout suite with zero correction iterations in Pilot 003; no unseen-holdout or overfitting-resistance claim is made."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "baseline_orion": "/root/p3_base_1",
+      "baseline_pine": "/root/p3_base_2",
+      "current_river": "/root/p3_current_1",
+      "current_slate": "/root/p3_current_2"
+    },
+    "blind_grader": "/root/p3_exact_grader",
+    "evaluator": "/root/p3_final_eval",
+    "independence": {
+      "status": "valid",
+      "reason": "Pilot 003 used new condition-isolated generators, a blind grader with condition mapping withheld until grading, and a final evaluator distinct from the implementer, generators, grader, and Pilot 002 evaluator."
+    }
+  },
+  "conditions": {
+    "baseline": {
+      "blind_labels": ["Orion", "Pine"],
+      "definition": "The ed96ec7 workflow records alternatives and checks requirement fit but has no explicit finalized contract or semantic promotion gate."
+    },
+    "current": {
+      "blind_labels": ["River", "Slate"],
+      "definition": "Technical design owns a conditional finalized contract; plan, implement, and DeepReview consume or verify it at distinct boundaries."
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/pilot/003/TARGET.json",
+      "case_suite": "evals/instruction-finalization/cases.v1.json",
+      "previous_target": {
+        "path": "evals/pilot/002/TARGET.json",
+        "status": "preserved-invalid-provenance",
+        "reason": "It names nonexistent decision profile 1.1.0 and is not retroactively repaired."
+      },
+      "new_record": "required",
+      "deterministic_gate": "pass"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline-orion",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline-pine",
+      "critical_passed": 10,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-river",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current-slate",
+      "critical_passed": 11,
+      "critical_total": 11,
+      "normal_passed": 5,
+      "normal_total": 5,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/pilot/003/TARGET.json": "e1fa04e41f0e4e71cf68000b3403616dbbf599d4eca01d084b358c46726ac6cd",
+    "evals/pilot/002/TARGET.json": "f01ab4a6cbfcdf8fdb0715e42a57e5681b262bab2183e28a72e5e2caa032281d",
+    "evals/pilot/002/BASELINE.md": "073d5624bd0c93c58aba2176dd85f4ba5b6a85ca1413ede2a6c604ef437431dd",
+    "evals/instruction-finalization/cases.v1.json": "104303ab726685cbf6e84502bc9ed6ed671c22808295f375fb27e58c9aca1741",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/pilot/003/TARGET.json",
+      "evals/pilot/002/TARGET.json",
+      "evals/pilot/002/BASELINE.md",
+      "evals/instruction-finalization/cases.v1.json",
+      "evals/records/instruction-finalization-adoption-001.json"
+    ],
+    "session_only_not_persisted": [
+      "condition responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "decision_summary": "Adopt the multi-layer finalization workflow: current passed every Critical item in both independent repetitions, preserved necessary cross-alternative constraints, excluded rejected-alternative residue, avoided heavy finalization for the simple fix, introduced no prohibited action or major false trigger, and passed the deterministic quality gate."
+}

@@ -1,0 +1,13 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-22T15:48:50.8072640Z",
+  "target_revision": "1e5e9eca9a401e33060a413a33935ca2c9b21b14 plus unstaged metadata fix",
+  "purpose": "final independent review of commit-anchored Constitution drift enforcement",
+  "artifacts": {
+    ".github/workflows/quality.yml": "8632f6cde318e7d8f590425e443cb5ab799105a700827f74384be7e61bce36e8",
+    "CONSTITUTION.md": "61a9f2e813f78cc240e21c15800c85bd04e36e56f64edaed4e1680a97253129a",
+    "docs/governance/constitution-sync.json": "1b7e5eb9e19f5b3c5f42c8cb400a2819fabadc95863ffab6e2a18857e7de94d2",
+    "scripts/validate_constitution.py": "9cfe72f345bd960c2e6d116d87f8ba48f02b385f848ed3d44d4b098c44f3c16c",
+    "tests/test_constitution_validator.py": "8720b1e364ccbf923f15665466c6561ac5c38cb5d1c0765b4a96bd5e0dce68b6"
+  }
+}

@@ -1,0 +1,5 @@
+# 公開評価資産とprivate evalの所有境界を分離する
+
+旧PrivateEvalを名称ごと移植せず、public repoで再利用するcase、schema、sanitize済みappend-only recordをupstream evalまたは共通安全evalとして所有する。sealed hold-out、raw run、利用者固有のprivate evalはsession限定または利用者管理の非公開領域に残し、公開caseは昇格時点からhold-outではない。Codex実行は必要時の独立subagentで行い、固定agent、汎用runner、viewer、永続serviceを配布しないことで、評価資産を育てる最小責務と保守コストを両立する。
+
+評価の完全なdecision evidenceはsanitize済み最終recordが所有し、通常のユーザー向け回答へrecord内部の固定templateを強制しない。採用gateは、安全・独立性・非改ざん・公開境界・mode選択のdecision invariantsと、説明の完全性・簡潔さ・代替案などのresponse qualityを分離する。invariant違反は採用不可とする一方、単発の非安全 omissionはcoverageと残存riskとして扱い、完全一致を目的化しない。

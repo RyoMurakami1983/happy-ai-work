@@ -13,9 +13,15 @@ description: >
 
 1. 指定された文書とrepo内の関連資料を先に読む。外部ページが指定された場合は、利用可能なコネクタまたはブラウザで原文を確認する。
 2. `interview-me` の手順で、既に決まっている事項、矛盾、実装を左右する未知を分け、重要な意思決定を深掘りする。
-3. `domain-modeling` の手順で、合意した用語、定義、境界、例外を整理する。永続化はユーザーが求めた場合、または作業中repoの変更範囲に含まれる場合だけ行う。
+3. `domain-modeling` の手順で、合意した用語、定義、境界、例外を整理する。repoの `CONTEXT.md` は必ず作成または更新する。
 4. 回答のたびに決定ログを更新し、同じ質問を繰り返さない。
 5. 実装を左右する未知がなくなったら、合意事項、用語、未確定事項、次工程へのhandoffを返す。
+
+## 成果物（saved-by-default）
+
+結果を後続PRDへ根拠・未決事項・重要判断として引き継げる場合、grill結果の単独保存は不要です。それ以外は `docs/grill_results/NNN_GRILL_WITH_DOCS_RESULT.md` へ保存します。`NNN` は同案件のPRD / design / planと共有します。
+
+conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、handoffに `exception reason:` を記載します。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べません。
 
 文書にない内容を事実として補わない。推定は推定と明示する。質問が不要なほど要求が明確なら、grillを長引かせずhandoffを作る。
 

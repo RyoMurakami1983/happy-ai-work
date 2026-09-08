@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "constitution_version": "1.0.0",
+  "constitution_revision": "1e5e9eca9a401e33060a413a33935ca2c9b21b14",
+  "constitution_sha256": "61a9f2e813f78cc240e21c15800c85bd04e36e56f64edaed4e1680a97253129a",
+  "personal_philosophy": {
+    "url": "https://github.com/RyoMurakami1983/RyoMurakami1983/blob/main/README.md",
+    "revision": "5967de4f099037b67eaf951c3997c9a73061d7be",
+    "committed_at": "2026-08-27T12:32:13Z"
+  },
+  "reconciled_at": "2026-09-06T17:22:21+09:00",
+  "drift_started_at": null,
+  "drift_source": null,
+  "resolution": "not-applicable",
+  "reason": "a607f6dから5967de4のREADME差分を照合。活動例の『プログラミング100日チャレンジ』を『実験やチャレンジ』へ、『部門横断の勉強会』を『勉強会』へ、『設計パターン』を『パターン』へ整理した変更であり、原理原則、形式知化、再現可能な仕組みという中心原則と優先順位は不変。Constitution 1.0.0の意味変更は不要と判断した。"
+}

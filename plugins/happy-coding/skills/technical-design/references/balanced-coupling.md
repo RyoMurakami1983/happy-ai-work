@@ -65,9 +65,9 @@
 - contract artifact path
 - checksum や version が必要な artifact
 - 統合 test / contract test の確認 command
-- `artifacts:` フィールド（`artifacts: conversation-only`、または保存したdesign artifact path）
+- `artifacts:` フィールド（通常は保存したdesign artifact path。例外時だけ理由付きの`artifacts: conversation-only`）
 
-`docs/design/NNN_TECHNICAL_DESIGN.md` が必要なら保存します。
+`docs/design/NNN_TECHNICAL_DESIGN.md` へ保存します。multi-repoではconversation-onlyを選べません。
 複数repoの実装順、vertical slices、HITL / AFKは`implementation-plan`へ渡します。
 ユーザーが設計書の保存を明示した場合は、repo内artifactを保存してhandoffに列挙します。
 

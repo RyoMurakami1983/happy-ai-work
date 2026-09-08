@@ -40,7 +40,8 @@ implementation contract
 - 目的、対象、非対象
 - 受け入れ条件
 - 主要な user-visible behavior または外から観測できる contract
-- handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か `conversation-only` か）
+- handoffに`finalized_contract`がある場合は、採用済みnormative source、exclusions、unknowns、主要target trace
+- handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か、例外理由付きの `conversation-only` か）
 - 実行する test / build / launch command
 - 失敗時の戻り先: `FAIL` は実装修正、`REPLAN_REQUIRED` は前段へ戻す
 
@@ -55,7 +56,8 @@ implementation contract
 - build / test / launch command
 - interactive app なら `references/interactive-app-bootstrap-checklist.md`
 - 複数リポで `plan.md` の `dependencies.contracts.requires` がある場合だけ、`checkpoints/contract_verify.py` で required artifact を検証する
-- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す。`artifacts: conversation-only`、または旧形式でフィールド自体が無い場合はこの確認をスキップする
+- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す
+- `artifacts: conversation-only` の場合は `exception reason:` があり、利用者の明示指定またはsmall one-sliceの例外条件を満たすことを確認する。複数repo、複数slice、public contract、migration / operationsを伴う場合は `REPLAN_REQUIRED` とする
 
 bootstrap の不足が今の slice を壊すなら修正します。関係ない整備は実装 scope に混ぜません。
 
@@ -72,6 +74,10 @@ planがある場合はslice境界を変更せず、直前にcontractを再確認
 - `RED` を確認する command と期待する失敗理由
 - `GREEN` を確認する command
 - acceptance command
+
+planでHITL review contractが指定されたinteractive sliceでは、reviewable milestone、launch方法、代表操作、期待結果、再開条件も固定する。人間の主観判断や実端末・外部app確認がacceptanceに含まれる場合、その判断を自動testの成功で代替しない。
+
+`finalized_contract`がある場合は、そのsliceと追加する主要な恒久targetがどのnormative sourceに対応するかも確認します。exclusion由来の新しい責務が必要になった、sourceが不明、または採用decisionが変わった場合は実装で補完せず`REPLAN_REQUIRED`とします。
 
 層ごとに「DB だけ」「UI だけ」「テストだけ」を横に広げる horizontal slice は避けます。
 
@@ -133,6 +139,22 @@ interactive evidenceが必要な場合だけ、対応するtemplateを読みま�
 - Windows desktop: [flaui.md](references/runtime-evidence/flaui.md)
 - Python GUI / pygame: [python-gui.md](references/runtime-evidence/python-gui.md)
 
+### HITL review gate（必要なsliceのみ）
+
+自動gateを通過して利用者が直接触れられる状態になったら、HITL review contractがあるsliceだけを明示的なreview milestoneとして渡す。
+
+- 同じbuildを起動するcommandまたは手順
+- 利用者が行う1〜5個の代表操作
+- 各操作で期待する表示、状態遷移、操作感
+- 自動確認済みの範囲と、人間の判断が残る範囲
+- feedback受領、承認、または`REPLAN_REQUIRED`となる再開条件
+
+状態は`code complete`、`runtime verified`、`user validated`を区別する。build/testと自動runtime evidenceだけで`user validated`と報告しない。feedbackで不具合が見つかった場合は再現loopを作れるなら`debug-and-fix`、contractの誤りなら前段へ戻る。
+
+HITLの結果がsliceのacceptanceに含まれる場合は、自動gateが通っても`HITL pending`として保持し、feedbackまたは承認を得るまでsliceを`PASS`やcompletion handoffに進めない。HITLが完成後の探索的な製品評価でありacceptanceをブロックしない場合だけ、`user validated`が未完了であることを残してローカル実装フェーズを閉じられる。
+
+HITL review contractがなく、自動runtime evidenceでacceptanceを確定できるsliceは、利用者入力を待つためだけに停止しない。
+
 ### ステップ 6 — completion handoff で閉じる
 
 全 slice が `PASS` したら、実装フェーズを閉じます。
@@ -144,8 +166,10 @@ handoff に残すもの:
 - 変更した主な file / artifact
 - 確認に使った design / plan artifact path
 - 残件、または明示的に対象外にしたもの
+- `finalized_contract`がある場合は、追加した主要な恒久targetとnormative sourceの対応、およびexclusion由来の残骸がない確認結果
 - 次に開く file または確認 command
 - 戻り先 skill がある場合はその理由
+- interactive UIでは`code complete`、`runtime verified`、`user validated`の到達状況と、残っているHITL review gate
 
 `docs/plan/NNN_PLAN.md` が今回の実装 plan なら、完了時に `docs/plan/NNN_PLAN_DONE.md` へリネームします。未完了項目が残る場合は、次の plan または handoff に切り出します。
 

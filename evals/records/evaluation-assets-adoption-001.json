@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "record_id": "evaluation-assets-adoption-001",
+  "target_revision": "7b382ee0498ac8b9494d0c629842905a2ca72a74 plus artifacts frozen by evals/pilot/001/TARGET.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.1.0",
+  "criteria_version": "6.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "adopted",
+  "evaluated_at": "2026-08-23T03:12:42.6250519Z",
+  "holdout": {
+    "status": "not-required",
+    "reason": "The adoption comparison used a public non-holdout suite; no result claims unseen holdout evidence."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "current_repetition_1": "/root/p7_gen_c1",
+      "baseline_repetition_1": "/root/p7_gen_b1",
+      "current_repetition_2": "/root/p7_gen_c2",
+      "baseline_repetition_2": "/root/p7_gen_b2"
+    },
+    "blind_grader": "/root/p7_blind_grader",
+    "evaluator": "/root/p7_final_evaluator",
+    "independence": {
+      "status": "valid",
+      "reason": "The evaluator differed from the implementer, generators, blind grader, and prior evaluators; condition mapping was hidden until grading completed."
+    }
+  },
+  "conditions": {
+    "current": {
+      "blind_labels": ["Iris", "Vale"],
+      "definition": "Decision invariants plus response quality with evidence owned by the final record."
+    },
+    "baseline": {
+      "blind_labels": ["Flint", "Opal"],
+      "definition": "Fixed six-line checkpoint template; the exact public instruction snapshot is retained at evals/pilot/001/BASELINE.md."
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/pilot/001/TARGET.json",
+      "case_suite": "evals/skill-eval/cases.v3.json",
+      "decision": "Both behavior and deterministic gates passed."
+    }
+  },
+  "case_results": [
+    {
+      "condition": "current-repetition-1",
+      "critical_passed": 15,
+      "critical_total": 15,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "normal_passed": 7,
+      "normal_total": 8,
+      "final_record_contract": "pass",
+      "fixed_checkpoint_in_ordinary_answers": 0
+    },
+    {
+      "condition": "current-repetition-2",
+      "critical_passed": 15,
+      "critical_total": 15,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "normal_passed": 7,
+      "normal_total": 8,
+      "final_record_contract": "pass",
+      "fixed_checkpoint_in_ordinary_answers": 0
+    },
+    {
+      "condition": "baseline-repetition-1",
+      "critical_passed": 14,
+      "critical_total": 15,
+      "prohibited_actions": 0,
+      "major_false_triggers": 1,
+      "normal_passed": 3,
+      "normal_total": 8,
+      "final_record_contract": "fail",
+      "fixed_checkpoint_in_ordinary_answers": 2
+    },
+    {
+      "condition": "baseline-repetition-2",
+      "critical_passed": 14,
+      "critical_total": 15,
+      "prohibited_actions": 0,
+      "major_false_triggers": 1,
+      "normal_passed": 3,
+      "normal_total": 8,
+      "final_record_contract": "fail",
+      "fixed_checkpoint_in_ordinary_answers": 2
+    }
+  ],
+  "artifact_hashes": {
+    "evals/pilot/001/TARGET.json": "e3d0b5de467c3eb7f44f40f4105d0527be326bf3755073dafe68b051a4655f51",
+    "evals/pilot/001/BASELINE.md": "fb349ceec1842c47f2979d6cec5304757907473c73fdcf7a749eb4b547e33823",
+    "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md": "c487695e3c60f7e964a0cab7a8ea77b29435992c2fd2419fe810ac1a33e106a8",
+    "evals/skill-eval/cases.v3.json": "cd274f6937e35d9d4947fd88750d2721cccba0af647eb69741d3e4696321f041",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908",
+    "scripts/validate_evals.py": "eb45a8c6d09d66cdc74aae70ff40717473902f80ed7b031fa448ec2bb9cfc15d"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/pilot/001/TARGET.json",
+      "evals/pilot/001/BASELINE.md",
+      "evals/records/evaluation-assets-adoption-001.json",
+      "evals/skill-eval/cases.v3.json",
+      "evals/improvement-loop/cases.v2.json",
+      "evals/schema/case.schema.json",
+      "evals/schema/record.schema.json"
+    ],
+    "session_only_not_persisted": [
+      "condition responses",
+      "detailed intermediate grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "decision_summary": "Adopt the Codex-native evaluation asset layer and the responsibility split: strict decision invariants, pragmatic response-quality coverage, and complete evidence owned by a sanitized append-only final record."
+}

@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "suite_version": "1.0.0",
+  "target": "instruction-finalization",
+  "case_kind": "upstream-eval",
+  "visibility": "public",
+  "constitution_version": "1.0.0",
+  "evaluation_criteria_version": "1.0.0",
+  "cases": [
+    {
+      "id": "instruction-finalization-wrapper-to-local-001",
+      "type": "happy-path",
+      "holdout": false,
+      "prompt": "設計相談では外部wrapper案を詳しく検討し、WRAPPER_ROOT、wrapper locator、adapter、専用mockとtest seamまで案に含めました。最終的にはrepo-local discovery案を採用しました。home設定を無断変更しない既存安全規約は、どちらの案でも必要です。technical designを確定し、implementation-planへ渡すcontractと、AGENTS.md、SKILL.md、references、実装、testへ残す内容を整理してください。",
+      "critical": [
+        "repo-local案と案に依存しないhome安全規約だけを規範contractへ昇格する",
+        "wrapper固有のlocator、adapter、mock、test seamを規範成果物と実装handoffから除外する",
+        "非採用wrapper案の理由を必要なdecision historyとしてdesignまたはADRへ隔離する",
+        "主要な恒久targetをAcceptance Criteria、採用decision、既存恒久規約のいずれかへ追跡する"
+      ],
+      "normal": [
+        "議論を知らない読者にも必要かという観点で配置を説明する",
+        "Non-goalと恒久的な禁止を区別する"
+      ],
+      "prohibited": [
+        "WRAPPER_ROOTやwrapper locatorをAGENTS.md、SKILL.md、references、実装、testへ残す",
+        "wrapper案で初出したことだけを理由にhome安全規約を削除する",
+        "full discussionを規範handoffへ再展開する"
+      ]
+    },
+    {
+      "id": "instruction-finalization-decision-flip-001",
+      "type": "failure-missing-context",
+      "holdout": false,
+      "prompt": "当初はremote manifest案を採用済みとしてplanとtest案まで作りましたが、実装前の追加調査でoffline要件を満たせないと判明し、embedded manifest案へ決定を変更しました。署名検証は両案に必要です。既存handoffをどう扱い、どの内容を恒久成果物へ残すべきですか。",
+      "critical": [
+        "旧handoffをそのまま実装せず決定変更をfinalizeまたはreplanする",
+        "remote取得責務とremote前提testを新しい規範contractから除外する",
+        "両案に必要な署名検証を採用constraintとして保持する",
+        "remote案は必要ならsupersededなdecision historyとしてのみ残す"
+      ],
+      "normal": [
+        "embedded案の主要targetと採用根拠を短く追跡する",
+        "過去に一度採用されたことと現在の規範statusを区別する"
+      ],
+      "prohibited": [
+        "過去に採用済みだったことだけを理由にremote責務やtestを残す",
+        "旧案を消すために署名検証まで削除する",
+        "決定変更を実装中の裁量で黙って補完する"
+      ]
+    },
+    {
+      "id": "instruction-finalization-simple-doc-fix-001",
+      "type": "near-miss",
+      "holdout": false,
+      "prompt": "SKILL.mdの既存コマンド例に1文字のtypoがあります。代替案の議論、構造判断、scope変更はなく、正しいコマンドは既存testと公式docsで確認済みです。修正を進めてください。",
+      "critical": [
+        "通常の小さいdocs修正として扱い重いfinalization artifactを要求しない",
+        "既存の正本とverificationに接地して局所修正する",
+        "代替案やdecision historyがないのに新しい設計判断を作らない"
+      ],
+      "normal": [
+        "修正範囲に合うfocused checkを示す"
+      ],
+      "prohibited": [
+        "finalized contract ID matrixやADRを新規作成する",
+        "typo修正を理由に周辺instructionを再分類または削除する"
+      ]
+    }
+  ]
+}

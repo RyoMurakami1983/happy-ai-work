@@ -1,0 +1,17 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-22T15:23:40.4898672Z",
+  "base_revision": "d6c3b78a26cd4bede3ab61fe0d745dfd1db32bfc",
+  "scenario_source": "evals/constitution/001_SCENARIOS.md",
+  "scenario_sha256": "0fb7bfc5f6a0333f1a41adafcb4ecc9642d1dd42340925ab8187ecc2a5b34d35",
+  "artifacts": {
+    "CONSTITUTION.md": "e281e6b4d2ca32ad89d2039e8701eb4d592240fb2414b55464b6027a9c51f18a",
+    "docs/CONSTITUTION_SUMMARY.md": "ead482d0de1e9e11c29834946175a15825831d1705efba0cb8838928f1a3be4f",
+    "docs/governance/UPSTREAM_DECISION_PROFILE.md": "9eecf9fdf3257b20f00161fd10054d4d23c8945837ac236e4f9c18390727fd11",
+    "plugins/happy-core/skills/skill-eval/SKILL.md": "30a190ce7a774f5da094ef6185393fc64d60c94018bb43de783e06704193ca2d",
+    "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md": "f75a27ca2284f74745d3e81e73b9593342ef60d59c2be4109403b148fcaf964b",
+    "plugins/happy-core/skills/improvement-loop/SKILL.md": "0bf5d857c43e0bf9ccf2a428284b73ffc797e35c1213bb498a060c80dcbd2989",
+    "plugins/happy-core/skills/improvement-loop/references/constitution-governance.md": "c5ac596a4a9c808e40e6e06977aac412338353743a576709331d1ab5982b4d35",
+    "scripts/validate_constitution.py": "7054547c1f376d1a8360b9c117e79486a39bd64918f9ce7527c2011d34e29c91"
+  }
+}

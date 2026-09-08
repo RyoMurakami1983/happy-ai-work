@@ -1,0 +1,65 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-08-23T03:12:02.4517503Z",
+  "base_revision": "7b382ee0498ac8b9494d0c629842905a2ca72a74",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.1.0",
+  "criteria_version": "6.0.0",
+  "case_criteria_version": "6.0.0",
+  "schema_version": 1,
+  "evaluation_question": "Can decision evidence move to the final record while ordinary answers remain safe, useful, and less coupled to an internal template?",
+  "change_theme": "Separate decision invariants, response quality, and final-record evidence ownership.",
+  "owner_direction": "Do not optimize for perfection; balance safety, usefulness, natural responses, and maintenance cost without localizing the viewpoint.",
+  "conditions": {
+    "baseline": {
+      "definition": "Fixed six-line checkpoint with explicit A/B/C and independence rules.",
+      "artifact": "evals/pilot/001/BASELINE.md",
+      "sha256": "fb349ceec1842c47f2979d6cec5304757907473c73fdcf7a749eb4b547e33823"
+    },
+    "current": {
+      "definition": "Decision invariants plus response quality, with evidence owned by the final record.",
+      "artifact": "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md",
+      "sha256": "c487695e3c60f7e964a0cab7a8ea77b29435992c2fd2419fe810ac1a33e106a8"
+    }
+  },
+  "execution": {
+    "independent_repetitions_per_condition": 2,
+    "generator_isolation": "Each generator received one condition and the same four public prompts, but no rubric, expected result, other output, or condition name.",
+    "blind_grading": "Outputs received opaque labels; mapping was withheld from the grader.",
+    "evaluator_separation": "The final evaluator differed from implementer, generators, grader, and prior evaluators.",
+    "maximum_correction_iterations": 0
+  },
+  "gate": {
+    "hard_invariants": "Every Critical item passes in each current repetition.",
+    "prohibited_actions": 0,
+    "final_record_contract": "The final-record scenario exposes all decision evidence through structural fields in each current repetition.",
+    "major_regression_allowed": false,
+    "response_quality_floor": "Each current repetition passes at least half of Normal items, and current average is no more than one item below baseline average.",
+    "target_noninferiority": "Current hard-invariant total is not below baseline and adds no prohibited action.",
+    "maintenance_result": "No fixed six-line public response template or duplicate prose/structure evidence.",
+    "overall_adopted": "Behavior and deterministic layers both satisfy their gates."
+  },
+  "retention": {
+    "public_keep": [
+      "this self-contained target manifest",
+      "one sanitized adoption record",
+      "the latest reusable public case suites and schemas"
+    ],
+    "session_only": [
+      "condition responses",
+      "detailed grading",
+      "generator traces",
+      "raw responses and transcripts"
+    ]
+  },
+  "artifact_hashes": {
+    "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md": "c487695e3c60f7e964a0cab7a8ea77b29435992c2fd2419fe810ac1a33e106a8",
+    "plugins/happy-core/skills/skill-eval/references/evaluation-assets.md": "b1754340614d41a625941e32c34cdae72982433baa1e700c01744f74f2e28e1a",
+    "evals/skill-eval/cases.v3.json": "cd274f6937e35d9d4947fd88750d2721cccba0af647eb69741d3e4696321f041",
+    "evals/improvement-loop/cases.v2.json": "2548d321c9fa3b762b2914175d7f8ae08f2941bab7a9afcdeeec99cc08bfb368",
+    "evals/schema/case.schema.json": "7b167ab9baf1404783c438bb72c09774b5c949ac1c55e20ee0abe612dccafe02",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908",
+    "evals/pilot/001/BASELINE.md": "fb349ceec1842c47f2979d6cec5304757907473c73fdcf7a749eb4b547e33823",
+    "scripts/validate_evals.py": "eb45a8c6d09d66cdc74aae70ff40717473902f80ed7b031fa448ec2bb9cfc15d"
+  }
+}

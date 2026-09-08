@@ -9,6 +9,11 @@
 
 各scenarioに最低一つのcritical要件を置く。評価後に要件やscenarioを簡単な方向へ変えない。
 
+## 成果物保存ポリシーのscenario
+
+- edge — small one-slice: 明らかに小さく低riskな単一sliceで、後続handoffや判断記録が不要。conversation-onlyを選ぶ場合、具体的な `exception reason` があること。
+- critical — artifact save required: multi-repo、複数slice、public contract、long-lived structure、compatibility、migration / operationsのいずれかを含む。conversation-onlyを選ばず、canonical pathへ保存し、handoffに実在pathを列挙すること。
+
 ## 記録項目
 
 | 項目 | 意味 |

@@ -2,10 +2,13 @@
 
 ## 配布モデル
 
-repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗黙依存させず、利用可能なら別skillへhandoffする形にします。
+repo内marketplaceが通常配布の`happy-core`、`happy-coding`と試用用`happy-preview`を配布します。plugin間でskillを暗黙依存させず、利用可能なら別skillへhandoffする形にします。プレビューの分離と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従います。
 
 ## 指示の配置
 
+- 公式upstreamの原則と統治境界: root `CONSTITUTION.md`
+- AIの日常参照と停止条件: `docs/CONSTITUTION_SUMMARY.md`
+- 文脈依存の価値比較: `docs/governance/UPSTREAM_DECISION_PROFILE.md`
 - home共通方針: `~/.codex/AGENTS.md`
 - repo共通方針: repoルートの `AGENTS.md`
 - サブツリー固有方針: 必要なディレクトリの `AGENTS.md`
@@ -16,11 +19,15 @@ repo内marketplaceが2つのpluginを配布します。plugin間でskillを暗�
 
 CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式がないため、言語固有知識をskillへ、常時必要なrepo契約を最寄りの`AGENTS.md`へ分けます。
 
+個人philosophyの全文、repo固有Mission、skill手順、評価scenarioはConstitutionへ混在させません。plugin利用先ではdownstream Constitutionを尊重し、存在しない場合もupstream固有価値を暗黙適用しません。
+
+公開評価資産は`evals/`でversion管理し、raw runとsealed hold-outはrepo外に保ちます。case／schema／sanitize済みrecordの所有境界は[EVALUATION_ASSETS.md](EVALUATION_ASSETS.md)を正本とします。
+
 ## Skill境界
 
 - 公開skillは独立した利用目的と検証境界を持つものに限定します。
 - 一つの目的の詳細modeは公開leaf skillではなく`references/`へ置きます。
-- 未完成候補は`incubator/`へ置き、pluginから配布しません。
+- 構想段階の候補は`incubator/`へ置きます。基本検証を通った試用skillは`happy-preview`で任意配布し、実利用確認後に通常pluginへの採用を判断します。
 - portfolio判断は[SKILL-PORTFOLIO.md](SKILL-PORTFOLIO.md)を正本とします。
 
 ## Workflow orchestration

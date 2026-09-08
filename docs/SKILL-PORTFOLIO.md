@@ -16,6 +16,16 @@
 - 業務理解の構造化収集: `business-understanding-survey`
 - 開発成果物: `to-prd`、`technical-design`、`implementation-plan`、`implement`
 
+## プレビュー配布
+
+`happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+
+## ゲーム制作の境界
+
+`video-game-design`は、遊びの核・ルール・導入を試作と人の観察で判断する。宮本茂を軸とする14名の根拠カードと第三者分析を持ち、本人発言・証言・制作記録・分析・推定を分ける。ゲーム以外の画面設計は`ui-design`、ソフトウェアの構造判断は`technical-design`が担当する。
+
+`unity-beginner-development`は、UnityのEditor・component・Scene・Prefab・入力・buildの接続を担当する。一般.NETのSDK契約は`dotnet`、工程管理は`implement`へ分け、Unityの動作確認を`dotnet test`で代替しない。両skillとも子ども向け制作に使えるが、年齢・2D・ジャンルを固定しない。
+
 ## 既存skillへ統合したもの
 
 | 旧skill | 統合先 | 理由 |
@@ -46,7 +56,7 @@
 
 ## 将来の昇格条件
 
-`incubator/`の候補は、次を満たした場合だけ公開skillへ昇格します。
+`incubator/`から試用配布への条件は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従います。通常pluginへの採用は、次を満たして判断します。
 
 1. 異なる実作業で複数回使われた。
 2. triggerを一文で他skillと区別できる。

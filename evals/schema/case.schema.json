@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RyoMurakami1983/happy-ai-work/evals/schema/case.schema.json",
+  "title": "Happy AI Work public evaluation case suite",
+  "type": "object",
+  "required": ["schema_version", "suite_version", "target", "case_kind", "visibility", "constitution_version", "evaluation_criteria_version", "cases"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "suite_version": {"type": "string", "pattern": "^[1-9][0-9]*\\.0\\.0$"},
+    "target": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "case_kind": {"enum": ["upstream-eval", "common-safety-eval"]},
+    "visibility": {"const": "public"},
+    "constitution_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "evaluation_criteria_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
+    "cases": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "holdout", "prompt", "critical", "normal", "prohibited"],
+        "additionalProperties": false,
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "type": {"enum": ["happy-path", "near-miss", "failure-missing-context"]},
+          "holdout": {"const": false},
+          "prompt": {"type": "string", "minLength": 1},
+          "critical": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "normal": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "prohibited": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+          "status": {"enum": ["active", "retired"]},
+          "replaced_by": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+          "retirement_reason": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

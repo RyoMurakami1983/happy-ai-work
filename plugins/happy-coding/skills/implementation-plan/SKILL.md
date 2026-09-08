@@ -16,6 +16,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 - acceptance criteriaまたはbehavior list
 - 既存repoのbuild / test / launch command
 - 構造判断が必要な変更では、`technical-design`のhandoffまたは同等の決定
+- design handoffに`finalized_contract`がある場合は、採用済みのnormative source、exclusions、unknowns、主要target trace
 - 保存済みartifactのpath
 
 要求が不足していれば `interview-with-docs` または `to-prd`、構造判断が不足していれば `technical-design` へ戻す。単一の明確なsliceなら、重いplanを作らず短いimplementation handoffだけでよい。
@@ -25,6 +26,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 ### 1. Behaviorと依存を整理する
 
 - acceptance criteriaを外部から観測可能なbehaviorへ対応付ける。
+- `finalized_contract`がある場合は、各sliceと追加する主要な恒久targetを少なくとも一つのnormative sourceへ対応付ける。非採用案やNon-goalの詳細をplanへ再展開しない。
 - schema、contract、migration、consumer / provider等の実依存だけを列挙する。
 - 依存しない作業と、順序を守る必要がある作業を分ける。
 
@@ -36,6 +38,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 
 - done条件と対象外
 - HITL / AFK
+- interactive UIをHITLにする場合は、利用者が直接触れられるreviewable milestone、launch方法、代表操作、期待結果、再開条件
 - 使用するpublic interface / test surface
 - first testまたはdocs/config変更のverification
 - RED command
@@ -43,6 +46,8 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 - GREEN command
 - acceptance command
 - 前提と依存slice
+
+HITLは、主観的な操作感、実端末、外部appとの互換性など、自動化だけではacceptanceを確定できない境界に置く。interactive UIだからという理由だけですべてのsliceを停止点にせず、自動runtime evidenceで十分なsliceはAFKのまま進める。
 
 DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける。
 
@@ -61,12 +66,21 @@ DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける�
 
 ### Goal / Success Criteria / Out of Scope
 ### Design Artifacts
+### Finalized Contract / Target Trace（design handoffにある場合だけ）
 ### Behavior List
 ### Dependencies
 ### Vertical Slices
 
 | Slice | HITL/AFK | Depends on | Done | Test Surface | First Test | RED Command | RED Expectation | GREEN Command | Acceptance Command | Slice Out of Scope |
 |---|---|---|---|---|---|---|---|---|---|---|
+
+### HITL Review Contracts（必要なsliceのみ）
+
+- Reviewable milestone: 利用者が何を直接操作できる状態か
+- Launch: 利用者が同じbuildを起動する方法
+- Review actions: 代表操作と確認する状態遷移
+- Expected observations: 利用者の予測と一致すべき結果
+- Resume condition: feedback、承認、または再計画のどれで再開するか
 
 ### Artifacts
 
@@ -79,16 +93,16 @@ artifacts:
 
 上はplanだけを保存した例である。保存済みPRD / design等が実在する場合だけ、そのpathも追加する。
 
-保存済み成果物がある場合は既知のpathをすべて列挙する。どの成果物も保存しない場合だけ `artifacts: conversation-only` とする。
+成果物は保存を既定（saved-by-default）とし、[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使って `docs/plan/NNN_PLAN.md` へ必ず保存する。保存済み成果物の実在するpathをすべて列挙する。finalized contractのnormative sourceまたは主要targetの根拠が不明なら、実行順で補わず`technical-design`へ戻す。
 
-進捗をrepoで追う価値がある場合、またはユーザーが保存を求めた場合は[NNN_PLAN_TEMPLATE.md](assets/NNN_PLAN_TEMPLATE.md)を使い、`docs/plan/NNN_PLAN.md`へ保存する。成果物の番号とpathは[WORK_ARTIFACTS.md](references/WORK_ARTIFACTS.md)に従う。
+conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。成果物の番号とpathは[WORK_ARTIFACTS.md](references/WORK_ARTIFACTS.md)に従う。
 
 ## 注意点
 
 - 設計案を作り直さない。構造判断が必要なら `technical-design` へ戻す。
 - 実装を始めない。
 - planを詳細な作業日記にしない。
-- PR、review、furikaeriを実装sliceへ混ぜない。
+- PR作成やreview実行そのものを実装sliceへ混ぜない。人間の判断が必要なruntime review contractはHITL境界として計画し、外部操作は上位workflowへ渡す。
 
 ## 関連リソース
 
