@@ -1,6 +1,6 @@
 {
   "name": "happy-preview",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "正式採用前のCodex skillsを任意導入して試用するプレビュープラグイン。実利用検証中です。",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Preview（試用版）",
     "shortDescription": "実利用検証中のskillsを試し、正式採用へ改善する",
-    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。初版はゲームデザインと初心者向けUnity開発を収録。基本検証と模擬依頼を確認済みですが、実制作での検証はこれからです。試用結果を基に改善し、採用したskillはhappy-coreまたはhappy-codingへ移します。",
+    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。ゲームデザイン、初心者向けUnity開発、Linuxデプロイを収録。実利用での効果を検証し、試用結果を基に改善して、採用したskillはhappy-coreまたはhappy-codingへ移します。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],

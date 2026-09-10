@@ -11,8 +11,9 @@ SKILL = ROOT / "plugins" / "happy-coding" / "skills" / "business-understanding-s
 SCRIPT = SKILL / "scripts" / "validate_questionnaire.py"
 TEMPLATE = SKILL / "assets" / "questionnaire-template.json"
 SPEC = importlib.util.spec_from_file_location("validate_questionnaire", SCRIPT)
+if SPEC is None or SPEC.loader is None:
+    raise RuntimeError("could not load questionnaire validator")
 MODULE = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
 SPEC.loader.exec_module(MODULE)
 
 
