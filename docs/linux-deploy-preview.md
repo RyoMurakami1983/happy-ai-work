@@ -1,6 +1,6 @@
 # linux-deployの初版設計と検証範囲
 
-Date: 2026-09-11
+Date: 2026-09-11 (Asia/Tokyo, UTC+09:00)
 Status: Preview / 実デプロイでの効果は未検証
 Source: [Issue #23](https://github.com/RyoMurakami1983/happy-ai-work/issues/23)
 
