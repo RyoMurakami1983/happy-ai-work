@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import os
 import subprocess
 import sys
 import tempfile
@@ -82,7 +83,11 @@ class HomeBootstrapTests(unittest.TestCase):
             target = Path(temporary) / "AGENTS.md"
             target.write_bytes(original)
             command = [sys.executable, str(SCRIPT), "--target", str(target)]
-            subprocess.run([*command, "--dry-run"], check=True, capture_output=True)
+            dry_run = subprocess.run(
+                [*command, "--dry-run"], check=True, capture_output=True,
+                env={**os.environ, "PYTHONIOENCODING": "cp1252"},
+            )
+            self.assertIn("共通の作業方針", dry_run.stdout.decode("utf-8"))
             self.assertEqual(target.read_bytes(), original)
             self.assertEqual(list(target.parent.glob("*.bak")), [])
 

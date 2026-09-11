@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import io
 import os
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -38,6 +40,8 @@ def merge(existing: str, managed: str) -> str:
 
 
 def main() -> int:
+    if isinstance(sys.stdout, io.TextIOWrapper):
+        sys.stdout.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--dry-run", action="store_true", help="show the diff without writing (default)")
