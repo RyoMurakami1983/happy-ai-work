@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Preview（試用版）",
     "shortDescription": "実利用検証中のskillsを試し、正式採用へ改善する",
-    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。ゲームデザイン、初心者向けUnity開発、Linuxデプロイを収録。実利用での効果を検証し、試用結果を基に改善して、採用したskillはhappy-coreまたはhappy-codingへ移します。",
+    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。ゲームデザイン、初心者向けUnity開発、Linuxデプロイ、人が理解・判断・行動しやすい出力へ整えるYohakuを収録。実利用での効果は検証中です。試用結果を基に改善し、採用したskillはhappy-coreまたはhappy-codingへ移します。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],

@@ -18,7 +18,13 @@
 
 ## プレビュー配布
 
-`happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+`happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`、`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+
+## Yohakuの境界
+
+`yohaku`は、人が正しく理解・判断・行動できる情報量と見せ方を整える。文章の企画は`writing-plan`、主張や構成の深い推敲は`deep-edit`、領域固有の判断・検証は対象skillが担当する。実装の簡素化は依頼範囲にある場合だけ扱う。
+
+homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた調整はYohakuへ分ける。両者は単独でも使え、他の圧縮skillを必須にしない。配置と試用条件は[設計記録](design/005_YOHAKU.md)を参照する。
 
 ## ゲーム制作の境界
 

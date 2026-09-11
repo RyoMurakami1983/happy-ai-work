@@ -70,10 +70,15 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - [video-game-design](plugins/happy-preview/skills/video-game-design/SKILL.md): 宮本茂を軸に14名の知見から遊び・試作・観察を設計
 - [unity-beginner-development](plugins/happy-preview/skills/unity-beginner-development/SKILL.md): Unity初心者の実装・Scene接続・動作確認
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
+- [yohaku](plugins/happy-preview/skills/yohaku/SKILL.md): 正確さ・安全・選択権を保ち、回答や手順を理解・判断・行動しやすい形へ整理
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
+
+Yohakuは「この説明を初心者が判断できる形にして」「安全条件を残して手順を整理して」などで使います。CavemanやPonytailの導入は不要です。試用では重要条件の見落とし、読み直し、追加質問、正しい判断までの時間を確認します。改善率は未測定です。設計と確認範囲は [Yohakuの設計](docs/design/005_YOHAKU.md) を参照してください。
+
+タスクの最初に`$yohaku`を明示して使うと、同じ会話の後続依頼にも継続適用する方針になります。「この回答だけ」で範囲を限定でき、「Yohakuを解除して」で終了できます。文脈の引き継ぎには適用状態とスキルの場所・主要原則を残し、再開後に必要なら読み直します。圧縮後の完全な保持は保証せず、継続のためのAGENTS.mdへの追記も行いません。
 
 実利用と修正後の確認を経て、採用したskillは通常pluginへ移します。移動先と導入変更はその際に案内します。配布・正式化・公式機能への移行方針は[ADR 0004](docs/adr/0004-preview-plugin-distribution.md)を参照してください。
 
@@ -87,7 +92,9 @@ Codex全体へ適用する指示は、通常 `~/.codex/AGENTS.md` に置きま�
 
 `home-bootstrap` は既存内容を全置換せず、管理対象マーカー内だけを更新します。最初に必ずdry-runします。
 
-適用時にはCodexのGit設定へ貼り付ける3つの指示文と自動マージの設定を案内します。Hooksは未設定を許容し、候補の影響と差分を確認してから明示承認された項目だけを設定します。
+共通方針は6項目とし、報告の原則を既存領域へ融合します。Yohaku用の断片を別途追記せず、詳しい説明の調整は必要時のskillに分けます。テンプレートの更新だけで、個人homeへ自動適用されることはありません。
+
+初回導入またはGit設定の依頼時には、CodexのGit設定へ貼り付ける3つの指示文と自動マージの設定を案内します。共通方針だけの更新ではその差分に絞ります。Hooksは未設定を許容し、候補の影響と差分を確認してから明示承認された項目だけを設定します。
 
 ```powershell
 uv run --no-project --python 3.14 python plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py --dry-run
