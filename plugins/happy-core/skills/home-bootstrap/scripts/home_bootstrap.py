@@ -28,9 +28,13 @@ def merge(existing: str, managed: str) -> str:
         before, remainder = existing.split(START, 1)
         _, after = remainder.split(END, 1)
         return before + managed.rstrip("\n") + after
-    if not existing.strip():
+    if not existing:
         return managed
-    return existing.rstrip() + "\n\n" + managed
+    if existing.endswith(("\n\n", "\r\n\r\n")):
+        separator = ""
+    else:
+        separator = "\n" if existing.endswith("\n") else "\n\n"
+    return existing + separator + managed
 
 
 def main() -> int:

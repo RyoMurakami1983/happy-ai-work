@@ -19,6 +19,21 @@ SPEC.loader.exec_module(MODULE)
 
 
 class HomeBootstrapTests(unittest.TestCase):
+    def test_first_insertion_preserves_trailing_whitespace(self) -> None:
+        managed = f"{MODULE.START}\nnew\n{MODULE.END}\n"
+        cases = [
+            ("", ""),
+            ("# Personal\nkeep  ", "\n\n"),
+            ("# Personal\r\nkeep\r\n", "\n"),
+            ("# Personal\r\nkeep\r\n\r\n\r\n", ""),
+            ("  \r\n\t\r\n", "\n"),
+        ]
+        for existing, separator in cases:
+            with self.subTest(existing=existing):
+                updated = MODULE.merge(existing, managed)
+                self.assertEqual(updated, existing + separator + managed)
+                self.assertEqual(MODULE.merge(updated, managed), updated)
+
     def test_adds_managed_section_without_replacing_existing_content(self) -> None:
         existing = "# Personal\n\n- keep this\n"
         managed = "<!-- happy-ai-work:start -->\n- managed\n<!-- happy-ai-work:end -->\n"
