@@ -27,7 +27,7 @@ def merge(existing: str, managed: str) -> str:
             raise ValueError("existing AGENTS.md has incomplete or duplicate markers")
         before, remainder = existing.split(START, 1)
         _, after = remainder.split(END, 1)
-        return before.rstrip() + "\n\n" + managed + after.lstrip("\r\n")
+        return before + managed.rstrip("\n") + after
     if not existing.strip():
         return managed
     return existing.rstrip() + "\n\n" + managed
@@ -45,7 +45,7 @@ def main() -> int:
     skill_root = Path(__file__).resolve().parent.parent
     template_path = args.template or skill_root / "assets" / "AGENTS.md"
     target = args.target or codex_home() / "AGENTS.md"
-    existing = target.read_text(encoding="utf-8") if target.exists() else ""
+    existing = target.read_bytes().decode("utf-8") if target.exists() else ""
     updated = merge(existing, template_path.read_text(encoding="utf-8"))
 
     print(f"target: {target}")
@@ -64,9 +64,9 @@ def main() -> int:
     if target.exists() and updated != existing:
         stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
         backup = target.with_name(f"{target.name}.{stamp}.bak")
-        backup.write_text(existing, encoding="utf-8")
+        backup.write_bytes(existing.encode("utf-8"))
         print(f"backup: {backup}")
-    target.write_text(updated, encoding="utf-8")
+    target.write_bytes(updated.encode("utf-8"))
     print("applied")
     return 0
 
