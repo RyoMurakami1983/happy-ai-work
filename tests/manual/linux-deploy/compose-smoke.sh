@@ -87,7 +87,7 @@ dc config --quiet
 config_hash=$(sha256sum compose.yaml .env)
 dc up --wait --wait-timeout 20
 first_id=$(dc ps -q app)
-dc exec -T app sh -c 'test "$(id -u)" != 0; test "$(cat /source/known.txt)" = fixture-source; test ! -e /sibling/private.txt; test ! -e /source/../sibling/private.txt; printf "saved-by-app\n" > /data/saved.txt'
+dc exec -T app sh -ec 'test "$(id -u)" != 0; test "$(cat /source/known.txt)" = fixture-source; test ! -e /sibling/private.txt; test ! -e /source/../sibling/private.txt; printf "saved-by-app\n" > /data/saved.txt'
 test "$(cat data/saved.txt)" = saved-by-app
 expect_failure readonly-source dc exec -T app sh -c 'echo forbidden > /source/probe.txt'
 test ! -e source/probe.txt
@@ -129,7 +129,7 @@ echo 'PASS failed-update exit=42 image-rollback data-preserved'
 stage=restore
 tar -xf backup.tar -C restore
 diff -r data restore
-sudo -n docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges:true --user "$uid:$gid" --mount "type=bind,src=$work/restore,dst=/restored,readonly" --entrypoint sh "$project:v1" -c 'test "$(cat /restored/keep.txt)" = persistent-sentinel; test "$(cat /restored/saved.txt)" = saved-by-app'
+sudo -n docker run --rm --network none --read-only --cap-drop ALL --security-opt no-new-privileges:true --user "$uid:$gid" --mount "type=bind,src=$work/restore,dst=/restored,readonly" --entrypoint sh "$project:v1" -ec 'test "$(cat /restored/keep.txt)" = persistent-sentinel; test "$(cat /restored/saved.txt)" = saved-by-app'
 test "$before" = "$(sha256sum data/*)"
 echo 'PASS separate-restore readable-as-app-user original-unchanged'
 stage=cleanup
