@@ -39,6 +39,7 @@ fi
 test -f /data/index.html || printf 'healthy-v1\n' > /data/index.html
 exec httpd -f -p 8080 -h /data
 APP
+chmod 644 app.sh
 stage=images
 sudo -n docker pull busybox:1.37
 base=$(sudo -n docker image inspect busybox:1.37 --format '{{index .RepoDigests 0}}')
