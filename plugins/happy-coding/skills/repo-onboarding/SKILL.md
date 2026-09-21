@@ -5,18 +5,18 @@ description: 未知のリポジトリを変更せずに調査し、目的、構�
 
 # Repository onboarding
 
-read-onlyを既定にし、READMEだけでなくmanifest、lockfile、CI、`AGENTS.md`、近接docsを根拠として地図を作る。
+read-onlyを既定にし、READMEだけでなくmanifest、lockfile、CI、`AGENTS.override.md`／`AGENTS.md`、近接docsを根拠として地図を作る。
 
 ## ワークフロー
 
-1. repo root、git状態、`AGENTS.md` chain、README、docs入口を確認する。
+1. repo root、git状態、各directoryで`AGENTS.override.md`を`AGENTS.md`より優先した有効なinstruction chain、README、docs入口を確認する。
 2. solution／workspace／manifest／lockfile／CIから主要言語、runtime、dependency、build、test、lintの正本を特定する。
 3. 主要directory、entrypoint、public interface、data store、external integrationを浅くたどる。
 4. 代表的な一つの処理経路を入口から出力まで追い、責務境界を確認する。
 5. commandは推測せず根拠を添える。実行が必要な場合も、read-onlyで安全なversion／help／test discoveryから始める。
 6. 目的、技術、構造、主要flow、build、test、注意点、未確認事項を短く返す。
 
-親directoryやhomeの共通指示が読み込まれていても、対象repo内にrepo管理の`AGENTS.md`がない場合は、その事実と、repo固有のbuild／test制約や重大なreview制約を永続化する必要性があるかを出力に含める。導入価値があり`workspace-bootstrap`が利用可能な場合は明示的なhandoff候補にする。利用できない場合は、導入の必要性と専用機能が現在利用できないことを返す。どちらの場合もonboarding中には作成しない。
+親directoryやhomeの共通指示が読み込まれていても、対象repo内にrepo管理の有効な`AGENTS.override.md`も`AGENTS.md`もない場合は、その事実と、repo固有のbuild／test制約や重大なreview制約を永続化する必要性があるかを出力に含める。導入価値があり`workspace-bootstrap`が利用可能な場合は明示的なhandoff候補にする。利用できない場合は、導入の必要性と専用機能が現在利用できないことを返す。どちらの場合もonboarding中には作成しない。
 
 repoへ`AGENTS.md`、CI、hook等を追加する依頼は`workspace-bootstrap`へ分離する。onboardingの名目で設定を書き換えない。
 
@@ -29,4 +29,4 @@ repoへ`AGENTS.md`、CI、hook等を追加する依頼は`workspace-bootstrap`�
 5. build／test／lint commandと根拠
 6. 重要な制約・risk
 7. 未確認事項と次に読む場所
-8. 対象repo内にrepo管理の`AGENTS.md`がない場合の`workspace-bootstrap` handoffの要否と根拠
+8. 対象repo内にrepo管理の有効な`AGENTS.override.md`も`AGENTS.md`もない場合の`workspace-bootstrap` handoffの要否と根拠
