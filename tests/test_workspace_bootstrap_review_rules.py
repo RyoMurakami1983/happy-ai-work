@@ -13,7 +13,9 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
 
         self.assertIn("親directoryやhomeの共通指示", skill)
         self.assertIn("対象repo内にrepo管理の`AGENTS.md`がない場合", skill)
-        self.assertIn("`workspace-bootstrap`を明示的なhandoff候補", skill)
+        self.assertIn("`workspace-bootstrap`が利用可能な場合", skill)
+        self.assertIn("専用機能が現在利用できない", skill)
+        self.assertIn("明示的なhandoff候補", skill)
         self.assertIn("onboarding中には作成しない", skill)
 
     def test_workspace_bootstrap_preserves_and_deduplicates_instructions(self) -> None:
@@ -21,6 +23,9 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
 
         for expected in (
             "`.github/copilot-instructions.md`",
+            "`.github/instructions/*.instructions.md`",
+            "`applyTo`付きのルール",
+            "対応する最寄りの`AGENTS.md`",
             "`AGENTS.fragment.md`",
             "全文置換せず",
             "全文を複製せず",

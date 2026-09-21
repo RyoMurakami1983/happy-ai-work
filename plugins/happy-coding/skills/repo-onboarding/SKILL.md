@@ -16,7 +16,7 @@ read-onlyを既定にし、READMEだけでなくmanifest、lockfile、CI、`AGEN
 5. commandは推測せず根拠を添える。実行が必要な場合も、read-onlyで安全なversion／help／test discoveryから始める。
 6. 目的、技術、構造、主要flow、build、test、注意点、未確認事項を短く返す。
 
-親directoryやhomeの共通指示が読み込まれていても、対象repo内にrepo管理の`AGENTS.md`がない場合は、その事実と、repo固有のbuild／test制約や重大なreview制約を永続化する必要性があるかを出力に含める。導入価値がある場合は`workspace-bootstrap`を明示的なhandoff候補にするが、onboarding中には作成しない。
+親directoryやhomeの共通指示が読み込まれていても、対象repo内にrepo管理の`AGENTS.md`がない場合は、その事実と、repo固有のbuild／test制約や重大なreview制約を永続化する必要性があるかを出力に含める。導入価値があり`workspace-bootstrap`が利用可能な場合は明示的なhandoff候補にする。利用できない場合は、導入の必要性と専用機能が現在利用できないことを返す。どちらの場合もonboarding中には作成しない。
 
 repoへ`AGENTS.md`、CI、hook等を追加する依頼は`workspace-bootstrap`へ分離する。onboardingの名目で設定を書き換えない。
 
