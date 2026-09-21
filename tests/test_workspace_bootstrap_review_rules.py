@@ -12,8 +12,8 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
         skill = self.read("plugins/happy-coding/skills/repo-onboarding/SKILL.md")
 
         self.assertIn("親directoryやhomeの共通指示", skill)
-        self.assertIn("`AGENTS.override.md`を`AGENTS.md`より優先", skill)
-        self.assertIn("有効な`AGENTS.override.md`も`AGENTS.md`もない場合", skill)
+        self.assertIn("`AGENTS.override.md`、`AGENTS.md`、`project_doc_fallback_filenames`", skill)
+        self.assertIn("または設定済みfallbackがない場合", skill)
         self.assertIn("`workspace-bootstrap`が利用可能な場合", skill)
         self.assertIn("専用機能が現在利用できない", skill)
         self.assertIn("明示的なhandoff候補", skill)
@@ -25,9 +25,13 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
         for expected in (
             "`.github/copilot-instructions.md`",
             "`.github/instructions/*.instructions.md`",
-            "`AGENTS.override.md`を`AGENTS.md`より優先",
+            "`AGENTS.override.md`、`AGENTS.md`、`project_doc_fallback_filenames`",
             "それに隠れる`AGENTS.md`を新規提案しない",
-            "overrideの廃止や通常AGENTSへの移行",
+            "overrideの廃止",
+            "通常AGENTSへの移行",
+            "新規`AGENTS.md`がそれをshadowする影響",
+            "fallbackの制約を保持する統合差分",
+            "fallbackからの移行",
             "`applyTo`付きのルール",
             "対応する最寄りの`AGENTS.md`",
             "`AGENTS.fragment.md`",
