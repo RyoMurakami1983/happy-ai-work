@@ -41,9 +41,14 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
 
         for expected in (
             "## Code Review Rules",
+            "採用済みAcceptance Criteria",
+            "外部contract",
+            "安全invariant",
             "重大な誤動作",
             "データ損失",
             "誤った正常終了",
+            "実装、CI、事故記録は必要性と適用範囲を確認する証拠",
+            "非採用挙動は恒久ルールへ昇格させない",
             "一般的なlint／style／テスト推奨は入れない",
         ):
             with self.subTest(expected=expected):
