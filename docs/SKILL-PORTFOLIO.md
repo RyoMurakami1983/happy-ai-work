@@ -50,6 +50,7 @@ homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた�
 
 ## Workflow再編
 
+- `domain-modeling`は、合意済みの目的・要件からドメインのモデルと業務上の契約を導く。用語整理だけなら`CONTEXT.md`等を更新し、正式なモデル化が必要な場合はドメイン文書に条件・境界を残す。目的・要件の正本は`to-prd`、技術構造は`technical-design`が担当する。[再定義の判断記録](design/006_DOMAIN_MODELING.md)を参照する。
 - 旧`design-and-plan`は、構造判断を行う`technical-design`と、実行順を作る`implementation-plan`へ分割した。
 - 旧`debug`は、原因説明で止まらず元症状をgreenへ戻す`debug-and-fix`へ置換した。
 - `coding`以外は暗黙選択を維持する。書込みskillの安全性はskill discoveryを無効化せず、実際の操作前の権限確認で守る。
