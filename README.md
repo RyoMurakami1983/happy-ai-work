@@ -50,7 +50,6 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 
 ### happy-coding
 
-- 明示オーケストレーション: `$coding`（通常依頼には暗黙発火しない）
 - 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
 - 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
@@ -59,7 +58,7 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
 
-`coding`は必要な工程だけを選ぶrouterです。PRD、technical design、implementation planを常に全部作るのではなく、入力artifactとriskに応じて省略します。
+依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
 
 旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
 
@@ -71,6 +70,7 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - [unity-beginner-development](plugins/happy-preview/skills/unity-beginner-development/SKILL.md): Unity初心者の実装・Scene接続・動作確認
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [yohaku](plugins/happy-preview/skills/yohaku/SKILL.md): 正確さ・安全・選択権を保ち、回答や手順を理解・判断・行動しやすい形へ整理
+- [technical-design-review](plugins/happy-preview/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
 

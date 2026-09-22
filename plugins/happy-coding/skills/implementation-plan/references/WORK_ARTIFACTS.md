@@ -1,6 +1,6 @@
 # Work Artifacts
 
-`interview-with-docs`、`to-prd`、`technical-design`、`implementation-plan`、`implement`の間で渡す成果物の既定構造です。
+`interview-with-docs`、`to-prd`、`domain-modeling`、`technical-design`、`implementation-plan`、`implement`の間で渡す成果物の既定構造です。
 
 ## Canonical doc structure
 
@@ -10,6 +10,8 @@ docs/
     001_GRILL_WITH_DOCS_RESULT.md
   prd/
     001_PRD.md
+  domain/
+    001_DOMAIN_MODEL.md
   design/
     001_TECHNICAL_DESIGN.md
   plan/
@@ -20,7 +22,7 @@ docs/
 
 ## Numbering rules
 
-- `grill_results` / `prd` / `design` / `plan` は同じ案件番号 `NNN` を共有する
+- `grill_results` / `prd` / `domain` / `design` / `plan` は同じ案件番号 `NNN` を共有する
 - ADR は `docs/adr/0001-short-slug.md` の独立連番を使う
 
 ## 保存ポリシー（saved-by-default）
@@ -29,6 +31,7 @@ docs/
 
 - repoに `CONTEXT.md` がなければ作成し、あれば案件で確定した用語・境界を反映する
 - `to-prd` は `docs/prd/NNN_PRD.md` を保存する
+- `domain-modeling` のモデル化は既存のドメイン文書、なければ `docs/domain/NNN_DOMAIN_MODEL.md` へ保存する。用語整理だけなら用語集の更新で終え、モデル文書は作らない
 - `technical-design` は `docs/design/NNN_TECHNICAL_DESIGN.md` を保存する
 - `implementation-plan` は `docs/plan/NNN_PLAN.md` を保存する
 - `interview-with-docs` は、結果を後続PRDへ根拠・未決事項・重要判断として引き継ぐ場合を除き、`docs/grill_results/NNN_GRILL_WITH_DOCS_RESULT.md` を保存する

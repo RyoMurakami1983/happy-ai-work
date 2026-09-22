@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "record_id": "technical-design-review-preview-001",
+  "target_revision": "befeda006fc5323f64f76d75f370631857b49a44 plus technical-design-review frozen by evals/technical-design-review/TARGET.v1.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-22T14:53:42.0222775+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Bounded forward test using public synthetic cases before preview use; no unseen-holdout or comparative superiority claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "concurrent_and_small": "/root/review_cases_a",
+      "routing": "/root/review_case_routing",
+      "unknown_and_conditions": "/root/review_cases_b"
+    },
+    "blind_grader": "/root/review_blind_grader",
+    "evaluator": "/root/review_blind_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Session dispatch used fresh contexts. Generators received only skill/reference and prompt-only files, without rubric or prior outputs. Grader received fixed rubric and generated artifacts, without skill, design rationale or expected overall outcome. Grader/evaluator is distinct from implementer and generators. Filesystem scope observations were also supplied without suggested scores."
+    }
+  },
+  "conditions": {
+    "candidate": {
+      "behavioral_verdict": "PASS",
+      "totals": {
+        "critical_passed": 20,
+        "critical_total": 20,
+        "normal_passed": 6,
+        "normal_total": 6,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "grading_sha256": "93e161d1df8edf777acccfc7cf5fda0578939f19cf460953e83482d02468ee17",
+      "generated_artifact_hashes": {
+        "design-review-concurrent-001": {
+          "response.md": "64e16d2c095b815821d50a25613ab954d1a7465efdbba984af570441f84b0c4a",
+          "docs/reviews/031_TECHNICAL_DESIGN_REVIEW.md": "06e2cade504c5d100b52fdecc9ca0a0ca998e4ae773960e09adba2025e8bd6f1"
+        },
+        "design-review-small-001": {
+          "response.md": "c3cbce91dc7192fda5511bf444f990dbf1fcac0149e4c408ee2e7b8a16ec1dfe"
+        },
+        "design-review-unknown-001": {
+          "response.md": "ec3a3d09c927fbf97b1e3aea073ac3083ae91c20cdd069434cc7f43bb25b8d6f"
+        },
+        "design-review-conditions-001": {
+          "response.md": "f05f50fe33a35d1056c338f1b2d8b6d450cad37869b364e1c99b89a26f4bd0fb"
+        },
+        "design-review-routing-001": {
+          "response.md": "4ff8861a6247332b0cdb0cbaaf0eabe99bcb18b629258dfedd8e5266c30feec8"
+        }
+      }
+    },
+    "execution_scope": {
+      "comparison": "Single candidate, no baseline",
+      "repetitions": 1,
+      "user_facing_artifacts": "Only the requested case 031 review was created; all other files are request/response transport.",
+      "input_files_unchanged": true,
+      "distribution_stage": "preview"
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/technical-design-review/TARGET.v1.json",
+      "case_suite": "evals/technical-design-review/cases.v1.json",
+      "deterministic_gate": "pass",
+      "verification": [
+        "Official skill quick_validate passed",
+        "Evaluation asset tests: 17 passed",
+        "validate_quality.py: repository validator, 62 tests, Ruff, ty and git diff check passed"
+      ],
+      "limitations": [
+        "Five known synthetic cases; no baseline, real-work validation, statistical superiority or unseen-holdout claim.",
+        "Near-miss measured instructed suitability, not automatic skill discovery.",
+        "Two generators each handled two cases in one context; case folders were isolated but model contexts within those pairs were shared.",
+        "Grading assessed artifacts and recorded independence; it did not independently audit full tool histories. Role separation is evidenced by the orchestrator session dispatch."
+      ],
+      "new_record": "required"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "design-review-concurrent-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "design-review-small-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "design-review-unknown-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "design-review-conditions-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "design-review-routing-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "plugins/happy-preview/skills/technical-design-review/SKILL.md": "4dd481f356db4b1e19ffa9518515366a8dcf7062fe49ed3e6b39cc2fa112cc69",
+    "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md": "f7feaaf9edd362471aaa3f33ffd05079985df3cfbde910d683993fde5c88366b",
+    "evals/technical-design-review/cases.v1.json": "df3cf4525b65a259a95cdb30a16b8b53cc1e1b6044a96dff5d88904a4936ea54",
+    "evals/technical-design-review/TARGET.v1.json": "481df4f57d84e075428984681cfdefb32cb6e747333bed6e5ebfb738d93eddc5"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/technical-design-review/cases.v1.json",
+      "evals/technical-design-review/TARGET.v1.json",
+      "evals/records/technical-design-review-preview-001.json"
+    ],
+    "session_only_not_persisted": [
+      "Generated review document",
+      "Raw case responses",
+      "Detailed grading with quotes and evidence"
+    ]
+  },
+  "decision_summary": "固定基準による振る舞い検証はPASS（Critical 20/20、通常6/6、禁止行為と重大な誤適用0）。happy-previewで試用を継続する。通常pluginへの正式採用や実利用での効果を確認したという判定ではない。"
+}

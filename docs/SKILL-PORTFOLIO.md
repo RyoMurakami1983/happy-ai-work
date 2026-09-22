@@ -12,13 +12,14 @@
 - .NET専門workflow: `dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
 - 横断workflow: `repo-onboarding`、`debug-and-fix`
-- 明示オーケストレーション: `coding`
 - 業務理解の構造化収集: `business-understanding-survey`
 - 開発成果物: `to-prd`、`technical-design`、`implementation-plan`、`implement`
 
 ## プレビュー配布
 
 `happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`、`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+
+`technical-design-review`もプレビューとして追加する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
 
 ## Yohakuの境界
 
@@ -48,9 +49,14 @@ homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた�
 
 ## Workflow再編
 
+- `domain-modeling`は、合意済みの目的・要件からドメインのモデルと業務上の契約を導く。用語整理だけなら`CONTEXT.md`等を更新し、正式なモデル化が必要な場合はドメイン文書に条件・境界を残す。目的・要件の正本は`to-prd`、技術構造は`technical-design`が担当する。[再定義の判断記録](design/006_DOMAIN_MODELING.md)を参照する。
 - 旧`design-and-plan`は、構造判断を行う`technical-design`と、実行順を作る`implementation-plan`へ分割した。
 - 旧`debug`は、原因説明で止まらず元症状をgreenへ戻す`debug-and-fix`へ置換した。
-- `coding`以外は暗黙選択を維持する。書込みskillの安全性はskill discoveryを無効化せず、実際の操作前の権限確認で守る。
+- 各skillは暗黙選択を維持する。書込みskillの安全性はskill discoveryを無効化せず、実際の操作前の権限確認で守る。
+
+## Coding routerの廃止（2026-09-22）
+
+利用者が使用しないため、`coding`の配布を終了する。個別skillを直接利用できるので代替routerは新設しない。関連する入口と専用の検証を除去する。`interview-with-docs`の用語整理／条件付きモデリングは、不要な正式モデリングを避ける独立した役割があるため維持する。設計レビューも必要な案件で個別に利用する。
 
 ## 移植しないもの
 

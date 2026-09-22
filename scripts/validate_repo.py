@@ -45,7 +45,6 @@ SECRET_RE = re.compile(
 )
 REQUIRED_CODING_SKILLS = {
     "ci-debug",
-    "coding",
     "debug-and-fix",
     "deep-review",
     "domain-modeling",
@@ -66,6 +65,7 @@ REQUIRED_CODING_SKILLS = {
     "wpf",
 }
 RETIRED_CODING_SKILLS = {
+    "coding",
     "debug",
     "design-and-plan",
     "implementation-eval-gate",
@@ -191,20 +191,6 @@ def validate_skills(failures: list[str]) -> None:
     retired = RETIRED_CODING_SKILLS & coding_skills
     if retired:
         fail(f"happy-coding: retired skills are still public {sorted(retired)}", failures)
-
-    coding_policy = (
-        ROOT
-        / "plugins"
-        / "happy-coding"
-        / "skills"
-        / "coding"
-        / "agents"
-        / "openai.yaml"
-    )
-    if not coding_policy.exists():
-        fail("coding: agents/openai.yaml is missing", failures)
-    elif "allow_implicit_invocation: false" not in coding_policy.read_text(encoding="utf-8"):
-        fail("coding: implicit invocation must be disabled", failures)
 
     core_skills = {
         skill_file.parent.name

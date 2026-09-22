@@ -1,0 +1,44 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-09-22T14:44:19.8005520+09:00",
+  "base_revision": "befeda006fc5323f64f76d75f370631857b49a44",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "evaluation_question": "合意済み入力から設計上の保証を検証し、問題・不足・受容条件に合った判定と戻り先を返せるか",
+  "hypothesis": "根拠、反例、判定境界の明示により、誤ったPASSと過剰な設計要求を防げる",
+  "counter_hypothesis": "追加手順が形式的な判定や過剰な不足確認を誘発する可能性がある",
+  "artifact_hashes": {
+    "plugins/happy-preview/skills/technical-design-review/SKILL.md": "4dd481f356db4b1e19ffa9518515366a8dcf7062fe49ed3e6b39cc2fa112cc69",
+    "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md": "f7feaaf9edd362471aaa3f33ffd05079985df3cfbde910d683993fde5c88366b",
+    "evals/technical-design-review/cases.v1.json": "df3cf4525b65a259a95cdb30a16b8b53cc1e1b6044a96dff5d88904a4936ea54"
+  },
+  "execution": {
+    "repetitions": 1,
+    "maximum_iterations": 2,
+    "generator_isolation": "Fresh subagents receive only skill, relevant reference and prompt-only files. No rubric, design rationale, prior outputs or expected verdict. Each case has a separate temporary directory; cases assigned to the same generator share its context.",
+    "blind_grading": "A fresh grader receives only fixed rubric and generated outputs. No skill text, implementation rationale or expected overall outcome.",
+    "observation": "Grade semantic findings, verdict, routing, artifact existence and write boundaries. Near-miss measures instructed suitability judgment, not automatic discovery."
+  },
+  "gate": {
+    "critical": "20/20",
+    "normal": "At least 5/6, report omissions",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "deterministic": "Official quick_validate, eval validator and repository quality entrypoint pass",
+    "limits": "Known public synthetic cases; one run, no baseline comparison, no hold-out or statistical claims"
+  },
+  "retention": {
+    "public_keep": [
+      "versioned synthetic cases",
+      "frozen manifest",
+      "sanitized append-only record"
+    ],
+    "session_only": [
+      "generated review",
+      "raw responses",
+      "detailed grading"
+    ],
+    "holdout": "not-required"
+  }
+}

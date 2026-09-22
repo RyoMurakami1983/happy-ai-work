@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "record_id": "to-prd-purpose-adoption-001",
+  "target_revision": "45cc019a52ac953cafd849f800682cab167124e5 plus to-prd instructions frozen by evals/to-prd-purpose/TARGET.v1.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "adopted",
+  "evaluated_at": "2026-09-22T13:49:57.5054430+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Bounded comparison of public synthetic known cases; no unseen-holdout or overfitting-resistance claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "baseline": "/root/generate_cedar",
+      "current": "/root/generate_maple"
+    },
+    "blind_grader": "/root/blind_grader",
+    "evaluator": "/root/blind_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Fresh condition generators received only one instruction snapshot and the same prompts, without rubric or prior outputs. The fresh grader/evaluator read only the fixed rubric and generated artifacts under opaque labels; it did not read the skill, manifest or version mapping and is distinct from implementer and both generators. Grader and evaluator are the same independent agent."
+    }
+  },
+  "conditions": {
+    "baseline": {
+      "blind_label": "cedar",
+      "totals": {
+        "critical_passed": 18,
+        "critical_total": 18,
+        "normal_passed": 8,
+        "normal_total": 9,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "grading_sha256": "bab7d96ddff42664314d6146f349bf2d9c575564d69bb9fa45de1e04db50745f",
+      "generated_artifact_hashes": {
+        "to-prd-purpose-confirmed-001": {
+          "CONTEXT.md": "267f904a62a0ef648304bb4d62758e4797df04a9f4e84e23c2d3d26d937a4a8e",
+          "docs/prd/021_PRD.md": "a96c3ac6b57abab9527f3e0211fe34c1d773cf74f880eff702dcd4f61278dfb2",
+          "response.md": "46ceb3259c025d9e0d1c8b5f6eac355ebae1f612cab0419cb1c6da37d6786716"
+        },
+        "to-prd-purpose-design-only-001": {
+          "response.md": "5019dfa0d8a7b04c01a77560ef1c481ee1605fd79ac6422cfe36efab376559e3"
+        },
+        "to-prd-purpose-gap-001": {
+          "CONTEXT.md": "ca909ab61d2d5a05b12f39b19f2f64aa3d484ebc582cdce45f51fb62d3e72ab8",
+          "docs/prd/023_PRD.md": "1bd408714e20e90e2cefe9aed68a03a45e3668fae4b188c08e862aba0416fa71",
+          "response.md": "1088a1466a87ca68e19e089a3c1a2bdfc0bd9ad0eaaf87fb5c54757e6204af90"
+        },
+        "to-prd-purpose-small-001": {
+          "response.md": "7b3101e39798acaf0d08a9fcd45b94720e2e5fc51004e4f58444bef3b8d6d597"
+        },
+        "to-prd-purpose-unknown-001": {
+          "CONTEXT.md": "2cda4ad47c58d82c74b473b2a0f87b53daa9d64b3c5ba8751d7c36c6ed65bc8d",
+          "docs/prd/022_PRD.md": "94b7ad4e54d1a5130a28c1b123ce9d58a5d5a979b16ea1df6d924bf1e260470a",
+          "response.md": "39004ccb658a923eebb767c1015dc3bca4060fbf31311c64af575a2f92e4dfd0"
+        }
+      }
+    },
+    "current": {
+      "blind_label": "maple",
+      "totals": {
+        "critical_passed": 18,
+        "critical_total": 18,
+        "normal_passed": 9,
+        "normal_total": 9,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "grading_sha256": "03cdb74c0a068369214343fc1fb8bafb69ecc424939c8646069519aa417467d8",
+      "generated_artifact_hashes": {
+        "to-prd-purpose-confirmed-001": {
+          "CONTEXT.md": "fc3fdf0176bb66a990ae63c9f2c3aab59d58bb300a0ae0996ad84e669349ea07",
+          "docs/prd/021_PRD.md": "021e5bbdd0738c607d488071e3d51239b5acf66210b00de0a6049793fb8bea59",
+          "response.md": "7f9892b6fb706e7e2526078eac4d3465c031521d68edc46291d0aa4bccccdd67"
+        },
+        "to-prd-purpose-design-only-001": {
+          "response.md": "e3dbb2c0684efe9acdd213dc116bc6534a5caae671cc39bc6f19bfb22cfe335a"
+        },
+        "to-prd-purpose-gap-001": {
+          "CONTEXT.md": "5e14c64fc2d9eb0c72412a861be843ae364c84f8e70b525532a0c0f7e0aae8b0",
+          "docs/prd/023_PRD.md": "5280231fc7c138252e8640b8c517650a2d3c4db1646a2701acabb385531ed827",
+          "response.md": "116637e9f4fda35f76767a81f81700b1eb000e1775b7acc2eaa0e47474d0cbdb"
+        },
+        "to-prd-purpose-small-001": {
+          "response.md": "ad5b9cecd68875d706cfd05ac4a853dc0485c278bae92368b593962017d0cb46"
+        },
+        "to-prd-purpose-unknown-001": {
+          "CONTEXT.md": "bbff13575dc6a10e6014b5342c5f63c3c179486b8f2c43a4349a3495de0d6571",
+          "docs/prd/022_PRD.md": "441b2be294365ccc8065c26df4511661373e373eb664ac5d94021494949fdf7c",
+          "response.md": "4828d86f7911100c374ef65ad431b137a270267f3fab17452a5a93f021b1fb0e"
+        }
+      }
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/to-prd-purpose/TARGET.v1.json",
+      "case_suite": "evals/to-prd-purpose/cases.v1.json",
+      "deterministic_gate": "pass",
+      "verification": [
+        "official quick_validate: pass with Python UTF-8 mode",
+        "public evaluation validator: pass",
+        "artifact policy: 4 tests passed",
+        "evaluation assets: 17 tests passed",
+        "validate_quality.py: 62 tests, repository validator, Ruff, ty and git diff check passed"
+      ],
+      "observation": "Baseline and current both passed all Critical items. Current additionally states that the confirmed requirement gap must update the PRD and AC before returning to modeling.",
+      "limitations": [
+        "One run per condition using five public known cases; no statistical superiority or unseen-holdout claim.",
+        "The near-miss measured instructed suitability judgment, not automatic skill discovery.",
+        "Each condition used one generator for all five cases; separate case directories do not imply separate model contexts."
+      ],
+      "new_record": "required"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline/to-prd-purpose-confirmed-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/to-prd-purpose-unknown-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/to-prd-purpose-gap-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/to-prd-purpose-small-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/to-prd-purpose-design-only-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current/to-prd-purpose-confirmed-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current/to-prd-purpose-unknown-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current/to-prd-purpose-gap-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current/to-prd-purpose-small-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "current/to-prd-purpose-design-only-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/to-prd-purpose/BASELINE.md": "1c38f3e7ad7d5a5b5bf7ccf76deea2bbc9a57e9d84a8df6971e6ddcc2b5494fd",
+    "evals/to-prd-purpose/cases.v1.json": "e506411d927800807da61dd5aa26f8ee3f40db3e87c537cadc41a388a3a6c0ed",
+    "evals/to-prd-purpose/TARGET.v1.json": "cb24864cbc94c3d91f1648c27a88155454848262dba01358ff862ecf575e3dfb",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/to-prd-purpose/BASELINE.md",
+      "evals/to-prd-purpose/cases.v1.json",
+      "evals/to-prd-purpose/TARGET.v1.json",
+      "evals/records/to-prd-purpose-adoption-001.json"
+    ],
+    "session_only_not_persisted": [
+      "Generated PRDs, CONTEXT and responses are retained only under git-ignored docs/local_skill_evals for this session; not included in public evaluation assets.",
+      "Detailed criterion grading remains in the same ignored local session directory; only counts, minimal findings and hashes are retained publicly."
+    ]
+  },
+  "decision_summary": "採用。5ケースの独立比較で必須項目は旧版・改善版とも18/18、禁止事項と重大誤起動は観測範囲で0。補助項目は旧版8/9、改善版9/9で、後工程から戻った要件不足の確認結果をPRD・ACへ反映する手順が明示された。全Criticalの非劣性と事前固定した採用水準を満たし、品質検証も通過。各版1回の比較であり、一般的な優位性や自動選択精度は主張しない。"
+}

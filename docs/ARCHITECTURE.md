@@ -30,10 +30,9 @@ CodexにはCopilotの`applyTo`付き`*.instructions.md`と同じ配布形式が�
 - 構想段階の候補は`incubator/`へ置きます。基本検証を通った試用skillは`happy-preview`で任意配布し、実利用確認後に通常pluginへの採用を判断します。
 - portfolio判断は[SKILL-PORTFOLIO.md](SKILL-PORTFOLIO.md)を正本とします。
 
-## Workflow orchestration
+## Workflowの責務
 
-- `coding`は明示呼び出し専用のrouterとし、`agents/openai.yaml`で`allow_implicit_invocation: false`を指定します。
-- routerは子skillの手順を複製せず、工程のentry / exit、skip理由、evidence、戻り先だけを管理します。
+- 個別skillを依頼と入力artifactに応じて使い、必要な次工程へhandoffします。
 - PRDはwhy / who / what、technical designはhow、implementation planはorder、implementはcodeとslice gateを所有します。
 - 工程内だけで使う評価役は公開leaf skillにせず、`implement/references/`と動的subagentへ置きます。
 - `debug-and-fix`の並列調査は、red/green commandを固定した後のread-only evidence gatheringに限定します。

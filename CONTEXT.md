@@ -14,7 +14,7 @@
 - CodexデスクトップアプリとCodex CLIを対象にする。
 - Windowsを第一対象とし、Ubuntu CIとWSL2の早期検証を行う。
 - `happy-core` は仕事・学習・ライティング・環境初期化・ふりかえり・改善ループ・Issue intake・skill評価を扱う。Issue操作自体を再実装せず、実装backlogと軽いfeedbackの行き先を判断する。
-- `happy-coding` は明示オーケストレーション、要件整理、technical design、implementation plan、実装、言語／framework支援、debug-and-fix、レビュー、CI対応を扱う。
+- `happy-coding` は要件整理、technical design、implementation plan、実装、言語／framework支援、debug-and-fix、レビュー、CI対応を扱う。
 - 構想段階の候補はplugin外の`incubator/`へ置く。基本検証を通った試用skillは`happy-preview`で任意配布し、実利用で価値を確認してから通常pluginへ移す。
 - Copilot CLI連携は初版の必須機能にしない。
 
