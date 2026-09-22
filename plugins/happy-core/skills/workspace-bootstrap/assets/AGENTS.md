@@ -22,3 +22,7 @@
 - 変更範囲に合うfocused checkを先に実行する。
 - 秘密情報、生成物、大容量artifactをcommitしない。
 - 詳細workflowはskillsへ置き、AGENTS.mdを肥大化させない。
+
+## Code Review Rules
+
+- `<repoの根拠で確認でき、見逃すと重大な誤動作・データ損失・権限／security境界の破れ・誤った正常終了につながる制約だけに置換。該当がなければsectionごと省く>`
