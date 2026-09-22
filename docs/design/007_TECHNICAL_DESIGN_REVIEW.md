@@ -40,3 +40,7 @@ Constitution 1.0.0の正確さ、評価整合性、人間の所有権、最小�
 2026-09-22の独立forward testでは、5件の必須条件20/20、通常条件6/6を満たし、確認範囲で禁止行為・重大な誤適用は0だった。同時引受の保証欠落をREVISE、未合意の保持・閲覧条件をBLOCKED、局所変更をPASS、受容済みの軽微な条件をPASS_WITH_CONDITIONSに分けた。設計作成・実装差分・モデル・UI・業務理解への振り分けも確認した。自動発見精度と実利用は未検証。
 
 公式quick_validateとrepo品質入口（62 tests、repo validator、Ruff、ty、diff check）が成功した。対象版と独立性、ケース別集計、限界は[評価記録](../../evals/records/technical-design-review-preview-001.json)、事前固定した条件は[TARGET](../../evals/technical-design-review/TARGET.v1.json)、再利用する依頼と基準は[cases](../../evals/technical-design-review/cases.v1.json)を参照する。
+
+## 後続判断（2026-09-22）
+
+利用者の合意により、使われないcoding routerを削除した。DR-01のcoding入口への接続は廃止し、個別skillのdescriptionと既存のtechnical-designのhandoffで担当を区別する。interview-with-docsの条件付きモデリングと新規レビューskillは維持する。この変更はレビューskillの本文・基準を変えず、上記評価の対象版と結果は保持する。
