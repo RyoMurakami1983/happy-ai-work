@@ -41,6 +41,8 @@ return path:
 5. 複数の依存slice、HITL/AFK分離、実行順の合意が必要なら `implementation-plan` を使う。単一sliceなら省略する。
 6. `implement` で実装し、内蔵eval gateを各sliceで通す。
 
+設計後、利用者の依頼・repo規約・変更riskから独立レビューが必要なら、計画・実装へ進む前に、利用可能な `technical-design-review` または同じ責務の独立レビュアーへ渡す。必要性と省略理由はtechnical-designのreview readinessに従い、プレビューpluginの導入を必須にしない。`REVISE` は指摘の担当へ、`BLOCKED` は不足の所有者へ戻し、解消後に再確認する。`PASS_WITH_CONDITIONS` は記録された受容条件を次工程へ引き継ぐ。
+
 interactive UIでHITL review contractがある場合は、最初のreviewable milestone以降を人間のruntime reviewへ渡す。PR作成が明示的に許可されているときだけ、PRを完成報告ではなくreview surfaceとして開くか更新できる。その場合は、PR URL、`code complete`／`runtime verified`／`user validated`の状態、残存review gate、merge前条件を直ちに利用者へ伝える。
 
 人間のruntime reviewと自動または独立reviewは、同じ変更を別観点から確認でき、互いをブロックしない場合は並行してよい。runtime feedbackで再現可能な不具合が見つかったら`debug-and-fix`、差分全体の指摘は`deep-review`へ渡し、修正後に該当gateを再実行する。
@@ -56,6 +58,8 @@ GitHub Actionsの失敗なら `ci-debug` を優先する。CI外でも同じ失�
 ### Review
 
 差分全体の独立レビューは `deep-review` へ渡す。指摘修正まで依頼されている場合だけ、指摘確定後に `implement` または `debug-and-fix` を使う。
+
+実装前の設計案のレビューなら、利用可能な `technical-design-review` または独立レビュアーへ渡す。設計作成の依頼は `technical-design` の担当とする。
 
 いずれの経路でも変更を作った場合、PR前、高risk、またはユーザーが独立レビューを求めたときは `deep-review` を使う。
 

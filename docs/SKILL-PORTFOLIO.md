@@ -20,6 +20,8 @@
 
 `happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`、`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
 
+`technical-design-review`もプレビューとして追加する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
+
 ## Yohakuの境界
 
 `yohaku`は、人が正しく理解・判断・行動できる情報量と見せ方を整える。文章の企画は`writing-plan`、主張や構成の深い推敲は`deep-edit`、領域固有の判断・検証は対象skillが担当する。実装の簡素化は依頼範囲にある場合だけ扱う。

@@ -22,6 +22,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "interactive-review-loop",
                 "ui-design",
                 "to-prd-purpose",
+                "technical-design-review",
             },
         )
         for path in suites:
