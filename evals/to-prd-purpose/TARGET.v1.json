@@ -1,0 +1,57 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-09-22T13:37:34.9114129+09:00",
+  "base_revision": "45cc019a52ac953cafd849f800682cab167124e5",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "evaluation_question": "目的・要件・ACの明示化により、根拠と対応を追えるPRDが得られ、未確定事項・技術境界・小規模例外を保持できるか",
+  "hypothesis": "目的から条件と検証への変換手順は、対応の欠落を減らす",
+  "counter_hypothesis": "旧版でも同等の成果物が得られ、追加指示は出力を長くするだけかもしれない",
+  "conditions": {
+    "baseline": {
+      "artifact": "evals/to-prd-purpose/BASELINE.md",
+      "sha256": "1c38f3e7ad7d5a5b5bf7ccf76deea2bbc9a57e9d84a8df6971e6ddcc2b5494fd",
+      "blind_label": "cedar"
+    },
+    "current": {
+      "artifact": "plugins/happy-coding/skills/to-prd/SKILL.md",
+      "sha256": "1cf98f651743b2831cf34928f3370e1b39a070d799da217fbc891632ce71aab3",
+      "blind_label": "maple"
+    }
+  },
+  "suite": {
+    "artifact": "evals/to-prd-purpose/cases.v1.json",
+    "sha256": "e506411d927800807da61dd5aa26f8ee3f40db3e87c537cadc41a388a3a6c0ed"
+  },
+  "execution": {
+    "repetitions_per_condition": 1,
+    "maximum_iterations": 2,
+    "generator_isolation": "Fresh subagent per condition; only condition instructions and prompts, no rubric, prior outputs or condition mapping. Cases use separate local workspaces.",
+    "blind_grading": "Fresh grader receives the fixed rubric and both opaque output folders, without condition mapping or skill instructions. Evaluator is separate from implementer and generators.",
+    "observation": "Inspect generated PRD contents, artifact existence and handoff; grade semantic correspondence, not exact headings or IDs. For near-miss, judge explicit invocation suitability only; automatic skill selection is not measured."
+  },
+  "gate": {
+    "critical": "18/18 in current",
+    "normal": "At least 8/9 in current; list any omission",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "noninferiority": "Current must not lose any Critical item passed by baseline",
+    "deterministic": "Official skill quick_validate, public eval validator, existing artifact-policy tests and repository quality entrypoint pass",
+    "limits": "One execution per condition, public known cases, no unseen-holdout or statistical improvement claim"
+  },
+  "retention": {
+    "public_keep": [
+      "versioned synthetic case suite",
+      "baseline instruction snapshot",
+      "frozen manifest",
+      "sanitized append-only result"
+    ],
+    "local_only": [
+      "generated PRDs",
+      "condition responses",
+      "detailed grading"
+    ],
+    "holdout": "not-required"
+  }
+}

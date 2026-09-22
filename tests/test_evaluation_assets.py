@@ -15,7 +15,14 @@ class EvaluationAssetTests(unittest.TestCase):
         suites = sorted((ROOT / "evals").glob("*/cases.v*.json"))
         self.assertEqual(
             {path.parent.name for path in suites},
-            {"skill-eval", "improvement-loop", "instruction-finalization", "interactive-review-loop", "ui-design"},
+            {
+                "skill-eval",
+                "improvement-loop",
+                "instruction-finalization",
+                "interactive-review-loop",
+                "ui-design",
+                "to-prd-purpose",
+            },
         )
         for path in suites:
             payload = json.loads(path.read_text(encoding="utf-8"))
