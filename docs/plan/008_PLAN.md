@@ -15,9 +15,9 @@ Issue [#33](https://github.com/RyoMurakami1983/happy-ai-work/issues/33) の共�
 - [x] Issueと現行指示・テスト・文書規約の確認
 - [x] PRDと設計の保存
 - [x] Slice 1: 共通方針の着手判断を配布テンプレートへ融合
-- [x] Slice 2: 相談・賛意・変更依頼の両方向を確認（公開caseと隔離した更新後の試行）
+- [ ] Slice 2: 相談・賛意・変更依頼の行動評価（公開caseは作成済み。正式な評価記録は未作成）
 - [x] 個人ホームへの適用判断と、適用する場合の差分確認
-- [x] Completion handoff
+- [ ] Completion handoff（Slice 2の評価後）
 
 ## Design Artifacts / Fixed Decisions
 
@@ -73,8 +73,8 @@ Issue [#33](https://github.com/RyoMurakami1983/happy-ai-work/issues/33) の共�
 - `home_bootstrap.py --dry-run` は個人ホームの第一項目だけの差分を示し、書き込まなかった。
 - 利用者の明示承認後に`--apply`で個人ホームの管理領域を更新し、元ファイルのbackupを作った。適用後、配布テンプレートとの一致を確認した。
 - 公式`skill-creator`の`quick_validate.py`は通過した。
-- 更新後の共通方針を読ませた独立作業者2名で、隔離した小規模試行を実施した。相談から追加の比較依頼へ続く2ターンでは設定ファイルを変更せず、誤字修正の明確な依頼では対象の`bold`だけを「大字」から「太字」へ修正し、JSON読込と`line_break`の保持を確認した。親作業者が両方の実ファイルを再読して照合した。
-- この試行は公開caseによる更新後の各1回であり、旧版との比較、未見hold-out、統計的な効果の主張はしない。
+- 更新後の共通方針を読ませた独立作業者2名による探索的な隔離試行では、相談から追加の比較依頼へ続く2ターンで設定ファイルを変更せず、明確な誤字修正依頼では対象の`bold`だけを修正した。親作業者が実ファイルを再読して照合した。
+- この試行には事前固定のTARGET manifestとsanitize済みの最終recordがない。`docs/EVALUATION_ASSETS.md`に従う正式な行動評価や採用判定の証拠として扱わない。旧版との比較、未見hold-out、複数環境での再現性も未確認である。
 
 ## Return Conditions
 

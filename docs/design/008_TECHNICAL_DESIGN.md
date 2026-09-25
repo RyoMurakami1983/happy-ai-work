@@ -63,7 +63,7 @@ Normative source: PRD 008のAC-01〜06、repo `AGENTS.md` の恒久規約の根�
 | `docs/plan/008_PLAN.md` | AC-01〜06 | 今回の実行順と個人適用境界を追跡するため |
 | `evals/consultation-start/cases.v1.json` | AC-01〜03 | 誤着手と過剰停止を同じ観測基準で評価するため |
 
-Exclusions: repoへの共通文言複製（rejected）、全変更前の確認（rejected）、Issue #17の再実装（non-goal）。個人ホームへの適用は2026-09-25に利用者が明示承認し、dry-runとbackupを経て実施した。更新後の隔離試行は実施済み。旧版との比較と複数環境での再現性は未確認。
+Exclusions: repoへの共通文言複製（rejected）、全変更前の確認（rejected）、Issue #17の再実装（non-goal）。個人ホームへの適用は2026-09-25に利用者が明示承認し、dry-runとbackupを経て実施した。更新後の探索的な隔離試行は参考観測であり、正式な行動評価と採用判定は未実施。
 
 ```yaml
 artifacts:
