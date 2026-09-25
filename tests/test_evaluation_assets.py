@@ -23,6 +23,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "ui-design",
                 "to-prd-purpose",
                 "technical-design-review",
+                "consultation-start",
             },
         )
         for path in suites:
