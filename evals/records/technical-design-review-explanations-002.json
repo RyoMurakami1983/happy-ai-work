@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "record_id": "technical-design-review-explanations-002",
+  "target_revision": "43dbfdf55a32d7805dc1b71047d260acefa07f5d plus instruction artifacts fixed by CANDIDATE.v2.json",
+  "constitution_version": "1.0.0",
+  "criteria_version": "2.0.0",
+  "decision_profile_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-26T16:02:33.413332+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Bounded comparison on known public synthetic scenarios; no unseen-generalization claim."
+  },
+  "previous_record": {
+    "status": "preserved",
+    "record_id": "technical-design-review-preview-001"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "baseline": "/root/generate_p",
+      "candidate": "/root/generate_q"
+    },
+    "blind_grader": "/root/blind_grader",
+    "evaluator": "/root/blind_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Fresh fork_turns=none contexts. Generators read only assigned skill/reference and prompt-only requests. Grader read only fixed rubric and anonymous p/q responses. No condition mapping or expected outcome supplied. Shared filesystem scopes are procedural; no claim of OS enforcement."
+    }
+  },
+  "conditions": {
+    "baseline": {
+      "behavioral_verdict": "FAIL",
+      "totals": {
+        "critical_passed": 13,
+        "critical_total": 13,
+        "normal_passed": 11,
+        "normal_total": 15,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "responses_sha256": "8c9668997397f1eab08e84a2c0aeb381a5cba4222fdbeddb1f933757e96112f9"
+    },
+    "candidate": {
+      "behavioral_verdict": "PASS",
+      "totals": {
+        "critical_passed": 13,
+        "critical_total": 13,
+        "normal_passed": 15,
+        "normal_total": 15,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "responses_sha256": "8f0a513111d8bceb3d1e9de0516a00e6e4982743a1bc42d411a9543df4dc3201"
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/technical-design-review/CANDIDATE.v2.json",
+      "case_suite": "evals/technical-design-review/cases.v2.json",
+      "criteria_manifest": "evals/technical-design-review/TARGET.v2.json",
+      "grading_sha256": "ccdc303b6b114d2343bec0a1605a9eb4981b9915da489fbb43e3e9563767a1d4",
+      "verification": [
+        "Official quick_validate passed in Python UTF-8 mode",
+        "Seven history evidence regression tests passed after five expected initial failures",
+        "validate_quality.py passed: repository/evaluation validators, 80 tests, Ruff, ty, git diff --check"
+      ],
+      "limitations": [
+        "Five public synthetic cases, one generation per condition; no statistical claim or unseen holdout",
+        "Fresh context per condition, but five cases share that condition context",
+        "Near-miss tests instructed routing, not automatic discovery",
+        "AC-08 real user comprehension remains unmeasured; user authorized PR and merge after isolated verification on 2026-09-27",
+        "Filesystem isolation is an explicit read/write scope, not an OS-level sandbox boundary",
+        "Candidate hashes captured from isolated input; criteria were frozen before generation"
+      ],
+      "new_record": "required"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline/decision",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 2,
+      "normal_total": 4,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/agreed-defect",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 3,
+      "normal_total": 4,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/measurement",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 2,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/bounded-changes",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 3,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "baseline/scope",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "candidate/decision",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 4,
+      "normal_total": 4,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "candidate/agreed-defect",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 4,
+      "normal_total": 4,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "candidate/measurement",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 3,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "candidate/bounded-changes",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 3,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "candidate/scope",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "plugins/happy-preview/skills/technical-design-review/SKILL.md": "3818ff4bbf898b142c7b7ce2e62157e0f95571ee7763cfe3b224404ec4755e2f",
+    "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md": "33367c107b7e0a6e8ce35a3a8f5825519b4a64a277fcbc32f22da1967fb43b01",
+    "evals/technical-design-review/cases.v2.json": "ab326f05ff8f13edbbb18fe8af8c4d9d38b7c9880a309b2b5b32f8439b15d792",
+    "evals/technical-design-review/TARGET.v2.json": "b4c26f6d51009d98e3f093d3b085793fa9ba8f0cc6ca1d992d1a3b923c7815d2",
+    "evals/technical-design-review/CANDIDATE.v2.json": "dd135121f71a422d2c970ccda35b9b8573d852eba5a196671b877c47129e59cb",
+    "evals/technical-design-review/snapshots/v1/SKILL.md": "4dd481f356db4b1e19ffa9518515366a8dcf7062fe49ed3e6b39cc2fa112cc69",
+    "evals/technical-design-review/snapshots/v1/references/purpose-driven-design-review.md": "f7feaaf9edd362471aaa3f33ffd05079985df3cfbde910d683993fde5c88366b"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "plugins/happy-preview/skills/technical-design-review/SKILL.md",
+      "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md",
+      "evals/technical-design-review/cases.v2.json",
+      "evals/technical-design-review/TARGET.v2.json",
+      "evals/technical-design-review/CANDIDATE.v2.json",
+      "evals/technical-design-review/snapshots/v1/SKILL.md",
+      "evals/technical-design-review/snapshots/v1/references/purpose-driven-design-review.md",
+      "evals/records/technical-design-review-explanations-002.json"
+    ],
+    "session_only_not_persisted": [
+      "Generated responses",
+      "Detailed grading and quotations",
+      "Agent transport files"
+    ]
+  },
+  "decision_summary": "固定した説明品質基準で旧版は通常11/15、新版は15/15。両版ともCritical13/13、禁止行為・重大な誤振分け0。新版は今回の基準を通過し、happy-previewで試用を継続する。旧版の過去評価を変更せず、新しい説明品質基準での差として記録する。実利用理解は未確認で、一般的な優位性や通常pluginへの昇格を主張しない。"
+}

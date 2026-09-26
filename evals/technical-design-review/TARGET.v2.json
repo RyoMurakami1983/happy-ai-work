@@ -1,0 +1,31 @@
+{
+  "record_version": 2,
+  "frozen_at": "2026-09-26T15:51:55.264641+00:00",
+  "base_revision": "43dbfdf55a32d7805dc1b71047d260acefa07f5d",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "2.0.0",
+  "evaluation_question": "判定の境界を保ち、問題・推奨・利用者の判断・次の行動が読み取れるか",
+  "hypothesis": "理由付き推奨と必要な判断の明示で利用者の行動が読み取れる",
+  "counter_hypothesis": "指示の追加が冗長化、不要な質問、過剰設計を増やす",
+  "execution": {
+    "repetitions": 1,
+    "maximum_iterations": 2,
+    "generator_isolation": "Fresh context per condition; five cases in each context; only skill, reference and prompt-only requests. No rubric, prior outputs or condition labels.",
+    "blind_grading": "Fresh grader receives frozen rubric and anonymous outputs, not condition mapping or skill.",
+    "observation": "Semantic requirements and prohibited actions; scope case measures instructed routing, not automatic discovery."
+  },
+  "gate": {
+    "critical": "all",
+    "normal": "at least 12 of 15 overall; each of decision/agreed-defect/measurement has at least 2 normal requirements met",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "decision_invariants": "No weakened verdict, invented acceptance or implementation authority",
+    "limits": "Public synthetic cases, no unseen holdout or statistical superiority. Real user comprehension remains unmeasured; user authorized merge after closed evaluation on 2026-09-27."
+  },
+  "artifact_hashes": {
+    "evals/technical-design-review/cases.v2.json": "ab326f05ff8f13edbbb18fe8af8c4d9d38b7c9880a309b2b5b32f8439b15d792",
+    "evals/technical-design-review/snapshots/v1/SKILL.md": "4dd481f356db4b1e19ffa9518515366a8dcf7062fe49ed3e6b39cc2fa112cc69",
+    "evals/technical-design-review/snapshots/v1/references/purpose-driven-design-review.md": "f7feaaf9edd362471aaa3f33ffd05079985df3cfbde910d683993fde5c88366b"
+  }
+}

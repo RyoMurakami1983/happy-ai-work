@@ -233,51 +233,6 @@ def validate_case_suite(path: Path, failures: list[str], schema: dict[str, Any])
     walk_fields(payload, path=path, failures=failures)
 
 
-def historical_artifacts(
-    path: Path, payload: dict[str, Any], failures: list[str]
-) -> dict[str, Path]:
-    """Resolve explicitly archived evidence without editing its immutable record."""
-    if path.resolve().parent != (ROOT / "evals" / "records").resolve():
-        return {}
-    history_path = ROOT / "evals" / "history" / path.name
-    if not history_path.exists():
-        return {}
-    history = load_json(history_path, failures)
-    label = str(history_path.relative_to(ROOT))
-    if not isinstance(history, dict) or set(history) != {"record_sha256", "artifacts"}:
-        failures.append(f"{label}: invalid history mapping")
-        return {}
-    if history["record_sha256"] != hashlib.sha256(path.read_bytes()).hexdigest():
-        failures.append(f"{label}: archived record hash mismatch")
-        return {}
-    mappings = history["artifacts"]
-    hashes = payload.get("artifact_hashes")
-    if not isinstance(mappings, dict) or not mappings or not isinstance(hashes, dict):
-        failures.append(f"{label}: invalid history artifacts")
-        return {}
-    result: dict[str, Path] = {}
-    for original, snapshot in mappings.items():
-        if original not in hashes:
-            failures.append(f"{label}: unknown artifact: {original}")
-            continue
-        if not isinstance(snapshot, str):
-            failures.append(f"{label}: invalid snapshot path")
-            continue
-        relative = Path(snapshot)
-        candidate = (ROOT / relative).resolve()
-        if (
-            relative.is_absolute()
-            or ROOT.resolve() not in candidate.parents
-            or (ROOT / "evals").resolve() not in candidate.parents
-            or "snapshots" not in candidate.relative_to(ROOT.resolve()).parts
-            or not candidate.is_file()
-        ):
-            failures.append(f"{label}: snapshot is missing or outside eval snapshots: {snapshot}")
-            continue
-        result[original] = candidate
-    return result
-
-
 def validate_record(path: Path, failures: list[str], schema: dict[str, Any]) -> None:
     payload = load_json(path, failures)
     if not isinstance(payload, dict):
@@ -333,7 +288,6 @@ def validate_record(path: Path, failures: list[str], schema: dict[str, Any]) -> 
     if public_status != "sanitized-only":
         failures.append(f"{path.relative_to(ROOT)}: public artifact must be sanitized-only")
     if isinstance(artifact_hashes, dict):
-        archived = historical_artifacts(path, payload, failures)
         root = ROOT.resolve()
         for artifact_path, expected_hash in artifact_hashes.items():
             relative = Path(artifact_path)
@@ -341,7 +295,6 @@ def validate_record(path: Path, failures: list[str], schema: dict[str, Any]) -> 
             if relative.is_absolute() or root not in candidate.parents:
                 failures.append(f"{path.relative_to(ROOT)}: artifact path escapes repository: {artifact_path}")
                 continue
-            candidate = archived.get(artifact_path, candidate)
             if not candidate.is_file():
                 failures.append(f"{path.relative_to(ROOT)}: hashed artifact is missing: {artifact_path}")
                 continue
@@ -355,8 +308,6 @@ def immutable_eval_path(changed_path: str) -> bool:
     normalized = changed_path.replace("\\", "/")
     return (
         normalized.startswith("evals/records/")
-        or normalized.startswith("evals/history/")
-        or (normalized.startswith("evals/") and "/snapshots/" in normalized)
         or normalized.startswith("evals/schema/")
         or re.fullmatch(r"evals/[^/]+/cases\.v[0-9]+\.json", normalized) is not None
     )
@@ -455,9 +406,6 @@ def main() -> int:
         for path in sorted(RECORDS.glob("*.json")):
             if "record.schema.json" in schemas:
                 validate_record(path, failures, schemas["record.schema.json"])
-    for history_path in sorted((EVALS / "history").glob("*.json")):
-        if not (RECORDS / history_path.name).is_file():
-            failures.append(f"{history_path.relative_to(ROOT)}: unknown archived record")
     validate_tracking_policy(failures)
     validate_append_only(failures)
     if failures:

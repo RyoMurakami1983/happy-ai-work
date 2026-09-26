@@ -55,3 +55,7 @@ behavioral evaluationの内部でも、decision invariantsとresponse qualityを
 完全なdecision evidenceはsanitize済み最終recordが所有する。通常のユーザー向け回答へrecord内部の固定templateを強制せず、その場の結論、安全境界、必要な次の行動を示す。recordでは`roles`、`conditions`、`previous_record`、新しい`record_id`、`retention_decision`、`mode`／`verdict`へ証拠を構造化する。
 
 recordの`artifact_hashes`はrepo内に存在する公開artifact pathとSHA-256を対応づけ、validatorが実体を照合する。baselineが現行treeに存在しないinstruction variantなら、意味要約だけで再現可能と主張せず、実際にgeneratorへ渡した公開instruction snapshotをpilot manifestとともに保持する。
+
+スキル更新後も過去recordの証拠を保持する場合は、`evals/history/<record-id>.json` にrecord自体のSHA-256（`record_sha256`）と、元artifact pathから `evals/` 内の `snapshots/` 配下の保存実体への対応（`artifacts`）を追加できる。validatorはrecordが当時のままか確認し、元の期待hashでsnapshotを検証する。これは過去の評価を現行版の成功として扱う仕組みではない。対応のないartifactと新しいrecordは現行実体に照合する。record、履歴対応表、snapshotはappend-onlyとし、旧record・旧manifestを書き換えない。
+
+履歴対応表の初回作成時に、そのrecordが参照する変更可能な実装・指示をすべて保存する。今回変更するファイルだけの部分保存にすると、後日の変更時にimmutableな対応表を拡張できない。既存の固定case・schema・manifestは元の実体を保持する。
