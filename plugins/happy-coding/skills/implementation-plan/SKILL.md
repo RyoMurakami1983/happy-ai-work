@@ -19,7 +19,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 - design handoffに`finalized_contract`がある場合は、採用済みのnormative source、exclusions、unknowns、主要target trace
 - 保存済みartifactのpath
 
-要求が不足していれば `interview-with-docs` または `to-prd`、構造判断が不足していれば `technical-design` へ戻す。単一の明確なsliceなら、重いplanを作らず短いimplementation handoffだけでよい。
+要求が不足していれば `interview-with-docs` または `to-prd`、構造判断が不足していれば `technical-design` へ戻す。[短縮条件](references/vertical-slice.md)を満たす単一の明確な変更なら、重いplanを作らず短いimplementation handoffだけでよい。省略理由と実装許可の確認・引き継ぎは省略しない。
 
 ## ワークフロー
 
@@ -32,7 +32,7 @@ description: 合意済みの要求とtechnical designを、依存順、vertical 
 
 ### 2. Vertical sliceへ分ける
 
-1 sliceは1つのユーザー行動またはacceptance conditionを主語にする。最初のsliceは必要な層を薄く縦断するtracer bulletを優先する。
+[垂直スライスの定義](references/vertical-slice.md)を読み、一つのまとまった観測可能な振る舞いを単位にする。正常・境界・失敗時など複数の受け入れ条件を同じsliceに含めてよい。最初のsliceは必要な層を薄く縦断するtracer bulletを優先する。
 
 各sliceに含めるもの:
 
@@ -60,6 +60,8 @@ DBだけ、UIだけ、testだけを先に広げるhorizontal sliceは避ける�
 - 要求の問題なら `interview-with-docs` または `to-prd` へ戻す。
 
 ### 4. Handoffを作る
+
+対象範囲と実装開始の許可を区別し、許可の状態・根拠となる利用者発言、省略工程と理由があれば引き継ぐ。計画の承認だけを実装開始の承認とみなさず、取得済みの同じ許可は聞き直さない。
 
 ```markdown
 ## Implementation Handoff

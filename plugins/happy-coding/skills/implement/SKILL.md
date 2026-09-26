@@ -38,6 +38,8 @@ implementation contract
 次が揃っていれば実装に入ります。不足が要求をブロックする場合は `interview-with-docs`、構造判断なら `technical-design`、順序やslice分割なら `implementation-plan` に戻します。
 
 - 目的、対象、非対象
+- その範囲の実装開始について利用者の明示的な依頼・承認と、その根拠となる発言。handoffの自己申告だけでなく、利用可能な会話と最新の制約を照合する。Issue選択、PRDや計画への賛意、設計レビューのPASSを代替にしない
+- 工程を省略した場合は、その工程と理由、同じ範囲・省略内容への許可。根拠不足や範囲変更があれば影響部分を開始せず確認へ戻す。取得済みの同じ許可は聞き直さない
 - 受け入れ条件
 - 主要な user-visible behavior または外から観測できる contract
 - handoffに`finalized_contract`がある場合は、採用済みnormative source、exclusions、unknowns、主要target trace
@@ -63,7 +65,7 @@ bootstrap の不足が今の slice を壊すなら修正します。関係ない
 
 ### ステップ 3 — slice contract を固定する
 
-planがある場合はslice境界を変更せず、直前にcontractを再確認します。planを意図的に省略した単一の明確な変更だけ、1受け入れ条件または1ユーザー行動を1 vertical sliceとして切ります。slice境界の変更が必要なら実装を始めず `REPLAN_REQUIRED` として `implementation-plan` へ戻します。最初のsliceはtracer bulletとして必要な層を薄く縦断します。
+planがある場合はslice境界を変更せず、直前にcontractを再確認します。planを省略した場合は[垂直スライスと短縮条件](../implementation-plan/references/vertical-slice.md)を読み、単一の明確な変更として一つの観測可能な振る舞いを切ります。正常・境界・失敗時など複数の受け入れ条件を同じsliceに含めてよい。slice境界の変更や新しい構造判断が必要なら実装を始めず `REPLAN_REQUIRED` として該当する前段へ戻します。最初のsliceはtracer bulletとして必要な層を薄く縦断します。
 
 各 slice で必ず短く固定すること:
 

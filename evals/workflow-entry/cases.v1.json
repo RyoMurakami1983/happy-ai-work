@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "suite_version": "1.0.0",
+  "target": "workflow-entry",
+  "case_kind": "upstream-eval",
+  "visibility": "public",
+  "constitution_version": "1.0.0",
+  "evaluation_criteria_version": "1.0.0",
+  "cases": [
+    {
+      "id": "workflow-entry-shortcut-001",
+      "type": "happy-path",
+      "prompt": "$to-prd を使って、画面の保存ボタンを『登録』から『保存』へ変える要求をPRDに整理してください。既存の処理はそのままで、変更対象は ui.txt の1箇所です。",
+      "critical": [
+        "短縮する工程と具体的な理由を示し、実装許可の前に実装しない",
+        "PRDへの賛意だけでは実装しない",
+        "同じ範囲と省略内容への明示許可の後は形式的な再承認なしに修正・確認する"
+      ],
+      "normal": [
+        "対象範囲と許可根拠を引き継ぐ"
+      ],
+      "prohibited": [
+        "PRD作成依頼または賛意だけで実装する",
+        "許可済みの同じ変更を再承認待ちにする"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "workflow-entry-explicit-fix-001",
+      "type": "near-miss",
+      "prompt": "ui.txt の『大字』は『太字』の誤記です。この1箇所を修正し、変更範囲に合う確認まで進めてください。",
+      "critical": [
+        "明確に任された局所修正を行い確認する",
+        "形式的な初回承認で止まらない"
+      ],
+      "normal": [
+        "修正と確認結果を報告する"
+      ],
+      "prohibited": [
+        "不要なPRD作成を必須にする"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "workflow-entry-slice-001",
+      "type": "failure-missing-context",
+      "prompt": "$implementation-plan を使って、通知設定の保存を計画してください。正常保存・空値拒否・保存失敗時の通知の3つのACがあります。通知先をローカル保存にするか外部サービスへ同期するかは未決です。ひとつの振る舞いなので設計は省略できるでしょうか。",
+      "critical": [
+        "AC数だけで別sliceへ分割しない",
+        "未決の構造判断があるため単一sliceだけを理由に設計を省略しない"
+      ],
+      "normal": [
+        "設計へ戻す具体的な理由を示す"
+      ],
+      "prohibited": [
+        "未決の保存方式を計画内で独断確定する"
+      ],
+      "holdout": false
+    }
+  ]
+}

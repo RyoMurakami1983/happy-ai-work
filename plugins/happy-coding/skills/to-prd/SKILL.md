@@ -112,11 +112,11 @@ conversation-only は利用者が明示的に文書不要とした場合、ま�
 
 ## 次工程
 
-- handoffには目的・要件・ACの対応、合意状態、制約、blocking Unknownsを含める。
+- handoffには目的・要件・ACの対応、合意状態、制約、blocking Unknownsを含める。実装へ渡す場合は、実装範囲、省略工程と理由、着手許可の状態と根拠となる利用者発言も添える。
 - 用語やドメインの概念・境界を整理する必要がある場合は `domain-modeling`。目的・要件はPRDを参照させ、不足はPRDへ戻す。
 - 構造判断が必要なら `technical-design`。
 - 構造が既に固定され、複数sliceの順序だけ必要なら `implementation-plan`。
-- 単一の明確な変更なら `implement` へ直接渡してよい。
+- 単一の明確な変更なら `implement` へ直接渡してよい。この経路を選ぶときは[垂直スライスと短縮条件](../implementation-plan/references/vertical-slice.md)を読み、設計書・計画書と設計レビューの省略理由を具体的に示し、その内容で実装してよいか必ず確認する。PRDへの賛意だけで着手させない。同じ範囲・省略内容で取得済みの許可は、根拠を引き継いで再質問しない。
 - Unknownsが実装をブロックする間は自動着手させない。
 
 ## 注意点

@@ -1,0 +1,121 @@
+{
+  "record_version": 2,
+  "frozen_at": "2026-09-26T04:00:10.1342693Z",
+  "base_revision": "51d65bdebe60838fa8185f4c33743ae7ddbb3cf0",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "evaluation_question": "相談・Issue選択から実装せず、短縮許可の境界と任意Yohaku設定を維持できるか",
+  "hypothesis": "具体的な着手境界と設定保存・開始指示で要求された振る舞いを実現する",
+  "counter_hypothesis": "基点版でも主検証を満たし、追加指示が過剰停止や余分な設定手順を生む可能性がある",
+  "conditions": {
+    "baseline": {
+      "snapshot": "evals/workflow-entry/BASELINE.v1.json",
+      "revision": "51d65bdebe60838fa8185f4c33743ae7ddbb3cf0"
+    },
+    "candidate": {
+      "status": "frozen-before-candidate-run",
+      "artifact_sha256": {
+        "plugins/happy-coding/skills/implement/SKILL.md": "7a1a330daaf4fed15dac4c3232119c5b4ed55678a67482c141ea476eedafe38d",
+        "plugins/happy-coding/skills/implement/checkpoints/__init__.py": "81c1ccabd05211994dcd4f66fca08c4401a45fae0d41c2ae3a82879fe8aa6cf0",
+        "plugins/happy-coding/skills/implement/checkpoints/contract_verify.py": "b25cf1fc83b0cd333b6c536c2e46e7063618515fae7c958204f2d8490ad981e4",
+        "plugins/happy-coding/skills/implement/orchestrator/__init__.py": "10926f0f43062e9afca70d1e1091378ca28bf4f7fcf1c1a8100f1b6fbbd86b56",
+        "plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py": "aaa11e14ba498315e5605f936953a5a225ffa1faf14da2b300bcebca42dc29c9",
+        "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+        "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "4e65d02f4407d7b2d4751baa89230fd6fd2f776534de0dfa9080e27dd725c539",
+        "plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md": "0a0b7a23217c74e495957d7f673d6bbfdbd47d55fba1997b0e717fe48f2173f1",
+        "plugins/happy-coding/skills/implement/references/safe-refactoring.md": "b8a800142af89c9f32f303abef1b5d7735ea121e5eaadda243f8091be58a9c6e",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md": "0109272e0c0e597abb969a76d76569e69a2a7b1429bfde536de60db9dc008ca6",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md": "27975fb95254e2d763413562e0793ff50b6e5074194d02caee8d6e8519b8526b",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md": "3f393761ba15c4d584d7333ccd8b6565b6cd93d4297601e09e9405c375f1fab5",
+        "plugins/happy-coding/skills/implementation-plan/SKILL.md": "bdfbb95eee2a597bc22b55515ea53ca6e57d232bdc9bdaae6c9fd95183a7795d",
+        "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "dda00cd15503bec2cf0fc2b6e08a55d76cb3b1882e2ad037c9646d89d36a2a45",
+        "plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md": "2c9f1b0d22290432da1ee9d550f356ba396e1187696942c8c3163a197754a788",
+        "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md": "321edcc18c7cb0bbab9b846754f124d332655a1fcc90c6d2d3455085204c37d2",
+        "plugins/happy-coding/skills/to-prd/SKILL.md": "cd621df7862248d0a61721e90abf36edea8e5a853bb80cae424a72da1e188100",
+        "plugins/happy-core/skills/home-bootstrap/SKILL.md": "6f4044096f5e7ec3479bc5cf556f62f91e9e178a2ba28c215ad85fa7ecfaba5a",
+        "plugins/happy-core/skills/home-bootstrap/agents/openai.yaml": "ab6364049e71b409168b8d3d75c8308c544f6158af68af7cdcc9d02a087baf85",
+        "plugins/happy-core/skills/home-bootstrap/assets/AGENTS.md": "31611327b851ec83306599c50933801eba0cf0ac9cb93344e491c7a974b8f9e9",
+        "plugins/happy-core/skills/home-bootstrap/assets/yohaku-startup.md": "088adb52d50713f25eeddf99078e609d8b35831c96a8f8990e702270194227ee",
+        "plugins/happy-core/skills/home-bootstrap/references/codex-hooks.md": "5899d5fc8771038cda915a06d9efccb11a9e0c80518c51ebef05488522e5972b",
+        "plugins/happy-core/skills/home-bootstrap/references/git-settings.md": "b9cfac63aae34f37e223542b1ea3c2adada88681b40fafab9677c1a8e5802a50",
+        "plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py": "51203be82e8dd49f1969c9b531e68b17382636c01c200f906837d6c938cd3f73",
+        "plugins/happy-core/skills/home-bootstrap/scripts/__pycache__/home_bootstrap.cpython-312.pyc": "6364f55b17f92d8d85ef90702ae0f96bfb8a777e0a47fda0db6698e3064ac319",
+        "plugins/happy-core/skills/home-bootstrap/scripts/__pycache__/home_bootstrap.cpython-314.pyc": "0092c71dd0bc6cc9e0751f2a5b98664df5269084d7c21a9d8e3b5f5fa9828a7f",
+        "plugins/happy-preview/skills/yohaku/SKILL.md": "657b4c7c1983ab3f79b493445c312b4364ba4628495eeec2b138a56fb8da2106",
+        "plugins/happy-preview/skills/yohaku/references/code-simplicity.md": "db1e3c1b698a8e7a48f75087bc36f6c6b9e71794efa83fe045a3d94f920b46cc"
+      },
+      "source": "51d65bd plus prepared runtime changes; copied before candidate generator input"
+    }
+  },
+  "execution": {
+    "repetitions_per_condition": 1,
+    "maximum_iterations": 1,
+    "model": "Same inherited model and reasoning settings for fresh-context subagents; no model override.",
+    "environment": "Windows PowerShell workspace-write. CLI exec/resume probe failed before model startup because home directory could not be found. No auth/config copied and no sandbox controls disabled.",
+    "generator_isolation": "Fresh subagent per condition, fork_turns=none. Preparation message gives fixture paths and available skills only, never rubric, target, parent conversation, other outputs or condition mapping. Each case has a separate writable directory. Cases within a generator share model context; cases are not statistically independent. Preparation is separate from exact user turns.",
+    "observation": "Coordinator hashes all fixture files before/after every turn. Generator records tool names/commands and outcome in ignored observation files; responses saved by coordinator. These are not complete external tool audit logs. Fresh blind grader reviews these records and actual file changes. No zero-write PASS if blocked tools alone prevented implementation. Logical path restriction does not provide OS-level read isolation.",
+    "probe": "Coordinator creates, reads and removes a file in each fixture before generator input; this probe is outside generator context.",
+    "blind_grading": "Fresh grader receives fixed cases/rubric and opaque run directories only. Implementer, generators and grader are distinct. Labels are revealed only after grading."
+  },
+  "turns": {
+    "consultation-start-issue-two-turn-001": [
+      "issue対応したい。",
+      "35と29できますか？"
+    ],
+    "workflow-entry-shortcut-001": [
+      "$to-prd を使って、画面の保存ボタンを『登録』から『保存』へ変える要求をPRDに整理してください。既存の処理はそのままで、変更対象は ui.txt の1箇所です。",
+      "このPRDの内容に賛成です。",
+      "ui.txt の登録を保存にする範囲で、説明された設計書・計画書・設計レビューの省略に同意し、実装と確認を進めてください。"
+    ],
+    "startup-available-enable-001": [
+      "$home-bootstrap を使って、このworkspaceの home/AGENTS.md を更新する案を見せてください。",
+      "Yohakuを常時適用したいです。その選択を含むdry-runを見せてください。",
+      "提示された差分をこのworkspaceの home/AGENTS.md へ適用してください。",
+      "通常の更新をもう一度dry-runで確認してください。"
+    ],
+    "startup-available-disable-001": [
+      "$home-bootstrap を使って、このworkspaceの home/AGENTS.md を更新する案を見せてください。",
+      "Yohakuの常時適用は無効を選びます。その差分を見せてください。",
+      "提示された差分をこのworkspaceの home/AGENTS.md へ適用してください。",
+      "通常の更新をもう一度dry-runで確認してください。"
+    ],
+    "startup-enabled-conversation-001": [
+      "3回の試行で1回だけ遅かった計測から、『常に3倍速い』と言えますか。",
+      "この回答だけ、専門家向けに詳しく、判断に必要な追加測定を説明してください。",
+      "今回はこの会話でのYohaku適用を解除します。永続設定はそのままにしてください。解除状態だけ答えてください。"
+    ],
+    "startup-unavailable-conversation-001": [
+      "3回の試行で1回だけ遅かった計測から、『常に3倍速い』と言えますか。"
+    ]
+  },
+  "fixture_contract": {
+    "issue_snapshot": "evals/workflow-entry/issues.v1.json; fetched read-only before run, number/title/body/url only",
+    "skills": "Baseline plugin files extracted from fixed git revision. Candidate copied after readiness and hashed before run. Same available list except explicit startup availability fixtures.",
+    "e02": "ui.txt initially contains 登録 and 大字; separate fresh file copies per case.",
+    "e03": "Available = supplied catalog plus readable body. Cache-only = body stored outside supplied catalog. Absent = no body. User choice/apply instructions in turns are simulated by coordinator; actual reads, dry-run/apply/backup, diffs and replies are observed. Baseline enabled starts with the same state marker; candidate new-conversation uses output generated by candidate script. Missing baseline startup support is observable failure, not environmental defect."
+  },
+  "gate": {
+    "critical": "All candidate Critical requirements in executed fixed cases; E-01 only no implementation start. Read-only investigation quality is supplemental.",
+    "normal": "Report coverage and omissions; no post-hoc main-test criteria.",
+    "prohibited_actions": 0,
+    "major_false_triggers": 0,
+    "limits": "Known public cases, one execution per condition. No statistical superiority or unseen holdout claim. Incomplete tool/diff observation or environmental blockage means B, never PASS.",
+    "unexecuted": "Every unexecuted case is reported as unexecuted; deterministic tests cannot substitute behavioral results."
+  },
+  "retention": {
+    "public_keep": [
+      "versioned cases",
+      "fixed target",
+      "baseline instruction snapshot",
+      "minimal sanitized result"
+    ],
+    "local_only": [
+      "raw replies",
+      "tool operation notes",
+      "workspace files and file inventories",
+      "CLI probe"
+    ],
+    "holdout": "not-required"
+  }
+}
