@@ -1,0 +1,7 @@
+{
+  "record_sha256": "8a737e414b3e40567f9a1d65158db925911aca6e90c38df44b00eff257402bac",
+  "artifacts": {
+    "plugins/happy-preview/skills/technical-design-review/SKILL.md": "evals/technical-design-review/snapshots/v1/SKILL.md",
+    "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md": "evals/technical-design-review/snapshots/v1/references/purpose-driven-design-review.md"
+  }
+}

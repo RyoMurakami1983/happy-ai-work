@@ -1,0 +1,7 @@
+{
+  "record_sha256": "b297f936041eb541870d1e3fbaeac6df61650e0c53afc2fc82148cf59cda5023",
+  "artifacts": {
+    "scripts/validate_evals.py": "evals/technical-design-review/snapshots/v1/validate_evals.py",
+    "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md": "evals/technical-design-review/snapshots/v1/evaluation-governance.md"
+  }
+}

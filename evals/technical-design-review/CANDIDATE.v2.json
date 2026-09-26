@@ -1,0 +1,10 @@
+{
+  "record_version": 2,
+  "captured_at": "2026-09-26T15:58:00.367530+00:00",
+  "criteria_manifest": "evals/technical-design-review/TARGET.v2.json",
+  "note": "Criteria frozen before generation. Candidate byte hashes match isolated q input; no post-observation instruction changes.",
+  "artifact_hashes": {
+    "plugins/happy-preview/skills/technical-design-review/SKILL.md": "3818ff4bbf898b142c7b7ce2e62157e0f95571ee7763cfe3b224404ec4755e2f",
+    "plugins/happy-preview/skills/technical-design-review/references/purpose-driven-design-review.md": "33367c107b7e0a6e8ce35a3a8f5825519b4a64a277fcbc32f22da1967fb43b01"
+  }
+}

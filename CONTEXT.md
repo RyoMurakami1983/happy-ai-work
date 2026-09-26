@@ -60,3 +60,11 @@
 ## Distribution
 
 `happy-ai-work-marketplace` から `happy-core`、`happy-coding`と試用用`happy-preview`を個別に導入する。各pluginのmanifestを正本とし、marketplaceは配布順と導入policyを管理する。プレビューは[ADR 0004](docs/adr/0004-preview-plugin-distribution.md)に従い、通常pluginとの重複配布を避ける。
+
+### 技術設計レビューの説明
+
+- **推奨**: レビュアーが理由と条件を示して勧める対応。利用者の採用決定ではない。
+- **判断依頼**: 利用者が選ぶ事項と、その選択によって変わる結果を明らかにした依頼。事実確認とは区別する。
+- **次の行動**: 担当、具体的作業、前提と確認方法が分かる一歩。判定や実行許可とは異なる。
+
+目的・要件は [PRD 010](docs/prd/010_PRD.md)、概念の責任と条件は [ドメインモデル010](docs/domain/010_DOMAIN_MODEL.md) を参照する。
