@@ -55,7 +55,7 @@
 
 ### Development workflow
 
-工程間の合意と垂直スライスに関する案件009の用語・境界は、[PRD 009](docs/prd/009_PRD.md)と[設計009](docs/design/009_TECHNICAL_DESIGN.md)に記録する。要求合意・設計レビュー・実装開始の許可は別の状態として扱う。配布skillsへの反映は実装承認後であり、この文書への参照追加は実装完了を意味しない。
+要求合意・設計レビュー・実装開始の許可は別の状態として扱う。垂直スライスと工程短縮の共通定義は[配布内reference](plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md)、責務の判断理由は[ADR 0005](docs/adr/0005-workflow-entry-and-optional-startup.md)を参照する。実装許可と検証完了も別の状態として記録する。
 
 ## Distribution
 

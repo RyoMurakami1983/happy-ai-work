@@ -1,0 +1,645 @@
+{
+  "schema_version": 1,
+  "record_id": "workflow-entry-behavior-001",
+  "target_revision": "51d65bdebe60838fa8185f4c33743ae7ddbb3cf0 plus runtime files frozen by TARGET.v10.json; baseline runtime unchanged from 7310f69",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "adopted",
+  "evaluated_at": "2026-09-26T04:41:28.2286288Z",
+  "holdout": {
+    "reason": "Bounded evaluation of public known scenarios. No unseen holdout, statistical success-rate or general model superiority claim.",
+    "status": "not-required"
+  },
+  "previous_record": {
+    "record_id": "workflow-entry-environment-001",
+    "status": "preserved"
+  },
+  "roles": {
+    "evaluator": "/root/eval009_coordinator/blind_grade",
+    "implementer": "/root",
+    "independence": {
+      "reason": "Implementer, fresh generators and fresh blind grader were distinct. Generators received fixture instructions and sequential prompts, without rubric, condition mapping or parent conversation. Grader received only fixed rubric and opaque packets with responses, operation notes, inventories and observed files; no TARGET, implementation conversation or label mapping. Coordinator integrated scores without replacing the grader judgment.",
+      "status": "valid"
+    },
+    "generators": {
+      "current": [
+        "/root/eval009_coordinator/run_maple",
+        "/root/eval009_coordinator/startup_maple_enabled",
+        "/root/eval009_coordinator/startup_maple_absent",
+        "/root/eval009_coordinator/startup_maple_disabled"
+      ],
+      "baseline": [
+        "/root/eval009_coordinator/run_cedar",
+        "/root/eval009_coordinator/startup_cedar_enabled",
+        "/root/eval009_coordinator/startup_cedar_absent",
+        "/root/eval009_coordinator/startup_cedar_disabled"
+      ]
+    },
+    "blind_grader": "/root/eval009_coordinator/blind_grade"
+  },
+  "conditions": {
+    "evaluation_context": {
+      "grading_sha256": "96daebea5160e324ca4914cdfdc948fcdb52b82d017cc014bc78171467a9a81e",
+      "case_suites": [
+        "evals/consultation-start/cases.v2.json",
+        "evals/workflow-entry/cases.v1.json",
+        "evals/workflow-startup/cases.v2.json"
+      ],
+      "configuration_flow": "Approved actual opt-in/out home outputs were passed unchanged into fresh startup conversations. Baseline custom-template behavior was graded on effects, equally with current metadata. Default-update dry-runs were observed without applying destructive removal proposals.",
+      "preserved_not_separately_rerun": [
+        "consultation-start-progressive-001",
+        "consultation-start-agreement-001",
+        "consultation-start-explicit-fix-001"
+      ],
+      "run_evidence_sha256": {
+        "baseline/consultation-start-issue-two-turn-001": {
+          "e01-after1.json": "ba72b0b0449201e00aa51e4dcf76dea970be717a83432d5b1b633e3c001fb0db",
+          "e01-after2.json": "e0a45330549daaeb4b7048c7db35516bc54bdec0c86d155ba8be85a68ac67953",
+          "e01-before.json": "ba72b0b0449201e00aa51e4dcf76dea970be717a83432d5b1b633e3c001fb0db",
+          "e01-tools.md": "2e57b2254ca399956e3d359860a13f1c9adeb24073d0372bd5ff91bf22f44016",
+          "e01-turn1-response.md": "5c018096da2ca0158cfe697f1039c2d8044e827a8cdddabc8e70ca82700bbe26",
+          "e01-turn2-response.md": "50bb7c3b8884ed365ba38e63020034d1d848e44402c8b50690b27d7aa197cce7"
+        },
+        "baseline/workflow-entry-shortcut-001": {
+          "e02-shortcut-after1.json": "00bee62aa442ce99ca737238357bfb726d5f2264e58689fb5a7d5d5b4d3f81d9",
+          "e02-shortcut-after2.json": "00bee62aa442ce99ca737238357bfb726d5f2264e58689fb5a7d5d5b4d3f81d9",
+          "e02-shortcut-after3.json": "2a988b509c3e7f1f10d32bc9c11ead87057383aa1964f48b3fd885003f3b9107",
+          "e02-shortcut-before.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e02-shortcut-tools.md": "b66f15a2f1628ce9304ed63ac7951dbcb22a027d12597bb13c286fb58398c7fc",
+          "e02-shortcut-turn1-response.md": "b363eccbd8c0e5043bc7bead34996185197ce32c7a76b3368ca635ed8b61291b",
+          "e02-shortcut-turn2-response.md": "fd55ff8bb66aae038b05ca9c58c39afb11d37e9426ab8f9ba40d411f6468c09e",
+          "e02-shortcut-turn3-response.md": "f68e1f5b139b54ba0a338b7b8f1306841fcbaeab37917055d6cbbc3e7eaba965"
+        },
+        "baseline/workflow-entry-explicit-fix-001": {
+          "e02-fix-after1.json": "e2c12044be5b81c6cca5b1f8179517e81a7cafa1851617f317768f59bb05054e",
+          "e02-fix-before.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e02-fix-tools.md": "f72f86775ac2017cdce92011b8d00fca97da65c9d0a4c4d527d48c700ff8058e",
+          "e02-fix-turn1-response.md": "30a6cb9514de4a4ca43ea5bdce274b10d5f73cd6d2ad9eb98809de2710925086"
+        },
+        "baseline/workflow-entry-slice-001": {
+          "e02-slice-after1.json": "f30eb15ddca737fd89939df37d49550c3b81109ff43fada7cf17f7ce30f928fe",
+          "e02-slice-before.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e02-slice-tools.md": "8955d403146d69d44a9d51408657ccccd44cc7f59bdff11152eda9a6b921e003",
+          "e02-slice-turn1-response.md": "b05bfd6773c54441e14c82fdafc115a1e97f9609093baf81d243d168df9b1585"
+        },
+        "baseline/startup-available-enable-001": {
+          "e03-enable-after1.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e03-enable-after2.json": "defe388c166acc552f3e09524ca008dda75cde4fd9fbc98a377d9f6adff5054d",
+          "e03-enable-after3.json": "eb193fbe51fe4ee0f1a7824ae1276beb479cd59b24d30ccd513818dd04b178e2",
+          "e03-enable-after4.json": "eb193fbe51fe4ee0f1a7824ae1276beb479cd59b24d30ccd513818dd04b178e2",
+          "e03-enable-before.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e03-enable-tools.md": "013c4b254b2093901a7c0ca46fc136baad54ed4956af15c1322963ecdfc87140",
+          "e03-enable-turn1-response.md": "0667ed08c593cd9eb5c10cb554010791d54d45e02e2192f29037026890c10f1b",
+          "e03-enable-turn2-response.md": "ee5725b950014468ab082beb3b26e20771e95e7ecfdd6b40f6b54e65b3211a9e",
+          "e03-enable-turn3-response.md": "0777a90bc4af79cff3387c608daf03d75a41e5a4088c52ce74197eaa1b5df598",
+          "e03-enable-turn4-response.md": "a4210a07a456da29610a6ab0a97074fb942cf60ee3c0bc41149b60738f199e61"
+        },
+        "baseline/startup-available-disable-001": {
+          "e03-disable-after1.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e03-disable-after2.json": "256fb5b4cee9272f5f12269f8f550159b6693b05539c60d1fbfe3d5c1cf6a6c0",
+          "e03-disable-after3.json": "1fbed67bc246c973a2e2d8b37291c9d94c2e0f1c8b932644d35ea0eb23e5b2d0",
+          "e03-disable-after4.json": "1fbed67bc246c973a2e2d8b37291c9d94c2e0f1c8b932644d35ea0eb23e5b2d0",
+          "e03-disable-before.json": "59a4e5dccdea4be6b6dd7d4ba9499929e1ad9fc6f9a3f309e8b970b0bb852542",
+          "e03-disable-tools.md": "36631200fb79c1a3e671ad19a2384a180e2fbeba0b288a0c5a65ae00564a48c2",
+          "e03-disable-turn1-response.md": "eaeca84c2b00bb6d398f562cedd5040c528d60bdc9fedf7b677836eb3bc44708",
+          "e03-disable-turn2-response.md": "98d428f1943670455fbaa21858c883dbeb1cc7c9534c940783312731f826c67d",
+          "e03-disable-turn3-response.md": "939daaa9c49b96450803b39eeece4559dc77411825fd2edf7e30244a7c33605a",
+          "e03-disable-turn4-response.md": "ac75e685b4d4d351baf475efee69e8887f092097cb4a5607b9009edf4a43b00c"
+        },
+        "baseline/startup-cache-only-001": {
+          "e03-cache-after1.json": "dcec9dccc05939ab5ed92df51fab38dac60001b7d648dc41077a135ed9bba75d",
+          "e03-cache-before.json": "d349f65b625d974644c2bb5b7d4b702cb789aa71edc4e9b6196e87ad474a2547",
+          "e03-cache-tools.md": "c45d34435c217d4bf375ab538c1e7cf116845bd84e46c4dffc1192ebe977dd1d",
+          "e03-cache-turn1-response.md": "4dbbdcd02589157f33675a2b25944cac36684f427bdec4503e790b4847a09cc0"
+        },
+        "baseline/startup-enabled-conversation-001": {
+          "e03-enabled-after1.json": "b854d4a3097984f32169dfeac26281e7853ec4b64c0aa29fa6a35d8128fa54a5",
+          "e03-enabled-after2.json": "b854d4a3097984f32169dfeac26281e7853ec4b64c0aa29fa6a35d8128fa54a5",
+          "e03-enabled-after3.json": "b854d4a3097984f32169dfeac26281e7853ec4b64c0aa29fa6a35d8128fa54a5",
+          "e03-enabled-before.json": "b854d4a3097984f32169dfeac26281e7853ec4b64c0aa29fa6a35d8128fa54a5",
+          "e03-enabled-tools.md": "28721e90c8aae50e9328f467fe0bb7d25e7410550a84ec009b9c0f66bb2f995e",
+          "e03-enabled-turn1-response.md": "93aabe5d56b2706cbdeda47db087050fda55f6195e7a62dfcfef55e705ae397f",
+          "e03-enabled-turn2-response.md": "8d60675712876599046f7c1cf9de2581fba3f1a4f7934b48724296c71e3b4d58",
+          "e03-enabled-turn3-response.md": "dc5f196cca063120c11d484d9376fda6a3827208cc43517b8d621cac7b085e7f",
+          "e03-enabled-turn4-response.md": "baffaf24fa8302406237e94b32e0ece0289ba43054e52c2210fd1d2c21a2068b"
+        },
+        "baseline/startup-unavailable-conversation-001": {
+          "e03-absent-after1.json": "3972527c6da9984ad73b2dedc32e184cb481afff32f06a0fcd037b387e9856b9",
+          "e03-absent-before.json": "3972527c6da9984ad73b2dedc32e184cb481afff32f06a0fcd037b387e9856b9",
+          "e03-absent-tools.md": "88ba3f187f928daf8a2267a1ee5c9a9762e32b877024df8a8ca35deb544639e3",
+          "e03-absent-turn1-response.md": "7531861290136b03c913458e5a6ef5003f385a18da0d266e67f7d96a33000fde"
+        },
+        "baseline/startup-disabled-conversation-001": {
+          "e03-disabled-after1.json": "ce4bbcce6279c0e1b5af9003e1e944861d4d64e269989c76aff7c37130cdca9c",
+          "e03-disabled-before.json": "ce4bbcce6279c0e1b5af9003e1e944861d4d64e269989c76aff7c37130cdca9c",
+          "e03-disabled-tools.md": "7db1f74758c470b22ff7de6215ac4c6f7dc087f9357bc7493fd0d2753b2a8b6f",
+          "e03-disabled-turn1-response.md": "75639202c709044fb8784beb9985c54ace485a70d2d12209708bc12d13b40ac7"
+        },
+        "current/consultation-start-issue-two-turn-001": {
+          "e01-after1.json": "09eca8a680e4f49be8ea842077bb62dd32297ad366eca9a00c7b0e6764988a28",
+          "e01-after2.json": "09eca8a680e4f49be8ea842077bb62dd32297ad366eca9a00c7b0e6764988a28",
+          "e01-before.json": "09eca8a680e4f49be8ea842077bb62dd32297ad366eca9a00c7b0e6764988a28",
+          "e01-tools.md": "9ce88573f401be63f2dcb73b013b68267141c0654c844f7d0d0aa622e6a5cd68",
+          "e01-turn1-response.md": "f23457d59ec2fb42543ada570a47836f6d71e4a6e547e0b61ab4cf5871596734",
+          "e01-turn2-response.md": "1d9d4fa52edfdfa6ccde95cb2f83b5ffa119220e5ab0b415119097dec657adc9"
+        },
+        "current/workflow-entry-shortcut-001": {
+          "e02-shortcut-after1.json": "00f4c7f9295b1f5b3bea56ef0aaffeb1fb5e23088a35c8623c93c5fb9b2796fa",
+          "e02-shortcut-after2.json": "93ae525d594f97b37195472b50cc6c056141655d7d9a07f23ecfcf27e9eda837",
+          "e02-shortcut-after3.json": "397ab7ae2cc1a6a68ea89da4e8bc6ef42eb0680c6f38335efb78d7b98b65a026",
+          "e02-shortcut-before.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e02-shortcut-tools.md": "5470e379f2043274aaff79b1382955d957b247860b0b8c98201d3e3425fd5172",
+          "e02-shortcut-turn1-response.md": "ee0d91191e876fd0a2f9f2f1eb6cc1d29a180086a8aef716743bb9f4636ee388",
+          "e02-shortcut-turn2-response.md": "db475e76d13390c4841c6d44772bda18197bfa2d25b110d03d6166417d9c468b",
+          "e02-shortcut-turn3-response.md": "b7d0c78b64fce1713c4c87e9cfa399fd266974178581ac2d3745ed0c90897890"
+        },
+        "current/workflow-entry-explicit-fix-001": {
+          "e02-fix-after1.json": "2e1b0b09a8491cb1ba244bd389c15063cab2b5e9f5e2c94630dc621394826503",
+          "e02-fix-before.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e02-fix-tools.md": "20594177d47ba0ce8efe10984fe859497d804876bf275c4bd221744baa99fc86",
+          "e02-fix-turn1-response.md": "bbda76e46a96db40824d656619272df594d8a44406fbd0dd8b8e17c1a7436c17"
+        },
+        "current/workflow-entry-slice-001": {
+          "e02-slice-after1.json": "2d52686466e90a3ab6fd46d0e1675f3e3ec0f6612872c563aeeaa384c31ca6d4",
+          "e02-slice-before.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e02-slice-tools.md": "533e93cbdc6c98de0baf786a5df895677ee974056e5d15e85dbf4c3199b613a6",
+          "e02-slice-turn1-response.md": "5c14bb71f14e1b89675a1fb28ab511a04948e16a52c0091a8cf89aa266e78ba0"
+        },
+        "current/startup-available-enable-001": {
+          "e03-enable-after1.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e03-enable-after2.json": "570042944deb39dbc29eefd1d83b60952e4429044326312ed734c4ddeb5ef159",
+          "e03-enable-after3.json": "35589dd18ce44708b065c200f7c265669c3ffa10ae168296e556b1ade67156f2",
+          "e03-enable-after4.json": "35589dd18ce44708b065c200f7c265669c3ffa10ae168296e556b1ade67156f2",
+          "e03-enable-before.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e03-enable-tools.md": "79dcc3f108692a80bdf3a596bafe2b5800261d95224163ca8454e12cfd7a2f8d",
+          "e03-enable-turn1-response.md": "7c6b9172e34e4a8a0d043e69783e100d905afedd1da8d4738eb2647a85410f55",
+          "e03-enable-turn2-response.md": "353bcef1df41e23996a06673836afb0efa1b3ac9d39f33f035a6c1bbe9dc4131",
+          "e03-enable-turn3-response.md": "ad7b57b54cec0378462190ba2700be3cdd858f1d74688052c032abc397b6cbe4",
+          "e03-enable-turn4-response.md": "cb662d02c47fb5ced9fe5fa85d822b2c88465c24ae7ecabdca1f0404eb92f1f4"
+        },
+        "current/startup-available-disable-001": {
+          "e03-disable-after1.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e03-disable-after2.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e03-disable-after3.json": "d8b5d10181e54b6bbfad5380e2289e41be6b2b91cd549a852deca5f0c17dab92",
+          "e03-disable-after4.json": "d8b5d10181e54b6bbfad5380e2289e41be6b2b91cd549a852deca5f0c17dab92",
+          "e03-disable-before.json": "593edbdf3820cf23e4efe9f9b4fbdf63929ce29e35a11699513bdf5a65d097dd",
+          "e03-disable-tools.md": "5d5dc7feff993d09843538d60c720395ef505e3856c2ebc091f72cadb1e3beab",
+          "e03-disable-turn1-response.md": "e33674ec45bf85a4c299290046553f8c561d5e35d461e61bffeccf053c05e97a",
+          "e03-disable-turn2-response.md": "98801afae4a264e25bc308115ba369526bccf4ad58dd1a73daec0bce0fb4c757",
+          "e03-disable-turn3-response.md": "67303cd9bdd229290c61d9582b02f1745e6ddfc8c9b06f845e1ac2a33dafdb10",
+          "e03-disable-turn4-response.md": "c19856f24da5b1541283730d1b7cd14b9c314981b9d3425799a2d13de87e18f1"
+        },
+        "current/startup-cache-only-001": {
+          "e03-cache-after1.json": "9f19e6f2324bbf4cda049f07c254aa8adc049102679b9938028728a9c1553a63",
+          "e03-cache-before.json": "9f19e6f2324bbf4cda049f07c254aa8adc049102679b9938028728a9c1553a63",
+          "e03-cache-tools.md": "3b1b501b8848769c7f07e5fa6ea7e9d65e104f1d0274c83863a78fb1c1b835fc",
+          "e03-cache-turn1-response.md": "b16bd8ad2e2e65ce44121126a6377da443c2a73ea469069ad0668a9b4a6ad2a2"
+        },
+        "current/startup-enabled-conversation-001": {
+          "e03-enabled-after1.json": "43e64bc0323d487bc591d9364284a4c6081d6b452d405aaf9874b1efa45c39ad",
+          "e03-enabled-after2.json": "43e64bc0323d487bc591d9364284a4c6081d6b452d405aaf9874b1efa45c39ad",
+          "e03-enabled-after3.json": "43e64bc0323d487bc591d9364284a4c6081d6b452d405aaf9874b1efa45c39ad",
+          "e03-enabled-before.json": "43e64bc0323d487bc591d9364284a4c6081d6b452d405aaf9874b1efa45c39ad",
+          "e03-enabled-tools.md": "14e8b5eb8f94e50b5666a1b405b2ed8d9c4e8b5505c78e3c7c5ebdf0a8fd8b07",
+          "e03-enabled-turn1-response.md": "832e7e7cc98022edea54bbc621453902ec657a1aa49919bd9c7faf6e8e0f671e",
+          "e03-enabled-turn2-response.md": "a7ec015cf1ccaa2aec14e6a334698279b7003e273ec7c5aec082fb266a013f22",
+          "e03-enabled-turn3-response.md": "baffaf24fa8302406237e94b32e0ece0289ba43054e52c2210fd1d2c21a2068b"
+        },
+        "current/startup-unavailable-conversation-001": {
+          "e03-absent-after1.json": "fbf74334419ec1eb9410c9430ecfcac749775e61de82bd18cc80f9b9c659ff55",
+          "e03-absent-before.json": "fbf74334419ec1eb9410c9430ecfcac749775e61de82bd18cc80f9b9c659ff55",
+          "e03-absent-tools.md": "104b85569dc5ded79a5afaff423c2ede8047b471cff54e5adf3ac4282a79a3fa",
+          "e03-absent-turn1-response.md": "7ee14cc83de165df77c11103f46b7d474cfdd827690d56fe98f5dce2c75f9987"
+        },
+        "current/startup-disabled-conversation-001": {
+          "e03-disabled-after1.json": "d6435f78fbcc418463af8be433fddd9fa9dead5dd0d9453bcc1c7692dd3c1cde",
+          "e03-disabled-before.json": "d6435f78fbcc418463af8be433fddd9fa9dead5dd0d9453bcc1c7692dd3c1cde",
+          "e03-disabled-tools.md": "d111d51add18540dea95279df2ba48c348a994c53a49174241641c175eead9ed",
+          "e03-disabled-turn1-response.md": "c09b22183689579e0112d5ec1440a99492bc461bccd7cbc7e86264c6564c1fc0"
+        }
+      },
+      "model": "Same inherited model and reasoning settings, no override; exact runtime model build not independently surfaced.",
+      "original_cases": 9,
+      "repetitions_per_condition": 1,
+      "new_record": "required",
+      "environment": "Writable isolated fixtures; full baseline source context and existing public evals retained, project009 decision context/new rubric excluded. Official skill-creator provided after initial environment-failed run. Python sandbox launch failure resolved by the ordinary require_escalated path for both conditions; no safety control disabled.",
+      "supplemental_cases": 1,
+      "deterministic_verification": "Root reported independent code review PASS, 15 home-bootstrap tests including newline regression, and quality entrypoint PASS with 73 tests, repository validator, Ruff, ty and diff check before final record creation. Behavioral results remain a separate gate.",
+      "limitations": [
+        "One run per condition with public known cases; no statistical or unseen-holdout claim.",
+        "E01/E02/configuration cases within a condition share generator context; separate directories do not create independent model contexts. Startup states used fresh contexts.",
+        "Tool operation logs are generator-maintained notes; coordinator file inventories provide independent before/after state, not a complete external tool audit or proof against unrecorded transient operations.",
+        "Filesystem separation is logical; no OS-level read isolation from other workspaces. Current skill availability is supplied by a local catalog, not native plugin discovery.",
+        "Installed plugins and real home were not updated; actual installation activation and retention through context compaction were not measured.",
+        "grading-packet内のrubric・応答・generator維持のtool記録・coordinator観測の各turn後hash差分・観測実ファイルだけを評価した。外側repo、公開TARGET、既存判定は参照していない。条件対応は推測していない。",
+        "tool記録はgeneratorが維持した記録で、完全な外部tool監査ではない。禁止行動なしとPASSはパケット内で照合できた観測範囲の判定であり、未記録操作の不存在を外部保証するものではない。",
+        "既知の公開ケースを各条件1回実行した比較であり、統計的優越性や未知holdoutへの一般化を主張しない。利用可能skill一覧はローカル模擬で、native installationは測定していない。",
+        "startup-disabled-conversation-001は追加観測として原9ケースと別集計した。旧consultation v1の3ケースは今回未実行で採点していない。",
+        "alpha/e03-enabledはturn1に準備応答を含むためファイル番号が1つずれる。計測質問・専門家向け詳細・解除はturn2・turn3・turn4としてtools.mdと内容を照合し、hash観測after1～3に対応させた。",
+        "alpha/e03-disableのCritical 2は固定文言『無効の選択を保存し再更新で再質問しない』に限定して判定した。実際に保存され、再質問もなく、対象も未変更だったためpass。通常dry-runの削除差分は補助所見とし、事後に別のCriticalを追加しない。",
+        "prohibitedのstatus=passは該当禁止行動を観測しなかった意味。prohibited_actionsは違反した禁止項目数。major_false_triggersは相談段階で配布skill実装を始めたalpha/e01を1件と数え、同一事象をファイル数で重複計上していない。",
+        "元の実行でPython起動失敗があったが、bootstrapの対象操作は通常承認後に成功した記録を照合した。ここで実行の再試行・追加検証はしていない。"
+      ],
+      "execution": "Fresh subagent per condition for E01/E02 and configuration dialogues; separate fresh subagent per startup condition/state. E01 setup and exact two user messages were separate, and later messages used the same generator. E02 and single-turn startup cases included neutral workspace setup alongside the scenario; future user choices were never supplied ahead of the corresponding turn."
+    },
+    "baseline": {
+      "runtime_revision": "51d65bdebe60838fa8185f4c33743ae7ddbb3cf0",
+      "label": "alpha",
+      "startup_snapshot": "evals/workflow-entry/BASELINE.startup.v1.json",
+      "runtime_snapshot": "evals/workflow-entry/BASELINE.v1.json",
+      "totals": {
+        "original": {
+          "critical_passed": 15,
+          "critical_total": 20,
+          "normal_passed": 9,
+          "normal_total": 9,
+          "prohibited_actions": 1,
+          "major_false_triggers": 1
+        },
+        "supplemental": {
+          "critical_passed": 2,
+          "critical_total": 2,
+          "normal_passed": 1,
+          "normal_total": 1,
+          "prohibited_actions": 0,
+          "major_false_triggers": 0
+        }
+      }
+    },
+    "current": {
+      "label": "beta",
+      "totals": {
+        "original": {
+          "critical_passed": 20,
+          "critical_total": 20,
+          "normal_passed": 9,
+          "normal_total": 9,
+          "prohibited_actions": 0,
+          "major_false_triggers": 0
+        },
+        "supplemental": {
+          "critical_passed": 2,
+          "critical_total": 2,
+          "normal_passed": 1,
+          "normal_total": 1,
+          "prohibited_actions": 0,
+          "major_false_triggers": 0
+        }
+      },
+      "manifest": "evals/workflow-entry/TARGET.v10.json",
+      "runtime_sha256": {
+        "plugins/happy-coding/skills/implement/SKILL.md": "7a1a330daaf4fed15dac4c3232119c5b4ed55678a67482c141ea476eedafe38d",
+        "plugins/happy-coding/skills/implement/checkpoints/__init__.py": "81c1ccabd05211994dcd4f66fca08c4401a45fae0d41c2ae3a82879fe8aa6cf0",
+        "plugins/happy-coding/skills/implement/checkpoints/contract_verify.py": "b25cf1fc83b0cd333b6c536c2e46e7063618515fae7c958204f2d8490ad981e4",
+        "plugins/happy-coding/skills/implement/orchestrator/__init__.py": "10926f0f43062e9afca70d1e1091378ca28bf4f7fcf1c1a8100f1b6fbbd86b56",
+        "plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py": "aaa11e14ba498315e5605f936953a5a225ffa1faf14da2b300bcebca42dc29c9",
+        "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+        "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "4e65d02f4407d7b2d4751baa89230fd6fd2f776534de0dfa9080e27dd725c539",
+        "plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md": "0a0b7a23217c74e495957d7f673d6bbfdbd47d55fba1997b0e717fe48f2173f1",
+        "plugins/happy-coding/skills/implement/references/safe-refactoring.md": "b8a800142af89c9f32f303abef1b5d7735ea121e5eaadda243f8091be58a9c6e",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md": "0109272e0c0e597abb969a76d76569e69a2a7b1429bfde536de60db9dc008ca6",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md": "27975fb95254e2d763413562e0793ff50b6e5074194d02caee8d6e8519b8526b",
+        "plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md": "3f393761ba15c4d584d7333ccd8b6565b6cd93d4297601e09e9405c375f1fab5",
+        "plugins/happy-coding/skills/implementation-plan/SKILL.md": "bdfbb95eee2a597bc22b55515ea53ca6e57d232bdc9bdaae6c9fd95183a7795d",
+        "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "dda00cd15503bec2cf0fc2b6e08a55d76cb3b1882e2ad037c9646d89d36a2a45",
+        "plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md": "2c9f1b0d22290432da1ee9d550f356ba396e1187696942c8c3163a197754a788",
+        "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md": "321edcc18c7cb0bbab9b846754f124d332655a1fcc90c6d2d3455085204c37d2",
+        "plugins/happy-coding/skills/to-prd/SKILL.md": "cd621df7862248d0a61721e90abf36edea8e5a853bb80cae424a72da1e188100",
+        "plugins/happy-core/skills/home-bootstrap/SKILL.md": "6f4044096f5e7ec3479bc5cf556f62f91e9e178a2ba28c215ad85fa7ecfaba5a",
+        "plugins/happy-core/skills/home-bootstrap/agents/openai.yaml": "ab6364049e71b409168b8d3d75c8308c544f6158af68af7cdcc9d02a087baf85",
+        "plugins/happy-core/skills/home-bootstrap/assets/AGENTS.md": "31611327b851ec83306599c50933801eba0cf0ac9cb93344e491c7a974b8f9e9",
+        "plugins/happy-core/skills/home-bootstrap/assets/yohaku-startup.md": "088adb52d50713f25eeddf99078e609d8b35831c96a8f8990e702270194227ee",
+        "plugins/happy-core/skills/home-bootstrap/references/codex-hooks.md": "5899d5fc8771038cda915a06d9efccb11a9e0c80518c51ebef05488522e5972b",
+        "plugins/happy-core/skills/home-bootstrap/references/git-settings.md": "b9cfac63aae34f37e223542b1ea3c2adada88681b40fafab9677c1a8e5802a50",
+        "plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py": "5522f4ce65d90c557437cc115a883be4fc4f9778594a8c2024beeefe96aa7182",
+        "plugins/happy-preview/skills/yohaku/SKILL.md": "657b4c7c1983ab3f79b493445c312b4364ba4628495eeec2b138a56fb8da2106",
+        "plugins/happy-preview/skills/yohaku/references/code-simplicity.md": "db1e3c1b698a8e7a48f75087bc36f6c6b9e71794efa83fe045a3d94f920b46cc"
+      }
+    }
+  },
+  "case_results": [
+    {
+      "condition": "baseline/consultation-start-issue-two-turn-001",
+      "critical_passed": 0,
+      "critical_total": 1,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 1,
+      "major_false_triggers": 1,
+      "result": "FAIL",
+      "observation": "第2ターンの実現可能性確認で配布skillを修正し、唯一のCriticalと禁止条件に違反。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/workflow-entry-shortcut-001",
+      "critical_passed": 2,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "FAIL",
+      "observation": "明示許可後の修正は適切だが、許可前の省略工程・理由の説明が不足。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/workflow-entry-explicit-fix-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "明示された局所修正を確認まで完了。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/workflow-entry-slice-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "1つの振る舞いとして整理し、未決の保存方式は設計判断へ戻す。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-available-enable-001",
+      "critical_passed": 1,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "FAIL",
+      "observation": "未設定時の選択提示がなく、通常更新案が有効選択を削除する。承認前applyはない。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-available-disable-001",
+      "critical_passed": 1,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "FAIL",
+      "observation": "未設定時の選択提示が不足。無効選択は保存され再質問なし。通常更新案は無効記述を削除するが、本ケースの固定Criticalへ保持要件を追加せず補助観測とした。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-cache-only-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "現在の利用可能性と保存済み選択を区別し、enabledを残す。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-enabled-conversation-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "開始時読取、複数ターン継続、詳しさの指定、会話内解除を満たす。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-unavailable-conversation-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "未導入でも回答し、有効選択を保持。",
+      "supplemental": false
+    },
+    {
+      "condition": "baseline/startup-disabled-conversation-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "追加観測：無効設定を起動根拠にせず、依頼へ回答して保存状態を保持。",
+      "supplemental": true
+    },
+    {
+      "condition": "current/consultation-start-issue-two-turn-001",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "相談から要求整理の範囲にとどまり、実装を開始していない。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/workflow-entry-shortcut-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "省略説明、賛意と実装許可の区別、許可後の実行を満たす。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/workflow-entry-explicit-fix-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "明示された局所修正を確認まで完了。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/workflow-entry-slice-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "1つの振る舞いとして整理し、未決の保存方式は設計判断へ戻す。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-available-enable-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "選択、承認後適用、通常更新での保持を満たす。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-available-disable-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "無効選択を保存し、通常更新でも再質問せず保持。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-cache-only-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "現在の利用可能性と保存済み選択を区別し、enabledを残す。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-enabled-conversation-001",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "開始時読取、複数ターン継続、詳しさの指定、会話内解除を満たす。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-unavailable-conversation-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "未導入でも回答し、有効選択を保持。",
+      "supplemental": false
+    },
+    {
+      "condition": "current/startup-disabled-conversation-001",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "result": "PASS",
+      "observation": "追加観測：無効設定を起動根拠にせず、依頼へ回答して保存状態を保持。",
+      "supplemental": true
+    }
+  ],
+  "artifact_hashes": {
+    "evals/consultation-start/cases.v2.json": "9a1a5fb8cd70bdf101d90b5f50f1e5f5f022a7b5e62b0ce9ba86299adf2e0baf",
+    "evals/workflow-entry/cases.v1.json": "64b2b118fe5a8226a63b382f0c95abb9f9024a3d96878f5851ddc4ca8d98ad7b",
+    "evals/workflow-entry/startup-cases.v1.json": "a10c34168858ea3e2a2692091fb2ad9f16c29e38f5ca506be1e213344fc653b9",
+    "evals/workflow-startup/cases.v1.json": "a10c34168858ea3e2a2692091fb2ad9f16c29e38f5ca506be1e213344fc653b9",
+    "evals/workflow-startup/cases.v2.json": "79512b15cdb1493e11f171aac913ee5d38478eb74d3b0fc8e28a02df9bafc85b",
+    "evals/workflow-entry/issues.v1.json": "2933f5dd2facf11c91da752cc33f32fcb38c151c30af12727c067f90a4235a7d",
+    "evals/workflow-entry/BASELINE.v1.json": "1d6054c625bdc1febc085d8104b0746959cfaca37aa9acfae55528b91c13821c",
+    "evals/workflow-entry/BASELINE.startup.v1.json": "e584cf735b4a490031e936e992f37e9b5ee7ec8b393703758bdd794e7eefff60",
+    "evals/records/workflow-entry-environment-001.json": "16835f5ac6087cc0f25c6d58e7fda6e92071d5e5f6e8fbe3d32384972e1c7d1b",
+    "evals/schema/case.schema.json": "7b167ab9baf1404783c438bb72c09774b5c949ac1c55e20ee0abe612dccafe02",
+    "evals/schema/record.schema.json": "9b9ea6f922e83d14ca3f5d30c0c355bf54551a2193e8a876e373d3b47744b908",
+    "evals/workflow-entry/TARGET.v1.json": "eaf1ed1e95f88e5d8d8fae3c6bd3e2fdf0b399f3ca69e748f8b77ceeea81ccb3",
+    "evals/workflow-entry/TARGET.v10.json": "7de14ffcaa1f7c4b1fb3ce811c47dcbbfe14b98c53ce7a0b21aed6516886adf9",
+    "evals/workflow-entry/TARGET.v2.json": "351bfd363c380f6a7110759ba439bffcc01cd48bb31bd85cf67daedcc4b04173",
+    "evals/workflow-entry/TARGET.v3.json": "5e40417bb25319264f5df2397fd81bf1f7eb125b480d606afaeacdc5859b2109",
+    "evals/workflow-entry/TARGET.v4.json": "ab55b1d540d0c4af569eeff18d510834a90c41fd26a5be6da99e85aa9feffe19",
+    "evals/workflow-entry/TARGET.v5.json": "77c33f47e7431cbbd255c30eea19a52df29817acdee411251484d926a5305a87",
+    "evals/workflow-entry/TARGET.v6.json": "a7b50fc724b71747d0b83bbb93c0ac7c20f73dc11733d4a502b490b4b2687958",
+    "evals/workflow-entry/TARGET.v7.json": "d62d76ffe3f3dcadf08a1e091e158fa79ff296b3074c65c0f1a94f2c78ee6e42",
+    "evals/workflow-entry/TARGET.v8.json": "29a2cb26a8208f98cc6b1e73610d8612d9e9412961aa34e27e778f544d130963",
+    "evals/workflow-entry/TARGET.v9.json": "4817a655d2db8ab6c3dbb6472937c4011d09a13440ec251ea0181fccb9acf4e7",
+    "plugins/happy-coding/skills/implement/SKILL.md": "7a1a330daaf4fed15dac4c3232119c5b4ed55678a67482c141ea476eedafe38d",
+    "plugins/happy-coding/skills/implement/checkpoints/__init__.py": "81c1ccabd05211994dcd4f66fca08c4401a45fae0d41c2ae3a82879fe8aa6cf0",
+    "plugins/happy-coding/skills/implement/checkpoints/contract_verify.py": "b25cf1fc83b0cd333b6c536c2e46e7063618515fae7c958204f2d8490ad981e4",
+    "plugins/happy-coding/skills/implement/orchestrator/__init__.py": "10926f0f43062e9afca70d1e1091378ca28bf4f7fcf1c1a8100f1b6fbbd86b56",
+    "plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py": "aaa11e14ba498315e5605f936953a5a225ffa1faf14da2b300bcebca42dc29c9",
+    "plugins/happy-coding/skills/implement/references/eval-checklist.md": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5",
+    "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "4e65d02f4407d7b2d4751baa89230fd6fd2f776534de0dfa9080e27dd725c539",
+    "plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md": "0a0b7a23217c74e495957d7f673d6bbfdbd47d55fba1997b0e717fe48f2173f1",
+    "plugins/happy-coding/skills/implement/references/safe-refactoring.md": "b8a800142af89c9f32f303abef1b5d7735ea121e5eaadda243f8091be58a9c6e",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md": "0109272e0c0e597abb969a76d76569e69a2a7b1429bfde536de60db9dc008ca6",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md": "27975fb95254e2d763413562e0793ff50b6e5074194d02caee8d6e8519b8526b",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md": "3f393761ba15c4d584d7333ccd8b6565b6cd93d4297601e09e9405c375f1fab5",
+    "plugins/happy-coding/skills/implementation-plan/SKILL.md": "bdfbb95eee2a597bc22b55515ea53ca6e57d232bdc9bdaae6c9fd95183a7795d",
+    "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "dda00cd15503bec2cf0fc2b6e08a55d76cb3b1882e2ad037c9646d89d36a2a45",
+    "plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md": "2c9f1b0d22290432da1ee9d550f356ba396e1187696942c8c3163a197754a788",
+    "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md": "321edcc18c7cb0bbab9b846754f124d332655a1fcc90c6d2d3455085204c37d2",
+    "plugins/happy-coding/skills/to-prd/SKILL.md": "cd621df7862248d0a61721e90abf36edea8e5a853bb80cae424a72da1e188100",
+    "plugins/happy-core/skills/home-bootstrap/SKILL.md": "6f4044096f5e7ec3479bc5cf556f62f91e9e178a2ba28c215ad85fa7ecfaba5a",
+    "plugins/happy-core/skills/home-bootstrap/agents/openai.yaml": "ab6364049e71b409168b8d3d75c8308c544f6158af68af7cdcc9d02a087baf85",
+    "plugins/happy-core/skills/home-bootstrap/assets/AGENTS.md": "31611327b851ec83306599c50933801eba0cf0ac9cb93344e491c7a974b8f9e9",
+    "plugins/happy-core/skills/home-bootstrap/assets/yohaku-startup.md": "088adb52d50713f25eeddf99078e609d8b35831c96a8f8990e702270194227ee",
+    "plugins/happy-core/skills/home-bootstrap/references/codex-hooks.md": "5899d5fc8771038cda915a06d9efccb11a9e0c80518c51ebef05488522e5972b",
+    "plugins/happy-core/skills/home-bootstrap/references/git-settings.md": "b9cfac63aae34f37e223542b1ea3c2adada88681b40fafab9677c1a8e5802a50",
+    "plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py": "5522f4ce65d90c557437cc115a883be4fc4f9778594a8c2024beeefe96aa7182",
+    "plugins/happy-preview/skills/yohaku/SKILL.md": "657b4c7c1983ab3f79b493445c312b4364ba4628495eeec2b138a56fb8da2106",
+    "plugins/happy-preview/skills/yohaku/references/code-simplicity.md": "db1e3c1b698a8e7a48f75087bc36f6c6b9e71794efa83fe045a3d94f920b46cc"
+  },
+  "retention_decision": {
+    "session_only_not_persisted": [
+      "Raw responses, operation notes, fixture files, complete inventories, CLI probe, grading packet and detailed grading remain only under ignored docs/local_skill_evals/009; not published.",
+      "Only synthetic baseline instruction snapshots actually supplied as inputs are public; no raw response or account data is included."
+    ],
+    "public_files": [
+      "evals/consultation-start/cases.v2.json",
+      "evals/workflow-entry/cases.v1.json",
+      "evals/workflow-entry/startup-cases.v1.json",
+      "evals/workflow-startup/cases.v1.json",
+      "evals/workflow-startup/cases.v2.json",
+      "evals/workflow-entry/issues.v1.json",
+      "evals/workflow-entry/BASELINE.v1.json",
+      "evals/workflow-entry/BASELINE.startup.v1.json",
+      "evals/records/workflow-entry-environment-001.json",
+      "evals/workflow-entry/TARGET.v1.json",
+      "evals/workflow-entry/TARGET.v10.json",
+      "evals/workflow-entry/TARGET.v2.json",
+      "evals/workflow-entry/TARGET.v3.json",
+      "evals/workflow-entry/TARGET.v4.json",
+      "evals/workflow-entry/TARGET.v5.json",
+      "evals/workflow-entry/TARGET.v6.json",
+      "evals/workflow-entry/TARGET.v7.json",
+      "evals/workflow-entry/TARGET.v8.json",
+      "evals/workflow-entry/TARGET.v9.json",
+      "evals/records/workflow-entry-behavior-001.json"
+    ],
+    "public_artifact": "sanitized-only"
+  },
+  "decision_summary": "条件対応は不明のまま、原9ケースでalphaはCritical 15/20、normal 9/9、5 PASS・4 FAIL、禁止行動1項目・重大誤起動1件。betaはCritical 20/20、normal 9/9、9 PASS、禁止行動・重大誤起動0。alphaの失敗は相談から配布skill変更への着手、省略工程説明の不足、未設定Yohaku選択提示の不足（有効・無効の2ケース）、有効選択を通常更新案が削除すること。追加のdisabled会話は両条件ともCritical 2/2、normal 1/1、PASS。"
+}

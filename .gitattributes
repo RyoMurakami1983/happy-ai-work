@@ -2,6 +2,23 @@
 # This covers source files such as Rust and C as plain text.
 * text=auto eol=lf
 
+# Preserve the exact bytes frozen and hashed for workflow evaluation 009.
+evals/consultation-start/cases.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/workflow-entry-behavior-001.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/workflow-entry-environment-001.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/BASELINE.startup.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/BASELINE.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v3.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v4.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v5.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v6.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v7.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v8.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v9.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/TARGET.v10.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-startup/cases.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
 # Explicitly declare binary files
 *.png binary
 *.jpg binary

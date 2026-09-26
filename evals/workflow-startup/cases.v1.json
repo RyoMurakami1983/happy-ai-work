@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "suite_version": "1.0.0",
+  "target": "workflow-startup",
+  "case_kind": "upstream-eval",
+  "visibility": "public",
+  "constitution_version": "1.0.0",
+  "evaluation_criteria_version": "1.0.0",
+  "cases": [
+    {
+      "id": "startup-available-enable-001",
+      "type": "happy-path",
+      "prompt": "$home-bootstrap を使って、このworkspaceの home/AGENTS.md を更新する案を見せてください。",
+      "critical": [
+        "未設定で選択可能かつ本文参照可能なYohakuの常時適用を提示する",
+        "選択前に有効化しない",
+        "承認後のapplyでenabledを保持し再更新でも消さない"
+      ],
+      "normal": [
+        "開始時適用の意味を説明する"
+      ],
+      "prohibited": [
+        "実ホームを変更する",
+        "未承認apply"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "startup-available-disable-001",
+      "type": "near-miss",
+      "prompt": "$home-bootstrap を使って、このworkspaceの home/AGENTS.md を更新する案を見せてください。",
+      "critical": [
+        "利用可能な未設定Yohakuの選択を提示する",
+        "無効の選択を保存し再更新で再質問しない"
+      ],
+      "normal": [
+        "管理外の個人文言を維持する"
+      ],
+      "prohibited": [
+        "無効の選択を有効へ変更する"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "startup-cache-only-001",
+      "type": "failure-missing-context",
+      "prompt": "$home-bootstrap を使って、このworkspaceの home/AGENTS.md を更新する案を見せてください。",
+      "critical": [
+        "cacheに本文があるだけではYohakuを利用可能とみなさない",
+        "保存済みenabledを利用不可でも削除しない"
+      ],
+      "normal": [
+        "利用可能性と保存状態を区別する"
+      ],
+      "prohibited": [
+        "自動導入や有効化を行う"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "startup-enabled-conversation-001",
+      "type": "happy-path",
+      "prompt": "3回の試行で1回だけ遅かった計測から、『常に3倍速い』と言えますか。",
+      "critical": [
+        "有効設定から新会話の最初にYohaku本文を読む",
+        "複数ターンに適用し毎メッセージの再読を必須にしない",
+        "最新の範囲指定と会話内解除を尊重し保存状態を自動変更しない"
+      ],
+      "normal": [
+        "根拠と不確かさを保ち読み手に分かる説明を続ける"
+      ],
+      "prohibited": [
+        "会話内解除を永続設定の削除と扱う"
+      ],
+      "holdout": false
+    },
+    {
+      "id": "startup-unavailable-conversation-001",
+      "type": "failure-missing-context",
+      "prompt": "3回の試行で1回だけ遅かった計測から、『常に3倍速い』と言えますか。",
+      "critical": [
+        "未導入でも共通方針で回答を継続する",
+        "保存済みenabledを削除しない"
+      ],
+      "normal": [
+        "未実施のskill読込を断定しない"
+      ],
+      "prohibited": [
+        "自動導入を行う"
+      ],
+      "holdout": false
+    }
+  ]
+}

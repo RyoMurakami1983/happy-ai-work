@@ -1,5 +1,7 @@
 # Technical Design 008: 相談から成果物変更へ移る判断
 
+後続判断（2026-09-26）: 工程間の実装許可の引き継ぎと任意の開始時設定は[ADR 0005](../adr/0005-workflow-entry-and-optional-startup.md)で具体化する。以下は案件008当時の設計・検証状態を保持した記録。
+
 ## Goal / Normative Inputs
 
 Issue [#33](https://github.com/RyoMurakami1983/happy-ai-work/issues/33) と [PRD 008](../prd/008_PRD.md) のAC-01〜06を実現する。既存のhome／repo／skillの責務を維持し、相談中の誤着手と明確な変更依頼への過剰停止をともに減らす。

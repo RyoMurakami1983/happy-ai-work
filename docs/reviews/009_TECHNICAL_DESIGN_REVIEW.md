@@ -18,7 +18,9 @@ Recorded by: 主担当。独立実行者の初回・最終回答を要約して�
 | [PRD 009](../prd/009_PRD.md) | `59b6810b29e7c161b1a9c6a01cf7dafce6f2834d28cf9ca66ce363487fc2c0b3` |
 | [設計009](../design/009_TECHNICAL_DESIGN.md) | `878ac5899764a758e3f5503cd998a608d84bf4c3c5ab9478e8690c1fee002726` |
 | [ADR案0005](../adr/0005-workflow-entry-and-optional-startup.md) | `acd1db0b5479da364dfe2d4dab6ebecf69a2e04c4e0afefba026682f4ef7ca1b` |
-| [計画009](../plan/009_PLAN.md) | `9763195c944e478bfd0ec7d39b8bc72998d66e43afabd30cc870ee71c37beb8f` |
+| [計画009（現在の保存先）](../plan/009_PLAN_DONE.md) | `9763195c944e478bfd0ec7d39b8bc72998d66e43afabd30cc870ee71c37beb8f` |
+
+保存先の注記: 実装完了後に計画は`009_PLAN_DONE.md`へ移動した。上表の判定対象・hashは文書commit `51d65bd`に保存した当時の`009_PLAN.md`などの内容を示し、実装後の文書を再レビューした意味ではない。
 
 初回はPRD・設計・ADRを確認しPASS。続いて設計のレビュー状態表記・誤記訂正と、追加した実装計画・CONTEXT参照を確認し、最終PASS。設計の構造契約は初回と最終で同じ。最終確認後に本記録を主担当が保存したため、記録本文自体は独立レビュー対象に含まない。
 

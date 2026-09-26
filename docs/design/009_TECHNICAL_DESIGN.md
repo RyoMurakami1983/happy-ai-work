@@ -2,13 +2,13 @@
 
 Date: 2026-09-26
 Revision: 1
-Status: 設計案。独立レビューで構造判断を確認済み。実装開始は未承認。結果は[レビュー009](../reviews/009_TECHNICAL_DESIGN_REVIEW.md)を参照。
+Status: 採用。独立レビュー後、2026-09-26に利用者が文書commit後の実装を承認。レビュー対象版はcommit `51d65bd`と[レビュー009](../reviews/009_TECHNICAL_DESIGN_REVIEW.md)に保存。
 
 ## Goal / Normative Inputs
 
 [PRD 009](../prd/009_PRD.md) R-01〜08 / AC-01〜11を実現する。要求と変更方針は合意済みで、本書は構造と公開操作を具体化する設計案。repoのAGENTS.md、既存home-bootstrapの適用条件、ADR [0003](../adr/0003-finalization-gate-ownership.md)・[0004](../adr/0004-preview-plugin-distribution.md)を既存境界とする。
 
-今回は文書作成・レビューまで。配布物の実装、評価実行、実ホーム適用、Issue #35・#29の実装は対象外。本書のコード・文言例は予定であり、実装済みのinterfaceではない。
+文書作成・レビュー後、配布物の実装と評価実行が承認された。実ホーム適用とIssue #35・#29の実装は対象外。構造契約はレビュー版から変更せず、実装の検証結果は計画と評価記録へ残す。
 
 ## Current Structure / 観測事実
 
@@ -148,7 +148,7 @@ rejected/non-goalは本案件の判断履歴であり、別途negative requireme
 - Review required: yes。利用者が設計レビューを含む計画を承認し、工程間の許可と永続設定の互換性に影響するため。
 - 対象版: 本書Revision 1。レビュー時にPRD・本書・ADRのSHA-256を固定する。
 - 確認点: 過剰停止、短縮経路の抜け道、definitionの責務、設定保持・異常時・旧版互換、previewへの必須依存がないこと。
-- 設計を止める要求Unknowns: なし。技術案は独立レビューで確認済み。行動評価は未実施、実装承認は未取得。
+- 設計を止める要求Unknowns: なし。技術案は独立レビューで確認済み。実装承認はPRD S-05に記録。行動評価は後続記録で確認する。
 - Finalized contract: PRDの合意済み要件・ACと既存repo規約を規範入力とする。D-01〜07は本設計の提案で、レビューと利用者の実装開始判断後に実装契約として渡す。非採用案の詳細は本書に留める。
 - 次担当: implementation-planへ構造判断・上表のtarget trace・許可状態を渡す。独立レビューの対象版と限界はレビュー009に記録する。
 

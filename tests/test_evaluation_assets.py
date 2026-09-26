@@ -24,6 +24,8 @@ class EvaluationAssetTests(unittest.TestCase):
                 "to-prd-purpose",
                 "technical-design-review",
                 "consultation-start",
+                "workflow-entry",
+                "workflow-startup",
             },
         )
         for path in suites:

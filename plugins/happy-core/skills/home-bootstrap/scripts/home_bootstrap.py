@@ -13,6 +13,47 @@ from pathlib import Path
 
 START = "<!-- happy-ai-work:start -->"
 END = "<!-- happy-ai-work:end -->"
+YOHAKU_KEY = "happy-ai-work:yohaku"
+
+
+def managed_body(text: str, *, required: bool = False) -> str | None:
+    if START not in text and END not in text and not required:
+        return None
+    if text.count(START) != 1 or text.count(END) != 1:
+        raise ValueError("incomplete or duplicate managed-section markers")
+    start, end = text.index(START), text.index(END)
+    if start >= end:
+        raise ValueError("managed-section markers are reversed")
+    return text[start + len(START):end]
+
+
+def yohaku_state(body: str | None) -> str | None:
+    lines = [line.strip() for line in (body or "").splitlines() if YOHAKU_KEY in line]
+    if not lines:
+        return None
+    if len(lines) == 1:
+        for state in ("enabled", "disabled"):
+            if lines[0] == f"<!-- {YOHAKU_KEY}={state} -->":
+                return state
+    raise ValueError("invalid or duplicate Yohaku state; resolve the managed section first")
+
+
+def compose(existing: str, template: str, choice: str, startup_path: Path) -> str:
+    state = yohaku_state(managed_body(existing))
+    managed_body(template, required=True)
+    if YOHAKU_KEY in template:
+        raise ValueError("base template must not contain Yohaku state metadata")
+    if choice != "preserve":
+        state = {"enable": "enabled", "disable": "disabled"}[choice]
+    if state is None:
+        return template
+    option = f"<!-- {YOHAKU_KEY}={state} -->\n"
+    if state == "enabled":
+        option += startup_path.read_text(encoding="utf-8").strip() + "\n"
+    before, after = template.split(END, 1)
+    if not before.endswith("\n"):
+        before += "\n"
+    return before + option + END + after
 
 
 def codex_home() -> Path:
@@ -22,11 +63,8 @@ def codex_home() -> Path:
 
 def merge(existing: str, managed: str) -> str:
     managed = managed.strip() + "\n"
-    if START not in managed or END not in managed:
-        raise ValueError("template is missing managed-section markers")
-    if START in existing or END in existing:
-        if existing.count(START) != 1 or existing.count(END) != 1:
-            raise ValueError("existing AGENTS.md has incomplete or duplicate markers")
+    managed_body(managed, required=True)
+    if managed_body(existing) is not None:
         before, remainder = existing.split(START, 1)
         _, after = remainder.split(END, 1)
         return before + managed.rstrip("\n") + after
@@ -48,13 +86,25 @@ def main() -> int:
     mode.add_argument("--apply", action="store_true", help="write after creating a backup")
     parser.add_argument("--target", type=Path, help="override the AGENTS.md path for testing")
     parser.add_argument("--template", type=Path, help="override the managed template path")
+    parser.add_argument(
+        "--yohaku", choices=("preserve", "enable", "disable"), default="preserve",
+        help="preserve the saved startup preference (default), or explicitly change it",
+    )
     args = parser.parse_args()
 
     skill_root = Path(__file__).resolve().parent.parent
     template_path = args.template or skill_root / "assets" / "AGENTS.md"
     target = args.target or codex_home() / "AGENTS.md"
-    existing = target.read_bytes().decode("utf-8") if target.exists() else ""
-    updated = merge(existing, template_path.read_text(encoding="utf-8"))
+    try:
+        existing = target.read_bytes().decode("utf-8") if target.exists() else ""
+        managed = compose(
+            existing, template_path.read_text(encoding="utf-8"), args.yohaku,
+            skill_root / "assets" / "yohaku-startup.md",
+        )
+        updated = merge(existing, managed)
+    except (ValueError, OSError) as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
 
     print(f"target: {target}")
     print("".join(difflib.unified_diff(
@@ -70,7 +120,7 @@ def main() -> int:
 
     target.parent.mkdir(parents=True, exist_ok=True)
     if target.exists() and updated != existing:
-        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
+        stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S%fZ")
         backup = target.with_name(f"{target.name}.{stamp}.bak")
         backup.write_bytes(existing.encode("utf-8"))
         print(f"backup: {backup}")

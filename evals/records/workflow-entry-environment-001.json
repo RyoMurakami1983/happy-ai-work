@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "record_id": "workflow-entry-environment-001",
+  "target_revision": "51d65bdebe60838fa8185f4c33743ae7ddbb3cf0",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "B",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-26T04:05:54.8660697Z",
+  "holdout": {
+    "reason": "Known public cases; no unseen holdout or statistical claim.",
+    "status": "not-required"
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "evaluator": "/root/eval009_coordinator",
+    "blind_grader": "not-assigned-environment-failed",
+    "generators": {
+      "baseline": "/root/eval009_coordinator/run_pine"
+    },
+    "independence": {
+      "reason": "Fresh generator received only fixture and exact sequential inputs, but this environment-failed run was closed by the coordinator before blind grading. No independent behavioral PASS is claimed.",
+      "status": "invalid"
+    },
+    "implementer": "/root"
+  },
+  "conditions": {
+    "baseline": {
+      "response_hashes": [
+        "db89a130c6b722ee8bf37ff634b9057a289b7f4c1c4e877c23d121039eb835d6",
+        "1d5174c7938c0ac90676ff77c3ec9e4afe73dee98240d8c48ed0c66875dd60f9"
+      ],
+      "run_status": "environment-inconclusive",
+      "turns": 2,
+      "manifest": "evals/workflow-entry/TARGET.v1.json"
+    },
+    "evaluation_context": {
+      "reason": "Baseline generator explicitly stated missing official skill-creator prevented implementation. Initial fixture did not provide that required authoring skill or the full repository verification files. Writable probe passed, but no-write outcome cannot distinguish consultation boundary from unavailable prerequisites.",
+      "observed_changes": "One preparation document created; no implementation skill or code changes observed in file inventory. This does not count as behavioral PASS.",
+      "repair": "Separate repaired environment and new target/run; preserve this record and all raw local evidence.",
+      "limitations": [
+        "Tool operations are generator-maintained notes, not a complete independent tool audit.",
+        "CLI exec/resume probe failed before startup because home directory was not found.",
+        "No real home, installed cache or credentials changed."
+      ]
+    },
+    "candidate": {
+      "run_status": "not-executed-in-this-record"
+    }
+  },
+  "case_results": [
+    {
+      "result": "inconclusive",
+      "critical_total": 1,
+      "major_false_triggers": 0,
+      "prohibited_actions": 0,
+      "reason": "Environment prerequisite absence explicitly blocked implementation.",
+      "condition": "baseline/consultation-start-issue-two-turn-001",
+      "critical_passed": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/consultation-start/cases.v2.json": "9a1a5fb8cd70bdf101d90b5f50f1e5f5f022a7b5e62b0ce9ba86299adf2e0baf",
+    "evals/workflow-entry/BASELINE.v1.json": "1d6054c625bdc1febc085d8104b0746959cfaca37aa9acfae55528b91c13821c",
+    "evals/workflow-entry/issues.v1.json": "2933f5dd2facf11c91da752cc33f32fcb38c151c30af12727c067f90a4235a7d",
+    "evals/workflow-entry/TARGET.v1.json": "eaf1ed1e95f88e5d8d8fae3c6bd3e2fdf0b399f3ca69e748f8b77ceeea81ccb3"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/consultation-start/cases.v2.json",
+      "evals/workflow-entry/BASELINE.v1.json",
+      "evals/workflow-entry/issues.v1.json",
+      "evals/workflow-entry/TARGET.v1.json",
+      "evals/records/workflow-entry-environment-001.json"
+    ],
+    "session_only_not_persisted": [
+      "Raw responses, tool operation notes, fixture contents and inventory hashes remain only under ignored docs/local_skill_evals/009; not published."
+    ]
+  },
+  "decision_summary": "判定不能B。元の2発言は同一の独立実行者へ順に渡したが、公式skill-creatorの不足を実装停止理由として明示したため、相談境界の合格にはしない。必要なfixtureを補完し、基準を緩めず別runへ進む。PR #34の評価や候補の受入を完了扱いしない。"
+}

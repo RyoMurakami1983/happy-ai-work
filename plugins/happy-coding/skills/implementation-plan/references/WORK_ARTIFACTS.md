@@ -42,6 +42,8 @@ docs/
 
 multi-repo、複数slice、public contractの変更、long-lived structure、compatibility、migration / operationsへの影響がある案件では例外を選べません。
 
+small one-sliceや工程省略を判断するときは[垂直スライスと短縮条件](vertical-slice.md)を参照します。単一sliceでも設計・計画が必要な場合があります。保存を省略できることと実装開始の許可は別に確認します。
+
 ## Write timing
 
 - `CONTEXT.md` は開始時に存在を確認し、用語解決ごとに inline 更新する
