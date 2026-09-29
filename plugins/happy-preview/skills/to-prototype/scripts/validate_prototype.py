@@ -3,9 +3,55 @@
 from __future__ import annotations
 
 import argparse
+import re
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
+
+RESOURCE_ATTRIBUTES = {
+    "script": ("src",),
+    "img": ("src", "srcset"),
+    "source": ("src", "srcset"),
+    "iframe": ("src",),
+    "audio": ("src",),
+    "video": ("src", "poster"),
+    "object": ("data",),
+    "embed": ("src",),
+    "track": ("src",),
+    "image": ("href",),
+    "use": ("href",),
+}
+RESOURCE_LINK_RELS = {
+    "stylesheet",
+    "icon",
+    "preload",
+    "modulepreload",
+    "prefetch",
+    "preconnect",
+    "dns-prefetch",
+    "manifest",
+    "mask-icon",
+}
+CSS_URL = re.compile(r"""url\(\s*(['"]?)(.*?)\1\s*\)""", re.IGNORECASE | re.DOTALL)
+CSS_IMPORT = re.compile(r"""@import\s+(['"])(.*?)\1""", re.IGNORECASE | re.DOTALL)
+CSS_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
+
+
+def is_external(url: str) -> bool:
+    url = url.strip()
+    return url.startswith("//") or urlsplit(url).scheme in {"http", "https"}
+
+
+def css_references(css: str) -> list[str]:
+    css = CSS_COMMENT.sub("", css)
+    references = [match.group(2) for match in CSS_URL.finditer(css)]
+    references.extend(match.group(2) for match in CSS_IMPORT.finditer(css))
+    return references
+
+
+def srcset_references(srcset: str) -> list[str]:
+    return [candidate.split(maxsplit=1)[0] for part in srcset.split(",")
+            if (candidate := part.strip())]
 
 
 class PrototypeParser(HTMLParser):
@@ -15,8 +61,12 @@ class PrototypeParser(HTMLParser):
         self.language = ""
         self.has_viewport = False
         self.in_title = False
+        self.in_style = False
         self.title_parts: list[str] = []
         self.external_resources: list[str] = []
+
+    def record(self, references: list[str]) -> None:
+        self.external_resources.extend(url for url in references if is_external(url))
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         self.tags.add(tag)
@@ -25,26 +75,36 @@ class PrototypeParser(HTMLParser):
             self.language = values.get("lang") or ""
         elif tag == "title":
             self.in_title = True
+        elif tag == "style":
+            self.in_style = True
         elif tag == "meta" and (values.get("name") or "").lower() == "viewport":
             self.has_viewport = True
 
-        resource = ""
-        if tag in {"script", "img", "iframe", "audio", "video", "source"}:
-            resource = values.get("src") or ""
-        elif tag == "link" and (values.get("rel") or "").lower() in {
-            "stylesheet", "icon", "preload", "modulepreload"
-        }:
-            resource = values.get("href") or ""
-        if resource and (resource.startswith("//") or urlsplit(resource).scheme in {"http", "https"}):
-            self.external_resources.append(resource)
+        for attr in RESOURCE_ATTRIBUTES.get(tag, ()):
+            value = values.get(attr) or ""
+            self.record(srcset_references(value) if attr == "srcset" else [value])
+        if tag == "link" and RESOURCE_LINK_RELS.intersection(
+            (values.get("rel") or "").lower().split()
+        ):
+            self.record([values.get("href") or ""])
+        if tag == "form":
+            self.record([values.get("action") or ""])
+        if tag == "input" and (values.get("type") or "").lower() == "image":
+            self.record([values.get("src") or ""])
+        if style := values.get("style"):
+            self.record(css_references(style))
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self.in_title = False
+        elif tag == "style":
+            self.in_style = False
 
     def handle_data(self, data: str) -> None:
         if self.in_title:
             self.title_parts.append(data)
+        if self.in_style:
+            self.record(css_references(data))
 
 
 def validate_html(html: str) -> list[str]:

@@ -62,5 +62,39 @@ class ToPrototypeTests(unittest.TestCase):
         self.assertTrue(any("外部資産" in error for error in errors))
 
 
+    def test_validator_detects_common_external_resource_forms(self) -> None:
+        base = INIT.render("試作", TEMPLATE.read_text(encoding="utf-8"))
+        cases = {
+            "css_import": ('<style>@import "https://cdn.example/a.css";</style>',
+                           "https://cdn.example/a.css"),
+            "css_url": ('<style>.icon { background: url(//cdn.example/a.svg) }</style>',
+                        "//cdn.example/a.svg"),
+            "inline_style": ('<div style="background: url(https://cdn.example/a.png)"></div>',
+                             "https://cdn.example/a.png"),
+            "srcset": ('<img srcset="local.png 1x, https://cdn.example/large.png 2x">',
+                       "https://cdn.example/large.png"),
+            "poster": ('<video poster="https://cdn.example/poster.png"></video>',
+                       "https://cdn.example/poster.png"),
+            "object_data": ('<object data="https://cdn.example/diagram.svg"></object>',
+                            "https://cdn.example/diagram.svg"),
+            "multi_token_rel": ('<link rel="alternate stylesheet" href="https://cdn.example/a.css">',
+                                "https://cdn.example/a.css"),
+            "form_action": ('<form action="https://cdn.example/save"></form>',
+                            "https://cdn.example/save"),
+        }
+        for name, (fragment, url) in cases.items():
+            with self.subTest(name=name):
+                errors = VALIDATE.validate_html(base.replace("</body>", fragment + "</body>"))
+                self.assertTrue(any(url in error for error in errors), errors)
+
+    def test_validator_allows_local_assets(self) -> None:
+        base = INIT.render("試作", TEMPLATE.read_text(encoding="utf-8"))
+        fragment = (
+            '<style>.icon { background: url("./icon.svg") }</style>'
+            '<img srcset="./small.png 1x, ./large.png 2x">'
+            '<link rel="alternate stylesheet" href="./style.css">'
+        )
+        self.assertEqual([], VALIDATE.validate_html(base.replace("</body>", fragment + "</body>")))
+
 if __name__ == "__main__":
     unittest.main()
