@@ -1,0 +1,178 @@
+{
+  "schema_version": 1,
+  "record_id": "technical-feasibility-research-preview-001",
+  "target_revision": "ce9d2305b4cb689857eb9cd32dec737189e60579 plus technical-feasibility-research frozen by evals/technical-feasibility-research/TARGET.v1.json",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-30T07:08:10.4054060+09:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Bounded public synthetic preview test; no unseen-holdout or comparative superiority claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "preference_and_evidence": "/root/research_generator_a",
+      "combination_sensitivity_and_routing": "/root/research_generator_b"
+    },
+    "blind_grader": "/root/research_blind_grader",
+    "evaluator": "/root/research_blind_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Fresh generator contexts received frozen skill and prompt-only files, without rubric or parent conversation. The fresh grader received rubric and responses, without skill, implementation or expected verdict. Role separation is evidenced by session dispatch. Both generators also read common home Yohaku; its capture and limitations are recorded in ENVIRONMENT.v1.json."
+    }
+  },
+  "conditions": {
+    "candidate": {
+      "generated_artifact_hashes": {
+        "research-preference-001": {
+          "response.md": "e0715aabf424fe7aa77c742340c6f4fe5ee07531a61e8285af984c02585ef9ac"
+        },
+        "research-evidence-001": {
+          "response.md": "b17cc5da3b98190c81f647c23cea15dd17c5b008a2ba5604dede18d70668e3ce"
+        },
+        "research-combination-001": {
+          "response.md": "4b56fa8805387e08595dff256e0bda18cf2ed5fcfe8856eab42a214f25878c88"
+        },
+        "research-sensitivity-001": {
+          "response.md": "cdbe6eb7786787c9ce55b938b5fbdf172f92097dd4109175dcad66e01b1efcf1"
+        },
+        "research-routing-001": {
+          "response.md": "4e414d71b6e4293a758d81470f5f45d5a7892a2ae63592f1eb5a89b460d49ff9"
+        }
+      },
+      "totals": {
+        "critical_passed": 20,
+        "critical_total": 20,
+        "normal_passed": 5,
+        "normal_total": 5,
+        "prohibited_actions": 0,
+        "major_false_triggers": 0
+      },
+      "behavioral_verdict": "PASS",
+      "grading_sha256": "e75fe9f3bc44090026daa98883bde631b604f03fe79ebaffe72179c1504bdaa5"
+    },
+    "execution_scope": {
+      "reasoning_effort": "high",
+      "distribution_stage": "preview",
+      "additional_inputs": "Generator A read decision-support; both generators read common home Yohaku. Linked Yohaku reference is preserved for dependency closure, not claimed as a read input.",
+      "repetitions": 1,
+      "user_facing_artifacts": "Conversation-only answers; temporary response files are evaluation transport.",
+      "comparison": "Single candidate, no baseline",
+      "frozen_artifact_hashes_verified_after_execution": true,
+      "model": "gpt-6-astra"
+    },
+    "evaluation_context": {
+      "artifact_manifest": "evals/technical-feasibility-research/TARGET.v1.json",
+      "environment_manifest": "evals/technical-feasibility-research/ENVIRONMENT.v1.json",
+      "case_suite": "evals/technical-feasibility-research/cases.v1.json",
+      "new_record": "required",
+      "verification": [
+        "Official skill quick_validate passed",
+        "CLI data-protection tests: 3 passed",
+        "Evaluation asset tests before this record: 17 passed",
+        "Independent implementation review: no high-confidence findings"
+      ],
+      "limitations": [
+        "Five known synthetic cases with one run each; no baseline, real-work effectiveness, statistical superiority or unseen-holdout claim.",
+        "Routing measures instructed suitability, not automatic skill discovery.",
+        "Cases are grouped within two fresh generator contexts; not per-case context isolation.",
+        "Common home Yohaku makes this a combined instruction environment. Its source was captured after generation; pre-run byte identity was not separately attested.",
+        "Grading assessed responses, not a full independent tool-history audit.",
+        "Only GPT-6 Astra was exercised; other GPT-6 models and real external research were not validated."
+      ]
+    }
+  },
+  "case_results": [
+    {
+      "condition": "research-preference-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "必須条件、証拠範囲、未確認点、条件付き推奨が一貫している。"
+    },
+    {
+      "condition": "research-evidence-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "資料不足と観測失敗を混同せず、調査終了と再検討条件を提示している。"
+    },
+    {
+      "condition": "research-combination-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "即時選択Sと将来候補Cを、運用上限と審査条件に基づいて区別している。"
+    },
+    {
+      "condition": "research-sensitivity-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "選好と必須条件を区別し、推奨理由と次の合意事項を提示している。"
+    },
+    {
+      "condition": "research-routing-001",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "Bのみを調査対象とし、A/C/Dの不要な調査起動を避けている。"
+    }
+  ],
+  "artifact_hashes": {
+    "evals/technical-feasibility-research/snapshots/v1/SKILL.md": "48b63d547ec3a41386d585ab4e9befd6431cf922f679014811f02fa459d56031",
+    "evals/technical-feasibility-research/snapshots/v1/references/decision-support.md": "3673415efc1ae957a8d30d88dadaa15f739c360d993242cf53a19c5528f6b46d",
+    "evals/technical-feasibility-research/snapshots/v1/assets/research-report.md": "752db9456e504e68b069b2c129c4269c87dc42f88ef479e6857b4acefce8cac4",
+    "evals/technical-feasibility-research/snapshots/v1/scripts/init_research.py": "faf9013a1d0764e82b4ca99d723636a3a49852136f45063e72cd12c2e43316d3",
+    "evals/technical-feasibility-research/cases.v1.json": "c995830d1c0e8ff7a02227972295901bb1ed68d3f580d032c14434b4da669a6f",
+    "evals/technical-feasibility-research/TARGET.v1.json": "001722b1295ce80969037871d0078216681aef17e7c6cece54af506141c87a82",
+    "evals/technical-feasibility-research/ENVIRONMENT.v1.json": "8fbc1a92d56f7a13737187d73d445547e4b4a27969f6524ad426d76c2d7dbed1",
+    "evals/technical-feasibility-research/snapshots/environment-v1/yohaku/SKILL.md": "657b4c7c1983ab3f79b493445c312b4364ba4628495eeec2b138a56fb8da2106",
+    "evals/technical-feasibility-research/snapshots/environment-v1/yohaku/references/code-simplicity.md": "db1e3c1b698a8e7a48f75087bc36f6c6b9e71794efa83fe045a3d94f920b46cc"
+  },
+  "retention_decision": {
+    "session_only_not_persisted": [
+      "Raw case responses",
+      "Detailed grading with evidence",
+      "Prompt-only working files"
+    ],
+    "public_files": [
+      "evals/technical-feasibility-research/snapshots/v1/SKILL.md",
+      "evals/technical-feasibility-research/snapshots/v1/references/decision-support.md",
+      "evals/technical-feasibility-research/snapshots/v1/assets/research-report.md",
+      "evals/technical-feasibility-research/snapshots/v1/scripts/init_research.py",
+      "evals/technical-feasibility-research/cases.v1.json",
+      "evals/technical-feasibility-research/TARGET.v1.json",
+      "evals/technical-feasibility-research/ENVIRONMENT.v1.json",
+      "evals/technical-feasibility-research/snapshots/environment-v1/yohaku/SKILL.md",
+      "evals/technical-feasibility-research/snapshots/environment-v1/yohaku/references/code-simplicity.md",
+      "evals/records/technical-feasibility-research-preview-001.json"
+    ],
+    "public_artifact": "sanitized-only"
+  },
+  "decision_summary": "固定基準の振る舞い検証はPASS（Critical 20/20、通常5/5、禁止行為・重大な誤適用0）。happy-previewで試用へ進む。共通home指示を含む限定評価であり、実利用での効果、通常pluginへの正式採用、他モデルでの再現性を確認した判定ではない。"
+}

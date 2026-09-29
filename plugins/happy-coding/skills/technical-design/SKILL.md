@@ -34,6 +34,8 @@ blockingなrequirement gapが残る部分は確定設計として渡さない。
 
 大きな技術選定が必要な場合だけ[TECH_SELECTION_HARNESS.md](references/TECH_SELECTION_HARNESS.md)を読む。既存stackで自然に実装できる場合は省略する。
 
+外部技術の機能・実行環境・配布等の未知が設計を左右する場合は、利用可能なら`technical-feasibility-research`へ目的・条件・対象環境と調査範囲を渡す。未導入なら必要な調査をこの設計内で行い、導入待ちにしない。返された出典・版・確認範囲・未確認事項・推奨を要件と照合して採否と構造へ取り込み、推奨を採用決定や実動作の証明と混同しない。
+
 ## ワークフロー
 
 ### 0. Normative inputsを固定する

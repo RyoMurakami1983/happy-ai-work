@@ -23,6 +23,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "ui-design",
                 "to-prd-purpose",
                 "technical-design-review",
+                "technical-feasibility-research",
                 "consultation-start",
                 "workflow-entry",
                 "workflow-startup",

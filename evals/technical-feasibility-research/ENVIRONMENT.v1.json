@@ -1,0 +1,12 @@
+{
+  "captured_at": "2026-09-30T07:03:44.3784424+09:00",
+  "capture_stage": "after generator execution, before grading",
+  "observed_generator_inputs": [
+    "Frozen research skill",
+    "Prompt-only files",
+    "Common home Yohaku skill"
+  ],
+  "additional_instruction_note": "Both generators independently loaded the common home Yohaku skill. This is not a skill-only comparison. Its current source and linked reference are captured after execution; pre-run byte identity was not separately attested.",
+  "automatic_discovery": "not tested",
+  "per_case_context_isolation": false
+}
