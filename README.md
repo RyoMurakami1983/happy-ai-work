@@ -72,11 +72,14 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [yohaku](plugins/happy-preview/skills/yohaku/SKILL.md): 正確さ・安全・選択権を保ち、回答や手順を理解・判断・行動しやすい形へ整理
 - [technical-design-review](plugins/happy-preview/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
+- [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
+
+技術実現性調査の初版はGPT-6向けに設計し、GPT-6 Astraによる5件の架空ケースを独立採点しました。[評価記録](evals/records/technical-feasibility-research-preview-001.json)の範囲で基本検証済みです。実案件での効果、自動起動、他モデルでの再現性は未検証です。
 
 Yohakuは「この説明を初心者が判断できる形にして」「安全条件を残して手順を整理して」などで使います。CavemanやPonytailの導入は不要です。試用では重要条件の見落とし、読み直し、追加質問、正しい判断までの時間を確認します。改善率は未測定です。設計と確認範囲は [Yohakuの設計](docs/design/005_YOHAKU.md) を参照してください。
 

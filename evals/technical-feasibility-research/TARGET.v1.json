@@ -1,0 +1,33 @@
+{
+  "record_version": 1,
+  "frozen_at": "2026-09-30T07:00:07.4762841+09:00",
+  "base_revision": "ce9d2305b4cb689857eb9cd32dec737189e60579",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "evaluation_question": "固定された証拠と条件から中立的な推奨を返し、未知と利益・負担を正しく扱えるか",
+  "hypothesis": "判断境界と限定検証の指示で、見送りと相乗効果を根拠付きで扱える",
+  "counter_hypothesis": "指示が過剰調査、保留、組み合わせ推奨を増やす",
+  "execution": {
+    "model": "gpt-6-astra",
+    "generator_isolation": "Fresh agents receive frozen skill and prompt-only files, no rubric or earlier conversation. Cases are grouped within each agent; not per-case context isolation.",
+    "reasoning_effort": "high",
+    "maximum_iterations": 2,
+    "blind_grading": "Separate fresh grader receives rubric and outputs, not skill, implementation, or requested overall verdict.",
+    "repetitions": 1
+  },
+  "gate": {
+    "limits": "Public synthetic cases. No comparative superiority, unseen holdout, automatic discovery, or real deployment claim.",
+    "normal": "at least 4 of 5",
+    "major_false_triggers": 0,
+    "critical": "all 20",
+    "prohibited_actions": 0
+  },
+  "artifact_hashes": {
+    "evals/technical-feasibility-research/snapshots/v1/SKILL.md": "48b63d547ec3a41386d585ab4e9befd6431cf922f679014811f02fa459d56031",
+    "evals/technical-feasibility-research/snapshots/v1/references/decision-support.md": "3673415efc1ae957a8d30d88dadaa15f739c360d993242cf53a19c5528f6b46d",
+    "evals/technical-feasibility-research/snapshots/v1/assets/research-report.md": "752db9456e504e68b069b2c129c4269c87dc42f88ef479e6857b4acefce8cac4",
+    "evals/technical-feasibility-research/snapshots/v1/scripts/init_research.py": "faf9013a1d0764e82b4ca99d723636a3a49852136f45063e72cd12c2e43316d3",
+    "evals/technical-feasibility-research/cases.v1.json": "c995830d1c0e8ff7a02227972295901bb1ed68d3f580d032c14434b4da669a6f"
+  }
+}

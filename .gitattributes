@@ -20,6 +20,11 @@ evals/workflow-entry/TARGET.v10.json -text whitespace=blank-at-eol,blank-at-eof,
 evals/workflow-startup/cases.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 
 # Explicitly declare binary files
+# Preserve frozen research evaluation bytes across checkout platforms.
+evals/technical-feasibility-research/TARGET.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/technical-feasibility-research/ENVIRONMENT.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/technical-feasibility-research-preview-001.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
 *.png binary
 *.jpg binary
 *.jpeg binary
