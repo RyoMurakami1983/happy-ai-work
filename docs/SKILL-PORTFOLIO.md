@@ -13,6 +13,7 @@
 - framework: `wpf`、`tauri`
 - 横断workflow: `repo-onboarding`、`debug-and-fix`
 - 業務理解の構造化収集: `business-understanding-survey`
+- 回答フォーム生成: `html-questionnaire`
 - 開発成果物: `to-prd`、`technical-design`、`implementation-plan`、`implement`
 
 ## プレビュー配布
@@ -49,6 +50,7 @@ homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた�
 
 ## Workflow再編
 
+- `html-questionnaire`は、決まった質問から回答用のオフラインHTMLを生成する独立した目的を持つ。質問と要件の合意は`interview-with-docs`、現場に聞く内容の設計は`business-understanding-survey`が担当する。公開サイトやサーバー保存はフォーム生成の範囲に含めない。入力、出力、検証条件が異なるため、質問設計skillの`references/`には統合しない。
 - `domain-modeling`は、合意済みの目的・要件からドメインのモデルと業務上の契約を導く。用語整理だけなら`CONTEXT.md`等を更新し、正式なモデル化が必要な場合はドメイン文書に条件・境界を残す。目的・要件の正本は`to-prd`、技術構造は`technical-design`が担当する。[再定義の判断記録](design/006_DOMAIN_MODELING.md)を参照する。
 - 旧`design-and-plan`は、構造判断を行う`technical-design`と、実行順を作る`implementation-plan`へ分割した。
 - 旧`debug`は、原因説明で止まらず元症状をgreenへ戻す`debug-and-fix`へ置換した。
