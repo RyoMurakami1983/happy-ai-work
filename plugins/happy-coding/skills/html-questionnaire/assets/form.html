@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${TITLE}</title>
+  <style>
+    :root { color-scheme: light; --canvas:#f5f5f5; --panel:#fff; --ink:#263238; --muted:#555; --border:#c5cbd1; --blue:#1565c0; --soft:#e3f2fd; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:var(--canvas); color:var(--ink); font:16px/1.6 system-ui,"Yu Gothic UI",Meiryo,sans-serif; }
+    main { max-width:850px; margin:auto; padding:24px 16px 48px; }
+    h1 { margin:0 0 8px; font-size:1.6rem; }
+    h2 { margin:0 0 12px; font-size:1.15rem; }
+    .card { background:var(--panel); border:1px solid var(--border); border-radius:5px; padding:20px; margin:0 0 16px; }
+    .question { border:0; border-top:1px solid var(--border); margin:0; padding:16px 0; }
+    .question:first-of-type { border-top:0; padding-top:0; }
+    legend { width:100%; padding:0; font-weight:700; }
+    label { display:block; margin:8px 0 4px; }
+    .hint { margin:4px 0 8px; color:var(--muted); }
+    select,textarea,input[type=text] { display:block; width:100%; min-height:40px; padding:8px 10px; border:1px solid #767676; border-radius:3px; background:#fff; color:var(--ink); font:inherit; }
+    textarea { min-height:90px; resize:vertical; }
+    :focus-visible { outline:2px solid var(--blue); outline-offset:2px; }
+    .actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+    button { min-height:40px; padding:7px 16px; border-radius:3px; cursor:pointer; font:inherit; font-weight:700; }
+    .primary { background:var(--blue); border:1px solid var(--blue); color:#fff; }
+    .secondary { background:var(--soft); border:1px solid var(--blue); color:#0d47a1; }
+    #preview { min-height:190px; font:14px/1.5 Consolas,monospace; }
+    #status { min-height:24px; margin:10px 0 0; }
+  </style>
+</head>
+<body><main>
+  <section class="card"><h1>${TITLE}</h1>${INTRO}<p>回答後に「回答をまとめる」を押し、内容を確認してコピーまたはJSONをダウンロードしてください。このHTMLは外部へ送信しません。</p></section>
+  <form id="questionnaire" data-form-id="${FORM_ID}">
+    ${SECTIONS}
+    <div class="actions"><button class="primary" type="submit">回答をまとめる</button><button class="secondary" type="reset">入力を消す</button></div>
+  </form>
+  <section class="card" aria-labelledby="output-title">
+    <h2 id="output-title">回答の受け渡し</h2>
+    <label for="preview">回答JSON</label><textarea id="preview" readonly placeholder="「回答をまとめる」を押すと表示します。"></textarea>
+    <div class="actions"><button id="copy" class="secondary" type="button">回答をコピー</button><button id="download" class="secondary" type="button">JSONをダウンロード</button></div>
+    <p id="status" role="status" aria-live="polite"></p>
+  </section>
+</main>
+<script>
+  const form = document.getElementById('questionnaire');
+  const preview = document.getElementById('preview');
+  const status = document.getElementById('status');
+  const questions = Array.from(form.querySelectorAll('.question'));
+  function updateValidation() {
+    for (const question of questions) {
+      const valueControl = question.querySelector('[data-role="value"]');
+      if (valueControl.tagName !== 'SELECT') {
+        valueControl.setCustomValidity(valueControl.required && !valueControl.value.trim() ? '回答を入力してください。' : '');
+      }
+      const note = question.querySelector('[data-role="note"]');
+      if (!note) continue;
+      const requiredIf = (note.dataset.requiredIf || '').split(',').filter(Boolean);
+      note.required = requiredIf.includes(valueControl.value);
+      note.setCustomValidity(note.required && !note.value.trim() ? '補足を入力してください。' : '');
+    }
+  }
+  function inputChanged() {
+    if (preview.value) {
+      preview.value = '';
+      status.textContent = '入力が変わりました。回答をまとめ直してください。';
+    }
+    updateValidation();
+  }
+  form.addEventListener('input', inputChanged);
+  form.addEventListener('change', inputChanged);
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    updateValidation();
+    if (!form.reportValidity()) return;
+    const result = { schema_version: 1, form_id: form.dataset.formId, answers: {} };
+    for (const question of questions) {
+      const answer = { value: question.querySelector('[data-role="value"]').value.trim() };
+      const note = question.querySelector('[data-role="note"]');
+      if (note) answer.note = note.value.trim();
+      result.answers[question.dataset.questionId] = answer;
+    }
+    preview.value = JSON.stringify(result, null, 2);
+    status.textContent = '回答をまとめました。内容を確認してください。';
+    preview.focus();
+  });
+  form.addEventListener('reset', () => { preview.value = ''; status.textContent = ''; setTimeout(updateValidation, 0); });
+  document.getElementById('copy').addEventListener('click', async () => {
+    if (!preview.value) { status.textContent = '先に回答をまとめてください。'; return; }
+    try { await navigator.clipboard.writeText(preview.value); status.textContent = 'コピーしました。'; }
+    catch { preview.focus(); preview.select(); status.textContent = '自動コピーできませんでした。選択した回答を Ctrl+C でコピーしてください。'; }
+  });
+  document.getElementById('download').addEventListener('click', () => {
+    if (!preview.value) { status.textContent = '先に回答をまとめてください。'; return; }
+    const url = URL.createObjectURL(new Blob([preview.value], {type:'application/json;charset=utf-8'}));
+    const link = document.createElement('a'); link.href = url; link.download = form.dataset.formId + '.json'; link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    status.textContent = 'JSONをダウンロードしました。';
+  });
+</script>
+</body></html>

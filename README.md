@@ -52,6 +52,7 @@ Codexアプリではplugin画面から `Happy AI Work` を開き、必要なplug
 
 - 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
 - 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
+- 回答フォーム: [html-questionnaire](plugins/happy-coding/skills/html-questionnaire/SKILL.md)（決まった質問からオフラインHTMLを生成し、回答をJSONで受け取る）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
 - UI設計・評価: `ui-design`
