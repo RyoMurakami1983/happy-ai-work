@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 import tempfile
@@ -21,6 +22,7 @@ class ResearchInitializerTests(unittest.TestCase):
             text=True,
             encoding="utf-8",
             errors="replace",
+            env={**os.environ, "PYTHONIOENCODING": "cp1252"},
             check=False,
         )
 
@@ -29,6 +31,7 @@ class ResearchInitializerTests(unittest.TestCase):
             output = Path(temporary) / "調査" / "report.md"
             result = self.run_cli("配布方式の成立条件", output)
             self.assertEqual(0, result.returncode, result.stderr)
+            self.assertEqual(str(output), result.stdout.strip())
             self.assertIn("配布方式の成立条件", output.read_text(encoding="utf-8"))
             original = "# 利用者の調査結果\n実測値を記録済み。\n".encode()
             output.write_bytes(original)

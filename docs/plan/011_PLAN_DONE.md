@@ -28,3 +28,9 @@ focused command：`uv run --no-project --python 3.14 python -m unittest discover
 模擬評価は共通home Yohaku指示も含み、ケースは2つの生成contextへ分けて実行した。Yohakuのソースは実行後に保存したため、実行前のbyte同一性は別途確認していない。スキル単体の優位性、未見hold-out、実際の自動起動、実案件の調査・配布成功、全GPT-6モデルでの再現性は確認していない。
 
 利用者の次の判断に必要な成果物は、スキル本文・判断例・調査票・CLIと、technical-designへの任意連携。home導入・公開は今回の完了条件に含まれない。
+
+## PR検証での補修
+
+PR #43のCIで、Gitへの初回登録時の改行変換による評価hash不一致と、英語Windows環境で日本語の出力先を表示する際のUnicodeEncodeErrorを検出した。前者は評価時のbytesを保持する属性と再登録で復元し、index内の全artifact hash一致を確認。後者はCLIの標準出力・標準エラーをUTF-8へ統一し、cp1252の入出力環境を固定したCLIテストで失敗を再現して修正した。
+
+凍結したv1評価資源とrecordは保持する。模擬評価は修正前CLIを含むsnapshotを対象としており、今回のCLI修正の根拠は回帰テストとCI。スキル本文・判断例・雛形は同一で、模擬回答の再生成は行わない。

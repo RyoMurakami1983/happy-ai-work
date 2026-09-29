@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import sys
+from io import TextIOWrapper
 from pathlib import Path
 
 TEMPLATE = Path(__file__).resolve().parent.parent / "assets" / "research-report.md"
@@ -18,6 +20,9 @@ def render(title: str, template: str) -> str:
 
 
 def main() -> int:
+    for stream in (sys.stdout, sys.stderr):
+        if isinstance(stream, TextIOWrapper):
+            stream.reconfigure(encoding="utf-8")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--title", required=True, help="Research question or report title")
     parser.add_argument("--output", required=True, type=Path, help="New Markdown report")
