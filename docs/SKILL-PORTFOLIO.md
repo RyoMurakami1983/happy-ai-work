@@ -20,6 +20,8 @@
 
 `happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`、`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
 
+`to-prototype`はUI設計案の操作と状態を実装前に試し、反応を設計へ戻すプレビューskill。初版は共通のHTML土台と初期化・基本検証だけを提供し、案件の画面構成を共通テンプレートで固定しない。
+
 `technical-design-review`もプレビューとして追加する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
 
 ## Yohakuの境界
@@ -50,6 +52,7 @@ homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた�
 
 ## Workflow再編
 
+- `to-prototype`は操作可能な試作と観察からUI設計を検証する。画面方針を決める`ui-design`、質問への回答を収集する`html-questionnaire`とは目的と検証条件を分ける。HTMLの生成だけで設計合意や実装承認とは扱わない。
 - `html-questionnaire`は、決まった質問から回答用のオフラインHTMLを生成する独立した目的を持つ。質問と要件の合意は`interview-with-docs`、現場に聞く内容の設計は`business-understanding-survey`が担当する。公開サイトやサーバー保存はフォーム生成の範囲に含めない。入力、出力、検証条件が異なるため、質問設計skillの`references/`には統合しない。
 - `domain-modeling`は、合意済みの目的・要件からドメインのモデルと業務上の契約を導く。用語整理だけなら`CONTEXT.md`等を更新し、正式なモデル化が必要な場合はドメイン文書に条件・境界を残す。目的・要件の正本は`to-prd`、技術構造は`technical-design`が担当する。[再定義の判断記録](design/006_DOMAIN_MODELING.md)を参照する。
 - 旧`design-and-plan`は、構造判断を行う`technical-design`と、実行順を作る`implementation-plan`へ分割した。
