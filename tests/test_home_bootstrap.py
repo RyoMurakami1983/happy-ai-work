@@ -106,7 +106,7 @@ class HomeBootstrapTests(unittest.TestCase):
                     self.assertEqual(target.read_bytes(), original)
                     self.assertEqual(list(Path(d).glob("*.bak")), [])
 
-    def test_cli_custom_template_rejects_old_startup_metadata(self) -> None:
+    def test_cli_custom_template_remains_updatable(self) -> None:
         with tempfile.TemporaryDirectory() as d:
             target = Path(d) / "AGENTS.md"
             template = Path(d) / "template.md"
@@ -116,15 +116,6 @@ class HomeBootstrapTests(unittest.TestCase):
             original = target.read_bytes()
             result = self.run_cli(target, "--apply", "--template", str(template))
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertEqual(target.read_bytes(), original)
-            self.assertEqual(list(Path(d).glob("*.bak")), [])
-            template.write_text(
-                f"{MODULE.START}\n<!-- happy-ai-work:yohaku=enabled -->\n{MODULE.END}",
-                encoding="utf-8",
-            )
-            result = self.run_cli(target, "--apply", "--template", str(template))
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("base template", result.stderr)
             self.assertEqual(target.read_bytes(), original)
             self.assertEqual(list(Path(d).glob("*.bak")), [])
 

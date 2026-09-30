@@ -13,7 +13,6 @@ from pathlib import Path
 
 START = "<!-- happy-ai-work:start -->"
 END = "<!-- happy-ai-work:end -->"
-YOHAKU_KEY = "happy-ai-work:yohaku"
 
 
 def managed_body(text: str, *, required: bool = False) -> str | None:
@@ -25,13 +24,6 @@ def managed_body(text: str, *, required: bool = False) -> str | None:
     if start >= end:
         raise ValueError("managed-section markers are reversed")
     return text[start + len(START):end]
-
-
-def compose(template: str) -> str:
-    managed_body(template, required=True)
-    if YOHAKU_KEY in template:
-        raise ValueError("base template must not contain Yohaku state metadata")
-    return template
 
 
 def codex_home() -> Path:
@@ -71,7 +63,7 @@ def main() -> int:
     target = args.target or codex_home() / "AGENTS.md"
     try:
         existing = target.read_bytes().decode("utf-8") if target.exists() else ""
-        managed = compose(template_path.read_text(encoding="utf-8"))
+        managed = template_path.read_text(encoding="utf-8")
         updated = merge(existing, managed)
     except (ValueError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
