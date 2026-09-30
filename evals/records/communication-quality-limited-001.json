@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "record_id": "communication-quality-limited-001",
+  "target_revision": "9c299ef plus candidate captured in evals/communication-quality/snapshots/v1",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "2.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-30T17:25:26.528898+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Known bounded synthetic fixture, no final adoption or generalization claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "implement_full": "/root/native_full",
+      "debug_full": "/root/native_debug",
+      "short": "/root/short_behavior"
+    },
+    "blind_grader": "not-used",
+    "evaluator": "/root",
+    "independence": {
+      "status": "invalid",
+      "reason": "Fresh generators were separated from implementation history, Yohaku, rubric and each other; parent integrated sanitized observations, no independent blind tool-history grading."
+    }
+  },
+  "conditions": {
+    "execution": {
+      "comparison": "single candidate, one run per completed condition, no baseline",
+      "long_test": "immediate synthetic emulation, no real soak",
+      "yohaku": "not read; no home startup dependency"
+    },
+    "environment": {
+      "python_full_attempts": "two initial tasks blocked before run; preserved as unexecuted, not PASS",
+      "native_followup": "separate full tasks used PowerShell standard fixture",
+      "short": "Python fixture succeeded after owner environment execution review"
+    },
+    "decision": {
+      "new_record": "required",
+      "limitations": [
+        "No human cognitive-load measurement",
+        "No real soak/environment compatibility",
+        "No automatic skill selection test",
+        "No dotnet or planning behavioral run"
+      ],
+      "supporting_summary": "docs/communication-verification-045.md"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "implement-full",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 3,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "Observed tool ordering and generator-reported sanitized notification/result; limited fixture scope."
+    },
+    {
+      "condition": "debug-full",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 3,
+      "normal_total": 3,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "Observed tool ordering and generator-reported sanitized notification/result; limited fixture scope."
+    },
+    {
+      "condition": "implement-short",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "Observed tool ordering and generator-reported sanitized notification/result; limited fixture scope."
+    }
+  ],
+  "artifact_hashes": {
+    "evals/communication-quality/snapshots/v1/plugins/happy-core/skills/skill-eval/SKILL.md.txt": "c40946bc505906579d60ea598aaf9fba39f1c380bcd0c658b328b31c4277fd2f",
+    "evals/communication-quality/snapshots/v1/plugins/happy-core/skills/skill-eval/references/prompt-evaluation.md.txt": "af1db530ba9e9b3d18cd080dad2726222517610f6431951fbe5da684d69e01c8",
+    "evals/communication-quality/snapshots/v1/plugins/happy-core/skills/skill-eval/references/evaluation-criteria-v2.md.txt": "f927713b04630d211e4324ecaa9e9f00b011a145fa2dd71ce401fc8a9c7539bb",
+    "evals/communication-quality/snapshots/v1/plugins/happy-core/skills/skill-eval/references/evaluation-governance.md.txt": "c487695e3c60f7e964a0cab7a8ea77b29435992c2fd2419fe810ac1a33e106a8",
+    "evals/communication-quality/snapshots/v1/plugins/happy-coding/skills/implement/SKILL.md.txt": "9ff5265ff752ce8186e0be61db1b7852b480a77ae4db68c3385ac862b534b653",
+    "evals/communication-quality/snapshots/v1/plugins/happy-coding/skills/implement/references/verification-communication.md.txt": "2e5370dda8258dbb17de5c7c851702dd07090575112fdee4ba48464507e335af",
+    "evals/communication-quality/snapshots/v1/plugins/happy-coding/skills/debug-and-fix/SKILL.md.txt": "71024b0783afc1c5c0b28b4f4ebd3622bb382c52947339da1610e9a8c0f5c940",
+    "evals/communication-quality/snapshots/v1/plugins/happy-coding/skills/dotnet/SKILL.md.txt": "0a1a3e2abe65eb3080e0b77ca06d076698be5b42a5eb6e24d69b90f728eb2410",
+    "evals/communication-quality/snapshots/v1/plugins/happy-coding/skills/implementation-plan/SKILL.md.txt": "37dbb51d3668114d8afe89da00fbc69ec8b2bb391a62b83059e1b67cddd85f9d",
+    "evals/communication-quality/cases.v1.json": "4a9106d90507876866bfb915074503fb2b1dbfd0e1b96e9f3cd8a183109899ae",
+    "evals/communication-quality/fixture_suite.py": "4012465a14bb1eb0467a337f297b65f487251c51e053c126c907dd44c3721341",
+    "evals/communication-quality/fixture_suite.ps1": "f3dd0cc89e3a971094af47ffb81b75c3f4e756173b77646c2ba17b2c4de39b2a"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/communication-quality/cases.v1.json",
+      "evals/records/communication-quality-limited-001.json",
+      "docs/communication-verification-045.md"
+    ],
+    "session_only_not_persisted": [
+      "raw task transcripts and responses",
+      "personal AGENTS and backup"
+    ]
+  },
+  "decision_summary": "Limited continued A: long-suite implement and planless debug notified before emulated run; short test added no approval wait. No superiority, final adoption or real-environment claim. Initial full Python runs remain blocked observations."
+}

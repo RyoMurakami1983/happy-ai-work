@@ -27,7 +27,7 @@ class HomeBootstrapTests(unittest.TestCase):
             env={**os.environ, "PYTHONIOENCODING": "utf-8"},
         )
 
-    def test_cli_update_preserves_enabled_yohaku(self) -> None:
+    def test_cli_update_removes_enabled_yohaku(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             target = Path(temporary) / "AGENTS.md"
             target.write_text(
@@ -39,74 +39,55 @@ class HomeBootstrapTests(unittest.TestCase):
                 check=True, capture_output=True,
             )
             updated = target.read_text(encoding="utf-8")
-            self.assertIn("<!-- happy-ai-work:yohaku=enabled -->", updated)
-            self.assertIn("新しい会話の開始時", updated)
+            self.assertNotIn("happy-ai-work:yohaku", updated)
+            self.assertNotIn("startup instruction", updated)
+            self.assertNotIn("新しい会話の開始時", updated)
 
-    def test_cli_yohaku_transitions_preserve_personal_content_and_backup(self) -> None:
+    def test_cli_migrates_old_preferences_without_revival(self) -> None:
         before = b"# Personal\r\n<!-- happy-ai-work:yohaku=outside -->\r\n\r\n"
-        after = b"\r\n\r\n# Local\r\nkeep  \r\n"
-        for initial in (None, "enabled", "disabled"):
-            for choice in ("preserve", "enable", "disable"):
-                with self.subTest(initial=initial, choice=choice), tempfile.TemporaryDirectory() as d:
-                    target = Path(d) / "AGENTS.md"
-                    metadata = f"<!-- happy-ai-work:yohaku={initial} -->\n" if initial else ""
-                    original = (
-                        before + f"{MODULE.START}\nold\n{metadata}{MODULE.END}".encode() + after
-                    )
-                    target.write_bytes(original)
-                    args = ("--yohaku", choice)
-                    dry = self.run_cli(target, "--dry-run", *args)
-                    self.assertEqual(dry.returncode, 0, dry.stderr)
-                    self.assertEqual(target.read_bytes(), original)
-                    self.assertEqual(list(Path(d).glob("*.bak")), [])
-                    applied = self.run_cli(target, "--apply", *args)
-                    self.assertEqual(applied.returncode, 0, applied.stderr)
-                    content = target.read_bytes()
-                    self.assertTrue(content.startswith(before))
-                    self.assertTrue(content.endswith(after))
-                    body = content.decode().split(MODULE.START)[1].split(MODULE.END)[0]
-                    expected = initial if choice == "preserve" else {
-                        "enable": "enabled", "disable": "disabled",
-                    }[choice]
-                    if expected:
-                        self.assertIn(f"<!-- happy-ai-work:yohaku={expected} -->", body)
-                    else:
-                        self.assertNotIn("happy-ai-work:yohaku", body)
-                    self.assertEqual("新しい会話の開始時" in body, expected == "enabled")
-                    backups = list(Path(d).glob("*.bak"))
-                    self.assertEqual(len(backups), 1)
-                    self.assertEqual(backups[0].read_bytes(), original)
-                    repeated = self.run_cli(target, "--apply")
-                    self.assertEqual(repeated.returncode, 0, repeated.stderr)
-                    self.assertEqual(target.read_bytes(), content)
-                    self.assertEqual(list(Path(d).glob("*.bak")), backups)
+        after = b"\r\n# Local\r\nkeep  \r\n"
+        for state in ("enabled", "disabled", "unknown", "enabled --><!-- happy-ai-work:yohaku=disabled"):
+            with self.subTest(state=state), tempfile.TemporaryDirectory() as d:
+                target = Path(d) / "AGENTS.md"
+                original = before + (
+                    f"{MODULE.START}\n<!-- happy-ai-work:yohaku={state} -->\n"
+                    f"- old startup instruction\n{MODULE.END}"
+                ).encode() + after
+                target.write_bytes(original)
+                dry = self.run_cli(target, "--dry-run")
+                self.assertEqual(dry.returncode, 0, dry.stderr)
+                self.assertEqual(target.read_bytes(), original)
+                self.assertEqual(list(Path(d).glob("*.bak")), [])
+                result = self.run_cli(target, "--apply")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                content = target.read_bytes()
+                self.assertTrue(content.startswith(before))
+                self.assertTrue(content.endswith(after))
+                body = MODULE.managed_body(content.decode())
+                self.assertNotIn("yohaku", body)
+                self.assertNotIn("startup instruction", body)
+                backups = list(Path(d).glob("*.bak"))
+                self.assertEqual(len(backups), 1)
+                self.assertEqual(backups[0].read_bytes(), original)
+                result = self.run_cli(target, "--apply")
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(target.read_bytes(), content)
+                self.assertEqual(list(Path(d).glob("*.bak")), backups)
 
     def test_cli_first_dry_run_does_not_create_directory(self) -> None:
         with tempfile.TemporaryDirectory() as d:
             target = Path(d) / "new" / "AGENTS.md"
-            result = self.run_cli(target, "--yohaku", "enable")
+            result = self.run_cli(target)
             self.assertEqual(result.returncode, 0, result.stderr)
-            self.assertIn("happy-ai-work:yohaku=enabled", result.stdout)
+            self.assertNotIn("yohaku=", result.stdout)
             self.assertFalse(target.parent.exists())
 
-    def test_cli_rejects_invalid_state_without_writing_or_backup(self) -> None:
-        states = (
-            "<!-- happy-ai-work:yohaku=unknown -->",
-            "<!-- happy-ai-work:yohaku=enabled",
-            "<!-- happy-ai-work:yohaku -->",
-            "<!-- happy-ai-work:yohaku=enabled -->\n<!-- happy-ai-work:yohaku=enabled -->",
-            "<!-- happy-ai-work:yohaku=enabled --><!-- happy-ai-work:yohaku=disabled -->",
-        )
-        for state in states:
-            with self.subTest(state=state), tempfile.TemporaryDirectory() as d:
-                target = Path(d) / "AGENTS.md"
-                original = f"{MODULE.START}\n{state}\n{MODULE.END}\n".encode()
-                target.write_bytes(original)
-                result = self.run_cli(target, "--apply", "--yohaku", "disable")
-                self.assertNotEqual(result.returncode, 0)
-                self.assertIn("invalid or duplicate Yohaku state", result.stderr)
-                self.assertEqual(target.read_bytes(), original)
-                self.assertEqual(list(Path(d).glob("*.bak")), [])
+    def test_removed_option_cannot_restore_startup(self) -> None:
+        with tempfile.TemporaryDirectory() as d:
+            target = Path(d) / "AGENTS.md"
+            result = self.run_cli(target, "--apply", "--yohaku", "enable")
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(target.exists())
 
     def test_cli_rejects_invalid_markers_in_existing_or_template(self) -> None:
         invalid = (MODULE.START, f"{MODULE.END}\n{MODULE.START}",
@@ -125,48 +106,18 @@ class HomeBootstrapTests(unittest.TestCase):
                     self.assertEqual(target.read_bytes(), original)
                     self.assertEqual(list(Path(d).glob("*.bak")), [])
 
-    def test_cli_custom_base_template_and_metadata_rejection(self) -> None:
+    def test_cli_custom_template_remains_updatable(self) -> None:
         with tempfile.TemporaryDirectory() as d:
             target = Path(d) / "AGENTS.md"
             template = Path(d) / "template.md"
-            template.write_text(f"{MODULE.START}\ncustom\n{MODULE.END}", encoding="utf-8")
-            result = self.run_cli(target, "--apply", "--template", str(template), "--yohaku", "enable")
+            template.write_text(f"{MODULE.START}\n- custom{MODULE.END}", encoding="utf-8")
+            result = self.run_cli(target, "--apply", "--template", str(template))
             self.assertEqual(result.returncode, 0, result.stderr)
             original = target.read_bytes()
-            self.assertIn(b"custom", original)
-            self.assertIn(b"yohaku=enabled", original)
-            template.write_bytes(original)
             result = self.run_cli(target, "--apply", "--template", str(template))
-            self.assertNotEqual(result.returncode, 0)
-            self.assertIn("base template", result.stderr)
+            self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(target.read_bytes(), original)
             self.assertEqual(list(Path(d).glob("*.bak")), [])
-
-    def test_cli_inline_end_template_remains_updatable(self) -> None:
-        for choice in ("enable", "disable"):
-            with self.subTest(choice=choice), tempfile.TemporaryDirectory() as d:
-                target = Path(d) / "AGENTS.md"
-                template = Path(d) / "template.md"
-                template.write_text(f"{MODULE.START}\n- custom{MODULE.END}", encoding="utf-8")
-                first = self.run_cli(target, "--template", str(template), "--yohaku", choice, "--apply")
-                self.assertEqual(first.returncode, 0, first.stderr)
-                original = target.read_bytes()
-                repeated = self.run_cli(target, "--template", str(template), "--apply")
-                self.assertEqual(repeated.returncode, 0, repeated.stderr)
-                self.assertEqual(target.read_bytes(), original)
-                self.assertEqual(list(Path(d).glob("*.bak")), [])
-
-    def test_cli_successive_preference_changes_keep_each_backup(self) -> None:
-        with tempfile.TemporaryDirectory() as d:
-            target = Path(d) / "AGENTS.md"
-            target.write_bytes(b"# Personal\r\nkeep\r\n")
-            previous = []
-            for choice in ("enable", "disable", "enable"):
-                previous.append(target.read_bytes())
-                result = self.run_cli(target, "--apply", "--yohaku", choice)
-                self.assertEqual(result.returncode, 0, result.stderr)
-            backups = sorted(Path(d).glob("*.bak"))
-            self.assertEqual([path.read_bytes() for path in backups], previous)
 
     def test_first_insertion_preserves_trailing_whitespace(self) -> None:
         managed = f"{MODULE.START}\nnew\n{MODULE.END}\n"

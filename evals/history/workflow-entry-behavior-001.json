@@ -1,0 +1,31 @@
+{
+  "record_sha256": "1c7220ece6ecad74eb568eae48fe24d4529178910a28d1f8ed0c00ce9a1c7864",
+  "artifacts": {
+    "plugins/happy-coding/skills/implement/SKILL.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/SKILL.md",
+    "plugins/happy-coding/skills/implement/checkpoints/__init__.py": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/checkpoints/__init__.py",
+    "plugins/happy-coding/skills/implement/checkpoints/contract_verify.py": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/checkpoints/contract_verify.py",
+    "plugins/happy-coding/skills/implement/orchestrator/__init__.py": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/orchestrator/__init__.py",
+    "plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py",
+    "plugins/happy-coding/skills/implement/references/eval-checklist.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/eval-checklist.md",
+    "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md",
+    "plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md",
+    "plugins/happy-coding/skills/implement/references/safe-refactoring.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/safe-refactoring.md",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md",
+    "plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md",
+    "plugins/happy-coding/skills/implementation-plan/SKILL.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implementation-plan/SKILL.md",
+    "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md",
+    "plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md",
+    "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md",
+    "plugins/happy-coding/skills/to-prd/SKILL.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-coding/skills/to-prd/SKILL.md",
+    "plugins/happy-core/skills/home-bootstrap/SKILL.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/SKILL.md",
+    "plugins/happy-core/skills/home-bootstrap/agents/openai.yaml": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/agents/openai.yaml",
+    "plugins/happy-core/skills/home-bootstrap/assets/AGENTS.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/assets/AGENTS.md",
+    "plugins/happy-core/skills/home-bootstrap/assets/yohaku-startup.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/assets/yohaku-startup.md",
+    "plugins/happy-core/skills/home-bootstrap/references/codex-hooks.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/references/codex-hooks.md",
+    "plugins/happy-core/skills/home-bootstrap/references/git-settings.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/references/git-settings.md",
+    "plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-core/skills/home-bootstrap/scripts/home_bootstrap.py",
+    "plugins/happy-preview/skills/yohaku/SKILL.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-preview/skills/yohaku/SKILL.md",
+    "plugins/happy-preview/skills/yohaku/references/code-simplicity.md": "evals/workflow-entry/snapshots/behavior-v1/plugins/happy-preview/skills/yohaku/references/code-simplicity.md"
+  }
+}
