@@ -20,6 +20,10 @@ evals/workflow-entry/TARGET.v10.json -text whitespace=blank-at-eol,blank-at-eof,
 evals/workflow-startup/cases.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 
 # Explicitly declare binary files
+# Preserve frozen PR delivery evaluation inputs and record bytes.
+evals/pr-delivery/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/pr-delivery-preview-001.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/pr-delivery-preview-002.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 # Preserve frozen communication inputs and archived workflow evidence byte-for-byte.
 evals/communication-quality/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 evals/workflow-entry/snapshots/behavior-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
