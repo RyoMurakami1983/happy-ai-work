@@ -1,6 +1,8 @@
 # 着手判断と任意の開始時設定の責務をhomeとskillsで分担する
 
 Status: Accepted（2026-09-26、独立設計レビュー後に利用者が「commit後に実装して外部レビューして下さい」と承認）
+
+後続判断: 決定4のYohaku開始時生成・選択保持は[ADR 0007](0007-communication-and-explicit-yohaku.md)で置き換えた。他の着手判断と共通方針の責務は維持する。
 Date: 2026-09-26
 
 ## 背景

@@ -20,6 +20,11 @@ evals/workflow-entry/TARGET.v10.json -text whitespace=blank-at-eol,blank-at-eof,
 evals/workflow-startup/cases.v2.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 
 # Explicitly declare binary files
+# Preserve frozen communication inputs and archived workflow evidence byte-for-byte.
+evals/communication-quality/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/workflow-entry/snapshots/behavior-v1/** -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+evals/records/communication-quality-limited-001.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+
 # Preserve frozen research evaluation bytes across checkout platforms.
 evals/technical-feasibility-research/TARGET.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
 evals/technical-feasibility-research/ENVIRONMENT.v1.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

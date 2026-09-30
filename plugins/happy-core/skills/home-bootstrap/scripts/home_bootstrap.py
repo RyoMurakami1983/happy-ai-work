@@ -27,33 +27,11 @@ def managed_body(text: str, *, required: bool = False) -> str | None:
     return text[start + len(START):end]
 
 
-def yohaku_state(body: str | None) -> str | None:
-    lines = [line.strip() for line in (body or "").splitlines() if YOHAKU_KEY in line]
-    if not lines:
-        return None
-    if len(lines) == 1:
-        for state in ("enabled", "disabled"):
-            if lines[0] == f"<!-- {YOHAKU_KEY}={state} -->":
-                return state
-    raise ValueError("invalid or duplicate Yohaku state; resolve the managed section first")
-
-
-def compose(existing: str, template: str, choice: str, startup_path: Path) -> str:
-    state = yohaku_state(managed_body(existing))
+def compose(template: str) -> str:
     managed_body(template, required=True)
     if YOHAKU_KEY in template:
         raise ValueError("base template must not contain Yohaku state metadata")
-    if choice != "preserve":
-        state = {"enable": "enabled", "disable": "disabled"}[choice]
-    if state is None:
-        return template
-    option = f"<!-- {YOHAKU_KEY}={state} -->\n"
-    if state == "enabled":
-        option += startup_path.read_text(encoding="utf-8").strip() + "\n"
-    before, after = template.split(END, 1)
-    if not before.endswith("\n"):
-        before += "\n"
-    return before + option + END + after
+    return template
 
 
 def codex_home() -> Path:
@@ -86,10 +64,6 @@ def main() -> int:
     mode.add_argument("--apply", action="store_true", help="write after creating a backup")
     parser.add_argument("--target", type=Path, help="override the AGENTS.md path for testing")
     parser.add_argument("--template", type=Path, help="override the managed template path")
-    parser.add_argument(
-        "--yohaku", choices=("preserve", "enable", "disable"), default="preserve",
-        help="preserve the saved startup preference (default), or explicitly change it",
-    )
     args = parser.parse_args()
 
     skill_root = Path(__file__).resolve().parent.parent
@@ -97,10 +71,7 @@ def main() -> int:
     target = args.target or codex_home() / "AGENTS.md"
     try:
         existing = target.read_bytes().decode("utf-8") if target.exists() else ""
-        managed = compose(
-            existing, template_path.read_text(encoding="utf-8"), args.yohaku,
-            skill_root / "assets" / "yohaku-startup.md",
-        )
+        managed = compose(template_path.read_text(encoding="utf-8"))
         updated = merge(existing, managed)
     except (ValueError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
