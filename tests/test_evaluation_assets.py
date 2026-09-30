@@ -26,6 +26,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "technical-feasibility-research",
                 "consultation-start",
                 "communication-quality",
+                "pr-delivery",
                 "workflow-entry",
                 "workflow-startup",
             },

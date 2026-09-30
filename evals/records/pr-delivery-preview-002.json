@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "record_id": "pr-delivery-preview-002",
+  "target_revision": "fe6ff46 plus frozen candidate v3",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "2.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-09-30T19:09:36.217262+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Bounded public synthetic preview verification, not final adoption or generalization."
+  },
+  "previous_record": {
+    "status": "preserved",
+    "record_id": "pr-delivery-preview-001"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "clean": "/root/delivery_clean",
+      "review": "/root/delivery_review",
+      "protected": "/root/delivery_protected"
+    },
+    "blind_grader": "/root/delivery_v3_grader",
+    "evaluator": "/root/delivery_v3_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Grader isolated from candidate implementation and parent verdict; fixed rubric and raw responses plus read-only local Git evidence. Single candidate, no comparison labels."
+    }
+  },
+  "conditions": {
+    "execution": {
+      "comparison": "one synthetic run per scenario; no baseline",
+      "remote": "isolated local bare Git with fixture host API; no real GitHub merge or deletion"
+    },
+    "evidence": {
+      "response_hashes": {
+        "clean": "87c856485f7034357ac7861eba6f0e7c192e2e48085890afa4ff6c6aa04ee732",
+        "review": "39f031ec702edb6711e9b9becd025e5fc463395f24567e772d09d9475d395d29",
+        "protected": "0bf2508047e135f087156f58de0d52dfcd44f45e5560f66f755f25df979904bc"
+      },
+      "command_audit": "Generator command summaries and independently checked current state; not complete raw tool audit"
+    },
+    "decision": {
+      "new_record": "required",
+      "limitations": [
+        "No actual installed-plugin discovery test",
+        "No real GitHub branch-protection or expected-SHA delete capability verification",
+        "No squash/rebase production run",
+        "No human-burden measurement"
+      ],
+      "unknowns": "First clean run used exact-ref force-with-lease; fixed force prohibition interpreted as ambiguous. Original B retained; criteria unchanged."
+    }
+  },
+  "case_results": [
+    {
+      "condition": "merge-clean",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "review-only",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "protected-work",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/pr-delivery/cases.v1.json": "9bee654f91c9429f2973bc128b14f79248d92ff1f1d0f200edbfdd9b20e76fb9",
+    "evals/pr-delivery/snapshots/v3/SKILL.md.txt": "da92ca0d6d7b5110c6d824061cee14b0c5eb7e2a50341e44b94cbe3ee015bb20"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/records/pr-delivery-preview-002.json",
+      "evals/pr-delivery/cases.v1.json"
+    ],
+    "session_only_not_persisted": [
+      "Raw generator responses and grader notes",
+      "Local synthetic repositories and command transcripts"
+    ]
+  },
+  "decision_summary": "A continued: final candidate used force-option-free expected-SHA fixture API; explicit merge completed scoped cleanup, review-only did not trigger, protected work remained. Fixed original criteria unchanged; previous ambiguous B preserved. Preview only, no real GitHub or human-burden claim."
+}
