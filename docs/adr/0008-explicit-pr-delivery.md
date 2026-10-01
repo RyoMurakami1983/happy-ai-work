@@ -17,3 +17,7 @@ remote削除は確認後の別pushを守るため、確認済みSHAを条件と�
 ## 配布と確認範囲
 
 [ADR 0004](0004-preview-plugin-distribution.md)に従い`happy-preview`で任意試用する。通常/対象外/保護caseを隔離されたlocal bare remoteと合成PRで検証し、実PR・既存branchを試験目的でmerge/deleteしない。自動発火の完全性、実GitHubでのeffect、squash/rebaseを含む全repo運用は未測定として残す。実利用確認後の通常配布採用は別判断とする。
+
+## 2026-10-01: 条件付き削除の限定改訂（Issue #49）
+
+上記のforce系option不要API限定を、確認済みrepo・接続先・完全ref・空でない期待SHAによる単一refの不可分な比較削除へ改訂する。Gitの明示値付き`--force-with-lease=<ref>:<expected>`削除もこの保証を満たす場合だけ選べる。無条件forceや省略形leaseの許可ではなく、競合時は保持して自動再試行しない。許可・MERGED確認・変更data・他作業の保護は不変。旧評価は再採点せず、新しい公開cases v2で範囲を区別する。実GitHubでの削除対応は未検証。
