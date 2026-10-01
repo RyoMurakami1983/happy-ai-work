@@ -19,3 +19,5 @@ Python version、一時dependency、tool version、実行順の正本は`scripts
 - `git diff --check`
 
 既存のuv cacheだけを使用する場合は`--offline`を付ける。検証が失敗した場合やworktreeを変更した場合は成功として扱わない。
+
+PRのCIでは、品質入口に加えて`validate_plugin_versions.py`が配布内容の変更に対するversion増加を自動検査します。比較範囲と例外は[plugin更新の確認](../plugin-update-verification.md)を参照してください。
