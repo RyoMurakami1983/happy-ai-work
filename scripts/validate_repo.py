@@ -71,8 +71,6 @@ RETIRED_CODING_SKILLS = {
     "implementation-eval-gate",
 }
 REQUIRED_CORE_SKILLS = {
-    "deep-edit",
-    "draft-writing",
     "furikaeri",
     "github-issue",
     "happy-add-issue",
@@ -81,7 +79,6 @@ REQUIRED_CORE_SKILLS = {
     "interview-me",
     "skill-eval",
     "workspace-bootstrap",
-    "writing-plan",
 }
 
 
