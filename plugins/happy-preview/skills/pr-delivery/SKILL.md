@@ -29,7 +29,7 @@ description: 「マージして」「merge PR」という対象PRの明示依頼
 2. 対象remoteからbaseをfetchし、既存base worktreeがcleanで履歴がfast-forward可能な場合だけ同期する。baseが未作成なら安全に作成できるか確認する。dirty・分岐・他作業中なら変更を保護し、reset/stashやcheckoutの強制で揃えない。同期のブロックが他の整理まで必ず止めるとは限らないが、各削除条件を独立して証明する。
 3. 削除対象のremote名・repo・branch名・local branch・worktreeの絶対pathを固定する。現在のtipが確認済みPR headと一致し、未push・未統合の追加commitがないことを確認する。squash/rebaseでは単なるancestor判定に頼らずPRのMERGED情報とmerge/base履歴も照合する。証明できない対象は残す。
 4. 専用worktreeは他の実行・別作業で使われておらず、未保存・未追跡data・未push・未統合変更がない場合だけ、worktree外から通常の`git worktree remove`で除去する。別worktreeの利用中branchを外すためにworktreeを消さない。
-5. remote branchは上記条件を満たす自分の対象branchだけ、確認済みSHAを削除操作の条件にして削除する。直前の読取だけでは競合を防げない。force系optionを使わない比較条件付きAPIでtip変更時の拒否を保証し、保証できないtoolではremote branchを保持する。無条件deleteやforce系optionで代替しない。local branchは他worktreeで使われていないことを再確認し、通常の`git branch -d`で削除する。squash等で`-d`が拒否する場合も`-D`で押し切らず、local branchを保持して理由を報告する。強制削除、破壊的reset、全branch一括削除・広範なworktree pruneはしない。
+5. remote branchは上記条件を満たす自分の対象branchだけ、確認済みSHAを削除操作の条件にして削除する。直前の読取だけでは競合を防げない。対象repo・remote・完全な`refs/heads/...`と空でない期待SHAを固定し、1refだけを比較して削除する。実行前に[条件付き削除](references/conditional-delete.md)を読み、明示した期待SHA付きleaseまたは同等の比較条件付きAPIでtip変更時の拒否を保証する。保証不能・競合・拒否時は保持し、期待SHAの更新による自動再試行や無条件deleteへ切り替えない。`--force`、省略形lease、複数ref・一括操作は使わない。local branchは他worktreeで使われていないことを再確認し、通常の`git branch -d`で削除する。squash等で`-d`が拒否する場合も`-D`で押し切らず、local branchを保持して理由を報告する。強制削除、破壊的reset、全branch一括削除・広範なworktree pruneはしない。
 6. 実際のremote/local branch不在、worktree登録とpathの除去、local baseとremote baseのSHA・clean状態を確認する。途中失敗で成功した操作を巻き戻すための再マージはせず、残る対象と理由を示す。
 
 ## 終了報告
