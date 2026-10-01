@@ -27,6 +27,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "consultation-start",
                 "communication-quality",
                 "pr-delivery",
+                "priority-skill-boundaries",
                 "workflow-entry",
                 "workflow-startup",
             },
