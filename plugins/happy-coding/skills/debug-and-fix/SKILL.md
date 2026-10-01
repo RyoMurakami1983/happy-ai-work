@@ -5,7 +5,7 @@ description: 特定の不具合、回帰、flaky failure、性能劣化につい
 
 # Debug and Fix
 
-コードを眺めて推測する前に、ユーザーの症状そのものをred/greenで判定できるfeedback loopを作る。修正依頼として起動したら、根本原因、最小修正、元症状と回帰範囲の再検証まで閉じる。
+ユーザーの症状そのものをred/greenで判定できるfeedback loopを、必要な調査と往復しながら作る。修正依頼として起動したら、根本原因、最小修正、元症状と回帰範囲の再検証まで閉じる。
 
 ## 完了契約
 
@@ -20,11 +20,13 @@ description: 特定の不具合、回帰、flaky failure、性能劣化につい
 
 診断だけを依頼された場合は修正しない。このskillは「直して」「解決して」「改善して」または同等の修正依頼に使う。GitHub Actionsだけの失敗は、利用可能なら `ci-debug` を先に使う。
 
-## 1. Red-capable loopを作る
+## 1. 症状を調べ、Red-capable loopを作る
+
+再現commandを決めるためのread-only調査（関連コード、既存test、設定、履歴、redact済みlog、公式docs）はred確認前から行ってよい。調査と再現を短く往復し、既知の事実と未検証の仮説を分ける。再現できないことを理由に読取調査まで止めず、調査のためという理由で本番instrumentationやdata mutationへ権限を広げない。
 
 計画がなくても、再現・検証commandの実行前に[検証の通知と報告](../implement/references/verification-communication.md)を読む。長い試験は目的・合成/実環境・所要時間の見込みを事前通知し、終了時は結果・未確認・必要な判断を伝える。通知を承認要求にせず、承認済みの同じ作業は再確認しない。短い通常testには待ちを増やさない。
 
-次を満たす1つのcommandを作り、実際にredを確認する。
+次を満たす再実行可能なcommandを既存入口から選ぶか作り、症状を検出できるredを確認する。確認できるまでは調査中として扱う。
 
 - 実際の症状を検出し、別の近接エラーを誤認しない
 - 修正後に同じ条件でgreenを判定できる
@@ -43,7 +45,7 @@ description: 特定の不具合、回帰、flaky failure、性能劣化につい
 
 flaky bugでは単発成功をgreenとしない。seed、time、filesystem、networkを固定するか、同じ刺激の反復・stress・隔離した並列実行で再現率を測る。baselineとしてattempt数、failure / hang数、timeout、seed、elapsedを記録し、修正前後を同じ試行数または同じ時間budgetで比較する。性能問題ではlogを増やす前にbenchmark / profiler / query planのbaselineを取る。
 
-budget内でredを作れない場合は「直った」と判定しない。原因を推測して進まず、試した内容を示し、次のinstrumentation、再現環境、redact済みartifact、または必要な権限を求める。
+budget内でredを作れない場合は「直った」と判定しない。得られた事実、未検証の仮説、試した内容と次の識別probeを示す。許可済みread-only調査で埋まる不足は調べ、追加実験は残りbudgetと権限の範囲で行う。budgetを使い切った、または必要な情報・権限がない場合は、再現環境、redact済みartifact、次の調査budgetやinstrumentation許可など必要なものだけを求める。推測だけの修正へ進まない。
 
 ## 2. 再現を最小化する
 
@@ -51,7 +53,7 @@ loopを反復し、入力、設定、呼び出し元、data、stepを1つずつ�
 
 ## 3. 必要な場合だけ独立調査を並列化する
 
-boundedなred-capable loopが存在し、未知の独立軸が2つ以上ある場合だけ[parallel-investigation.md](references/parallel-investigation.md)を読む。既定は最大3レーンにする。loopができた時点で、親agentの最小化とread-onlyなrepo / artifact / external調査は並行してよい。
+未知の独立軸があり、分担の費用より証拠収集の利益が大きい場合は[parallel-investigation.md](references/parallel-investigation.md)を読む。red-capable loopができる前でも、再現条件を探すread-onlyなrepo / artifact / external調査は分担してよい。問いと停止条件を分け、必要なレーンだけ使う。単純な局所bugでは単独調査を優先する。
 
 - repo / ownership: 実行経路、責務境界、最近の変更、正常系との差分
 - reproduction / runtime: 最初に期待からずれる境界、環境差、log / trace

@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "record_id": "priority-skill-boundaries-001",
+  "target_revision": "057793523be1dba099a90a13757298fdcb0e05fa plus candidate content identified by artifact_hashes",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "2.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-10-01T22:03:16.418088+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Known public regression decision probes only; not final adoption or generalization."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "priority-skill-editor and interview-editor",
+    "generators": {
+      "bootstrap": "probe-interactive-bootstrap",
+      "interview": "probe-interview-decisions",
+      "debug": "probe-debug-discovery"
+    },
+    "blind_grader": "grade-priority-boundary-probes",
+    "evaluator": "grade-priority-boundary-probes",
+    "independence": {
+      "status": "valid",
+      "reason": "Separate fresh-context grader received fixed rubric, response artifacts and hashes, not implementation deliberations or intended verdict. Separate generators received only skill and scenario pairs; they did not receive rubric or diff. Single candidate, so no comparison labels."
+    }
+  },
+  "conditions": {
+    "execution": {
+      "kind": "first-response decision probes",
+      "repetitions": 1,
+      "comparison": "single candidate; no baseline",
+      "shared_context": "Each skill-specific generator answered two independent prompts in one task; not six isolated full workflow runs."
+    },
+    "evidence": {
+      "candidate_provenance": "Candidate files and case/protocol content were fixed before generator launch and unchanged through completion. Hash manifest was captured after launch, not a pre-run hash snapshot; do not infer stronger timestamped integrity evidence.",
+      "response_hashes": {
+        "bootstrap": "0ef206992ce9c31fcb77780670bee309bc2f2aafdb7f586d07ca647d86179037",
+        "interview": "b8e66fd63f6abe4922837d285bb737aa2e746aa286f70e0fe72d83040663bd6b",
+        "debug": "e656078448c109f3a2f35905d04019005335be0efa7d22b914dfb6286da4a960"
+      }
+    },
+    "decision": {
+      "new_record": "required",
+      "prior_records": "All existing records preserved; no prior run of this new suite.",
+      "normal_misses": [
+        "existing-app",
+        "new-app",
+        "unreproduced-bug",
+        "diagnosis-only"
+      ],
+      "limitations": [
+        "First-response plans only: no actual app build, launch, mutation or process cleanup observed",
+        "No multi-turn interview depth or stopping test",
+        "No baseline comparison, time savings, installed-plugin discovery or Astra-specific effect measured",
+        "Four responses missed the non-gating concision requirement"
+      ],
+      "static_review": "Separate reviewer found no blocking contradictions; this is not behavioral evidence."
+    }
+  },
+  "case_results": [
+    {
+      "condition": "existing-app",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 0,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "new-app",
+      "critical_passed": 3,
+      "critical_total": 3,
+      "normal_passed": 0,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "known-decision",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "deep-unknown",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 1,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "unreproduced-bug",
+      "critical_passed": 4,
+      "critical_total": 4,
+      "normal_passed": 0,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "diagnosis-only",
+      "critical_passed": 2,
+      "critical_total": 2,
+      "normal_passed": 0,
+      "normal_total": 1,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "plugins/happy-core/skills/interview-me/SKILL.md": "b4fced35607403908774587ee2eecc72d45b519c672a17141d1eebb0713c7009",
+    "plugins/happy-coding/skills/implement/SKILL.md": "9ff5265ff752ce8186e0be61db1b7852b480a77ae4db68c3385ac862b534b653",
+    "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "054b0e513ed677dd24eb7f0107fa2ebca44e30d6ce2aef4c4979313275069821",
+    "plugins/happy-coding/skills/debug-and-fix/SKILL.md": "c70374be1068b2b754cf1ec93599a7ff6407084f0d3f90f23e558d5d2ad17e4c",
+    "plugins/happy-coding/skills/debug-and-fix/references/parallel-investigation.md": "7c980ed7b38db1f5586324a3f94fb945cf864ffc29af3ffae1a2fd7a2fb9d044",
+    "evals/priority-skill-boundaries/cases.v1.json": "17cbaead3a3718b58a2119c7899ee855c4ae4726054a07558c3bf564fb040fc1",
+    "evals/priority-skill-boundaries/protocol.v1.md": "885c35a152ebccbe30d8056230b6dc8c697b7100333cb356138e94d2164450cb"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/priority-skill-boundaries/cases.v1.json",
+      "evals/priority-skill-boundaries/protocol.v1.md",
+      "evals/records/priority-skill-boundaries-001.json"
+    ],
+    "session_only_not_persisted": [
+      "Raw generator responses and grader details",
+      "Local condition-hash manifest and execution transcripts"
+    ]
+  },
+  "decision_summary": "A continued: six decision probes met all 15 Critical requirements with zero prohibited choices. The known-context interview stopped without quota questions; the deep-unknown case asked a concrete authority question; bootstrap and debug plans retained runtime/verification/permission boundaries. Normal concision passed only 2/6. Evidence supports bounded draft continuation, not real-world improvement or final adoption."
+}

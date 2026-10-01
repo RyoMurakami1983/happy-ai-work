@@ -1,29 +1,25 @@
 # Interactive App Bootstrap Checklist
 
-この checklist は **母艦 repo 側の正本** です。interactive app の pilot / downstream repo では、sync 済みのコピーを読みながら、実装着手前に最低限そろっているべき前提を確認します。`implement` の bootstrap checkpoint（ステップ 2）で使い、足りない場合は実装を始める前に補います。
+この checklist は `implement` の bootstrap checkpoint（ステップ 2）で、対象sliceの実装・検証を妨げる不足だけを見つけるために使います。既存appでは実在する入口を再利用し、新規appでは採用stackと受け入れ条件に必要な入口を用意します。該当stackと比較pilotの節だけを読み、全stackの整備を要求しません。
 
-## 1. Target repo sync
+## 1. Target repo の現状
 
-- `repo-template` / `scripts/sync-to-repo.ps1` は母艦 repo の source of truth であり、downstream repo では配布済みの結果を前提に読む
-
-- target repo に `AGENTS.md` または `AGENTS.override.md` が存在するか
-- 作業ディレクトリまでの階層に追加の `AGENTS.md` が存在するか
-- 言語別 instructions が target repo の技術スタックと一致しているか
-- 未配布なら `scripts/sync-to-repo.ps1 -TargetRepoPath PATH` 相当で配布するか、未配布のまま進める理由を handoff に明記したか
-- target repo が `git init` 済みで `.git/` を持つか
-- `.githooks/` や `core.hooksPath` の確認が必要な flow なら、Git 初期化前に「bootstrap 完了」と見なしていないか
+- 対象pathに適用される `AGENTS.override.md` / `AGENTS.md` 等の有効なinstructionsと既存workflowを確認する
+- build / test / launchの入口は対象repoのREADME、manifest、scripts、CIから特定する。存在しないtemplateや同期scriptを前提にしない
+- 既存repoへinstructionsやtemplateを再配布しない。Codex向け初期化自体が依頼範囲なら、利用可能な `workspace-bootstrap` を使い、既存内容を保つ差分と承認の境界に従う
+- Git管理状態を確認する。`git init`やhooks設定は今回の作業に必要かつ依頼範囲の場合だけ行い、未初期化だけをapp検証のblockerにしない
 
 ## 2. Common contract
 
-- build / test / lint / launch の入口が repo に存在するか
+- 対象sliceに必要な build / test / lint / launch の入口が repo に存在するか（該当しない入口は理由を明記）
 - generator handoff で test command と runtime launch command を返せる入口があるか
 - interactive app の受け入れ条件に「live runtime で何を確認するか」が書かれているか
-- どの stack でも 1 つに固定した build / test / launch command を返せるか
+- 選択した stack で、同じ条件を再実行できる build / test / launch command を返せるか
 - interactive app の比較 pilot なら、minimum comparable harness contract を採用するか判断したか
   - deterministic seed または同等の固定シナリオ
   - 共通 state dump schema
   - 共通 command runner
-- これらが未整備なら bootstrap task として先に補うか、未整備の理由を handoff / eval に明記したか
+- 対象sliceを妨げる不足は依頼範囲で補い、実行できない検証とその理由は handoff / eval に明記したか
 
 ## 3. TypeScript / web
 
@@ -46,14 +42,12 @@
 - desktop app の launch command が 1 つに固定されているか
 - FlaUI などで window title / control / status text / restart 動線を観測できる見込みがあるか
 
-## 6. Fallback rule
+## 6. 不足と完了の扱い
 
-- ここで不足が見つかったら、実装で埋めながら進めるのではなく bootstrap task として先に補う
-- どうしても未整備のまま進める場合は、slice gateへevidence gapとして引き渡す
-- bootstrap 完了は少なくとも次の 3 点を満たす
-  - target repo への template / instructions 配布
-  - `git init` 済み
-  - build / test / launch command の固定
+- 今のsliceに必要な不足だけを補う。無関係な設定、依存、template配布は追加しない
+- launchや観測が環境・権限で阻まれる場合は、その具体的なblockerと未確認範囲をslice gateへevidence gapとして渡す。build/testの成功だけでruntime verifiedとはしない
+- bootstrapでは、適用instructions、必要な検証入口、起動方法とlive runtimeの観測対象を確認する。新規appならこれらを最初のsliceで実行可能にする
+- bootstrap確認はruntime検証そのものではない。slice gateで実際に起動し、受け入れ条件に対応する表示・操作・状態を観測する
 
 ## 7. Comparable harness contract for pilot
 
