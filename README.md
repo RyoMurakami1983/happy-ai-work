@@ -32,6 +32,8 @@ repoをclone済みの場合は、repoルートで `codex plugin marketplace add 
 
 Codexアプリではplugin画面から `Happy AI Work` を開き、必要なpluginを導入します。
 
+更新時は[plugin更新の確認手順](docs/plugin-update-verification.md)で、配布commit・version・導入済み内容・新しい会話での読込を別々に確認します。
+
 ## 主要skills
 
 ### happy-core
