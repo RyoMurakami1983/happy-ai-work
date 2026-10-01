@@ -16,6 +16,27 @@ Refs [#48](https://github.com/RyoMurakami1983/happy-ai-work/issues/48)。repo更
 
 core/codingは既存skill修正、previewはpr-delivery等の追加を識別する。今後の変更では上表を期待値として使い回さず、対象commitのmanifestを正本にする。
 
+## PRでversionの上げ忘れを自動検出する
+
+`quality` CIはPRの作成・更新時に`validate_plugin_versions.py`を自動実行する。開発者が確認commandを実行し忘れても、配布内容を変更してversionを据え置いたPRは検査が失敗する。PRタイトルには依存しない。
+
+- 対象: `plugins/<name>/`配下の全tracked file。SKILL.md、reference文書、plugin内README、script、agent設定、asset、manifestの変更・追加・削除・移動を含む
+- 対象外: repo直下README、`docs/`などplugin外だけの変更
+- 既存plugin: manifestの数値`MAJOR.MINOR.PATCH`をPR baseより増やす。`+metadata`だけの変更、据置、減少は失敗。比較は文字列順ではなく数値順。現行配布形式に合わせ、このgateではprerelease suffixを扱わない
+- 新規plugin: directory名とmanifest名の一致、有効な数値versionを必須にする。比較元のない新規identityとして扱う
+- 全削除: 廃止としてversion増加は不要。catalogとの整合は既存repo validatorで確認する。fileが残るのにmanifestだけない状態は失敗
+- 移動: file renameを追加・削除として比較し、移動元・移動先の存続pluginを両方確認する。plugin directoryのrenameでmanifest名を据え置くと失敗。名前も変える場合は旧identityの廃止＋新identityの追加としてreviewする
+
+PR固有の変更はbase/headの共通祖先からheadまでで求め、versionの期待値は現在のPR base commitから取得する。これによりbase側だけの変更をPRの変更に数えず、古いbranchでbase以下のversionを再利用することも防ぐ。GitHubの仮merge commitや作業中fileではなく、eventが渡すbase/head SHAを使う。履歴不足や参照不明は失敗にする。
+
+ローカルでもcommit済み変更を比較できる:
+
+```powershell
+python scripts/validate_plugin_versions.py --base origin/main --head HEAD
+```
+
+これは配布側の上げ忘れを検出する検査で、利用者のPCを調べたりpluginを更新したりはしない。CI失敗をmerge禁止にするにはrepositoryのrequired checks設定も必要で、この変更では設定を変更しない。導入済み内容の更新忘れは以下の手順で別に確認する。
+
 ## 1. 更新前の現在地
 
 許可された導入先で実施する。全設定、全cache、全file一覧、個人pathをIssue/PRへ貼らない。次の出力はまずローカルだけで確認し、公開記録には末尾の限定した項目を転記する。

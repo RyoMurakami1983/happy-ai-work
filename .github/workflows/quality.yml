@@ -21,6 +21,13 @@ jobs:
       - uses: astral-sh/setup-uv@v7
         with:
           version: "0.12.5"
+      - name: Check plugin release versions
+        if: github.event_name == 'pull_request'
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: python scripts/validate_plugin_versions.py --base "$BASE_SHA" --head "$HEAD_SHA"
       - run: uv run --script scripts/validate_quality.py
       - run: python scripts/validate_constitution.py --check-remote
         env:
