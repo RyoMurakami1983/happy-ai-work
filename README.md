@@ -14,7 +14,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | home／workspace初期化、文章の構成・下書き・推敲 |
+| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
@@ -45,9 +45,6 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - `workspace-bootstrap`: repo用 `AGENTS.md` と最小基盤を対話的に準備
 - `github-issue`: 現repoの後続作業を実行可能なGitHub Issueへ整理
 - `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
-- `writing-plan`: 読者と目的から文章構成を設計
-- `draft-writing`: 合意済み構成から日本語初稿を作成
-- `deep-edit`: 主張・構成・論理・読みやすさ・正確性の順に推敲
 - `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
 - `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
 - `skill-eval`: 既存skillのtriggerと振る舞いをrealistic scenarioで評価
