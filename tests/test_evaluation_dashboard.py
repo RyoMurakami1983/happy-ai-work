@@ -10,6 +10,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "scripts" / "evaluation_dashboard.py"
@@ -39,7 +40,7 @@ class EvaluationDashboardTests(unittest.TestCase):
                     self.skipTest(f"hardlink creation unavailable: {exc}")
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(source), "--summary", str(output)],
-                capture_output=True, text=True, check=False,
+                capture_output=True, text=True, check=False, timeout=30,
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("summary", result.stderr)
@@ -65,7 +66,7 @@ class EvaluationDashboardTests(unittest.TestCase):
             output = Path(directory) / "missing-parent" / "summary.json"
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(source), "--summary", str(output)],
-                capture_output=True, text=True, check=False,
+                capture_output=True, text=True, check=False, timeout=30,
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("summary", result.stderr)
@@ -217,7 +218,7 @@ process.stdout.write(JSON.stringify({accepted,segments:api.segments(rows,'s').ma
 """
         result = subprocess.run(
             ["node", "-e", program, str(ROOT / "docs/evaluation-dashboard.html")],
-            input=json.dumps(inputs), text=True, capture_output=True, check=False,
+            input=json.dumps(inputs), text=True, encoding="utf-8", capture_output=True, check=False, timeout=30,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         observed = json.loads(result.stdout)
@@ -246,7 +247,8 @@ process.stdout.write(JSON.stringify(module.exports.summarize(payload)));
 """
         result = subprocess.run(
             ["node", "-e", program, str(ROOT / "docs/evaluation-dashboard.html")],
-            input=fixture.read_text(encoding="utf-8"), capture_output=True, text=True, check=False,
+            input=fixture.read_text(encoding="utf-8"), capture_output=True, text=True, encoding="utf-8",
+            check=False, timeout=30,
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         browser = json.loads(result.stdout)
@@ -261,6 +263,12 @@ process.stdout.write(JSON.stringify(module.exports.summarize(payload)));
                     js_row[key] = py_row[key]
         self.assertEqual(browser, python)
 
+    @unittest.skipUnless(shutil.which("node"), "Node runtime is not installed")
+    def test_node_exchange_uses_utf8_under_legacy_locale(self) -> None:
+        # Windows' default code page must not change the JSON/Node wire encoding.
+        with mock.patch("locale.getencoding", return_value="cp1252"):
+            self.test_browser_engine_matches_python_contract()
+
     def test_import_rejects_contradictory_gate_without_writing_summary(self) -> None:
         payload = json.loads((ROOT / "tests/fixtures/dashboard/synthetic.v1.json").read_text(encoding="utf-8"))
         payload["runs"][0]["cases"][0]["gates"]["permission"] = "fail"
@@ -270,7 +278,7 @@ process.stdout.write(JSON.stringify(module.exports.summarize(payload)));
             source.write_text(json.dumps(payload), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(source), "--summary", str(output)],
-                capture_output=True, text=True, check=False,
+                capture_output=True, text=True, check=False, timeout=30,
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertFalse(output.exists())
@@ -281,7 +289,7 @@ process.stdout.write(JSON.stringify(module.exports.summarize(payload)));
             output = Path(directory) / "summary.json"
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(ROOT / "tests/fixtures/dashboard/synthetic.v1.json"),
-                 "--summary", str(output)], capture_output=True, text=True, check=False,
+                 "--summary", str(output)], capture_output=True, text=True, check=False, timeout=30,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             summary = json.loads(output.read_text(encoding="utf-8"))
@@ -310,7 +318,7 @@ process.stdout.write(JSON.stringify(module.exports.summarize(payload)));
             source.write_text(json.dumps(payload), encoding="utf-8")
             result = subprocess.run(
                 [sys.executable, str(SCRIPT), str(source), "--summary", str(output)],
-                capture_output=True, text=True, check=False,
+                capture_output=True, text=True, check=False, timeout=30,
             )
             self.assertEqual(result.returncode, 0, result.stderr)
             summary = json.loads(output.read_text(encoding="utf-8"))
