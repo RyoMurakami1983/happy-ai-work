@@ -1,0 +1,1593 @@
+{
+  "schema_version": 1,
+  "data_kind": "synthetic",
+  "sanitized": true,
+  "export_id": "synthetic-contract-fixture",
+  "generated_at": "2026-10-03T00:00:00Z",
+  "methods": [
+    {
+      "id": "synthetic-method-v1",
+      "sha256": "6f7687e2f27fd21da3409bff5a6f4b4119f0af93d4506a695f71dcef18f9d96e",
+      "version": "demo-1",
+      "locked": true,
+      "preregistration": {
+        "id": "synthetic-registration",
+        "sha256": "8140f67d25749784017909231d1092ee27d0d16805305bb9443554abff0c67dd",
+        "locked_at": "2026-09-01T00:00:00Z"
+      },
+      "q_max": 100,
+      "b_max": 10,
+      "lambda": 0.1,
+      "beta": 3,
+      "burden_unit": "demo-unit",
+      "burden_basis": "measured"
+    },
+    {
+      "id": "synthetic-estimated-method",
+      "sha256": "9135d8a43534ac072c21e86a3f8ab24e8ca89df520571d70c0ca0e6b8ab98645",
+      "version": "demo-1",
+      "locked": true,
+      "preregistration": {
+        "id": "synthetic-registration",
+        "sha256": "8140f67d25749784017909231d1092ee27d0d16805305bb9443554abff0c67dd",
+        "locked_at": "2026-09-01T00:00:00Z"
+      },
+      "q_max": 100,
+      "b_max": 10,
+      "lambda": 0.1,
+      "beta": 3,
+      "burden_unit": "demo-unit",
+      "burden_basis": "estimated"
+    }
+  ],
+  "runs": [
+    {
+      "id": "synthetic-run-1",
+      "condition_id": "synthetic-A",
+      "condition_sha256": "b4698dbd327f6ffb328d6d6cf82c471e0b7051cb739d518d90cc70c640d8fa79",
+      "started_at": "2026-09-02T00:00:00Z",
+      "evaluated_at": "2026-09-02T01:00:00Z",
+      "iteration": 1,
+      "method_id": "synthetic-method-v1",
+      "evaluation_mode": "A",
+      "provenance": {
+        "model_id": "synthetic-model",
+        "model_snapshot": "synthetic-snapshot-1",
+        "reasoning_effort": "synthetic-high",
+        "tools": [
+          {
+            "id": "synthetic-tools",
+            "sha256": "fd4b0e081130050f570f672bff393f362006da7187e941ee8f4547f3ca59e965",
+            "version": "demo-1"
+          }
+        ],
+        "permissions": {
+          "id": "synthetic-permissions",
+          "sha256": "80619eeff7625d4a04dde58ed1692e608e5620cdb8a00e3ecd5a39bb9f4152ff"
+        },
+        "execution_profile": {
+          "id": "synthetic-fixed-context-token-time-cost-caps",
+          "sha256": "3ef486eace27542581d6e4017554b7319a44f8cce9eec47f0016b7e80272b398"
+        },
+        "fixture": {
+          "id": "synthetic-fixture",
+          "sha256": "3a3436765885cdf2edc179512c22dd4c4259410f0d18f391cbc8d83a837c678e"
+        },
+        "dataset": {
+          "id": "synthetic-dataset",
+          "sha256": "c77fa7f1fde27d6a9fa51c6555546e3a13efadd584938e01d788e8a9d48289f4"
+        },
+        "harness": {
+          "id": "synthetic-harness",
+          "sha256": "12a787ae0e2606c3e2b45580e27d62fb36434fad2bf736a1bf928c2ff5f51f92",
+          "version": "demo-1"
+        },
+        "implementation_revision": "a74b2e5bfd0a3e5fc8329151747ff7fe1176abce",
+        "sources": [
+          {
+            "id": "synthetic-public-source",
+            "sha256": "724499340cb93e184b10d02e9260d2c6daa66ff99572632387653f036f7e9ae9"
+          }
+        ]
+      },
+      "assigned_case_ids": [
+        "demo-case-1",
+        "demo-case-2",
+        "demo-case-3",
+        "demo-case-4",
+        "demo-case-5",
+        "demo-case-6"
+      ],
+      "cases": [
+        {
+          "id": "synthetic-1-1",
+          "case_id": "demo-case-1",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 80,
+          "b": 0.5,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-1-0",
+              "sha256": "f516dfca8d460e6d155c8856e2a45aac1577c27822d475fd99ba8f050a22fde6"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 0.5,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-0",
+                "work_event_ids": [
+                  "demo-work-0"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-1-2",
+          "case_id": "demo-case-2",
+          "family": "docs",
+          "outcome": "fail",
+          "completion": "complete",
+          "gates": {
+            "quality": "fail",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 81,
+          "b": 1.0,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-1-1",
+              "sha256": "e62c6e1738bc50ea0dab56503309b280c3dc915ecf5e5ffe49acbadba81887a8"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.0,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-1",
+                "work_event_ids": [
+                  "demo-work-1"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-1-3",
+          "case_id": "demo-case-3",
+          "family": "small-fix",
+          "outcome": "hard_fail",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "fail",
+            "critical": "pass"
+          },
+          "q": 82,
+          "b": 1.5,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-1-2",
+              "sha256": "76249b4ca8ed640abd795c14030451c0c0d9eab5f19be34f506bd2025b8cf8cc"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.5,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-2",
+                "work_event_ids": [
+                  "demo-work-2"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-1-4",
+          "case_id": "demo-case-4",
+          "family": "docs",
+          "outcome": "incomplete",
+          "completion": "incomplete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-1-5",
+          "case_id": "demo-case-5",
+          "family": "small-fix",
+          "outcome": "indeterminate",
+          "completion": "complete",
+          "gates": {
+            "quality": "indeterminate",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-1-6",
+          "case_id": "demo-case-6",
+          "family": "docs",
+          "outcome": "not_run",
+          "completion": "not_run",
+          "gates": {
+            "quality": "not_evaluated",
+            "safety": "not_evaluated",
+            "permission": "not_evaluated",
+            "critical": "not_evaluated"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-run-2",
+      "condition_id": "synthetic-A",
+      "condition_sha256": "b4698dbd327f6ffb328d6d6cf82c471e0b7051cb739d518d90cc70c640d8fa79",
+      "started_at": "2026-09-03T00:00:00Z",
+      "evaluated_at": "2026-09-03T01:00:00Z",
+      "iteration": 2,
+      "method_id": "synthetic-method-v1",
+      "evaluation_mode": "A",
+      "provenance": {
+        "model_id": "synthetic-model",
+        "model_snapshot": "synthetic-snapshot-1",
+        "reasoning_effort": "synthetic-high",
+        "tools": [
+          {
+            "id": "synthetic-tools",
+            "sha256": "fd4b0e081130050f570f672bff393f362006da7187e941ee8f4547f3ca59e965",
+            "version": "demo-1"
+          }
+        ],
+        "permissions": {
+          "id": "synthetic-permissions",
+          "sha256": "80619eeff7625d4a04dde58ed1692e608e5620cdb8a00e3ecd5a39bb9f4152ff"
+        },
+        "execution_profile": {
+          "id": "synthetic-fixed-context-token-time-cost-caps",
+          "sha256": "3ef486eace27542581d6e4017554b7319a44f8cce9eec47f0016b7e80272b398"
+        },
+        "fixture": {
+          "id": "synthetic-fixture",
+          "sha256": "3a3436765885cdf2edc179512c22dd4c4259410f0d18f391cbc8d83a837c678e"
+        },
+        "dataset": {
+          "id": "synthetic-dataset",
+          "sha256": "c77fa7f1fde27d6a9fa51c6555546e3a13efadd584938e01d788e8a9d48289f4"
+        },
+        "harness": {
+          "id": "synthetic-harness",
+          "sha256": "12a787ae0e2606c3e2b45580e27d62fb36434fad2bf736a1bf928c2ff5f51f92",
+          "version": "demo-1"
+        },
+        "implementation_revision": "49a1dca488f6604327202518225212f63328fbad",
+        "sources": [
+          {
+            "id": "synthetic-public-source",
+            "sha256": "724499340cb93e184b10d02e9260d2c6daa66ff99572632387653f036f7e9ae9"
+          }
+        ]
+      },
+      "assigned_case_ids": [
+        "demo-case-1",
+        "demo-case-2",
+        "demo-case-3",
+        "demo-case-4",
+        "demo-case-5",
+        "demo-case-6"
+      ],
+      "cases": [
+        {
+          "id": "synthetic-2-1",
+          "case_id": "demo-case-1",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-2-2",
+          "case_id": "demo-case-2",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-2-3",
+          "case_id": "demo-case-3",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-2-4",
+          "case_id": "demo-case-4",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-2-5",
+          "case_id": "demo-case-5",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-2-6",
+          "case_id": "demo-case-6",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": null,
+          "b": null,
+          "burden_basis": "unavailable",
+          "independence": "unknown",
+          "contamination": "clean",
+          "trace": "missing",
+          "evidence": [],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": null,
+              "unit": "demo-unit",
+              "basis": "unavailable"
+            },
+            "dependency_delay": {
+              "value": null,
+              "unit": "dependent-work-unit",
+              "basis": "unavailable"
+            },
+            "rework": {
+              "value": null,
+              "unit": "work-unit",
+              "basis": "unavailable"
+            },
+            "human_review_time": {
+              "value": null,
+              "unit": "seconds",
+              "basis": "unavailable"
+            },
+            "accounting": "unverified",
+            "event_links": [],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-run-3",
+      "condition_id": "synthetic-A",
+      "condition_sha256": "b4698dbd327f6ffb328d6d6cf82c471e0b7051cb739d518d90cc70c640d8fa79",
+      "started_at": "2026-09-04T00:00:00Z",
+      "evaluated_at": "2026-09-04T01:00:00Z",
+      "iteration": 3,
+      "method_id": "synthetic-method-v1",
+      "evaluation_mode": "A",
+      "provenance": {
+        "model_id": "synthetic-model",
+        "model_snapshot": "synthetic-snapshot-1",
+        "reasoning_effort": "synthetic-high",
+        "tools": [
+          {
+            "id": "synthetic-tools",
+            "sha256": "fd4b0e081130050f570f672bff393f362006da7187e941ee8f4547f3ca59e965",
+            "version": "demo-1"
+          }
+        ],
+        "permissions": {
+          "id": "synthetic-permissions",
+          "sha256": "80619eeff7625d4a04dde58ed1692e608e5620cdb8a00e3ecd5a39bb9f4152ff"
+        },
+        "execution_profile": {
+          "id": "synthetic-fixed-context-token-time-cost-caps",
+          "sha256": "3ef486eace27542581d6e4017554b7319a44f8cce9eec47f0016b7e80272b398"
+        },
+        "fixture": {
+          "id": "synthetic-fixture",
+          "sha256": "3a3436765885cdf2edc179512c22dd4c4259410f0d18f391cbc8d83a837c678e"
+        },
+        "dataset": {
+          "id": "synthetic-dataset",
+          "sha256": "c77fa7f1fde27d6a9fa51c6555546e3a13efadd584938e01d788e8a9d48289f4"
+        },
+        "harness": {
+          "id": "synthetic-harness",
+          "sha256": "12a787ae0e2606c3e2b45580e27d62fb36434fad2bf736a1bf928c2ff5f51f92",
+          "version": "demo-1"
+        },
+        "implementation_revision": "61e931c594cb8f7fea302c49e3222c538f855f97",
+        "sources": [
+          {
+            "id": "synthetic-public-source",
+            "sha256": "724499340cb93e184b10d02e9260d2c6daa66ff99572632387653f036f7e9ae9"
+          }
+        ]
+      },
+      "assigned_case_ids": [
+        "demo-case-1",
+        "demo-case-2",
+        "demo-case-3",
+        "demo-case-4",
+        "demo-case-5",
+        "demo-case-6"
+      ],
+      "cases": [
+        {
+          "id": "synthetic-3-1",
+          "case_id": "demo-case-1",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 80,
+          "b": 0.5,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-0",
+              "sha256": "97c6abb4054a6791ff641336d8500ce7d52fd6033d1fa2b6af414dd93d9e5edc"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 0.5,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-0",
+                "work_event_ids": [
+                  "demo-work-0"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-3-2",
+          "case_id": "demo-case-2",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 81,
+          "b": 1.0,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-1",
+              "sha256": "9268b7120c854c8889697750ccb15ce3764b88a6a49eb005b7357f7585e45fba"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.0,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-1",
+                "work_event_ids": [
+                  "demo-work-1"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-3-3",
+          "case_id": "demo-case-3",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 82,
+          "b": 1.5,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-2",
+              "sha256": "ba61766223eb493503f104439f0d64f32fa9bafb518cb5d830ce97634ccef8c6"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.5,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-2",
+                "work_event_ids": [
+                  "demo-work-2"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-3-4",
+          "case_id": "demo-case-4",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 83,
+          "b": 2.0,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-3",
+              "sha256": "710377f6c75f704af983f0629f0980475c334166447af40c4b9ee95a095b1d85"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 2.0,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-3",
+                "work_event_ids": [
+                  "demo-work-3"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-3-5",
+          "case_id": "demo-case-5",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 84,
+          "b": 2.5,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-4",
+              "sha256": "f631d7a67311427be6300b84fcd601e20b6777e10e9aa9917f6848baaab22a8d"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 2.5,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-4",
+                "work_event_ids": [
+                  "demo-work-4"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-3-6",
+          "case_id": "demo-case-6",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 85,
+          "b": 3.0,
+          "burden_basis": "measured",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-3-5",
+              "sha256": "3ddf57580b1174a9c9f042f739df9761dd809df35bf863bea55b4bfbd1a96ace"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 3.0,
+              "unit": "demo-unit",
+              "basis": "measured"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-5",
+                "work_event_ids": [
+                  "demo-work-5"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        }
+      ]
+    },
+    {
+      "id": "synthetic-run-4",
+      "condition_id": "synthetic-A",
+      "condition_sha256": "b4698dbd327f6ffb328d6d6cf82c471e0b7051cb739d518d90cc70c640d8fa79",
+      "started_at": "2026-09-05T00:00:00Z",
+      "evaluated_at": "2026-09-05T01:00:00Z",
+      "iteration": 4,
+      "method_id": "synthetic-estimated-method",
+      "evaluation_mode": "A",
+      "provenance": {
+        "model_id": "synthetic-model",
+        "model_snapshot": "synthetic-snapshot-1",
+        "reasoning_effort": "synthetic-high",
+        "tools": [
+          {
+            "id": "synthetic-tools",
+            "sha256": "fd4b0e081130050f570f672bff393f362006da7187e941ee8f4547f3ca59e965",
+            "version": "demo-1"
+          }
+        ],
+        "permissions": {
+          "id": "synthetic-permissions",
+          "sha256": "80619eeff7625d4a04dde58ed1692e608e5620cdb8a00e3ecd5a39bb9f4152ff"
+        },
+        "execution_profile": {
+          "id": "synthetic-fixed-context-token-time-cost-caps",
+          "sha256": "3ef486eace27542581d6e4017554b7319a44f8cce9eec47f0016b7e80272b398"
+        },
+        "fixture": {
+          "id": "synthetic-fixture",
+          "sha256": "3a3436765885cdf2edc179512c22dd4c4259410f0d18f391cbc8d83a837c678e"
+        },
+        "dataset": {
+          "id": "synthetic-dataset",
+          "sha256": "c77fa7f1fde27d6a9fa51c6555546e3a13efadd584938e01d788e8a9d48289f4"
+        },
+        "harness": {
+          "id": "synthetic-harness",
+          "sha256": "12a787ae0e2606c3e2b45580e27d62fb36434fad2bf736a1bf928c2ff5f51f92",
+          "version": "demo-1"
+        },
+        "implementation_revision": "b15b18483a8df213b234b9c48a70162a914f09c5",
+        "sources": [
+          {
+            "id": "synthetic-public-source",
+            "sha256": "724499340cb93e184b10d02e9260d2c6daa66ff99572632387653f036f7e9ae9"
+          }
+        ]
+      },
+      "assigned_case_ids": [
+        "demo-case-1",
+        "demo-case-2",
+        "demo-case-3",
+        "demo-case-4",
+        "demo-case-5",
+        "demo-case-6"
+      ],
+      "cases": [
+        {
+          "id": "synthetic-4-1",
+          "case_id": "demo-case-1",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 80,
+          "b": 0.5,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-0",
+              "sha256": "797cdd6e1f3fbe1f6e6b9b5d732d54faf4f09af03948f0c2216b08f48aa24e2f"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 0.5,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-0",
+                "work_event_ids": [
+                  "demo-work-0"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-4-2",
+          "case_id": "demo-case-2",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 81,
+          "b": 1.0,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-1",
+              "sha256": "4cd4dfbb12d598ac2c933fef360172a4924e281d34c9cf474f1532e90fc2f16d"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.0,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-1",
+                "work_event_ids": [
+                  "demo-work-1"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-4-3",
+          "case_id": "demo-case-3",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 82,
+          "b": 1.5,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-2",
+              "sha256": "d318d1bb42c8f1d80f91e50984c8278da37d0b4bdc8925e3a96b8ca168bb3c3f"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 1.5,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-2",
+                "work_event_ids": [
+                  "demo-work-2"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-4-4",
+          "case_id": "demo-case-4",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 83,
+          "b": 2.0,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-3",
+              "sha256": "686f76424763a24ba28c2e4b8b42d0bc5e2e174e1a55f619387828dca36758a8"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 2.0,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-3",
+                "work_event_ids": [
+                  "demo-work-3"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-4-5",
+          "case_id": "demo-case-5",
+          "family": "small-fix",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 84,
+          "b": 2.5,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-4",
+              "sha256": "eab498902307f12cc1b1433f4d1f55070fc93f89e2489f0ca21d2519e9f54a64"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 2.5,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-4",
+                "work_event_ids": [
+                  "demo-work-4"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        },
+        {
+          "id": "synthetic-4-6",
+          "case_id": "demo-case-6",
+          "family": "docs",
+          "outcome": "pass",
+          "completion": "complete",
+          "gates": {
+            "quality": "pass",
+            "safety": "pass",
+            "permission": "pass",
+            "critical": "pass"
+          },
+          "q": 85,
+          "b": 3.0,
+          "burden_basis": "estimated",
+          "independence": "valid",
+          "contamination": "clean",
+          "trace": "sufficient",
+          "evidence": [
+            {
+              "id": "synthetic-evidence-4-5",
+              "sha256": "9dccf29b0e17866e9af95137d5d881bdf34824815442e7c942912b2cd6838b92"
+            }
+          ],
+          "human_review": "pending",
+          "summary": "架空データ。実際の評価結果ではありません。",
+          "burden_details": {
+            "raw_burden": {
+              "value": 3.0,
+              "unit": "demo-unit",
+              "basis": "estimated"
+            },
+            "dependency_delay": {
+              "value": 0,
+              "unit": "dependent-work-unit",
+              "basis": "measured"
+            },
+            "rework": {
+              "value": 0,
+              "unit": "work-unit",
+              "basis": "measured"
+            },
+            "human_review_time": {
+              "value": 30,
+              "unit": "seconds",
+              "basis": "measured"
+            },
+            "accounting": "deduplicated",
+            "event_links": [
+              {
+                "decision_event_id": "demo-decision-5",
+                "work_event_ids": [
+                  "demo-work-5"
+                ]
+              }
+            ],
+            "summary": "架空の分類。必要な確認時間はBへ加算しない。"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "baseline_revision": "ab32391c9612ad7983a4805040a6331ad5f576db",
+  "baseline_entrypoint_sha256": "9ff5265ff752ce8186e0be61db1b7852b480a77ae4db68c3385ac862b534b653",
+  "baseline_frontmatter": {
+    "name": "implement",
+    "description": "実装契約を受け取り、bootstrap 確認、vertical slice 分割、TDD loop、slice gate、completion handoff まで進める。 technical-design / implementation-plan / issue から実装可能な契約を受け取り、PR やふりかえりではなくローカル実装を完了したいとき。\n"
+  },
+  "status": "candidate-only; not adopted; behavioral comparison not run",
+  "preserved_resources": [
+    {
+      "source_path": "plugins/happy-coding/skills/implementation-plan/assets/NNN_PLAN_TEMPLATE.md",
+      "candidate_path": "implement/assets/NNN_PLAN_TEMPLATE.md",
+      "sha256": "dda00cd15503bec2cf0fc2b6e08a55d76cb3b1882e2ad037c9646d89d36a2a45"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/checkpoints/__init__.py",
+      "candidate_path": "implement/checkpoints/__init__.py",
+      "sha256": "81c1ccabd05211994dcd4f66fca08c4401a45fae0d41c2ae3a82879fe8aa6cf0"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/checkpoints/contract_verify.py",
+      "candidate_path": "implement/checkpoints/contract_verify.py",
+      "sha256": "b25cf1fc83b0cd333b6c536c2e46e7063618515fae7c958204f2d8490ad981e4"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/orchestrator/__init__.py",
+      "candidate_path": "implement/orchestrator/__init__.py",
+      "sha256": "10926f0f43062e9afca70d1e1091378ca28bf4f7fcf1c1a8100f1b6fbbd86b56"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/orchestrator/fleet_orchestrator.py",
+      "candidate_path": "implement/orchestrator/fleet_orchestrator.py",
+      "sha256": "aaa11e14ba498315e5605f936953a5a225ffa1faf14da2b300bcebca42dc29c9"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md",
+      "candidate_path": "implement/references/WORK_ARTIFACTS.md",
+      "sha256": "321edcc18c7cb0bbab9b846754f124d332655a1fcc90c6d2d3455085204c37d2"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/eval-checklist.md",
+      "candidate_path": "implement/references/eval-checklist.md",
+      "sha256": "0a0983a843d2a327f7244a1327dc90da01a212c9cecc2e140a01b85d4894bdc5"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md",
+      "candidate_path": "implement/references/interactive-app-bootstrap-checklist.md",
+      "sha256": "054b0e513ed677dd24eb7f0107fa2ebca44e30d6ce2aef4c4979313275069821"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/interactive-app-comparable-harness-contract.md",
+      "candidate_path": "implement/references/interactive-app-comparable-harness-contract.md",
+      "sha256": "0a0b7a23217c74e495957d7f673d6bbfdbd47d55fba1997b0e717fe48f2173f1"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/runtime-evidence/flaui.md",
+      "candidate_path": "implement/references/runtime-evidence/flaui.md",
+      "sha256": "0109272e0c0e597abb969a76d76569e69a2a7b1429bfde536de60db9dc008ca6"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/runtime-evidence/playwright.md",
+      "candidate_path": "implement/references/runtime-evidence/playwright.md",
+      "sha256": "27975fb95254e2d763413562e0793ff50b6e5074194d02caee8d6e8519b8526b"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/runtime-evidence/python-gui.md",
+      "candidate_path": "implement/references/runtime-evidence/python-gui.md",
+      "sha256": "3f393761ba15c4d584d7333ccd8b6565b6cd93d4297601e09e9405c375f1fab5"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/safe-refactoring.md",
+      "candidate_path": "implement/references/safe-refactoring.md",
+      "sha256": "b8a800142af89c9f32f303abef1b5d7735ea121e5eaadda243f8091be58a9c6e"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implement/references/verification-communication.md",
+      "candidate_path": "implement/references/verification-communication.md",
+      "sha256": "2e5370dda8258dbb17de5c7c851702dd07090575112fdee4ba48464507e335af"
+    },
+    {
+      "source_path": "plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md",
+      "candidate_path": "implement/references/vertical-slice.md",
+      "sha256": "2c9f1b0d22290432da1ee9d550f356ba396e1187696942c8c3163a197754a788"
+    }
+  ],
+  "adapted_resources": [
+    {
+      "candidate_path": "implement/SKILL.md",
+      "source_path": "plugins/happy-coding/skills/implement/SKILL.md",
+      "change": "Condense shared body; route conditional contract and UI details; preserve discovery frontmatter."
+    },
+    {
+      "candidate_path": "implement/references/task-contract.md",
+      "source_path": "plugins/happy-coding/skills/implement/SKILL.md",
+      "change": "Move artifact, finalized-contract and multi-repository details behind explicit conditions."
+    },
+    {
+      "candidate_path": "implement/references/interactive-gates.md",
+      "source_path": "plugins/happy-coding/skills/implement/SKILL.md",
+      "change": "Move runtime and HITL detail behind the interactive-app condition."
+    }
+  ],
+  "validation_boundary": "Packaging, source-byte integrity and helper execution checks do not establish semantic preservation or comparative benefit."
+}
