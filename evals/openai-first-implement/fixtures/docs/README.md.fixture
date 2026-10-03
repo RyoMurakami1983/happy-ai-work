@@ -1,0 +1,4 @@
+# Local timer
+
+A small offline countdown tool. Start resumes the remaining duration; Stop pauses it.
+See [usage](guides/usage-old.md). No account, network access, or background notifications.

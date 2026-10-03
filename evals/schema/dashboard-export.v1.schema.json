@@ -1,0 +1,652 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Sanitized dashboard export v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "data_kind",
+    "sanitized",
+    "export_id",
+    "generated_at",
+    "methods",
+    "runs"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "data_kind": {
+      "type": "string",
+      "enum": [
+        "synthetic",
+        "real",
+        "diagnostic"
+      ]
+    },
+    "sanitized": {
+      "type": "boolean",
+      "const": true
+    },
+    "export_id": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+    },
+    "generated_at": {
+      "type": "string",
+      "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)(?![\\s\\S])",
+      "format": "date-time"
+    },
+    "methods": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5000,
+      "items": {
+        "$ref": "#/$defs/method"
+      }
+    },
+    "runs": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 5000,
+      "items": {
+        "$ref": "#/$defs/run"
+      }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+    },
+    "hashRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{64})(?![\\s\\S])"
+        }
+      }
+    },
+    "versionRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "sha256"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{64})(?![\\s\\S])"
+        }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "unit",
+        "basis"
+      ],
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "basis": {
+          "type": "string",
+          "enum": [
+            "measured",
+            "estimated",
+            "unavailable"
+          ]
+        }
+      }
+    },
+    "method": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "version",
+        "sha256",
+        "locked",
+        "preregistration",
+        "q_max",
+        "b_max",
+        "lambda",
+        "beta",
+        "burden_unit",
+        "burden_basis"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{64})(?![\\s\\S])"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "preregistration": {
+          "anyOf": [
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "sha256",
+                "locked_at"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^(?:[0-9a-f]{64})(?![\\s\\S])"
+                },
+                "locked_at": {
+                  "type": "string",
+                  "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)(?![\\s\\S])",
+                  "format": "date-time"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "q_max": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000
+        },
+        "b_max": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 1000000
+        },
+        "lambda": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "beta": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "burden_unit": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "burden_basis": {
+          "type": "string",
+          "enum": [
+            "measured",
+            "estimated"
+          ]
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "model_snapshot",
+        "reasoning_effort",
+        "tools",
+        "permissions",
+        "execution_profile",
+        "fixture",
+        "dataset",
+        "harness",
+        "implementation_revision",
+        "sources"
+      ],
+      "properties": {
+        "model_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "model_snapshot": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "reasoning_effort": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5000,
+          "items": {
+            "$ref": "#/$defs/versionRef"
+          }
+        },
+        "permissions": {
+          "$ref": "#/$defs/hashRef"
+        },
+        "execution_profile": {
+          "$ref": "#/$defs/hashRef"
+        },
+        "fixture": {
+          "$ref": "#/$defs/hashRef"
+        },
+        "dataset": {
+          "$ref": "#/$defs/hashRef"
+        },
+        "harness": {
+          "$ref": "#/$defs/versionRef"
+        },
+        "implementation_revision": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{40,64})(?![\\s\\S])"
+        },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5000,
+          "items": {
+            "$ref": "#/$defs/hashRef"
+          }
+        }
+      }
+    },
+    "burdenDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "raw_burden",
+        "dependency_delay",
+        "rework",
+        "human_review_time",
+        "accounting",
+        "event_links",
+        "summary"
+      ],
+      "properties": {
+        "raw_burden": {
+          "$ref": "#/$defs/metric"
+        },
+        "dependency_delay": {
+          "$ref": "#/$defs/metric"
+        },
+        "rework": {
+          "$ref": "#/$defs/metric"
+        },
+        "human_review_time": {
+          "$ref": "#/$defs/metric"
+        },
+        "accounting": {
+          "type": "string",
+          "enum": [
+            "deduplicated",
+            "unverified"
+          ]
+        },
+        "event_links": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 5000,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "decision_event_id",
+              "work_event_ids"
+            ],
+            "properties": {
+              "decision_event_id": {
+                "type": "string",
+                "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+              },
+              "work_event_ids": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 5000,
+                "items": {
+                  "type": "string",
+                  "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+                },
+                "uniqueItems": true
+              }
+            }
+          }
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "case_id",
+        "family",
+        "outcome",
+        "completion",
+        "gates",
+        "q",
+        "b",
+        "burden_basis",
+        "independence",
+        "contamination",
+        "trace",
+        "evidence",
+        "human_review",
+        "summary",
+        "burden_details"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "case_id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "family": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "pass",
+            "fail",
+            "hard_fail",
+            "incomplete",
+            "indeterminate",
+            "not_run"
+          ]
+        },
+        "completion": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "incomplete",
+            "not_run"
+          ]
+        },
+        "gates": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "quality",
+            "safety",
+            "permission",
+            "critical"
+          ],
+          "properties": {
+            "quality": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "indeterminate",
+                "not_evaluated"
+              ]
+            },
+            "safety": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "indeterminate",
+                "not_evaluated"
+              ]
+            },
+            "permission": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "indeterminate",
+                "not_evaluated"
+              ]
+            },
+            "critical": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "indeterminate",
+                "not_evaluated"
+              ]
+            }
+          }
+        },
+        "q": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "b": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "burden_basis": {
+          "type": "string",
+          "enum": [
+            "measured",
+            "estimated",
+            "unavailable"
+          ]
+        },
+        "independence": {
+          "type": "string",
+          "enum": [
+            "valid",
+            "invalid",
+            "unknown"
+          ]
+        },
+        "contamination": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "contaminated",
+            "unknown"
+          ]
+        },
+        "trace": {
+          "type": "string",
+          "enum": [
+            "sufficient",
+            "insufficient",
+            "missing"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 5000,
+          "items": {
+            "$ref": "#/$defs/hashRef"
+          }
+        },
+        "human_review": {
+          "type": "string",
+          "enum": [
+            "reviewed",
+            "pending",
+            "not_requested"
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2000
+        },
+        "burden_details": {
+          "$ref": "#/$defs/burdenDetails"
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "condition_id",
+        "condition_sha256",
+        "started_at",
+        "evaluated_at",
+        "iteration",
+        "method_id",
+        "evaluation_mode",
+        "provenance",
+        "assigned_case_ids",
+        "cases"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "condition_id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "condition_sha256": {
+          "type": "string",
+          "pattern": "^(?:[0-9a-f]{64})(?![\\s\\S])"
+        },
+        "started_at": {
+          "type": "string",
+          "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)(?![\\s\\S])",
+          "format": "date-time"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "pattern": "^(?:[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z)(?![\\s\\S])",
+          "format": "date-time"
+        },
+        "iteration": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "method_id": {
+          "type": "string",
+          "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+        },
+        "evaluation_mode": {
+          "type": "string",
+          "enum": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        },
+        "assigned_case_ids": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5000,
+          "items": {
+            "type": "string",
+            "pattern": "^(?:[A-Za-z0-9][A-Za-z0-9._:-]{0,127})(?![\\s\\S])"
+          },
+          "uniqueItems": true
+        },
+        "cases": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5000,
+          "items": {
+            "$ref": "#/$defs/case"
+          }
+        }
+      }
+    }
+  }
+}
