@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "prd_number": "005",
+  "revision": "例v1",
+  "reference_root": ".",
+  "output": "005_prd/005_PRD.html",
+  "inputs_sha256": {
+    "005_PRD.md": "6bf88bbcb1c8720e822abf2861248ea948ac34ede074bccb7ba412d26a18f551",
+    "005_prd/diagrams/trace.svg": "41ffd55221cf2d02ec89ef591311d137c7a542f3da702dadc54766128dd4bd88",
+    "005_presentation.json": "503f89cc93c9a182be8e366ae8a08f74eb960007b2031d907be5c1c7eeabcfe2"
+  },
+  "generator_sha256": "93cf8fa90bae727acdf7d3fa64b5eafd451b5d0877cebcf902b20ff5b5a4863c",
+  "template_sha256": "e288e058239375b429ce5008dbe14379fa20b197887290459d5ef5e38092ee80",
+  "output_sha256": "1c808c58332c300fcb3b2cc8f816529743c9270f20ab88f97280d5ab9c0067ad",
+  "static_validation": {
+    "unique_ids": true,
+    "local_links_and_anchors": true,
+    "svg_xml_and_passive_content": true,
+    "canonical_heading_refs": true,
+    "no_external_resources": true
+  },
+  "markdown_mode": "supported-subset",
+  "markdown_notice": null,
+  "diagram_sync": [
+    {
+      "id": "trace",
+      "sync_mode_declared": "single-source",
+      "sync_note": "編集可能SVGを表示にも使用。正本との意味は別途照合する。",
+      "semantic_equivalence_verified": false
+    }
+  ],
+  "browser_runtime_verified": false,
+  "semantic_review_verified": false,
+  "validation_scope": "Static local generation only; no browser, network, external mutation, or UML rendering."
+}

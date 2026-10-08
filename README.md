@@ -62,7 +62,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
 
-`technical-design`と`implementation-plan`は、Markdown正本に加えて図入りのオフラインHTMLを作れます。設計書はアーキテクチャの構成、クラス、処理順、状態を必要な図で示し、計画書はsliceの依存・開始条件・人の確認を読みやすく表示します。小変更では短いMarkdownを使います。[設計書の表示例](plugins/happy-coding/skills/technical-design/assets/example/001_DESIGN.html)と[計画書の表示例](plugins/happy-coding/skills/implementation-plan/assets/example/003_plan/003_PLAN.html)を参照してください。
+`to-prd`、`technical-design`、`implementation-plan`は、Markdown正本に加えてオフラインHTMLを作れます。PRDは目的・要件・受入条件と未確定事項の対応、設計書はアーキテクチャの構成・クラス・処理順・状態、計画書はsliceの依存・開始条件・人の確認を、対応表や必要な図で読みやすく示します。小変更では短いMarkdownを使います。[PRDの表示例](plugins/happy-coding/skills/to-prd/assets/example/005_prd/005_PRD.html)、[設計書の表示例](plugins/happy-coding/skills/technical-design/assets/example/001_DESIGN.html)、[計画書の表示例](plugins/happy-coding/skills/implementation-plan/assets/example/003_plan/003_PLAN.html)を参照してください。
 
 旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
 

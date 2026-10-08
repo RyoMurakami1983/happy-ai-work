@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 RENDERERS = {
     "design": ROOT / "plugins/happy-coding/skills/technical-design/scripts/render_design.py",
     "plan": ROOT / "plugins/happy-coding/skills/implementation-plan/scripts/render_plan.py",
+    "prd": ROOT / "plugins/happy-coding/skills/to-prd/scripts/render_prd.py",
 }
 SVG = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 100">
 <defs><marker id="arrow"><path d="M0 0L3 3"/></marker></defs>

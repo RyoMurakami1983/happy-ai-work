@@ -38,14 +38,15 @@ docs/
 
 ### 図入りHTMLを併用する場合
 
-設計の構成・処理順・状態や、複数sliceの依存・開始条件を人が判断するときは、Markdown正本への入口としてオフラインHTMLを追加できる。小変更へ図やHTMLを要求しない。利用者の形式指定と既存repo規約を優先する。
+目的・要件・ACの対応、設計の構成・処理順・状態、複数sliceの依存・開始条件を人が判断するときは、Markdown正本への入口としてオフラインHTMLを追加できる。小変更へ図やHTMLを要求しない。利用者の形式指定と既存repo規約を優先する。
 
+- PRDの正本は `docs/prd/NNN_PRD.md` を保ち、`NNN_presentation.json` と `NNN_prd/NNN_PRD.html` 等を追加する
 - 新規の設計資料は `docs/design/NNN_design/` に正本、`NNN_DESIGN.html`、表示用入力、必要な図と確認記録をまとめられる
 - 計画の正本は `docs/plan/NNN_PLAN.md` を保ち、`NNN_presentation.json` と `NNN_plan/NNN_PLAN.html` 等を追加する
 - 既存資料を自動移動しない。handoffは既定pathを推測せず、正本と派生資料の実在pathを渡す
 - HTMLは要約・図・詳細の表示であり、独立した規範入力や実装開始の許可にはしない。正本更新・PLAN_DONEへの改名後は表示用入力とリンクも揃え、再生成する
 
-形式ごとの保存・同期は[設計HTML](../../technical-design/references/html-design.md)と[計画HTML](html-plan.md)を参照する。
+形式ごとの保存・同期は[PRD HTML](../../to-prd/references/html-prd.md)、[設計HTML](../../technical-design/references/html-design.md)、[計画HTML](html-plan.md)を参照する。
 
 ### conversation-only exceptions
 
