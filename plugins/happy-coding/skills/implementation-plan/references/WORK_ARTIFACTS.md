@@ -32,9 +32,20 @@ docs/
 - repoに `CONTEXT.md` がなければ作成し、あれば案件で確定した用語・境界を反映する
 - `to-prd` は `docs/prd/NNN_PRD.md` を保存する
 - `domain-modeling` のモデル化は既存のドメイン文書、なければ `docs/domain/NNN_DOMAIN_MODEL.md` へ保存する。用語整理だけなら用語集の更新で終え、モデル文書は作らない
-- `technical-design` は `docs/design/NNN_TECHNICAL_DESIGN.md` を保存する
+- `technical-design` はMarkdownのみなら `docs/design/NNN_TECHNICAL_DESIGN.md`、新規のHTML併用案件なら `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` を正本として保存する。形式は同skillの出力契約に従う
 - `implementation-plan` は `docs/plan/NNN_PLAN.md` を保存する
 - `interview-with-docs` は、結果を後続PRDへ根拠・未決事項・重要判断として引き継ぐ場合を除き、`docs/grill_results/NNN_GRILL_WITH_DOCS_RESULT.md` を保存する
+
+### 図入りHTMLを併用する場合
+
+設計の構成・処理順・状態や、複数sliceの依存・開始条件を人が判断するときは、Markdown正本への入口としてオフラインHTMLを追加できる。小変更へ図やHTMLを要求しない。利用者の形式指定と既存repo規約を優先する。
+
+- 新規の設計資料は `docs/design/NNN_design/` に正本、`NNN_DESIGN.html`、表示用入力、必要な図と確認記録をまとめられる
+- 計画の正本は `docs/plan/NNN_PLAN.md` を保ち、`NNN_presentation.json` と `NNN_plan/NNN_PLAN.html` 等を追加する
+- 既存資料を自動移動しない。handoffは既定pathを推測せず、正本と派生資料の実在pathを渡す
+- HTMLは要約・図・詳細の表示であり、独立した規範入力や実装開始の許可にはしない。正本更新・PLAN_DONEへの改名後は表示用入力とリンクも揃え、再生成する
+
+形式ごとの保存・同期は[設計HTML](../../technical-design/references/html-design.md)と[計画HTML](html-plan.md)を参照する。
 
 ### conversation-only exceptions
 

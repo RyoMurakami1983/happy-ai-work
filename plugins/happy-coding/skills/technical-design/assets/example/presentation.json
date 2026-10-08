@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "number": "001",
+  "title": "申請確認ツール — 設計v1（架空例）",
+  "subtitle": "入力・確認・保存の責任を追い、失敗を完了に見せないための設計資料。",
+  "date": "2026-10-07",
+  "revision": "v1",
+  "status": "提案・実装未着手",
+  "canonical_document": "001_TECHNICAL_DESIGN.md",
+  "summary_cards": [
+    {"title": "完了の条件", "body": "確認だけでなく外部台帳の保存成功を確認して完了を表示する。", "source_refs": ["目的と範囲", "操作の契約"]},
+    {"title": "変化を閉じる", "body": "台帳APIの変更は接続Adapterへ隔離する。", "source_refs": ["構成判断"]},
+    {"title": "未確定の接続", "body": "重複防止と応答不明の照会方法は未確認。接続の完成contractではない。", "source_refs": ["未確認事項"]}
+  ],
+  "diagrams": [
+    {"id": "architecture", "title": "01 全体構成", "question": "入力・確認・外部通信を誰が担当するか？", "description": "矢印は静的なコード依存。外部通信の実行順を示す図ではありません。", "svg": "diagrams/01-components.svg", "source": "diagrams/01-components.svg", "caption": "画面は確認処理を使い、確認処理は接続窓口を使う。Adapterが台帳への通信を担当する。", "source_refs": ["構成判断", "操作の契約"], "sync_mode": "single-source", "sync_note": "編集可能なSVGそのものを表示する。UML変換用の外部依存はない。"},
+    {"id": "states", "title": "02 状態と失敗", "question": "保存が失敗した場合に、どこで止まるか？", "description": "保存中から成功時だけ完了へ進む。失敗・応答不明は保留。", "svg": "diagrams/02-states.svg", "source": "diagrams/02-states.svg", "caption": "保留からの自動復旧は対象外。担当者の確認で対応する。", "source_refs": ["状態と失敗", "未確認事項"], "sync_mode": "single-source", "sync_note": "表示と編集に同じSVGを使う。"}
+  ],
+  "sections": [
+    {"id": "scope", "title": "今回の範囲", "paragraphs": ["通常の入力・確認・台帳保存・状態表示を扱う。"], "bullets": ["自動復旧は対象外。", "図の構成はこの架空例の提案であり、全案件の既定解ではない。"], "source_refs": ["目的と範囲", "構成判断"]},
+    {"id": "unknowns", "title": "未確認事項と保証の限界", "paragraphs": ["保存応答が不明でも、未保存と判断できない。接続仕様の確認を先に行う。"], "bullets": [], "table": {"headers": ["ID", "未確認", "止める範囲・次担当"], "rows": [["U-01", "重複防止キー・応答不明の照会", "外部接続contractの確定。連携担当。"]]}, "source_refs": ["未確認事項", "状態と失敗"]}
+  ],
+  "references": [{"label": "設計正本Markdown", "path": "001_TECHNICAL_DESIGN.md"}]
+}

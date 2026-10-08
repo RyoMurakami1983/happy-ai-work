@@ -1,6 +1,6 @@
 ---
 name: technical-design
-description: 合意済みの目的・要件から、module責務、public interface、data flow、security boundary、trade-offを決め、根拠・変更シナリオ・契約を追える設計を作る。構造判断とレビューへ渡す設計資料の作成・更新に使う。独立レビューの判定、実装計画、実装は扱わない。
+description: 合意済みの目的・要件から、module責務、public interface、data flow、security boundary、trade-offを決め、根拠・変更シナリオ・契約を追える設計を作る。構造判断とレビューへ渡す設計資料の作成・更新に使い、必要ならアーキテクチャ・UML図入りHTMLを併用する。独立レビューの判定、実装計画、実装は扱わない。
 ---
 
 # Technical Design
@@ -35,6 +35,8 @@ blockingなrequirement gapが残る部分は確定設計として渡さない。
 大きな技術選定が必要な場合だけ[TECH_SELECTION_HARNESS.md](references/TECH_SELECTION_HARNESS.md)を読む。既存stackで自然に実装できる場合は省略する。
 
 外部技術の機能・実行環境・配布等の未知が設計を左右する場合は、利用可能なら`technical-feasibility-research`へ目的・条件・対象環境と調査範囲を渡す。未導入なら必要な調査をこの設計内で行い、導入待ちにしない。返された出典・版・確認範囲・未確認事項・推奨を要件と照合して採否と構造へ取り込み、推奨を採用決定や実動作の証明と混同しない。
+
+資料の形式は読者が行う判断に合わせる。局所変更・単純CRUDは短いMarkdownを既定とする。新規開発や複数の責務・外部I/O・失敗状態を扱う設計では、アーキテクチャや必要なUML図を含むオフラインHTMLの併用を推奨する。利用者の指定とrepoの既存規約を優先し、形式を選んだ理由を一行で残す。HTMLを使う場合だけ[html-design.md](references/html-design.md)を読む。図は構成・クラス・シーケンス・状態遷移などから判断したい問いに合わせて選ぶ。
 
 ## ワークフロー
 
@@ -91,9 +93,11 @@ blockingなrequirement gapが残る部分は確定設計として渡さない。
 
 ここでのreadinessは証拠が揃っているかを示すもので、独立レビューのPASSや実装承認ではない。必要な独立レビューは、利用可能なら `technical-design-review`、なければ独立レビュアーへ同じ資料を渡す。skillの存在を前提にした呼出しや新設は行わない。blockingな不足や必要なレビューが未完了なら、その理由と次の担当を示し、実装へ進める完成設計とは扱わない。
 
+HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Unknowns、保証範囲を照合する。静的検証、図の視認、ブラウザ動作、独立レビュー、利用者評価を分けて記録する。版・hash一致は意味の一致やレビューPASSを証明しない。
+
 ## 出力
 
-成果物は保存を既定（saved-by-default）とし、`docs/design/NNN_TECHNICAL_DESIGN.md` へ必ず保存する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+成果物は保存を既定（saved-by-default）とし、設計正本をMarkdownへ保存する。従来ルートは `docs/design/NNN_TECHNICAL_DESIGN.md`。新規のHTML併用資料は `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` と `NNN_DESIGN.html`、必要な図・編集用ソース・検証記録を同じ案件ディレクトリにまとめてよい。repoの規約と既存の公開pathを優先し、既存資料は自動移動しない。移動が依頼された場合は相対リンク・生成処理・Artifactsと既知の参照元を更新する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
 
 ```markdown
 # Technical Design NNN: [Name]
@@ -126,6 +130,7 @@ artifacts:
 ```
 
 上はdesignだけを保存した例である。保存済みPRD等が実在する場合だけ、そのpathも追加する。
+HTML併用では、選択した案件ディレクトリの正本・HTML・図ソース・検証結果の実在pathを列挙する。
 
 ## 注意点
 
@@ -142,3 +147,4 @@ artifacts:
 - [balanced-coupling.md](references/balanced-coupling.md) — multi-repo / ownership境界の場合
 - [review-ready-design.md](references/review-ready-design.md) — trace、変更シナリオ、操作のcontract、レビュー引き継ぎを詳しく記載する場合
 - [finalization-contract.md](references/finalization-contract.md) — 複数案や決定変更から恒久成果物へ採用contractだけを渡す場合
+- [html-design.md](references/html-design.md) — アーキテクチャ・UML図入りHTMLを併用する場合の構成・テンプレート・同期・検証

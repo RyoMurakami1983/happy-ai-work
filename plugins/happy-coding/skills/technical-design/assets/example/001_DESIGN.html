@@ -1,0 +1,69 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>申請確認ツール — 設計v1（架空例）</title><style>
+:root{--blue:#245eac;--ink:#223348;--muted:#596b7f;--border:#cfd8e3;--soft:#edf3fa;--bg:#f4f6f8}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:70px}body{margin:0;color:var(--ink);background:var(--bg);font:16px/1.75 "Yu Gothic UI",Meiryo,system-ui,sans-serif}a{color:#215da8}button{font:inherit;cursor:pointer}header{background:#fff;border-bottom:1px solid var(--border);padding:34px 24px 24px}.hero{max-width:1160px;margin:auto}h1{font-size:clamp(25px,3vw,37px);line-height:1.4;margin:8px 0 12px}h2{font-size:25px;line-height:1.5;margin:4px 0 12px}h3{font-size:21px;margin:25px 0 10px}h4{font-size:18px;margin:20px 0 8px}.eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;color:var(--blue);margin:0}.badge{display:inline-block;background:#e8f1fb;color:#245c99;padding:3px 10px;border-radius:4px;font-size:13px;margin:0 5px 5px 0}.lead{font-size:18px;max-width:930px;color:var(--muted)}nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--border)}nav div{max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;gap:7px;padding:10px 16px}nav a{display:block;padding:4px 12px;text-decoration:none;border-radius:4px;color:#334e6e;font-size:14px}nav a:hover,nav a:focus{background:var(--soft)}main{max-width:1200px;margin:auto;padding:24px 18px 60px}.card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:28px;margin-bottom:24px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.tile{background:#f2f6fc;border:1px solid #d5e1ef;padding:18px;border-radius:6px}.tile h3{margin:0 0 8px;font-size:18px}.tile p{margin:0}.notice{border-left:4px solid #dca34b;background:#fff8eb;padding:16px 20px;margin-top:20px}.notice p{margin:0}.diagram-tools{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}.zoom{border:1px solid #b7c8db;background:#edf4fd;color:#245c99;border-radius:4px;padding:5px 12px}.diagram-scroll{overflow:auto;margin-top:18px;border:1px solid #e2e8ef;background:white}.diagram-scroll svg{display:block;width:100%;min-width:900px;height:auto}.diagram-scroll.expanded svg{width:140%;min-width:1250px}.caption{color:var(--muted);border-left:3px solid #b4cbe3;padding:5px 14px;font-size:15px;margin:18px 0 0}.table-wrap{overflow:auto}table{border-collapse:collapse;width:100%;margin:14px 0;font-size:15px}th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}th{background:#edf3fa;white-space:nowrap}td{min-width:100px}code{font-family:Consolas,"Yu Gothic",monospace;font-size:.9em;overflow-wrap:anywhere;background:#eff3f8;padding:2px 4px;border-radius:3px}pre{overflow:auto;background:#f4f7fa;border:1px solid var(--border);padding:15px}pre code{background:transparent;padding:0;white-space:pre}details{border-top:1px solid var(--border);padding:14px 0}summary{font-size:19px;font-weight:700;cursor:pointer;color:#285681}details>div{margin-top:18px}ul,ol{padding-left:26px}li{margin:5px 0}.references{display:flex;gap:14px;flex-wrap:wrap}footer{text-align:center;color:var(--muted);font-size:13px;padding:0 20px 30px}:focus-visible{outline:3px solid #5d8ccc;outline-offset:3px}@media(max-width:700px){.grid{grid-template-columns:1fr}.card{padding:20px 16px}main{padding:18px 10px}nav a{padding:3px 7px;font-size:13px}.lead{font-size:16px}}@media print{nav,.diagram-tools{display:none}.card{break-inside:avoid;padding:18px;margin-bottom:18px}.diagram-scroll svg{min-width:0}.card{border:0}body{background:white}main{max-width:none;padding:0}details{display:block}}
+
+@media print{details>div{display:block!important}header{padding:15px}a{color:#223348;text-decoration:none}.diagram-scroll,.table-wrap{overflow:visible}.diagram-scroll svg,.diagram-scroll.expanded svg{width:100%;min-width:0;max-width:100%}}
+</style></head><body><header><div class="hero"><p class="eyebrow">DESIGN 001</p><h1>申請確認ツール — 設計v1（架空例）</h1><span class="badge">2026-10-07</span><span class="badge">v1</span><span class="badge">提案・実装未着手</span><p class="lead">入力・確認・保存の責任を追い、失敗を完了に見せないための設計資料。</p></div></header><nav aria-label="設計書の目次"><div><a href="#overview">要点</a><a href="#architecture">01 全体構成</a><a href="#states">02 状態と失敗</a><a href="#scope">今回の範囲</a><a href="#unknowns">未確認事項と保証の限界</a><a href="#details">詳細</a><a href="#references">資料</a></div></nav><main><section class="card" id="overview"><h2>設計の要点</h2><div class="grid"><article class="tile"><h3>完了の条件</h3><p>確認だけでなく外部台帳の保存成功を確認して完了を表示する。</p><p class="caption">正本の参照：<a href="#md-目的と範囲">目的と範囲</a> / <a href="#md-操作の契約">操作の契約</a></p></article><article class="tile"><h3>変化を閉じる</h3><p>台帳APIの変更は接続Adapterへ隔離する。</p><p class="caption">正本の参照：<a href="#md-構成判断">構成判断</a></p></article><article class="tile"><h3>未確定の接続</h3><p>重複防止と応答不明の照会方法は未確認。接続の完成contractではない。</p><p class="caption">正本の参照：<a href="#md-未確認事項">未確認事項</a></p></article></div></section>
+<section class="card diagram-section" id="architecture"><h2>01 全体構成</h2><p class="lead">入力・確認・外部通信を誰が担当するか？</p><p>矢印は静的なコード依存。外部通信の実行順を示す図ではありません。</p><div class="diagram-tools"><button type="button" class="zoom" aria-pressed="false">図を拡大</button><a href="diagrams/01-components.svg">図だけ開く</a><a href="diagrams/01-components.svg">図ソース</a></div><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-labelledby="diagram-architecture-title diagram-architecture-desc">
+<title id="diagram-architecture-title">申請確認ツールの静的依存</title><desc id="diagram-architecture-desc">画面から確認処理、接続窓口へ依存する。接続Adapterは窓口を実装する。</desc>
+<rect width="1000" height="530" fill="#ffffff" />
+<defs><marker id="diagram-architecture-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42668e" /></marker></defs>
+<rect x="30" y="30" width="940" height="470" rx="12" fill="#f5f8fc" stroke="#cfd8e3" />
+<g font-family="Meiryo, sans-serif" font-size="22" text-anchor="middle" fill="#223348">
+<rect x="90" y="100" width="220" height="120" rx="8" fill="#fff" stroke="#245eac" /><text x="200" y="145">画面</text><text x="200" y="180" font-size="18">入力・状態表示</text>
+<rect x="390" y="100" width="220" height="120" rx="8" fill="#eaf2fc" stroke="#245eac" /><text x="500" y="145">確認処理</text><text x="500" y="180" font-size="18">順序・完了条件</text>
+<rect x="690" y="100" width="220" height="120" rx="8" fill="#fff" stroke="#245eac" /><text x="800" y="145">接続窓口</text><text x="800" y="180" font-size="18">保存結果を返す</text>
+<rect x="690" y="320" width="220" height="110" rx="8" fill="#fff" stroke="#245eac" /><text x="800" y="365">接続Adapter</text><text x="800" y="400" font-size="18">台帳通信を担当</text>
+<text x="290" y="340" font-size="20">矢印：静的依存</text><text x="290" y="375" font-size="18">提案・実装未着手</text>
+</g>
+<g fill="none" stroke="#42668e" stroke-width="3" marker-end="url(#diagram-architecture-arrow)"><path d="M310 160 H384" /><path d="M610 160 H684" /><path d="M800 320 V227" /></g>
+<text x="820" y="275" font-family="Meiryo,sans-serif" font-size="18" fill="#223348">実装</text>
+</svg></div><p class="caption">画面は確認処理を使い、確認処理は接続窓口を使う。Adapterが台帳への通信を担当する。</p><p class="caption">図の同期方法（入力の申告）：single-source / 編集可能なSVGそのものを表示する。UML変換用の外部依存はない。</p><p class="caption">正本の参照：<a href="#md-構成判断">構成判断</a> / <a href="#md-操作の契約">操作の契約</a></p></section>
+<section class="card diagram-section" id="states"><h2>02 状態と失敗</h2><p class="lead">保存が失敗した場合に、どこで止まるか？</p><p>保存中から成功時だけ完了へ進む。失敗・応答不明は保留。</p><div class="diagram-tools"><button type="button" class="zoom" aria-pressed="false">図を拡大</button><a href="diagrams/02-states.svg">図だけ開く</a><a href="diagrams/02-states.svg">図ソース</a></div><div class="diagram-scroll"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="diagram-states-title diagram-states-desc">
+<title id="diagram-states-title">申請確認の状態</title><desc id="diagram-states-desc">入力中、確認待ち、保存中、完了へ進む。保存失敗と応答不明は保留。</desc>
+<rect width="1000" height="600" fill="#ffffff" />
+<defs><marker id="diagram-states-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42668e" /></marker></defs>
+<g font-family="Meiryo,sans-serif" font-size="22" text-anchor="middle" fill="#223348">
+<rect x="55" y="100" width="185" height="100" rx="15" fill="#fff" stroke="#245eac" /><text x="147" y="158">入力中</text>
+<rect x="295" y="100" width="185" height="100" rx="15" fill="#eaf2fc" stroke="#245eac" /><text x="387" y="158">確認待ち</text>
+<rect x="535" y="100" width="185" height="100" rx="15" fill="#eaf2fc" stroke="#245eac" /><text x="627" y="158">保存中</text>
+<rect x="775" y="100" width="185" height="100" rx="15" fill="#ecf7ef" stroke="#4d8160" /><text x="867" y="158">完了</text>
+<rect x="535" y="355" width="185" height="100" rx="15" fill="#fff8eb" stroke="#b8893f" /><text x="627" y="413">保留</text>
+<text x="267" y="85" font-size="17">入力済み</text><text x="507" y="85" font-size="17">確認済み</text><text x="747" y="85" font-size="17">保存成功</text>
+<text x="383" y="275" font-size="18">入力訂正</text><text x="770" y="285" font-size="18">失敗・応答不明</text>
+<text x="500" y="535" font-size="18">保留からの自動復旧は対象外。担当者が外部台帳を確認する。</text>
+</g>
+<g fill="none" stroke="#42668e" stroke-width="3" marker-end="url(#diagram-states-arrow)"><path d="M240 150 H289" /><path d="M480 150 H529" /><path d="M720 150 H769" /><path d="M627 200 V349" /><path d="M387 200 V245 H147 V207" /></g>
+</svg></div><p class="caption">保留からの自動復旧は対象外。担当者の確認で対応する。</p><p class="caption">図の同期方法（入力の申告）：single-source / 表示と編集に同じSVGを使う。</p><p class="caption">正本の参照：<a href="#md-状態と失敗">状態と失敗</a> / <a href="#md-未確認事項">未確認事項</a></p></section>
+<section class="card" id="scope"><h2>今回の範囲</h2><p>通常の入力・確認・台帳保存・状態表示を扱う。</p><ul><li>自動復旧は対象外。</li><li>図の構成はこの架空例の提案であり、全案件の既定解ではない。</li></ul><p class="caption">正本の参照：<a href="#md-目的と範囲">目的と範囲</a> / <a href="#md-構成判断">構成判断</a></p></section>
+<section class="card" id="unknowns"><h2>未確認事項と保証の限界</h2><p>保存応答が不明でも、未保存と判断できない。接続仕様の確認を先に行う。</p><div class="table-wrap"><table><thead><tr><th>ID</th><th>未確認</th><th>止める範囲・次担当</th></tr></thead><tbody><tr><td>U-01</td><td>重複防止キー・応答不明の照会</td><td>外部接続contractの確定。連携担当。</td></tr></tbody></table></div><p class="caption">正本の参照：<a href="#md-未確認事項">未確認事項</a> / <a href="#md-状態と失敗">状態と失敗</a></p></section>
+<section class="card" id="details"><h2>設計の詳細（MD正本）</h2><p>HTMLは正本を読むための派生資料です。図の意味や判断の正確性は別途レビューしてください。</p><p><a href="001_TECHNICAL_DESIGN.md">MD正本を開く</a></p><details><summary>正本の全文</summary><div><h3 id="md-technical-design-001-申請確認ツール-架空例">Technical Design 001: 申請確認ツール（架空例）</h3>
+<p>設計版v1、提案・実装未着手。複数の責任と外部保存の失敗状態を判断するため、HTMLと二つの図を併用する。この例の構造は汎用の既定解ではない。</p>
+<h4 id="md-目的と範囲">目的と範囲</h4>
+<p>合意記録R-01：作業者が申請内容を確認し、外部台帳への保存成功を確認してから完了を表示する。AC-01：保存が失敗したとき、完了を表示しない。</p>
+<p>例外後の自動復旧・台帳管理画面の更新は対象外。</p>
+<h4 id="md-構成判断">構成判断</h4>
+<p>画面は入力と状態表示を担当し、確認処理が完了条件を判断する。台帳の接続をAdapterへ隔離する。静的依存の表示を目的とし、画面イベントを外部APIの契約から分ける。</p>
+<div class="table-wrap"><table><thead><tr><th>責任</th><th>担当</th><th>観測する境界</th></tr></thead><tbody><tr><td>内容確認と保存の順序</td><td>確認処理</td><td>操作結果</td></tr><tr><td>台帳の通信形式の変換</td><td>接続Adapter</td><td>保存結果とエラー</td></tr></tbody></table></div>
+<p>変更シナリオCS-01：台帳のAPI形式が変わる場合、接続Adapter内へ影響を閉じる。変更が起こる時期は未確定。</p>
+<h4 id="md-操作の契約">操作の契約</h4>
+<p><code>ConfirmRequest</code> は確認済み入力を受け取り、保存成功後に完了を返す。失敗時は保留理由を返す。画面は保留を強制完了に変換しない。</p>
+<h4 id="md-状態と失敗">状態と失敗</h4>
+<p>入力中 → 確認待ち → 保存中 → 完了。入力訂正は確認待ちから入力中へ戻る。保存失敗は保留となり、初期版では担当者が外部台帳を確認する。</p>
+<p>保存応答が不明な場合、保存されていないとは判断できない。自動再送はこの例の対象外。状態図の「失敗」は応答不明も含む。</p>
+<h4 id="md-未確認事項">未確認事項</h4>
+<p>U-01：外部台帳の重複防止キーと応答不明時の照会方法。外部接続contractの確定を止める。連携担当が仕様を提供する。図はこの仕様の成立を保証しない。</p>
+<h4 id="md-レビューと引継ぎ">レビューと引継ぎ</h4>
+<p>保存応答不明が業務に影響するため、接続実装前のレビューを推奨する。これは架空のテンプレート例であり、レビューPASS・実装承認・実動作の証拠ではない。</p></div></details></section>
+<section class="card" id="references"><h2>関連資料</h2><div class="references"><a href="001_TECHNICAL_DESIGN.md">設計正本Markdown</a></div></section></main><footer>Design 001 / v1 / 派生資料・静的検証と意味レビューは別です。</footer><script>
+const nav=document.querySelector('nav');
+const updateScrollOffset=()=>{document.documentElement.style.scrollPaddingTop=(nav.getBoundingClientRect().height+16)+'px';};
+new ResizeObserver(updateScrollOffset).observe(nav);
+updateScrollOffset();
+document.querySelectorAll('.zoom').forEach(button=>button.addEventListener('click',()=>{const panel=button.closest('section').querySelector('.diagram-scroll');const expanded=panel.classList.toggle('expanded');button.setAttribute('aria-pressed',String(expanded));button.textContent=expanded?'通常サイズに戻す':'図を拡大';}));
+function revealAnchor(){let id;try{id=decodeURIComponent(location.hash.slice(1));}catch{return;}const target=document.getElementById(id);if(!target)return;let parent=target.parentElement;while(parent){if(parent.tagName==='DETAILS')parent.open=true;parent=parent.parentElement;}target.scrollIntoView();}
+window.addEventListener('hashchange',revealAnchor);
+if(location.hash)revealAnchor();
+const restore=new Map();
+window.addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(detail=>{restore.set(detail,detail.open);detail.open=true;}));
+window.addEventListener('afterprint',()=>{restore.forEach((open,detail)=>{detail.open=open;});restore.clear();});
+</script></body></html>

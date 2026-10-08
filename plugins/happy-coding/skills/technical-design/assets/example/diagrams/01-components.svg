@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 530" role="img" aria-labelledby="title desc">
+<title id="title">申請確認ツールの静的依存</title><desc id="desc">画面から確認処理、接続窓口へ依存する。接続Adapterは窓口を実装する。</desc>
+<rect width="1000" height="530" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42668e"/></marker></defs>
+<rect x="30" y="30" width="940" height="470" rx="12" fill="#f5f8fc" stroke="#cfd8e3"/>
+<g font-family="Meiryo, sans-serif" font-size="22" text-anchor="middle" fill="#223348">
+<rect x="90" y="100" width="220" height="120" rx="8" fill="#fff" stroke="#245eac"/><text x="200" y="145">画面</text><text x="200" y="180" font-size="18">入力・状態表示</text>
+<rect x="390" y="100" width="220" height="120" rx="8" fill="#eaf2fc" stroke="#245eac"/><text x="500" y="145">確認処理</text><text x="500" y="180" font-size="18">順序・完了条件</text>
+<rect x="690" y="100" width="220" height="120" rx="8" fill="#fff" stroke="#245eac"/><text x="800" y="145">接続窓口</text><text x="800" y="180" font-size="18">保存結果を返す</text>
+<rect x="690" y="320" width="220" height="110" rx="8" fill="#fff" stroke="#245eac"/><text x="800" y="365">接続Adapter</text><text x="800" y="400" font-size="18">台帳通信を担当</text>
+<text x="290" y="340" font-size="20">矢印：静的依存</text><text x="290" y="375" font-size="18">提案・実装未着手</text>
+</g>
+<g fill="none" stroke="#42668e" stroke-width="3" marker-end="url(#arrow)"><path d="M310 160 H384"/><path d="M610 160 H684"/><path d="M800 320 V227"/></g>
+<text x="820" y="275" font-family="Meiryo,sans-serif" font-size="18" fill="#223348">実装</text>
+</svg>
