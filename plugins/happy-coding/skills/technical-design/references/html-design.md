@@ -62,6 +62,10 @@ python <skill>/scripts/render_design.py <case>/presentation.json --output <case>
 
 正本本文も「詳細」に掲載する。簡易Markdown表示の対応範囲は生成器のhelp/docstringを参照する。対応しない構文を黙って省かず、原文表示に切り替えて告知する。要約の独立した執筆は許容するが、必ず `source_refs` を持ち、意味の照合を行う。
 
+SVGのCSSは`fill`・`stroke`・文字・マーカー等の描画用プロパティに限定する。`position`・`display`・`background`等のレイアウト指定、独自プロパティ、コメント・at-rule・疑似クラスは拒否する。`<style>`は単純なSVG要素名・`#id`・`.class`・`*`とそのカンマ区切りだけを受け付け、生成時に各SVGのIDで適用範囲を限定する。複雑なセレクタは描画属性か単純な規則に直す。
+
+正本の見出し参照からコードブロック内の見出しを除外する。バッククォート・チルダの3文字以上のフェンス、先頭0〜3個の空白、同じ記号で開き以上の長さの終端に対応する。未閉鎖のフェンスは文書末尾までコードとして扱う。表示と参照検証で同じ判定を使う（[CommonMarkのフェンス規則](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)）。
+
 ## 検証と評価
 
 - 生成器の検証：入力schema、図XML・危険な参照、ファイル・見出し・HTML内リンクの存在、重複ID、入力hashと生成版。`--check` は書き込まず、古い生成物を検出する。

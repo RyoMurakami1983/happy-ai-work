@@ -9,9 +9,9 @@
     "003_plan/diagrams/dependencies.svg": "2e6659e4cf0a3347b1c769e62d20ce35858d0df33df195e3f64ef136ed6b9817",
     "003_presentation.json": "4ee21137728169181bdffce947a406b54663307ad27341049eba938c8fd780fe"
   },
-  "generator_sha256": "099904c0a0304bfb829337a75d051940d435adb4a07c17a4411030301f14ce4d",
+  "generator_sha256": "dfe3eb6c61cbb15a33f4cc4f7adb6a5c902247f5672c386abb412ff6e87ef993",
   "template_sha256": "0bf6dc2077785a8821afef747632fdc70061d078b9960742c06b556989439788",
-  "output_sha256": "4664a60bab06c281dbb09faf2fec9284fce46827adc08612c09ab2c933631e4c",
+  "output_sha256": "2bce3893eb57413d0877f6fe42fe066a0d291cf3347ed101baea45bfd28c63a8",
   "static_validation": {
     "unique_ids": true,
     "local_links_and_anchors": true,

@@ -61,6 +61,10 @@ python <skill>/scripts/render_plan.py <repo>/docs/plan/NNN_presentation.json --o
 
 正本全文を詳細へ埋め込む。簡易Markdownの対応範囲は生成器のdocstringを参照する。task listは「未完了」「完了」の静的表示にし、HTMLから進捗を書き換えない。対応外の構文は全文の原文表示へ切り替え、欠落を防ぐ。
 
+SVGのCSSは`fill`・`stroke`・文字・マーカー等の描画用プロパティに限定する。`position`・`display`・`background`等のレイアウト指定、独自プロパティ、コメント・at-rule・疑似クラスは拒否する。`<style>`は単純なSVG要素名・`#id`・`.class`・`*`とそのカンマ区切りだけを受け付け、生成時に各SVGのIDで適用範囲を限定する。複雑なセレクタは描画属性か単純な規則に直す。
+
+正本の見出し参照からコードブロック内の見出しを除外する。バッククォート・チルダの3文字以上のフェンス、先頭0〜3個の空白、同じ記号で開き以上の長さの終端に対応する。未閉鎖のフェンスは文書末尾までコードとして扱う。表示と参照検証で同じ判定を使う（[CommonMarkのフェンス規則](https://spec.commonmark.org/0.31.2/#fenced-code-blocks)）。
+
 ## 確認
 
 - 生成器の`--check`で入力版、hash、ローカル参照、見出し、重複ID、SVGの静的内容を確認する。

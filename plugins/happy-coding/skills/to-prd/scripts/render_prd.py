@@ -102,13 +102,29 @@ def link(path, output):
     return escape(relative(path, output.parent), quote=True)
 
 
+def opening_fence(line):
+    match = re.fullmatch(r"( {0,3})(`{3,}|~{3,})(.*)", line)
+    if match and not (match[2][0] == "`" and "`" in match[3]):
+        return match[2][0], len(match[2]), len(match[1])
+    return None
+
+
+def closing_fence(line, fence):
+    character, length, _ = fence
+    return bool(re.fullmatch(r" {0,3}" + re.escape(character) + "{" + str(length) + r",}[ \t]*", line))
+
+
 def heading_records(source):
     records = []
-    fence = False
+    fence = None
     counts = Counter()
     for line in source.splitlines():
-        if line.startswith("```"):
-            fence = not fence
+        if fence:
+            if closing_fence(line, fence):
+                fence = None
+            continue
+        fence = opening_fence(line)
+        if fence:
             continue
         match = re.fullmatch(r"(#{1,6}) (.+)", line)
         if match and not fence:
@@ -147,6 +163,62 @@ SAFE_SVG = set(
     ).split()
 )
 URL_CSS = re.compile(r"url\(\s*(['\"]?)(.*?)\1\s*\)", re.I)
+SVG_PRESENTATION = set(
+    (
+        "fill fill-opacity fill-rule stroke stroke-width stroke-opacity stroke-linecap stroke-linejoin "
+        "stroke-miterlimit stroke-dasharray stroke-dashoffset opacity color stop-color stop-opacity "
+        "font-family font-size font-weight font-style text-anchor dominant-baseline alignment-baseline "
+        "clip-path clip-rule marker-start marker-mid marker-end"
+    ).split()
+)
+
+
+def svg_declarations(css, label):
+    """Allow paint/text properties, never document layout or arbitrary CSS syntax."""
+    check_css(css, label)
+    declarations = []
+    for declaration in css.split(";"):
+        if not declaration.strip():
+            continue
+        name, separator, value = declaration.partition(":")
+        name, value = name.strip().lower(), value.strip()
+        if (
+            not separator
+            or name not in SVG_PRESENTATION
+            or not re.fullmatch(r"""[\w\s#.,%()+'"-]+""", value)
+        ):
+            fail(f"{label}: unsupported SVG presentation declaration")
+        declarations.append(name + ":" + value)
+    return ";".join(declarations)
+
+
+def scoped_svg_styles(css, label, scope, mapping, rewrite):
+    """Accept simple type/id/class selectors and bind every rule to this SVG."""
+    check_css(css, label)
+    result = []
+    cursor = 0
+    for rule in re.finditer(r"([^{}]+)\{([^{}]*)\}", css):
+        if css[cursor:rule.start()].strip():
+            fail(f"{label}: unsupported SVG stylesheet syntax")
+        selectors = []
+        for selector in rule[1].split(","):
+            selector = selector.strip()
+            if selector.startswith("#"):
+                if selector[1:] not in mapping:
+                    fail(f"{label}: missing SVG selector id")
+                selector = "#" + mapping[selector[1:]]
+            elif re.fullmatch(r"\.[A-Za-z_][\w-]*", selector):
+                pass
+            elif selector not in SAFE_SVG and selector != "*":
+                fail(f"{label}: unsupported SVG selector")
+            selectors.append(
+                "#" + scope if selector in ("svg", "#" + scope) else "#" + scope + " " + selector
+            )
+        result.append(",".join(selectors) + "{" + rewrite(svg_declarations(rule[2], label)) + "}")
+        cursor = rule.end()
+    if css[cursor:].strip():
+        fail(f"{label}: unsupported SVG stylesheet syntax")
+    return "\n".join(result)
 
 
 def clean_svg(path, prefix):
@@ -176,12 +248,20 @@ def clean_svg(path, prefix):
                 ids.append(value)
             if name == "href" and not re.fullmatch(r"#[A-Za-z_][\w.-]*", value):
                 fail(f"{path.name}: SVG href must refer to a local id")
+            if name.lower() == "style":
+                svg_declarations(value, path.name)
             check_css(value, path.name)
         if tag == "style":
-            check_css(element.text or "", path.name)
+            if len(element):
+                fail(f"{path.name}: nested SVG stylesheet elements are prohibited")
     if len(ids) != len(set(ids)):
         fail(f"{path.name}: duplicate SVG ids")
     mapping = {item: prefix + "-" + item for item in ids}
+    scope = mapping.get(root.get("id"))
+    if scope is None:
+        scope = prefix + "-scope"
+        while scope in mapping.values():
+            scope += "-scope"
 
     def rewrite(value):
         def url_match(match):
@@ -208,10 +288,8 @@ def clean_svg(path, prefix):
             else:
                 element.set(key, rewrite(value))
         if element.tag.rsplit("}", 1)[-1] == "style":
-            css = rewrite(element.text or "")
-            for old, new in mapping.items():
-                css = re.sub(r"#" + re.escape(old) + r"(?![\w.-])", "#" + new, css)
-            element.text = css
+            element.text = scoped_svg_styles(element.text or "", path.name, scope, mapping, rewrite)
+    root.set("id", scope)
     ET.register_namespace("", "http://www.w3.org/2000/svg")
     ET.register_namespace("xlink", "http://www.w3.org/1999/xlink")
     return ET.tostring(root, encoding="unicode")
@@ -279,14 +357,14 @@ def render_markdown(source, records, base, reference_root, output):
             if not line.strip():
                 i += 1
                 continue
-            if line.startswith("```"):
+            fence = opening_fence(line)
+            if fence:
                 code = []
                 i += 1
-                while i < len(lines) and lines[i] != "```":
-                    code.append(lines[i])
+                while i < len(lines) and not closing_fence(lines[i], fence):
+                    indent = min(fence[2], len(lines[i]) - len(lines[i].lstrip(" ")))
+                    code.append(lines[i][indent:])
                     i += 1
-                if i == len(lines):
-                    raise MarkdownFallback("閉じていないコードブロック")
                 result.append("<pre><code>" + escape("\n".join(code)) + "</code></pre>")
                 i += 1
                 continue

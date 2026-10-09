@@ -349,6 +349,102 @@ class RenderWorkDocumentTests(unittest.TestCase):
                     self.assertIn(f"url(#diagram-{ident}-arrow)", fixture.html())
                 self.run_script(fixture, "--check")
 
+    def test_svg_styles_cannot_cover_or_restyle_the_document(self) -> None:
+        unsafe_content = (
+            '<rect style="position:fixed;inset:0;z-index:999;background:white"/>',
+            '<rect STYLE="position:fixed;inset:0;z-index:999;background:white"/>',
+            '<svg style="position:fixed;width:100vw;height:100vh"/>',
+            '<style>body,.notice{display:none}</style>',
+            '<style>.notice{position:fixed}</style>',
+            '<style>@media print{.notice{fill:white}}</style>',
+            '<rect style="fill:red;--layout:fixed"/>',
+            '<rect style="fill:red/**/;position:fixed"/>',
+            '<style>text:has(body){fill:white}</style>',
+            '<style>text{fill:red}<tspan/>body{display:none}</style>',
+        )
+        for kind in RENDERERS:
+            for index, unsafe in enumerate(unsafe_content):
+                with self.subTest(renderer=kind, svg=unsafe):
+                    fixture = self.fixture(kind, str(index))
+                    (fixture.base / "diagram.svg").write_text(
+                        '<svg xmlns="http://www.w3.org/2000/svg">' + unsafe + "</svg>", encoding="utf-8"
+                    )
+                    before = snapshot(self.root)
+                    self.run_script(fixture, expected=2)
+                    self.assertEqual(before, snapshot(self.root))
+
+    def test_svg_presentation_styles_stay_inside_each_diagram(self) -> None:
+        svg = SVG.replace(
+            "<defs>",
+            '<style>svg{font-family:sans-serif}#abcdef,text,.notice{fill:#abcdef;stroke-width:2}</style><defs>',
+        ).replace('id="box"', 'id="abcdef" style="fill:rgb(20,40,60);marker-end:url(#arrow)"')
+        for kind in RENDERERS:
+            with self.subTest(renderer=kind):
+                fixture = self.fixture(kind)
+                (fixture.base / "diagram.svg").write_text(svg, encoding="utf-8")
+                diagram = deepcopy(fixture.spec["diagrams"][0])
+                fixture.spec["diagrams"].append({**diagram, "id": "behavior"})
+                fixture.save_spec()
+                self.run_script(fixture)
+                html = fixture.html()
+                for name in ("architecture", "behavior"):
+                    scope = f"diagram-{name}-scope"
+                    self.assertIn(f'id="{scope}"', html)
+                    self.assertIn(f"#{scope} #diagram-{name}-abcdef", html)
+                    self.assertIn(f"#{scope} text", html)
+                    self.assertIn(f"#{scope} .notice", html)
+                    self.assertIn(f"#{scope}{{font-family:sans-serif}}", html)
+                    self.assertIn(f"marker-end:url(#diagram-{name}-arrow)", html)
+                # CSS colors must not be mistaken for id selectors when ids are renamed.
+                self.assertIn("fill:#abcdef", html)
+                self.run_script(fixture, "--check")
+
+    def test_source_refs_ignore_headings_in_all_supported_code_fences(self) -> None:
+        blocks = (
+            "~~~md\n## Fenced\n~~~\n",
+            "   ```md\n## Fenced\n ```\t\n",
+            "  ~~~~md\n~~~\n## Fenced\n  ~~~~~ \n",
+            "````md\n```\n## Fenced\n`````\n",
+            "~~~md\n```\n## Fenced\n~~~\n",
+            "~~~md\n~~~ trailing text\n## Fenced\n~~~\n",
+            "~~~md\n    ~~~\n## Fenced\n~~~\n",
+            "```md\n## Fenced\n",
+        )
+        for kind in RENDERERS:
+            for index, block in enumerate(blocks):
+                with self.subTest(renderer=kind, block=index):
+                    fixture = self.fixture(kind, str(index))
+                    source = CANONICAL + "\n" + block
+                    (fixture.base / "canonical.md").write_text(source, encoding="utf-8")
+                    self.run_script(fixture)
+                    self.assertNotIn("md-fenced", HtmlInventory(fixture.html()).ids)
+                    self.assertIn("## Fenced", fixture.html())
+                    fixture.spec["summary_cards"][0]["source_refs"] = ["Fenced"]
+                    fixture.save_spec()
+                    before = snapshot(self.root)
+                    self.run_script(fixture, "--force", expected=2)
+                    self.assertEqual(before, snapshot(self.root))
+
+    def test_real_heading_after_fences_works_in_rendered_and_fallback_markdown(self) -> None:
+        for kind in RENDERERS:
+            for fallback in (False, True):
+                with self.subTest(renderer=kind, fallback=fallback):
+                    fixture = self.fixture(kind, str(fallback))
+                    source = "# Document\n   ~~~~md\n## Boundaries\n~~~\n## Unknowns\n~~~~~\n" + CANONICAL
+                    if fallback:
+                        source += "\n> Quote <unsupported>\n"
+                    (fixture.base / "canonical.md").write_text(source, encoding="utf-8")
+                    self.run_script(fixture)
+                    inventory = HtmlInventory(fixture.html())
+                    self.assertEqual(1, inventory.ids.count("md-boundaries"))
+                    self.assertEqual(1, inventory.ids.count("md-unknowns"))
+                    self.assertIn('href="#md-boundaries"', fixture.html())
+                    expected_mode = "full-source-fallback" if fallback else "supported-subset"
+                    self.assertEqual(expected_mode, fixture.manifest()["markdown_mode"])
+                    if fallback:
+                        self.assertIn("<pre>" + escape(source) + "</pre>", fixture.html())
+                    self.run_script(fixture, "--check")
+
     def test_unsupported_markdown_preserves_complete_escaped_source(self) -> None:
         sources = (
             "# Document\n\n## Boundaries\n\n> Quote <danger>\n\n## Unknowns\n\nLast line remains.\n",

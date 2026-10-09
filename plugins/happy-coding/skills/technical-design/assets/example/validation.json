@@ -10,9 +10,9 @@
     "diagrams/02-states.svg": "7f94c4dce869396fc49b56e0790bff1ea2f795794c425873f5540e11424ea330",
     "presentation.json": "d5e523cf7b123bb6b45a86ebc65cc15d72939329a04956b0c670aff167c843f5"
   },
-  "generator_sha256": "b3460c1155f5616b3a1c73aa79c10b438836699acd2a89829aca9c4e4475bc1d",
+  "generator_sha256": "b9ef41d206333f31078cb2e5075b00196bb1a973befbf298a9bc09ae56c29d3d",
   "template_sha256": "dadf0393a21d16ceb3df0bc106170fa451c9168c55dfc40c5eca4283a07e18ae",
-  "output_sha256": "01fb2e9638a1f13873e584d68839f26577982dd4f2a14d99d18c776af894ed7c",
+  "output_sha256": "a852fa385ad350993f0b98ae99f123b1e09b8bd75ab789a4fc4b17e30942ba37",
   "static_validation": {
     "unique_ids": true,
     "local_links_and_anchors": true,
