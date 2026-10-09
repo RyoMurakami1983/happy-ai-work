@@ -13,6 +13,11 @@
 
 - [今回やらないこと]
 
+## Implementation Permission / Command Status
+
+- 実装許可: [対象・範囲・根拠となる利用者発言。未取得なら未取得]
+- Command status: [確認済み既存command / 作成予定・未実行。検証予定と実績を区別]
+
 ## Progress
 
 - [ ] Bootstrap / 前提確認
@@ -79,6 +84,10 @@
 - Review actions: [利用者が行う代表操作]
 - Expected observations: [操作後に観測すべき結果]
 - Resume condition: [feedback、承認、または再計画の条件]
+
+## Dependencies / Start Conditions（必要な場合）
+
+[実依存と、未成立条件・影響slice・担当・再開の証拠。実装許可と外部の開始条件を分ける]
 
 ## Order Rationale
 

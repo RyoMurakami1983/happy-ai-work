@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "design_number": "001",
+  "revision": "v1",
+  "reference_root": ".",
+  "output": "001_DESIGN.html",
+  "inputs_sha256": {
+    "001_TECHNICAL_DESIGN.md": "8e876859430f0c05f91fd55ed81006ccae0124d760dd4d6549ef10d61fd6abce",
+    "diagrams/01-components.svg": "492d68debbb2c6cf50311efe9c28cd1aad8d51ec3e7ec1bd39184327c700bc3a",
+    "diagrams/02-states.svg": "7f94c4dce869396fc49b56e0790bff1ea2f795794c425873f5540e11424ea330",
+    "presentation.json": "d5e523cf7b123bb6b45a86ebc65cc15d72939329a04956b0c670aff167c843f5"
+  },
+  "generator_sha256": "b9ef41d206333f31078cb2e5075b00196bb1a973befbf298a9bc09ae56c29d3d",
+  "template_sha256": "dadf0393a21d16ceb3df0bc106170fa451c9168c55dfc40c5eca4283a07e18ae",
+  "output_sha256": "a852fa385ad350993f0b98ae99f123b1e09b8bd75ab789a4fc4b17e30942ba37",
+  "static_validation": {
+    "unique_ids": true,
+    "local_links_and_anchors": true,
+    "svg_xml_and_passive_content": true,
+    "canonical_heading_refs": true,
+    "no_external_resources": true
+  },
+  "markdown_mode": "supported-subset",
+  "markdown_notice": null,
+  "diagram_sync": [
+    {
+      "id": "architecture",
+      "sync_mode_declared": "single-source",
+      "sync_note": "編集可能なSVGそのものを表示する。UML変換用の外部依存はない。",
+      "semantic_equivalence_verified": false
+    },
+    {
+      "id": "states",
+      "sync_mode_declared": "single-source",
+      "sync_note": "表示と編集に同じSVGを使う。",
+      "semantic_equivalence_verified": false
+    }
+  ],
+  "browser_runtime_verified": false,
+  "semantic_review_verified": false,
+  "validation_scope": "Static local generation only; no browser, network, external mutation, or UML rendering."
+}

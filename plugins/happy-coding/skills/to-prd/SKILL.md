@@ -1,6 +1,6 @@
 ---
 name: to-prd
-description: 会話と確認済み資料の文脈から目的、目的達成の条件となる要件、検証可能なAcceptance Criteriaを対応づけ、scope・制約・未確定事項とともにPRDへ整理する。何をなぜ作るかを合意・保存するときに使う。モデルや技術構造の設計、実装計画は扱わない。
+description: 会話と確認済み資料の文脈から目的、目的達成の条件となる要件、検証可能なAcceptance Criteriaを対応づけ、scope・制約・未確定事項とともにPRDへ整理する。何をなぜ作るかを合意・保存し、必要に応じて読解用のオフラインHTMLも作る。モデルや技術構造の設計、実装計画は扱わない。
 ---
 
 # To PRD
@@ -50,7 +50,13 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 6. 既決の制約、前提、依存、コードベース確認状況を記録する。Unknownsには影響する目的・要件、次工程を止めるか、確認先を添える。後工程から返された要件不足もここへ戻し、答えを得てから要求へ反映する。
 7. 根拠とscopeを再確認し、確定済み部分と未確定部分を区別して次工程へhandoffする。
 
+## 出力形式
+
+局所変更は短いMarkdownでよい。複数の目的・要件の対応や関係者のレビューを支える場合は、要点・対応表・必要な図・正本全文を持つオフラインHTMLの併用を推奨する。利用者の形式指定と既存repo規約を優先し、HTMLを作る場合だけ[HTML PRD](references/html-prd.md)を読む。目的→要件→AC、対象外、根拠、合意状態、blocking Unknownsを正本と揃え、要約で未合意事項を確定しない。図は利用者の流れや要求の対応を説明するために選び、architectureや実装順をPRDで新たに決めない。
+
 ## 生成テンプレート
+
+正本の雛形は[NNN_PRD_TEMPLATE.md](assets/NNN_PRD_TEMPLATE.md)。次の構成を案件へ合わせて使う。
 
 ```markdown
 # PRD: [Name]
@@ -58,6 +64,7 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 ## Context
 ## Problem
 ## Users
+## Agreement Status
 ## Purpose
 ### Top-level Purpose
 ### Relevant Sub-purposes
@@ -89,6 +96,8 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 ```
 
 成果物は保存を既定（saved-by-default）とし、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ必ず保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+
+HTMLを併用しても正本の保存先を保ち、`docs/prd/NNN_presentation.json` と `docs/prd/NNN_prd/NNN_PRD.html` 等を追加する。既存資料をHTML化だけで移動しない。正本を変更したら表示用入力・図を照合して再生成し、handoffには正本と派生資料の実在pathを含める。HTMLの生成や要求への合意を、実装開始の許可として扱わない。
 
 次工程へのhandoffには必ず次のいずれかを含める。保存済み成果物が1つでもある場合は、会話で補った内容だけであっても既知のpathをすべて列挙する。
 

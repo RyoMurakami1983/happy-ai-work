@@ -67,7 +67,7 @@
 - 統合 test / contract test の確認 command
 - `artifacts:` フィールド（通常は保存したdesign artifact path。例外時だけ理由付きの`artifacts: conversation-only`）
 
-`docs/design/NNN_TECHNICAL_DESIGN.md` へ保存します。multi-repoではconversation-onlyを選べません。
+保存先は [SKILL.mdの出力契約](../SKILL.md) とrepoの規約に従います。従来のMarkdown配置とHTML併用時の案件ディレクトリから実際のpathを選び、handoffへ列挙します。multi-repoではconversation-onlyを選べません。
 複数repoの実装順、vertical slices、HITL / AFKは`implementation-plan`へ渡します。
 ユーザーが設計書の保存を明示した場合は、repo内artifactを保存してhandoffに列挙します。
 

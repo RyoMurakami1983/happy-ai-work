@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 370" role="img" aria-labelledby="title desc">
+  <title id="title">架空PRDの目的・要件・受入条件の対応</title>
+  <desc id="desc">P-01からR-01と候補R-03、P-02からR-02へ対応し、各要件からACへ対応する。矢印は実装順ではない。</desc>
+  <defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0 0 L9 3 L0 6 Z" fill="#496582"/></marker></defs>
+  <rect width="1000" height="370" fill="#ffffff"/>
+  <g font-family="Yu Gothic UI,Meiryo,sans-serif" font-size="18" fill="#223348">
+    <text x="40" y="32" font-weight="700">目的</text><text x="370" y="32" font-weight="700">要件</text><text x="700" y="32" font-weight="700">受入条件</text>
+    <g fill="none" stroke="#496582" stroke-width="2" marker-end="url(#arrow)">
+      <path d="M290 96 H350"/><path d="M290 96 H320 V296 H350"/><path d="M290 196 H350"/>
+      <path d="M620 96 H680"/><path d="M620 196 H680"/><path d="M620 296 H680"/>
+    </g>
+    <g stroke="#afc5de" fill="#edf3fa">
+      <rect x="40" y="56" width="250" height="80" rx="6"/><rect x="40" y="156" width="250" height="80" rx="6"/>
+      <rect x="350" y="56" width="270" height="80" rx="6"/><rect x="350" y="156" width="270" height="80" rx="6"/>
+      <rect x="680" y="56" width="280" height="80" rx="6"/><rect x="680" y="156" width="280" height="80" rx="6"/>
+    </g>
+    <g stroke="#d4a256" fill="#fff6e8"><rect x="350" y="256" width="270" height="80" rx="6"/><rect x="680" y="256" width="280" height="80" rx="6"/></g>
+    <text x="56" y="85"><tspan font-weight="700">P-01</tspan><tspan x="56" dy="28">確認前の誤取込を避ける</tspan></text>
+    <text x="56" y="185"><tspan font-weight="700">P-02</tspan><tspan x="56" dy="28">対象と理由を理解する</tspan></text>
+    <text x="366" y="85"><tspan font-weight="700">R-01：必須列不足を拒否</tspan><tspan x="366" dy="28">架空の合意済み条件</tspan></text>
+    <text x="366" y="185"><tspan font-weight="700">R-02：更新前プレビュー</tspan><tspan x="366" dy="28">架空の合意済み条件</tspan></text>
+    <text x="366" y="285"><tspan font-weight="700">R-03：確認対象だけ反映</tspan><tspan x="366" dy="28">未合意の候補・U-01待ち</tspan></text>
+    <text x="696" y="85"><tspan font-weight="700">AC-01</tspan><tspan x="696" dy="28">不足表示、更新なし</tspan></text>
+    <text x="696" y="185"><tspan font-weight="700">AC-02</tspan><tspan x="696" dy="28">有効・無効と理由を確認</tspan></text>
+    <text x="696" y="285"><tspan font-weight="700">AC-03 / AC-04（候補）</tspan><tspan x="696" dy="28">取消・対象の一致・失敗表示</tspan></text>
+  </g>
+</svg>
