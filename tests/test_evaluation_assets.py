@@ -28,6 +28,7 @@ class EvaluationAssetTests(unittest.TestCase):
                 "communication-quality",
                 "pr-delivery",
                 "priority-skill-boundaries",
+                "openai-first-implement",
                 "workflow-entry",
                 "workflow-startup",
             },
