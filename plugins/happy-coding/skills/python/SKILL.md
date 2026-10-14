@@ -15,6 +15,11 @@ description: Pythonリポジトリの環境・依存・lint・型検査・テス
 4. formatter、lint、type check、focused testをrepoの順序で実行し、必要なら全体testへ広げる。
 5. CLIやscriptでは終了コード、標準出力／標準エラー、文字コード、Windows／WSLのpath差を確認する。
 
+## GUIバックエンドのNGパターン
+
+常用GUIの頻繁な入力確認・保存などのたびに、重いPythonバックエンド全体を起動・終了する構成は採用しない。EXE化や非同期呼出しだけでは起動費用は消えない。
+GUI連携では設計時に呼出し頻度とprocessの生存期間を確認し、常駐processの再利用や軽い処理の分離を検討する。[coding-practices.md](references/coding-practices.md)のGUI項目に従い、実配布物の初回起動と継続操作を分けて測る。単発CLI、EXE、one-file形式自体の一律禁止ではない。
+
 repoへ永続的なPython規約を追加する依頼では、[AGENTS.fragment.md](assets/AGENTS.fragment.md)を対象repoに合わせて最寄りの`AGENTS.md`へ統合する。
 
 ## 境界
