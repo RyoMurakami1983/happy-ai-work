@@ -19,7 +19,7 @@ frontend、Rust command、capability、external binary、bundleを別契約と�
 ## Python連携のNGパターン
 
 常用GUIの頻繁な操作ごとに、重いPythonバックエンド全体を起動・終了する構成は採用しない。Tauriは要求ごとのPython再起動を必須にしていない。
-Python連携では設計時にprocessの生存期間を選び、常駐sidecarの再利用や軽い処理の分離を検討する。[sidecars-and-distribution.md](references/sidecars-and-distribution.md)に従い、実配布物の初回起動と継続操作を測る。単発CLI、EXE、one-file形式自体の一律禁止ではない。
+Python連携では設計時にprocessの生存期間を選び、常駐sidecarの再利用や軽い処理の分離を検討する。Python連携では[GUI起動費用と常駐processの契約](../python/references/coding-practices.md#guiから使うpythonの起動費用)も直接読み、lifecycle・protocol・失敗時の扱いを確認する。[sidecars-and-distribution.md](references/sidecars-and-distribution.md)に従い、実配布物の初回起動と継続操作を測る。単発CLI、EXE、one-file形式自体の一律禁止ではない。
 
 ## 境界
 
