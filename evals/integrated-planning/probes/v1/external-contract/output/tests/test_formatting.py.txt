@@ -1,0 +1,21 @@
+import unittest
+
+from formatting import title
+
+
+class TitleTests(unittest.TestCase):
+    def test_strips_boundary_whitespace_preserving_interior_text(self):
+        cases = [
+            (" \t\nHello  wide\tworld\r\n ", "Hello  wide\tworld"),
+            ("already  trimmed", "already  trimmed"),
+            ("", ""),
+            (" \t\r\n ", ""),
+            ("\u3000こんにちは  世界\u3000", "こんにちは  世界"),
+        ]
+        for value, expected in cases:
+            with self.subTest(value=value):
+                self.assertEqual(title(value), expected)
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -1,0 +1,6 @@
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK

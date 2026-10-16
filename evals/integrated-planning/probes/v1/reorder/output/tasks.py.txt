@@ -1,0 +1,14 @@
+import csv
+import io
+
+
+def list_tasks(tasks, status=None):
+    return [task for task in tasks if status is None or task["status"] == status]
+
+
+def export_csv(tasks):
+    output = io.StringIO(newline="")
+    writer = csv.DictWriter(output, fieldnames=["id", "status", "title"], extrasaction="ignore")
+    writer.writeheader()
+    writer.writerows(tasks)
+    return output.getvalue()

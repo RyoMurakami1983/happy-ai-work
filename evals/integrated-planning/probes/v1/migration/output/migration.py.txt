@@ -1,0 +1,31 @@
+import sqlite3
+
+def open_db(path):
+    return sqlite3.connect(path)
+
+
+def migrate(connection, fail_after=None):
+    columns = {row[1] for row in connection.execute("PRAGMA table_info(people)")}
+    if "normalized_name" not in columns:
+        connection.execute("ALTER TABLE people ADD COLUMN normalized_name TEXT")
+        connection.commit()
+
+    rows = connection.execute(
+        "SELECT id, name FROM people WHERE normalized_name IS NULL ORDER BY id"
+    ).fetchall()
+    processed = 0
+    for person_id, name in rows:
+        connection.execute(
+            "UPDATE people SET normalized_name = ? WHERE id = ? AND normalized_name IS NULL",
+            (name.strip().lower(), person_id),
+        )
+        connection.commit()
+        processed += 1
+        if fail_after is not None and processed == fail_after:
+            raise RuntimeError(f"Injected failure after {processed} committed rows")
+
+    remaining = connection.execute(
+        "SELECT COUNT(*) FROM people WHERE normalized_name IS NULL"
+    ).fetchone()[0]
+    if remaining:
+        raise RuntimeError(f"Migration incomplete: {remaining} rows remain NULL")

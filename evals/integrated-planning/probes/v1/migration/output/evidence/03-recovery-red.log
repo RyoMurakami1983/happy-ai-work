@@ -1,0 +1,15 @@
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ok
+test_partial_failure_is_durable_and_retry_resumes (test_migration.MigrationTests.test_partial_failure_is_durable_and_retry_resumes) ... ERROR
+
+======================================================================
+ERROR: test_partial_failure_is_durable_and_retry_resumes (test_migration.MigrationTests.test_partial_failure_is_durable_and_retry_resumes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/migration/tests/test_migration.py", line 31, in test_partial_failure_is_durable_and_retry_resumes
+    migrate(self.connection, fail_after=1)
+TypeError: migrate() got an unexpected keyword argument 'fail_after'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+FAILED (errors=1)

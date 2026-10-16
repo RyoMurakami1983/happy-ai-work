@@ -1,0 +1,106 @@
+from pathlib import Path
+import sqlite3
+import tempfile
+import unittest
+
+from migration import open_db
+
+
+class MigrationTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(dir=Path(__file__).resolve().parents[1])
+        self.addCleanup(self.temp.cleanup)
+        self.path = str(Path(self.temp.name) / "people.sqlite3")
+        self.connection = open_db(self.path)
+        self.addCleanup(lambda: self.connection.close())
+        self.connection.execute("CREATE TABLE people(id INTEGER PRIMARY KEY, name TEXT NOT NULL)")
+        self.original = [(1, "  ALICE  "), (2, "BoB"), (3, " ÉLODIE\t")]
+        self.connection.executemany("INSERT INTO people(id, name) VALUES (?, ?)", self.original)
+        self.connection.commit()
+
+    def test_migrates_preserving_original_rows(self):
+        from migration import migrate
+        migrate(self.connection)
+        self.assertEqual(self.connection.execute("SELECT id, name FROM people ORDER BY id").fetchall(), self.original)
+        self.assertEqual(self.connection.execute("SELECT normalized_name FROM people ORDER BY id").fetchall(),
+                         [("alice",), ("bob",), ("élodie",)])
+
+    def test_partial_failure_is_durable_and_retry_resumes(self):
+        from migration import migrate
+        with self.assertRaises(RuntimeError):
+            migrate(self.connection, fail_after=1)
+        self.connection.close()
+        self.connection = open_db(self.path)
+        self.assertEqual(self.connection.execute("SELECT id, name FROM people ORDER BY id").fetchall(), self.original)
+        partial = self.connection.execute("SELECT id, normalized_name FROM people ORDER BY id").fetchall()
+        self.assertEqual(sum(value is not None for _, value in partial), 1)
+        self.assertEqual(sum(value is None for _, value in partial), 2)
+        # A retry with the same fault budget must advance exactly one remaining row.
+        with self.assertRaises(RuntimeError):
+            migrate(self.connection, fail_after=1)
+        self.connection.close()
+        self.connection = open_db(self.path)
+        self.assertEqual(self.connection.execute("SELECT COUNT(*) FROM people WHERE normalized_name IS NULL").fetchone()[0], 1)
+        migrate(self.connection)
+        final = self.connection.execute("SELECT id, name, normalized_name FROM people ORDER BY id").fetchall()
+        self.assertEqual(final, [(1, "  ALICE  ", "alice"), (2, "BoB", "bob"), (3, " ÉLODIE\t", "élodie")])
+        migrate(self.connection)
+        self.assertEqual(self.connection.execute("SELECT id, name, normalized_name FROM people ORDER BY id").fetchall(), final)
+
+    def test_completion_rejects_remaining_nulls(self):
+        from migration import migrate
+        self.connection.execute("ALTER TABLE people ADD COLUMN normalized_name TEXT")
+        self.connection.execute("""
+            CREATE TRIGGER keep_null AFTER UPDATE OF normalized_name ON people
+            WHEN NEW.id = 2
+            BEGIN
+                UPDATE people SET normalized_name = NULL WHERE id = NEW.id;
+            END
+        """)
+        self.connection.commit()
+        with self.assertRaises(RuntimeError):
+            migrate(self.connection)
+        self.assertEqual(self.connection.execute("SELECT COUNT(*) FROM people WHERE normalized_name IS NULL").fetchone()[0], 1)
+        self.assertEqual(self.connection.execute("SELECT id, name FROM people ORDER BY id").fetchall(), self.original)
+
+    def test_existing_values_are_preserved_and_retry_is_idempotent(self):
+        from migration import migrate
+        self.connection.execute("ALTER TABLE people ADD COLUMN normalized_name TEXT")
+        self.connection.execute("UPDATE people SET normalized_name = 'custom-value' WHERE id = 2")
+        self.connection.commit()
+        migrate(self.connection)
+        expected = [("alice",), ("custom-value",), ("élodie",)]
+        self.assertEqual(self.connection.execute("SELECT normalized_name FROM people ORDER BY id").fetchall(), expected)
+        changes = self.connection.total_changes
+        migrate(self.connection, fail_after=1)
+        self.assertEqual(self.connection.total_changes, changes)
+        self.assertEqual(self.connection.execute("SELECT normalized_name FROM people ORDER BY id").fetchall(), expected)
+        self.assertEqual(self.connection.execute("SELECT id, name FROM people ORDER BY id").fetchall(), self.original)
+
+    def test_empty_table_gets_column_and_repeats_safely(self):
+        from migration import migrate
+        path = str(Path(self.temp.name) / "empty.sqlite3")
+        with sqlite3.connect(path) as connection:
+            connection.execute("CREATE TABLE people(id INTEGER PRIMARY KEY, name TEXT NOT NULL)")
+            migrate(connection)
+            migrate(connection)
+            self.assertIn("normalized_name", [column[1] for column in connection.execute("PRAGMA table_info(people)")])
+            self.assertEqual(connection.execute("SELECT COUNT(*) FROM people").fetchone()[0], 0)
+        connection.close()
+
+    def test_failure_on_final_row_can_be_retried(self):
+        from migration import migrate
+        with self.assertRaises(RuntimeError):
+            migrate(self.connection, fail_after=3)
+        self.connection.close()
+        self.connection = open_db(self.path)
+        self.assertEqual(self.connection.execute("SELECT COUNT(*) FROM people WHERE normalized_name IS NULL").fetchone()[0], 0)
+        migrate(self.connection)
+        self.assertEqual(self.connection.execute("SELECT id, name FROM people ORDER BY id").fetchall(), self.original)
+
+    def test_whitespace_only_name_normalizes_to_empty_text(self):
+        from migration import migrate
+        self.connection.execute("INSERT INTO people(id, name) VALUES (?, ?)", (4, " \t\n"))
+        self.connection.commit()
+        migrate(self.connection)
+        self.assertEqual(self.connection.execute("SELECT name, normalized_name FROM people WHERE id = 4").fetchone(), (" \t\n", ""))

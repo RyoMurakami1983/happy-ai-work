@@ -1,0 +1,1 @@
+Accepted import design: every imported row, including duplicate external_id values, must be retained without loss. Reuse existing table and existing external_id identity; design assumes duplicate rows are already supported. New identity/schema strategy is not decided or authorized.

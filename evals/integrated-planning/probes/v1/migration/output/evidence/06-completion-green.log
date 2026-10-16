@@ -1,0 +1,8 @@
+test_completion_rejects_remaining_nulls (test_migration.MigrationTests.test_completion_rejects_remaining_nulls) ... ok
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ok
+test_partial_failure_is_durable_and_retry_resumes (test_migration.MigrationTests.test_partial_failure_is_durable_and_retry_resumes) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.005s
+
+OK
