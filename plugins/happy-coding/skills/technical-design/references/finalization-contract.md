@@ -73,4 +73,4 @@ finalized_contract:
     non-goal: 今回のscope外であり恒久禁止ではない
 ```
 
-`exclusions`は短い識別子、`rejected`／`non-goal`／`superseded`等のstatus、decision historyへのpointerだけを伝え、非採用案のlocatorや手順をhandoffへ複製しません。handoffでは`non-goal`が今回のscope外であって恒久禁止ではないこと、`rejected`も別途negative requirementとして採用されない限り禁止規約へ昇格しないことを短く明示します。normative sourceが確定できない、Unknownが実装を左右する、または決定が変わった場合は`implementation-plan`や`implement`へ進まず設計を再finalizeします。
+`exclusions`は短い識別子、`rejected`／`non-goal`／`superseded`等のstatus、decision historyへのpointerだけを伝え、非採用案のlocatorや手順をhandoffへ複製しません。handoffでは`non-goal`が今回のscope外であって恒久禁止ではないこと、`rejected`も別途negative requirementとして採用されない限り禁止規約へ昇格しないことを短く明示します。normative sourceが確定できない、Unknownが実装を左右する、または決定が変わった場合は`implement`へ進まず設計を再finalizeします。

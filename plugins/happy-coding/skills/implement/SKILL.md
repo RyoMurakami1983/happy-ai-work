@@ -1,18 +1,19 @@
 ---
 name: implement
 description: >
-  実装契約を受け取り、bootstrap 確認、vertical slice 分割、TDD loop、slice gate、completion handoff まで進める。
-  technical-design / implementation-plan / issue から実装可能な契約を受け取り、PR やふりかえりではなくローカル実装を完了したいとき。
+  合意済みの要求・設計・issueから実装順とvertical slicesを計画し、許可された範囲をTDDと検証で完了する。
+  実装計画だけの依頼にも使い、その場合は計画で停止する。PR作成やふりかえりは別skill。
 ---
 
 # implement — TDD で実装して閉じる
 
-実装契約を、観測可能な vertical slice ごとに TDD で通してから handoff します。`implementation-plan` がある場合はそのslice境界を維持し、planを省略した単一の明確な変更だけをここでslice化します。
-この skill は実装フェーズだけを扱います。PR 作成、PR review 対応、pre-PR review、furikaeri は別 skill に任せます。
+実装に必要な計画と実行を一つのloopで扱います。必要な粒度で順序・slice・検証を決め、承認済みの範囲を実装します。構造判断は`technical-design`が所有します。
+計画だけの依頼（plan-only）では、調査と計画成果物の作成までで停止し、実装コード・test・設定の変更や実行へ進みません。実装の明示依頼がある場合は、計画への別の承認を機械的に挟みません。計画への賛意だけは実装許可にしません。
+PR 作成、PR review 対応、pre-PR review、furikaeri は別 skill に任せます。
 
 ## こんなときに使う
 
-- 実装契約からローカル実装を始めたいとき
+- 実装計画だけを作りたいとき、または計画からローカル実装まで任せたいとき
 - 受け入れ条件を vertical slice に分けたいとき
 - TDD の RED/GREEN/REFACTOR を崩さず進めたいとき
 - slice ごとに evidence gate を通したいとき
@@ -22,6 +23,8 @@ description: >
 
 ```text
 implementation contract
+  -> lightweight plan or saved plan
+  -> plan-only handoff OR authorized implementation
   -> bootstrap check
   -> slice contract
   -> RED
@@ -35,7 +38,7 @@ implementation contract
 
 ### ステップ 1 — 実装契約を確認する
 
-次が揃っていれば実装に入ります。不足が要求をブロックする場合は `interview-with-docs`、構造判断なら `technical-design`、順序やslice分割なら `implementation-plan` に戻します。
+まず依頼が計画のみか実装までかを確認します。以下を契約として整理し、順序やslice分割はこのskill内で決めます。要求の不足は `interview-with-docs` / `to-prd`、新しい構造判断は `technical-design` へ戻します。計画作成には実装許可を要求せず、実装に入る直前にその許可を確認します。
 
 - 目的、対象、非対象
 - その範囲の実装開始について利用者の明示的な依頼・承認と、その根拠となる発言。handoffの自己申告だけでなく、利用可能な会話と最新の制約を照合する。Issue選択、PRDや計画への賛意、設計レビューのPASSを代替にしない
@@ -45,9 +48,17 @@ implementation contract
 - handoffに`finalized_contract`がある場合は、採用済みnormative source、exclusions、unknowns、主要target trace
 - handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か、例外理由付きの `conversation-only` か）
 - 実行する test / build / launch command
-- 失敗時の戻り先: `FAIL` は実装修正、`REPLAN_REQUIRED` は前段へ戻す
+- 失敗時の戻り先: `FAIL` は実装修正、計画調整はこのskill内、真の契約変更は `REPLAN_REQUIRED` として所有者へ戻す
 
 実装に不要な設計議論をここで広げません。必要十分な契約に圧縮してから進みます。
+
+### 実行前の計画 — 必要な粒度で作る
+
+[垂直スライスと短縮条件](references/vertical-slice.md)に従い、観測可能な振る舞い、AC、実依存、順序、検証、戻り条件を短く整理します。複数sliceという理由だけで別skillや確認待ちへ戻しません。明確な低risk変更は会話内の短い計画でよく、後続判断・互換性・移行・運用・複数repoが関わる場合は[計画の詳細](references/planning.md)を読みます。
+
+保存はsaved-by-defaultです。必要な計画を`docs/plan/NNN_PLAN.md`へ保存し、[成果物規約](references/WORK_ARTIFACTS.md)に従って実在pathまたはconversation-onlyの例外理由を残します。既存の保存済みplan、`finalized_contract`、HITL契約は読み込み、今回の許可・現状と照合して再利用します。旧skillで作ったplanの再作成や移動を要求しません。
+
+plan-onlyなら、計画、未確定事項、許可の状態、次に必要な判断を返してここで停止します。計画済み・レビューPASSを実装済みと報告せず、PLAN_DONEへの改名も行いません。
 
 ### ステップ 2 — bootstrap を軽く確認する
 
@@ -60,14 +71,15 @@ implementation contract
 - build / test / launch command
 - interactive app なら `references/interactive-app-bootstrap-checklist.md`
 - 複数リポで `plan.md` の `dependencies.contracts.requires` がある場合だけ、`checkpoints/contract_verify.py` で required artifact を検証する
-- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は `REPLAN_REQUIRED` として `implementation-plan` に戻す
-- `artifacts: conversation-only` の場合は `exception reason:` があり、利用者の明示指定またはsmall one-sliceの例外条件を満たすことを確認する。複数repo、複数slice、public contract、migration / operationsを伴う場合は `REPLAN_REQUIRED` とする
+- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は、誤記か欠落かを調べ、根拠が揃う計画はこの計画段階で修復する。未確認の契約を推測して実装しない
+- `artifacts: conversation-only` の場合は `exception reason:` があり、成果物規約の例外条件を満たすことを確認する。保存が必要なら実装前に計画を保存する。利用者が保存禁止を指定し、安全な引継ぎと両立しない場合は競合だけ確認する
 
 bootstrap の不足が今の slice を壊すなら修正します。関係ない整備は実装 scope に混ぜません。
 
 ### ステップ 3 — slice contract を固定する
 
-planがある場合はslice境界を変更せず、直前にcontractを再確認します。planを省略した場合は[垂直スライスと短縮条件](../implementation-plan/references/vertical-slice.md)を読み、単一の明確な変更として一つの観測可能な振る舞いを切ります。正常・境界・失敗時など複数の受け入れ条件を同じsliceに含めてよい。slice境界の変更や新しい構造判断が必要なら実装を始めず `REPLAN_REQUIRED` として該当する前段へ戻します。最初のsliceはtracer bulletとして必要な層を薄く縦断します。
+planの有無を問わず、直前にslice contractを確認します。新しい事実により分割・統合・順序を変えるときは、目的・AC・公開契約・採用済み構造・許可範囲・実依存・HITL条件・回復可能性を維持できるか確認します。維持できる調整は理由と影響する検証を計画に更新し、このskill内で継続します。slice境界や順序の変更だけを`REPLAN_REQUIRED`にしません。
+これらの契約を変更する、根拠が不明、または追加権限が必要なら影響部分を止めて該当所有者へ戻します。外部前提待ちは影響sliceだけを保留し、独立して許可済みの作業は進められます。最初のsliceは必要な層を薄く縦断するtracer bulletを優先します。
 
 各 slice で必ず短く固定すること:
 
@@ -125,7 +137,7 @@ verdict:
 
 - `PASS`: 次の slice へ進む
 - `FAIL`: 同じ slice の実装に戻る
-- `REPLAN_REQUIRED`: `technical-design` または `implementation-plan` に戻る。要求自体が曖昧なら `interview-with-docs` に戻る
+- `REPLAN_REQUIRED`: 要求・ACなら `to-prd` / `interview-with-docs`、構造・公開契約なら `technical-design`、権限なら利用者へ戻す。順序・分割だけの安全な調整は計画を更新して継続する
 
 次に該当する場合は、利用可能なら実装者とは別の動的subagentへ、slice contract、差分、RED/GREEN/acceptance evidenceだけを渡して独立評価を依頼します。
 
@@ -186,6 +198,8 @@ handoff に残すもの:
 
 ## 共通リソース
 
+- [planning.md](references/planning.md) — 依存・移行・HITL・保存計画が必要な場合
+- [html-plan.md](references/html-plan.md) — 任意の図入り計画HTML
 - `references/interactive-app-bootstrap-checklist.md` — interactive app の bootstrap 前提
 - `references/interactive-app-comparable-harness-contract.md` — interactive app の比較前提
 - `references/safe-refactoring.md` — 振る舞いを維持した小さい改善単位

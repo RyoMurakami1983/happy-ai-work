@@ -6,7 +6,7 @@ description: 合意済みの目的・要件から、module責務、public interf
 # Technical Design
 
 要求の「何を実現するか」を、実装可能な「どの構造で実現するか」へ変換する。
-このskillは構造判断とレビューに必要な根拠の準備を所有する。目的・要件はPRDまたは同等の合意記録を参照し、業務上のモデル・不変条件は `domain-modeling`、実装順序やvertical sliceの進捗計画は `implementation-plan` へ渡す。
+このskillは構造判断とレビューに必要な根拠の準備を所有する。目的・要件はPRDまたは同等の合意記録を参照し、業務上のモデル・不変条件は `domain-modeling`、実装順序やvertical sliceの進捗計画は `implement`の計画段階 へ渡す。
 
 ## 入力ゲート
 
@@ -85,7 +85,7 @@ blockingなrequirement gapが残る部分は確定設計として渡さない。
 - dependency、schema、contractの変更順に破綻がないか
 - 未解決事項が実装をブロックしないか
 
-順序の詳細やfirst testはここで作らず、`implementation-plan`へ渡す。
+順序の詳細やfirst testはここで作らず、`implement`の計画段階へ渡す。
 
 ### 5. Review readinessを整理する
 
@@ -122,7 +122,7 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 
 見出しは規模に応じて統合・省略してよい。根拠から設計・検証への対応、適用するcontract、未決事項とレビュー要否は、短い設計でも追えるようにする。domain model文書がない場合はその列を省き、必要な業務条件を合意記録へ直接結び付ける。
 
-handoffには、設計artifact、実装で守る採用済み構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。finalization contractが必要な案件では、採用済みの規範sourceと主要targetへのtraceを渡し、非採用案の詳細はdesign／ADRへの参照に留める。AGENTS.md、SKILL.md、reference等のinstructionを更新する場合は、その配置が議論を知らない読者にも必要な理由をtarget traceへ一行で書く。exclusionは`rejected`／`non-goal`／`superseded`を区別し、`rejected`と`non-goal`は別途negative requirementとして採用されない限り恒久禁止ではないとhandoffで明示する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
+handoffには、設計artifact、実装で守る採用済み構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。finalization contractが必要な案件では、採用済みの規範sourceと主要targetへのtraceを渡し、非採用案の詳細はdesign／ADRへの参照に留める。AGENTS.md、SKILL.md、reference等のinstructionを更新する場合は、その配置が議論を知らない読者にも必要な理由をtarget traceへ一行で書く。exclusionは`rejected`／`non-goal`／`superseded`を区別し、`rejected`と`non-goal`は別途negative requirementとして採用されない限り恒久禁止ではないとhandoffで明示する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、public contract、migration / operationsを伴う場合は選べない。
 
 ```yaml
 artifacts:

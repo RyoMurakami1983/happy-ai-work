@@ -10,7 +10,7 @@ class WorkArtifactPolicyTests(unittest.TestCase):
 
     def test_work_artifacts_define_saved_by_default_policy(self) -> None:
         policy = self.read(
-            "plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md"
+            "plugins/happy-coding/skills/implement/references/WORK_ARTIFACTS.md"
         )
 
         self.assertIn("saved-by-default", policy)
@@ -30,7 +30,7 @@ class WorkArtifactPolicyTests(unittest.TestCase):
             "plugins/happy-coding/skills/technical-design/SKILL.md": (
                 "docs/design/NNN_TECHNICAL_DESIGN.md"
             ),
-            "plugins/happy-coding/skills/implementation-plan/SKILL.md": (
+            "plugins/happy-coding/skills/implement/SKILL.md": (
                 "docs/plan/NNN_PLAN.md"
             ),
         }

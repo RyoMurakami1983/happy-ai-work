@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "number": "003",
+  "title": "CSV取込プレビュー — 実装計画の架空例",
+  "subtitle": "模擬プレビュー、選択操作、検証先への取込を順に確認する。アプリとcommandは未実装。",
+  "date": "2026-10-07",
+  "revision": "例v1",
+  "status": "計画例・全工程未着手・実装許可未取得",
+  "canonical_document": "003_PLAN.md",
+  "summary_cards": [
+    {"title":"まず観測する結果","body":"形式不備を拒否し、有効・無効行の模擬プレビューを画面で確認する。","source_refs":["GOAL","S1 入力検証から模擬プレビューまで"]},
+    {"title":"人が確認する地点","body":"S2で選択・取消の一致、S3で検証先の反映結果を確認する。","source_refs":["S2 対象選択と取消","S3 確認した対象の取込"]},
+    {"title":"開始条件を分ける","body":"G0の実装許可は全工程。G1の検証先・権限はS3だけに影響する。","source_refs":["Implementation Permission / Command Status","Dependencies / Start Conditions"]}
+  ],
+  "diagrams": [
+    {"id":"dependencies","title":"実装の依存順","question":"何を確認してから次へ進むか？","description":"全工程未着手。S1→S2→S3の順で、S3に検証先・権限確認が合流する。","svg":"003_plan/diagrams/dependencies.svg","source":"003_plan/diagrams/dependencies.svg","caption":"矢印は実依存。日程・工数・並列実装の指示ではない。","source_refs":["Dependencies / Start Conditions","Order Rationale"],"sync_mode":"single-source","sync_note":"この編集可能SVGを表示にも使用。正本との意味は別途照合する。"}
+  ],
+  "sections": [
+    {"id":"slices","title":"工程と観測できる結果","paragraphs":["詳細にはfirst test、RED/GREEN/acceptance、検証budget、HITLの操作と再開条件を記載。commandは予定・未実行。"],"bullets":[],"source_refs":["Vertical Slices","Progress"],"table":{"headers":["Slice","Doneの入口","区分","前提"],"rows":[["S1","入力拒否と模擬プレビュー、更新ゼロ","AFK／未着手","G0"],["S2","選択・取消と候補の一致","HITL／未着手","S1"],["S3","確認対象の反映と失敗表示","HITL／未着手","S2＋G1"]]}},
+    {"id":"acceptance","title":"受入条件との対応","paragraphs":[],"bullets":[],"source_refs":["Success Criteria"],"table":{"headers":["AC","観測結果","Slice"],"rows":[["AC1","必須列欠落は拒否、更新しない","S1"],["AC2","有効・無効行のプレビュー","S1、S2"],["AC3","選択と取消の一致","S2"],["AC4","確認対象の反映、失敗は未完了","S3"]]}},
+    {"id":"conditions","title":"着手条件と人の確認","paragraphs":["G1待ちでも、G0取得後ならS1/S2を進められる。G0未取得なら実装開始の根拠にはならない。"],"bullets":["S2：選択・解除・取消・再選択で候補と表示を照合。不一致はS2修正。","S3：G1の対象・許可を確認し、検証先の反映と失敗表示を照合。未確認ならS3を保留。"],"source_refs":["Dependencies / Start Conditions","S2 対象選択と取消","S3 確認した対象の取込"]},
+    {"id":"validation","title":"検証予定と未確認の範囲","paragraphs":["commandとrunnerは未実装。合成入力の自動検証と、人の操作・外部接続の受入を区別する。所要時間は不明。60秒等のbudgetは上限案であり実測値ではない。","検証先の権限は未確認。構造変更が必要なら設計へ戻し、計画だけで確定しない。"],"bullets":[],"source_refs":["Implementation Permission / Command Status","Risks / Unknowns","Return Conditions"]}
+  ],
+  "references": [
+    {"label":"計画正本","path":"003_PLAN.md"}
+  ]
+}
