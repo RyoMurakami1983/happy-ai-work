@@ -1,0 +1,10 @@
+{
+  "record_sha256": "0c34213b38b4d98beadeaf93cde8216f895ec5e29a479f5d4683ca632d104530",
+  "artifacts": {
+    "plugins/happy-core/skills/interview-me/SKILL.md": "evals/integrated-planning/snapshots/priority-skill-boundaries-001/plugins/happy-core/skills/interview-me/SKILL.md.txt",
+    "plugins/happy-coding/skills/implement/SKILL.md": "evals/integrated-planning/snapshots/priority-skill-boundaries-001/plugins/happy-coding/skills/implement/SKILL.md.txt",
+    "plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md": "evals/integrated-planning/snapshots/priority-skill-boundaries-001/plugins/happy-coding/skills/implement/references/interactive-app-bootstrap-checklist.md.txt",
+    "plugins/happy-coding/skills/debug-and-fix/SKILL.md": "evals/integrated-planning/snapshots/priority-skill-boundaries-001/plugins/happy-coding/skills/debug-and-fix/SKILL.md.txt",
+    "plugins/happy-coding/skills/debug-and-fix/references/parallel-investigation.md": "evals/integrated-planning/snapshots/priority-skill-boundaries-001/plugins/happy-coding/skills/debug-and-fix/references/parallel-investigation.md.txt"
+  }
+}

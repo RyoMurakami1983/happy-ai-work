@@ -1,0 +1,10 @@
+schema: CREATE TABLE imports (external_id TEXT PRIMARY KEY, payload TEXT)
+input: [('repeated', 'first'), ('repeated', 'first'), ('repeated', 'second')]
+stored: [('repeated', 'second')]
+expected_count: 3 actual_count: 1
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/contract-conflict/evidence/probe_duplicate_rows.py", line 19, in <module>
+    assert Counter(actual) == Counter(rows), "duplicate input rows were lost"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: duplicate input rows were lost
+exit_code=1

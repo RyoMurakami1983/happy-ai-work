@@ -1,0 +1,19 @@
+"""Run the supplied checkpoint without manufacturing missing provider data."""
+from pathlib import Path
+import sys
+
+root = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(root))
+from skill.checkpoints.contract_verify import verify_contracts
+
+# Read the exact corrected scalar fields from this small fixture's saved plan.
+fields = {}
+for line in (root / 'plan.md').read_text().splitlines():
+    field = line.strip().removeprefix('- ')
+    if field.startswith(('artifact:', 'path:', 'checksum:')):
+        key, value = field.split(':', 1)
+        fields[key] = value.strip()
+result = verify_contracts({'dependencies': {'contracts': {'requires': [fields]}}}, root)
+print('status:', result.status)
+print(result.reason)
+raise SystemExit(0 if result.status == 'PASS' else 1)

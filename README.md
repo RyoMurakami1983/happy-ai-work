@@ -51,7 +51,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 ### happy-coding
 
-- 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implementation-plan`、`implement`
+- 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implement`
 - 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
 - 回答フォーム: [html-questionnaire](plugins/happy-coding/skills/html-questionnaire/SKILL.md)（決まった質問からオフラインHTMLを生成し、回答をJSONで受け取る）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
@@ -62,9 +62,11 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
 
-`to-prd`、`technical-design`、`implementation-plan`は、Markdown正本に加えてオフラインHTMLを作れます。PRDは目的・要件・受入条件と未確定事項の対応、設計書はアーキテクチャの構成・クラス・処理順・状態、計画書はsliceの依存・開始条件・人の確認を、対応表や必要な図で読みやすく示します。小変更では短いMarkdownを使います。[PRDの表示例](plugins/happy-coding/skills/to-prd/assets/example/005_prd/005_PRD.html)、[設計書の表示例](plugins/happy-coding/skills/technical-design/assets/example/001_DESIGN.html)、[計画書の表示例](plugins/happy-coding/skills/implementation-plan/assets/example/003_plan/003_PLAN.html)を参照してください。
+`to-prd`、`technical-design`、`implement`の計画段階は、Markdown正本に加えてオフラインHTMLを作れます。PRDは目的・要件・受入条件と未確定事項の対応、設計書はアーキテクチャの構成・クラス・処理順・状態、計画書はsliceの依存・開始条件・人の確認を、対応表や必要な図で読みやすく示します。小変更では短いMarkdownを使います。[PRDの表示例](plugins/happy-coding/skills/to-prd/assets/example/005_prd/005_PRD.html)、[設計書の表示例](plugins/happy-coding/skills/technical-design/assets/example/001_DESIGN.html)、[計画書の表示例](plugins/happy-coding/skills/implement/assets/example/003_plan/003_PLAN.html)を参照してください。
 
 旧repoのleaf skillをそのまま並べず、独立した利用目的がない詳細は各skillの`references/`へ統合しています。移植判断は[docs/SKILL-PORTFOLIO.md](docs/SKILL-PORTFOLIO.md)を参照してください。
+
+`implementation-plan`は配布外へアーカイブし、計画機能を`implement`へ統合しました。計画のみの依頼では実装せず、実装まで任された場合は必要な計画調整を同じskill内で行います。保存済みplanは再利用できます。[判断と移行](docs/adr/0011-integrated-implementation-planning.md)を参照してください。
 
 ### happy-preview（試用版）
 
@@ -96,7 +98,7 @@ Codex全体へ適用する指示は、通常 `~/.codex/AGENTS.md` に置きま�
 
 `home-bootstrap` は既存内容を全置換せず、管理対象マーカー内だけを更新します。最初に必ずdry-runします。
 
-基本方針には、相談・Issue選択・要求合意と実装開始の許可を区別する指示を置きます。工程の詳細はskillsが担当し、PRDから直接実装へ渡す場合も、省略理由を説明してその内容での実装可否を確認します。同じ範囲で取得済みの許可は聞き直しません。垂直スライスと短縮条件は[共通reference](plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md)を参照します。
+基本方針には、相談・Issue選択・要求合意と実装開始の許可を区別する指示を置きます。工程の詳細はskillsが担当し、PRDから直接実装へ渡す場合も、省略理由を説明してその内容での実装可否を確認します。同じ範囲で取得済みの許可は聞き直しません。垂直スライスと短縮条件は[共通reference](plugins/happy-coding/skills/implement/references/vertical-slice.md)を参照します。
 
 配布テンプレートの変更、pluginの更新、実homeへの適用、新しい会話での読込確認は別の段階です。テンプレートの更新だけで個人homeへ自動適用されることはありません。設計判断は[ADR 0005](docs/adr/0005-workflow-entry-and-optional-startup.md)に記録しています。
 

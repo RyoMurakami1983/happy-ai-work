@@ -1,0 +1,69 @@
+import copy
+import unittest
+from tasks import list_tasks
+
+
+class TasksTests(unittest.TestCase):
+    def setUp(self):
+        self.tasks = [
+            {"id": 3, "status": "open", "title": 'One, "two"', "extra": "ignored"},
+            {"id": 1, "status": "closed", "title": "Closed"},
+            {"id": 2, "status": "open"},
+            {"id": 4, "status": "Open", "title": "Different case"},
+        ]
+
+    def test_list(self):
+        self.assertEqual(list_tasks([{"id": 1, "status": "open"}]), [{"id": 1, "status": "open"}])
+
+    def test_filter_preserves_order_and_input(self):
+        before = copy.deepcopy(self.tasks)
+        result = list_tasks(self.tasks, status="open")
+        self.assertEqual([row["id"] for row in result], [3, 2])
+        self.assertIs(result[0], self.tasks[0])
+        self.assertIs(result[1], self.tasks[2])
+        self.assertEqual(self.tasks, before)
+
+    def test_filter_empty_and_no_matches(self):
+        self.assertEqual(list_tasks([], status="open"), [])
+        self.assertEqual(list_tasks(self.tasks, status="missing"), [])
+
+    def test_none_keeps_all_rows_in_new_list(self):
+        before = copy.deepcopy(self.tasks)
+        for result in (list_tasks(self.tasks), list_tasks(self.tasks, status=None)):
+            self.assertEqual(result, self.tasks)
+            self.assertIsNot(result, self.tasks)
+            for actual, original in zip(result, self.tasks):
+                self.assertIs(actual, original)
+        self.assertEqual(self.tasks, before)
+
+    def test_empty_status_is_an_exact_filter(self):
+        tasks = [{"id": 1, "status": ""}, {"id": 2, "status": "open"}]
+        self.assertEqual(list_tasks(tasks, status=""), [tasks[0]])
+
+    def test_csv_round_trip_preserves_input(self):
+        import csv
+        import io
+        from tasks import export_csv
+
+        before = copy.deepcopy(self.tasks)
+        text = export_csv(self.tasks)
+        self.assertIsInstance(text, str)
+        self.assertEqual(list(csv.reader(io.StringIO(text))), [
+            ["id", "status", "title"],
+            ["3", "open", 'One, "two"'],
+            ["1", "closed", "Closed"],
+            ["2", "open", ""],
+            ["4", "Open", "Different case"],
+        ])
+        self.assertEqual(self.tasks, before)
+
+    def test_csv_empty_has_header(self):
+        from tasks import export_csv
+        self.assertEqual(export_csv([]), "id,status,title\r\n")
+
+    def test_csv_preserves_newlines_in_title(self):
+        import csv
+        import io
+        from tasks import export_csv
+        tasks = [{"id": 1, "status": "open", "title": "first\nsecond"}]
+        self.assertEqual(list(csv.DictReader(io.StringIO(export_csv(tasks))))[0]["title"], "first\nsecond")

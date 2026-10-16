@@ -12,7 +12,7 @@ Markdownを正本とし、要約・図・正本全文を含むオフラインHTM
 
 設計の図は、責務と依存を示す構成図、所有・多重度を示すクラス図、成功・部分失敗を示すシーケンス図、許可条件を示す状態図から選ぶ。図数やDDD・特定アーキテクチャの採用は固定しない。計画では既決設計を参照し、実依存と開始条件を示す。
 
-新規HTML設計は案件フォルダへまとめ、従来のMarkdown設計は移動しない。計画正本の `docs/plan/NNN_PLAN.md` は維持する。[WORK_ARTIFACTS](../../plugins/happy-coding/skills/implementation-plan/references/WORK_ARTIFACTS.md)に両ルートを示し、後工程は実在する正本pathを受け取る。
+新規HTML設計は案件フォルダへまとめ、従来のMarkdown設計は移動しない。計画正本の `docs/plan/NNN_PLAN.md` は維持する。[WORK_ARTIFACTS](../../plugins/happy-coding/skills/implement/references/WORK_ARTIFACTS.md)に両ルートを示し、後工程は実在する正本pathを受け取る。
 
 各skillに標準ライブラリだけの生成器とテンプレート・架空例を置く。単独でコピーして使える形を優先し、この変更でplugin全体の共通生成基盤は作らない。UMLからの自動描画は含めず、SVGを取り込む。編集元とSVGが別なら意味の照合が必要なことを示す。
 

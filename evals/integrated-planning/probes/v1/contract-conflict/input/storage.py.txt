@@ -1,0 +1,7 @@
+def initialize(conn):
+    conn.execute("CREATE TABLE imports (external_id TEXT PRIMARY KEY, payload TEXT)")
+
+def import_rows(conn, rows):
+    for row in rows:
+        conn.execute("INSERT OR REPLACE INTO imports VALUES (?, ?)", row)
+    conn.commit()

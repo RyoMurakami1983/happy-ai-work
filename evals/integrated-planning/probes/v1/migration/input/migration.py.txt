@@ -1,0 +1,4 @@
+import sqlite3
+
+def open_db(path):
+    return sqlite3.connect(path)

@@ -1,0 +1,6 @@
+import unittest
+from tasks import list_tasks
+
+class TasksTests(unittest.TestCase):
+    def test_list(self):
+        self.assertEqual(list_tasks([{"id": 1, "status": "open"}]), [{"id": 1, "status": "open"}])

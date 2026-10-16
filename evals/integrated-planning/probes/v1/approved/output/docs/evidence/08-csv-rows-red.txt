@@ -1,0 +1,20 @@
+test_empty_export_contains_only_ordered_header (test_tasks.ExportCsvTests.test_empty_export_contains_only_ordered_header) ... ok
+test_export_quotes_values_and_preserves_row_order (test_tasks.ExportCsvTests.test_export_quotes_values_and_preserves_row_order) ... FAIL
+test_empty_input_and_unmatched_status (test_tasks.TasksTests.test_empty_input_and_unmatched_status) ... ok
+test_empty_status_is_an_exact_filter (test_tasks.TasksTests.test_empty_status_is_an_exact_filter) ... ok
+test_filter_exact_status_preserves_order_and_rows (test_tasks.TasksTests.test_filter_exact_status_preserves_order_and_rows) ... ok
+test_list (test_tasks.TasksTests.test_list) ... ok
+test_listing_preserves_inputs_and_unfiltered_rows (test_tasks.TasksTests.test_listing_preserves_inputs_and_unfiltered_rows) ... ok
+
+======================================================================
+FAIL: test_export_quotes_values_and_preserves_row_order (test_tasks.ExportCsvTests.test_export_quotes_values_and_preserves_row_order)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/approved/tests/test_tasks.py", line 64, in test_export_quotes_values_and_preserves_row_order
+    self.assertIn('"Fix, ""carefully"""', result)
+AssertionError: '"Fix, ""carefully"""' not found in 'id,status,title\r\n'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+FAILED (failures=1)

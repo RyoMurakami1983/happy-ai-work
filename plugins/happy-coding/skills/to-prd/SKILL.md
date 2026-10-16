@@ -106,7 +106,7 @@ artifacts:
   - docs/prd/NNN_PRD.md
 ```
 
-conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
+conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、public contract、migration / operationsを伴う場合は選べない。
 
 ## 出荷ゲート
 
@@ -124,8 +124,8 @@ conversation-only は利用者が明示的に文書不要とした場合、ま�
 - handoffには目的・要件・ACの対応、合意状態、制約、blocking Unknownsを含める。実装へ渡す場合は、実装範囲、省略工程と理由、着手許可の状態と根拠となる利用者発言も添える。
 - 用語やドメインの概念・境界を整理する必要がある場合は `domain-modeling`。目的・要件はPRDを参照させ、不足はPRDへ戻す。
 - 構造判断が必要なら `technical-design`。
-- 構造が既に固定され、複数sliceの順序だけ必要なら `implementation-plan`。
-- 単一の明確な変更なら `implement` へ直接渡してよい。この経路を選ぶときは[垂直スライスと短縮条件](../implementation-plan/references/vertical-slice.md)を読み、設計書・計画書と設計レビューの省略理由を具体的に示し、その内容で実装してよいか必ず確認する。PRDへの賛意だけで着手させない。同じ範囲・省略内容で取得済みの許可は、根拠を引き継いで再質問しない。
+- 構造が既に固定され、順序やslice分割が必要なら `implement` の計画段階へ渡す。計画のみか実装までか、許可の範囲と根拠も引き継ぐ。
+- 単一の明確な変更なら `implement` へ直接渡してよい。この経路を選ぶときは[垂直スライスと短縮条件](../implement/references/vertical-slice.md)を読み、設計書・計画書と設計レビューの省略理由を具体的に示し、その内容で実装してよいか必ず確認する。PRDへの賛意だけで着手させない。同じ範囲・省略内容で取得済みの許可は、根拠を引き継いで再質問しない。
 - Unknownsが実装をブロックする間は自動着手させない。
 
 ## 注意点

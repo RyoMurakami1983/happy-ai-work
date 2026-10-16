@@ -1,0 +1,12 @@
+test_completion_rejects_remaining_nulls (test_migration.MigrationTests.test_completion_rejects_remaining_nulls) ... ok
+test_empty_table_gets_column_and_repeats_safely (test_migration.MigrationTests.test_empty_table_gets_column_and_repeats_safely) ... ok
+test_existing_values_are_preserved_and_retry_is_idempotent (test_migration.MigrationTests.test_existing_values_are_preserved_and_retry_is_idempotent) ... ok
+test_failure_on_final_row_can_be_retried (test_migration.MigrationTests.test_failure_on_final_row_can_be_retried) ... ok
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ok
+test_partial_failure_is_durable_and_retry_resumes (test_migration.MigrationTests.test_partial_failure_is_durable_and_retry_resumes) ... ok
+test_whitespace_only_name_normalizes_to_empty_text (test_migration.MigrationTests.test_whitespace_only_name_normalizes_to_empty_text) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.008s
+
+OK
