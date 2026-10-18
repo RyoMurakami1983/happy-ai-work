@@ -41,6 +41,17 @@ class WorkArtifactPolicyTests(unittest.TestCase):
                 self.assertIn(artifact_path, skill)
                 self.assertIn("saved-by-default", skill)
 
+    def test_artifact_producers_link_the_shared_exception_policy(self) -> None:
+        # Structural routing check only; scenario review checks the decisions.
+        for name in ("interview-with-docs", "to-prd", "technical-design"):
+            path = ROOT / "plugins/happy-coding/skills" / name / "SKILL.md"
+            with self.subTest(skill=name):
+                text = path.read_text(encoding="utf-8")
+                target = "../implement/references/WORK_ARTIFACTS.md"
+                self.assertIn(f"{target}#conversation-only-exceptions", text)
+                self.assertTrue((path.parent / target).is_file())
+                self.assertIn("exception reason:", text)
+
     def test_design_skills_define_adr_decision_conditions(self) -> None:
         for skill_path in (
             "plugins/happy-coding/skills/domain-modeling/SKILL.md",

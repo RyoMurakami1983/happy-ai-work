@@ -63,12 +63,14 @@ python scripts/verify_plugin_update.py --plugin happy-core --source "$Source/plu
 python scripts/verify_plugin_update.py --plugin happy-coding --source "$Source/plugins/happy-coding" --installed "$InstalledCoding"
 ```
 
-scriptはrepoルートから実行する。Python標準libraryのみを使う。manifestと対象skillの固定allowlistだけを読み、相対path・存在・SHA-256を出す。設定やhome、cacheを変更しない。version値はsourceとinstalled双方のmanifestからローカルで確認し、記録する。manifest自体のhashも比較する。
+scriptはrepoルートから実行する。Python標準libraryのみを使う。manifestと対象skillの固定allowlistだけを読み、相対path・存在・SHA-256を出す。廃止pathは固定allowlistの存在だけを確認し、内容を読んだりdirectoryを列挙したりしない。設定やhome、cacheを変更しない。version値はsourceとinstalled双方のmanifestからローカルで確認し、記録する。manifest自体のhashも比較する。
 
-- `samples_match`（exit 0）: 対象fileのbytes一致だけを意味する。plugin全体・実home・会話での読込成功ではない
-- `mismatch`（exit 1）: 内容差、missing、読取不可、root外symlink等。双方missingも一致にしない
+- `samples_match`（exit 0）: 対象fileのbytes一致と、指定した廃止pathの不在だけを意味する。plugin全体・実home・会話での読込成功ではない
+- `mismatch`（exit 1）: 内容差、missing、読取不可、root外symlink、廃止pathの残存等。必要fileが双方missingでも一致にせず、廃止pathが双方に残っていても一致にしない
 - `not_checked`（exit 1）: `--installed`を省略。導入先未確認。未導入かどうかはplugin一覧で別に判断する
 - `session_load`は常に`not_checked`。このscriptでは会話での読込を証明できない
+
+[#59](https://github.com/RyoMurakami1983/happy-ai-work/issues/59)の統合計画の更新確認では、happy-codingの対象に`references/planning.md`、`references/html-plan.md`、`assets/NNN_PLAN_TEMPLATE.md`、`assets/plan.html`、`scripts/render_plan.py`を含む（いずれも`skills/implement/`配下）。既存sampleが一致していても、この計画referenceやassetだけが古ければ不一致となる。`absent_paths`ではsourceとinstalledの`skills/implementation-plan`がともに不在であることを要求し、空directory、旧`SKILL.md`の残存、dangling symlinkも更新済みと扱わない。これは指定した1つの廃止pathの確認であり、他の旧fileや手動copyを全探索するものではない。
 
 happy-previewは任意導入のまま。試用希望と導入が確認できた場合だけ、`--plugin happy-preview`、対応するsource、installedPathで比較する。未導入なら「未導入・更新対象外」と記録し、チェックを通すために導入しない。
 
@@ -102,6 +104,7 @@ codex plugin add happy-coding@happy-ai-work-marketplace --json
 
 - #46: installedの`implement`/`debug-and-fix`/`dotnet`と通知referenceを確認し、新しい会話で検証の事前通知・終了報告の指示が読み込まれるか確認する。長時間試験を実行する必要はない。実際の通知品質の観測は#44/#45で別に扱う
 - #47: preview試用者だけ、新しい会話で`pr-delivery`の利用可能性・読込元を確認する。読込確認のためにPRをmergeしない。明示指定での読込と自動選択は別に記録する
+- #59: 新しい会話で`implement`の統合計画referenceが利用され、旧`implementation-plan`が独立したskillとして残っていないかを別に確認する。source/installedのsample一致と廃止pathの不在だけでは、この会話での状態は未確認
 - coreのhome-bootstrap配布templateが更新されても、実homeへ自動反映されない。実home適用はこの更新確認の対象外。別途依頼時にdry-run・差分・backup・明示承認を経る。通知指示の配布template、実home適用、新しい会話での有効化を混同しない
 - 読込元を確認できない、CLIが未対応、認証/接続で止まる場合は「未確認」と停止理由を残す。hash一致だけで完了へ繰り上げない
 
@@ -115,6 +118,7 @@ codex plugin add happy-coding@happy-ai-work-marketplace --json
 marketplace: name / Git or local / full HEAD SHA / clean or dirty
 plugin: name / source version / installed version / installed・enabled状態
 対象file: allowlistの相対path / source SHA-256 / installed SHA-256 / 存在状態
+廃止path: allowlistの相対path / source・installedの不在・残存・未確認
 更新操作・結果: 未実施 / 実施したコマンドの種類 / 成功・失敗
 installed内容: 対象bytes一致 / 不一致 / 未導入 / 未確認
 実home: 対象外 / 別途承認された適用結果
@@ -131,4 +135,4 @@ preview: opt-in有無 / 明示指定読込 / 自動選択は別記
 
 ## この変更の検証範囲
 
-cloud上の開発と合成fixtureのテストは、実利用先の更新を証明しない。テストは同versionの内容差、新versionでも古い内容、missing、未確認path、preview非選択、root外symlink、CLI結果を扱う。公開PRにはテストしたcommitとCI結果を残す。利用者のinstalled plugin更新、実home適用、新しい会話での読込は、別途実測するまで未確認。
+cloud上の開発と合成fixtureのテストは、実利用先の更新を証明しない。テストは同versionの内容差、新versionでも古い内容、計画referenceだけの古い内容、計画assetの内容差・missing、廃止directory・entrypoint・symlinkの残存、未確認path、preview非選択、root外symlink、個人pathを含まないCLI結果を扱う。対象外fileは検査しないことと`session_load`が常に未確認であることも確認する。公開PRにはテストしたcommitとCI結果を残す。利用者のinstalled plugin更新、実home適用、新しい会話での読込は、別途実測するまで未確認。
