@@ -104,16 +104,22 @@ class PluginUpdateVerificationTests(unittest.TestCase):
     def test_retired_symlinks_are_not_treated_as_absent(self):
         self.populate_samples("happy-coding")
         retired = self.installed / "skills/implementation-plan"
-        targets = ((self.installed / "missing-target", "present"), (self.source, "outside_root"))
-        for target, expected in targets:
-            with self.subTest(state=expected):
+        # Resolving a dangling directory symlink varies by platform. Any of
+        # these fail-closed states is valid; the path must never pass as absent.
+        targets = (
+            (self.installed / "missing-target", ("present", "outside_root")),
+            (self.source, ("outside_root",)),
+        )
+        for target, expected_states in targets:
+            with self.subTest(states=expected_states):
                 try:
                     retired.symlink_to(target, target_is_directory=True)
                 except OSError:
                     self.skipTest("Symlinks unavailable on this platform")
                 report = self.report("happy-coding")
                 self.assertEqual(report["status"], "mismatch")
-                self.assertEqual(report["absent_paths"][0]["installed"], {"state": expected})
+                self.assertIn(report["absent_paths"][0]["installed"]["state"], expected_states)
+                self.assertFalse(report["absent_paths"][0]["matches"])
                 self.assertNotIn(self.directory.name, json.dumps(report))
                 retired.unlink()
 

@@ -33,6 +33,6 @@
 - 3つの変更skillは公式quick_validateでPASS。remote Constitution checkはhealthy
 - 初回aggregateではtest fixtureの型推論とloop closureのlintが失敗し、同時編集も検出された。修正・編集停止後に上記全件を再実行してPASS
 
-checksumが変わる保存ではYAMLの整形・コメントは正規化され得る。metadataの意味とMarkdown本文は保持し、no-opでは元bytesを保持する。CIは公開後に対象commitで別途確認する。
+checksumが変わる保存ではYAMLの整形・コメントは正規化され得る。metadataの意味とMarkdown本文は保持し、no-opでは元bytesを保持する。初回CIではUbuntuとsecret-scanが成功し、Windowsでdangling symlinkの拒否理由名がLinuxと異なりtestが1件失敗した（`present`想定に対し`outside_root`）。いずれも安全な不一致判定であり、productionの判定は変更せずtestで許す拒否状態を明示した。再実行するCIの対象commitと結果はPRに記録する。
 
 実利用者のinstalled plugin更新やfresh session loadはこの修正の検証対象外。テストの選択的整理と実behavior比較は[Issue #60](https://github.com/RyoMurakami1983/happy-ai-work/issues/60)と既存[Draft PR #54](https://github.com/RyoMurakami1983/happy-ai-work/pull/54)で別に追う。新framework・大規模agent評価・性能改善の主張は追加しない。
