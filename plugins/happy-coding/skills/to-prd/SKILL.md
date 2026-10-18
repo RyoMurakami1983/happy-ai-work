@@ -95,7 +95,7 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 | AC-01 | R-01 | [条件・操作] | [合否を判定できる結果] |
 ```
 
-成果物は保存を既定（saved-by-default）とし、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ必ず保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+成果物は保存を既定（saved-by-default）とし、下記の共通成果物契約で例外を選ぶ場合を除き、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
 
 HTMLを併用しても正本の保存先を保ち、`docs/prd/NNN_presentation.json` と `docs/prd/NNN_prd/NNN_PRD.html` 等を追加する。既存資料をHTML化だけで移動しない。正本を変更したら表示用入力・図を照合して再生成し、handoffには正本と派生資料の実在pathを含める。HTMLの生成や要求への合意を、実装開始の許可として扱わない。
 
@@ -106,7 +106,7 @@ artifacts:
   - docs/prd/NNN_PRD.md
 ```
 
-conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、public contract、migration / operationsを伴う場合は選べない。
+conversation-only の可否と保存必須条件は、[共通成果物契約](../implement/references/WORK_ARTIFACTS.md#conversation-only-exceptions)に従う。例外を選ぶ場合は `artifacts: conversation-only` と具体的な `exception reason:` をhandoffに記載する。
 
 ## 出荷ゲート
 

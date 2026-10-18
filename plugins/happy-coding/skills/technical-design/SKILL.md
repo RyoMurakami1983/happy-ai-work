@@ -122,7 +122,7 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 
 見出しは規模に応じて統合・省略してよい。根拠から設計・検証への対応、適用するcontract、未決事項とレビュー要否は、短い設計でも追えるようにする。domain model文書がない場合はその列を省き、必要な業務条件を合意記録へ直接結び付ける。
 
-handoffには、設計artifact、実装で守る採用済み構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。finalization contractが必要な案件では、採用済みの規範sourceと主要targetへのtraceを渡し、非採用案の詳細はdesign／ADRへの参照に留める。AGENTS.md、SKILL.md、reference等のinstructionを更新する場合は、その配置が議論を知らない読者にも必要な理由をtarget traceへ一行で書く。exclusionは`rejected`／`non-goal`／`superseded`を区別し、`rejected`と`non-goal`は別途negative requirementとして採用されない限り恒久禁止ではないとhandoffで明示する。conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、public contract、migration / operationsを伴う場合は選べない。
+handoffには、設計artifact、実装で守る採用済み構造判断、未決定事項、次の戻り先を含め、実在する既知のpathをすべて列挙する。finalization contractが必要な案件では、採用済みの規範sourceと主要targetへのtraceを渡し、非採用案の詳細はdesign／ADRへの参照に留める。AGENTS.md、SKILL.md、reference等のinstructionを更新する場合は、その配置が議論を知らない読者にも必要な理由をtarget traceへ一行で書く。exclusionは`rejected`／`non-goal`／`superseded`を区別し、`rejected`と`non-goal`は別途negative requirementとして採用されない限り恒久禁止ではないとhandoffで明示する。conversation-only の可否と保存必須条件は、[共通成果物契約](../implement/references/WORK_ARTIFACTS.md#conversation-only-exceptions)に従う。例外を選ぶ場合は `artifacts: conversation-only` と具体的な `exception reason:` をhandoffに記載する。
 
 ```yaml
 artifacts:
