@@ -8,7 +8,7 @@
 - ACから観測可能なbehavior、各sliceのDone、public test surface、first test、REDの期待失敗、GREEN / acceptance commandへの対応
 - `finalized_contract`がある場合はnormative source → slice / 主要な恒久targetへのtrace。exclusionsは識別子と参照だけを保持し、非採用案の責務を作り直さない
 - schema、consumer/provider、外部成果物などの実依存。必要な開始条件、成立の証拠、未成立時に影響するslice
-- 検証の目的・規模、合成/実環境、所要時間の見込みと根拠（不明なら不明）、timeout/試行budget。[検証通知](verification-communication.md)へ渡し、予定commandと実行結果を区別する
+- 検証の目的・規模、合成入力／一時fixture／実環境、外部接続、所要時間の見込みと根拠（不明なら不明）、timeout/試行budget。上記の許可範囲とともに[実行直前の通知](verification-communication.md)へ渡し、予定commandと実行結果を区別する
 - 実装中の変更理由と次の再開点。詳細な作業日記や全testの先書きにはしない
 
 [PLAN template](../assets/NNN_PLAN_TEMPLATE.md)を必要な節だけ使う。slice数・HITL数は固定しない。初回はtracer bulletで縦断し、以後は価値とriskを早く観測できる順を選ぶ。確定していないsliceの並列実装はしない。

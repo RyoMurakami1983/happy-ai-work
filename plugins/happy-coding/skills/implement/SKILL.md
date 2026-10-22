@@ -175,6 +175,8 @@ HITL review contractがなく、自動runtime evidenceでacceptanceを確定で�
 
 全 slice が `PASS` したら、実装フェーズを閉じます。
 
+利用者向けの完了報告は[検証の通知と報告](references/verification-communication.md)に従い、主要関心への対応と成果物の現在地を先に示します。以下の証拠一覧をそのまま回答へ転記しません。
+
 handoff に残すもの:
 
 - 完了した slice
