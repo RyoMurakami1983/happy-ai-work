@@ -1,0 +1,47 @@
+test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) ... 
+  test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value=' \t\nHello  wide\tworld\r\n ') ... FAIL
+  test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value=' \t\r\n ') ... FAIL
+  test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value='\u3000こんにちは  世界\u3000') ... FAIL
+
+======================================================================
+FAIL: test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value=' \t\nHello  wide\tworld\r\n ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/external-contract/tests/test_formatting.py", line 17, in test_strips_boundary_whitespace_preserving_interior_text
+    self.assertEqual(title(value), expected)
+AssertionError: ' \t\nHello  wide\tworld\r\n ' != 'Hello  wide\tworld'
+-  	
+- Hello  wide	world
+?            	     -
++ Hello  wide	world
+-  
+
+
+======================================================================
+FAIL: test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value=' \t\r\n ')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/external-contract/tests/test_formatting.py", line 17, in test_strips_boundary_whitespace_preserving_interior_text
+    self.assertEqual(title(value), expected)
+AssertionError: ' \t\r\n ' != ''
+-  	
+-  
+
+
+======================================================================
+FAIL: test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) (value='\u3000こんにちは  世界\u3000')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/external-contract/tests/test_formatting.py", line 17, in test_strips_boundary_whitespace_preserving_interior_text
+    self.assertEqual(title(value), expected)
+AssertionError: '\u3000こんにちは  世界\u3000' != 'こんにちは  世界'
+- 　こんにちは  世界　
+? -         -
++ こんにちは  世界
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=3)
+exit_code=1

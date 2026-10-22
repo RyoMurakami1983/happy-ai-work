@@ -1,0 +1,7 @@
+test_strips_boundary_whitespace_preserving_interior_text (test_formatting.TitleTests.test_strips_boundary_whitespace_preserving_interior_text) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+exit_code=0

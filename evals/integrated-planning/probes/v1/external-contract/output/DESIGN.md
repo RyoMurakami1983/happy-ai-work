@@ -1,0 +1,1 @@
+Accepted scope: implement consumer only using verified provider/api.yaml contract; do not invent it. Independent title(value) fix strips leading/trailing whitespace, preserving interior text. Test locally.

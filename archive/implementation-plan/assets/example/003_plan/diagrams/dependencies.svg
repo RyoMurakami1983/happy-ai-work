@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 820" role="img" aria-labelledby="title description">
+<title id="title">CSV取込プレビューの依存順</title><desc id="description">全工程に実装許可が必要。S1で模擬プレビュー、S2で選択と取消、検証先確認G1後にS3の取込。全工程未着手。</desc>
+<rect width="960" height="820" fill="#fff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto"><path d="M0 0L10 5L0 10" fill="#42668e"/></marker></defs>
+<g font-family="Meiryo,sans-serif" text-anchor="middle" fill="#223348">
+<rect x="50" y="30" width="860" height="92" rx="8" fill="#f1f5f9" stroke="#afbccb"/>
+<text x="480" y="65" font-size="24" font-weight="bold">G0 実装開始の許可：未取得</text><text x="480" y="101" font-size="19">全sliceの開始条件。今回の例は計画作成のみ。</text>
+<rect x="70" y="176" width="490" height="108" rx="8" fill="#eaf2fc" stroke="#245eac"/>
+<text x="315" y="213" font-size="24" font-weight="bold">S1 入力検証 → 模擬プレビュー</text><text x="315" y="247" font-size="20">AFK／未着手／更新adapterは呼ばない</text>
+<rect x="70" y="353" width="490" height="126" rx="8" fill="#fff8eb" stroke="#b8893f"/>
+<text x="315" y="392" font-size="24" font-weight="bold">S2 対象選択と取消</text><text x="315" y="428" font-size="20">HITL／未着手／操作結果を確認</text><text x="315" y="459" font-size="18">不一致はS2へ、要求不足は要求整理へ</text>
+<rect x="635" y="353" width="275" height="126" rx="8" fill="#f1f5f9" stroke="#afbccb"/>
+<text x="772" y="392" font-size="23" font-weight="bold">G1 検証先・権限</text><text x="772" y="428" font-size="19">未確認／S3だけに影響</text><text x="772" y="459" font-size="18">管理者の確認記録が必要</text>
+<rect x="220" y="578" width="520" height="130" rx="8" fill="#fff8eb" stroke="#b8893f"/>
+<text x="480" y="619" font-size="24" font-weight="bold">S3 確認した対象の取込</text><text x="480" y="655" font-size="20">HITL／未着手／S2＋G1に依存</text><text x="480" y="687" font-size="18">許可した検証先のみ。失敗は成功と表示しない。</text>
+<text x="480" y="765" font-size="19">矢印：実装依存　青：模擬検証　橙：人の確認　灰：開始条件</text>
+<text x="480" y="798" font-size="18">日程・工数は未見積り。予定commandを実行済みとは扱わない。</text>
+</g>
+<g fill="none" stroke="#42668e" stroke-width="2.5" marker-end="url(#arrow)">
+<path d="M315 122V170"/><path d="M315 284V347"/><path d="M315 479V528H445V572"/><path d="M772 479V528H515V572"/>
+</g></svg>

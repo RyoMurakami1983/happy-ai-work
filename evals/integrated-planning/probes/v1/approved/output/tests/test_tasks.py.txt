@@ -1,0 +1,83 @@
+import csv
+import io
+import unittest
+from copy import deepcopy
+
+import tasks
+from tasks import list_tasks
+
+
+class TasksTests(unittest.TestCase):
+    def test_list(self):
+        self.assertEqual(list_tasks([{"id": 1, "status": "open"}]), [{"id": 1, "status": "open"}])
+
+    def test_filter_exact_status_preserves_order_and_rows(self):
+        rows = [
+            {"id": 1, "status": "open"},
+            {"id": 2, "status": "closed"},
+            {"id": 3, "status": "Open"},
+            {"id": 4, "status": "open"},
+        ]
+        result = list_tasks(rows, status="open")
+        self.assertEqual(result, [rows[0], rows[3]])
+        self.assertIs(result[0], rows[0])
+        self.assertIs(result[1], rows[3])
+
+    def test_empty_input_and_unmatched_status(self):
+        self.assertEqual(list_tasks([]), [])
+        self.assertEqual(list_tasks([], status="open"), [])
+        self.assertEqual(list_tasks([{"id": 1, "status": "closed"}], status="open"), [])
+
+    def test_empty_status_is_an_exact_filter(self):
+        rows = [{"id": 1, "status": ""}, {"id": 2, "status": "open"}]
+        self.assertEqual(list_tasks(rows, status=""), [rows[0]])
+
+    def test_listing_preserves_inputs_and_unfiltered_rows(self):
+        rows = [
+            {"id": 2, "status": "closed", "title": "second", "extra": [1]},
+            {"id": 1, "status": "open", "title": "first"},
+        ]
+        before = deepcopy(rows)
+        for status in (None, "open", "missing"):
+            with self.subTest(status=status):
+                result = list_tasks(rows, status=status)
+                self.assertEqual(rows, before)
+                expected = rows if status is None else [row for row in rows if row["status"] == status]
+                self.assertEqual(result, expected)
+                for actual, original in zip(result, expected):
+                    self.assertIs(actual, original)
+                self.assertIsNot(result, rows)
+
+
+class ExportCsvTests(unittest.TestCase):
+    def test_empty_export_contains_only_ordered_header(self):
+        self.assertEqual(tasks.export_csv([]), "id,status,title\r\n")
+
+    def test_export_quotes_values_and_preserves_row_order(self):
+        rows = [
+            {"title": 'Fix, "carefully"', "status": "open", "id": 2},
+            {"id": 1, "status": "closed", "title": "line one\nline two"},
+        ]
+        result = tasks.export_csv(rows)
+        self.assertIn('"Fix, ""carefully"""', result)
+        self.assertEqual(list(csv.reader(io.StringIO(result, newline=""))), [
+            ["id", "status", "title"],
+            ["2", "open", 'Fix, "carefully"'],
+            ["1", "closed", "line one\nline two"],
+        ])
+
+    def test_export_ignores_extra_fields_and_blanks_missing_title(self):
+        rows = [{"id": 1, "status": "open", "owner": "someone"}]
+        self.assertEqual(tasks.export_csv(rows), "id,status,title\r\n1,open,\r\n")
+
+    def test_export_does_not_mutate_inputs(self):
+        rows = [
+            {"id": 2, "status": "open", "extra": {"notes": ["retain"]}},
+            {"id": 1, "status": "closed", "title": 'Task, "quoted"'},
+        ]
+        before = deepcopy(rows)
+        originals = list(rows)
+        tasks.export_csv(rows)
+        self.assertEqual(rows, before)
+        for actual, original in zip(rows, originals):
+            self.assertIs(actual, original)

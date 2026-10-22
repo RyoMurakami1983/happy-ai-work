@@ -16,6 +16,11 @@ SAMPLES = {
     "happy-coding": (
         ".codex-plugin/plugin.json",
         "skills/implement/SKILL.md",
+        "skills/implement/references/planning.md",
+        "skills/implement/references/html-plan.md",
+        "skills/implement/assets/NNN_PLAN_TEMPLATE.md",
+        "skills/implement/assets/plan.html",
+        "skills/implement/scripts/render_plan.py",
         "skills/implement/references/verification-communication.md",
         "skills/debug-and-fix/SKILL.md",
         "skills/dotnet/SKILL.md",
@@ -26,6 +31,10 @@ SAMPLES = {
         "skills/pr-delivery/agents/openai.yaml",
     ),
 }
+
+# Checking the directory also catches an obsolete SKILL.md entrypoint, without
+# enumerating or reading any retired content in the selected installation.
+ABSENT_PATHS = {"happy-coding": ("skills/implementation-plan",)}
 
 
 def fingerprint(root: Path, relative: str) -> dict[str, str]:
@@ -42,6 +51,20 @@ def fingerprint(root: Path, relative: str) -> dict[str, str]:
     return {"state": "present", "sha256": hashlib.sha256(content).hexdigest()}
 
 
+def absence_state(root: Path, relative: str) -> dict[str, str]:
+    """Require retired paths to be absent, including dangling symlink entries."""
+    try:
+        path = root / relative
+        if not path.resolve().is_relative_to(root.resolve()):
+            return {"state": "outside_root"}
+        path.lstat()
+    except FileNotFoundError:
+        return {"state": "absent"}
+    except (OSError, RuntimeError):
+        return {"state": "unreadable"}
+    return {"state": "present"}
+
+
 def compare(plugin: str, source: Path, installed: Path | None) -> dict[str, object]:
     files = []
     matched = installed is not None
@@ -51,10 +74,23 @@ def compare(plugin: str, source: Path, installed: Path | None) -> dict[str, obje
         matches = expected["state"] == "present" and expected == actual
         matched &= matches
         files.append({"file": relative, "source": expected, "installed": actual, "matches": matches})
+    absent_paths = []
+    for relative in ABSENT_PATHS.get(plugin, ()):
+        expected = absence_state(source, relative)
+        actual = absence_state(installed, relative) if installed is not None else {"state": "not_checked"}
+        matches = expected["state"] == "absent" and expected == actual
+        matched &= matches
+        absent_paths.append({"path": relative, "source": expected, "installed": actual, "matches": matches})
     status = "samples_match" if matched else "mismatch"
     if installed is None:
         status = "not_checked"
-    return {"plugin": plugin, "status": status, "files": files, "session_load": "not_checked"}
+    return {
+        "plugin": plugin,
+        "status": status,
+        "files": files,
+        "absent_paths": absent_paths,
+        "session_load": "not_checked",
+    }
 
 
 def main() -> int:

@@ -1,6 +1,6 @@
 ---
 name: to-prd
-description: 会話と確認済み資料の文脈から目的、目的達成の条件となる要件、検証可能なAcceptance Criteriaを対応づけ、scope・制約・未確定事項とともにPRDへ整理する。何をなぜ作るかを合意・保存するときに使う。モデルや技術構造の設計、実装計画は扱わない。
+description: 会話と確認済み資料の文脈から目的、目的達成の条件となる要件、検証可能なAcceptance Criteriaを対応づけ、scope・制約・未確定事項とともにPRDへ整理する。何をなぜ作るかを合意・保存し、必要に応じて読解用のオフラインHTMLも作る。モデルや技術構造の設計、実装計画は扱わない。
 ---
 
 # To PRD
@@ -50,7 +50,13 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 6. 既決の制約、前提、依存、コードベース確認状況を記録する。Unknownsには影響する目的・要件、次工程を止めるか、確認先を添える。後工程から返された要件不足もここへ戻し、答えを得てから要求へ反映する。
 7. 根拠とscopeを再確認し、確定済み部分と未確定部分を区別して次工程へhandoffする。
 
+## 出力形式
+
+局所変更は短いMarkdownでよい。複数の目的・要件の対応や関係者のレビューを支える場合は、要点・対応表・必要な図・正本全文を持つオフラインHTMLの併用を推奨する。利用者の形式指定と既存repo規約を優先し、HTMLを作る場合だけ[HTML PRD](references/html-prd.md)を読む。目的→要件→AC、対象外、根拠、合意状態、blocking Unknownsを正本と揃え、要約で未合意事項を確定しない。図は利用者の流れや要求の対応を説明するために選び、architectureや実装順をPRDで新たに決めない。
+
 ## 生成テンプレート
+
+正本の雛形は[NNN_PRD_TEMPLATE.md](assets/NNN_PRD_TEMPLATE.md)。次の構成を案件へ合わせて使う。
 
 ```markdown
 # PRD: [Name]
@@ -58,6 +64,7 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 ## Context
 ## Problem
 ## Users
+## Agreement Status
 ## Purpose
 ### Top-level Purpose
 ### Relevant Sub-purposes
@@ -88,7 +95,9 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 | AC-01 | R-01 | [条件・操作] | [合否を判定できる結果] |
 ```
 
-成果物は保存を既定（saved-by-default）とし、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ必ず保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+成果物は保存を既定（saved-by-default）とし、下記の共通成果物契約で例外を選ぶ場合を除き、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+
+HTMLを併用しても正本の保存先を保ち、`docs/prd/NNN_presentation.json` と `docs/prd/NNN_prd/NNN_PRD.html` 等を追加する。既存資料をHTML化だけで移動しない。正本を変更したら表示用入力・図を照合して再生成し、handoffには正本と派生資料の実在pathを含める。HTMLの生成や要求への合意を、実装開始の許可として扱わない。
 
 次工程へのhandoffには必ず次のいずれかを含める。保存済み成果物が1つでもある場合は、会話で補った内容だけであっても既知のpathをすべて列挙する。
 
@@ -97,7 +106,7 @@ artifacts:
   - docs/prd/NNN_PRD.md
 ```
 
-conversation-only は利用者が明示的に文書不要とした場合、またはsmall one-sliceで後続の判断記録が不要な場合だけ許容し、`exception reason:` を併記する。複数repo、複数slice、public contract、migration / operationsを伴う場合は選べない。
+conversation-only の可否と保存必須条件は、[共通成果物契約](../implement/references/WORK_ARTIFACTS.md#conversation-only-exceptions)に従う。例外を選ぶ場合は `artifacts: conversation-only` と具体的な `exception reason:` をhandoffに記載する。
 
 ## 出荷ゲート
 
@@ -115,8 +124,8 @@ conversation-only は利用者が明示的に文書不要とした場合、ま�
 - handoffには目的・要件・ACの対応、合意状態、制約、blocking Unknownsを含める。実装へ渡す場合は、実装範囲、省略工程と理由、着手許可の状態と根拠となる利用者発言も添える。
 - 用語やドメインの概念・境界を整理する必要がある場合は `domain-modeling`。目的・要件はPRDを参照させ、不足はPRDへ戻す。
 - 構造判断が必要なら `technical-design`。
-- 構造が既に固定され、複数sliceの順序だけ必要なら `implementation-plan`。
-- 単一の明確な変更なら `implement` へ直接渡してよい。この経路を選ぶときは[垂直スライスと短縮条件](../implementation-plan/references/vertical-slice.md)を読み、設計書・計画書と設計レビューの省略理由を具体的に示し、その内容で実装してよいか必ず確認する。PRDへの賛意だけで着手させない。同じ範囲・省略内容で取得済みの許可は、根拠を引き継いで再質問しない。
+- 構造が既に固定され、順序やslice分割が必要なら `implement` の計画段階へ渡す。計画のみか実装までか、許可の範囲と根拠も引き継ぐ。
+- 単一の明確な変更なら `implement` へ直接渡してよい。この経路を選ぶときは[垂直スライスと短縮条件](../implement/references/vertical-slice.md)を読み、設計書・計画書と設計レビューの省略理由を具体的に示し、その内容で実装してよいか必ず確認する。PRDへの賛意だけで着手させない。同じ範囲・省略内容で取得済みの許可は、根拠を引き継いで再質問しない。
 - Unknownsが実装をブロックする間は自動着手させない。
 
 ## 注意点

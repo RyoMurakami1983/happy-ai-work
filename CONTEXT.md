@@ -55,7 +55,7 @@
 
 ### Development workflow
 
-要求合意・設計レビュー・実装開始の許可は別の状態として扱う。垂直スライスと工程短縮の共通定義は[配布内reference](plugins/happy-coding/skills/implementation-plan/references/vertical-slice.md)、責務の判断理由は[ADR 0005](docs/adr/0005-workflow-entry-and-optional-startup.md)を参照する。実装許可と検証完了も別の状態として記録する。
+要求合意・設計レビュー・実装開始の許可は別の状態として扱う。垂直スライスと工程短縮の共通定義は[配布内reference](plugins/happy-coding/skills/implement/references/vertical-slice.md)、責務の判断理由は[ADR 0005](docs/adr/0005-workflow-entry-and-optional-startup.md)を参照する。実装許可と検証完了も別の状態として記録する。
 
 ## Distribution
 

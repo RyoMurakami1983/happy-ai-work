@@ -1,0 +1,7 @@
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ok
+test_partial_failure_is_durable_and_retry_resumes (test_migration.MigrationTests.test_partial_failure_is_durable_and_retry_resumes) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.002s
+
+OK

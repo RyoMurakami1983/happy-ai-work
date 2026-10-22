@@ -1,0 +1,408 @@
+{
+  "schema_version": 1,
+  "suite_id": "current-v2",
+  "baseline_revision": "1854315e78454f1f3b98ad9f9ea9ce2217cbf013",
+  "candidate_status": "not prepared; legacy-v1 candidate is not a current comparator",
+  "conditions": {
+    "baseline": {
+      ".agents/skills/implement/SKILL.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/SKILL.md",
+        "sha256": "a23ae72054a8a2673d322f2d47324774c6ce46e1b689f87848346b910439c44d"
+      },
+      ".agents/skills/implement/assets/NNN_PLAN_TEMPLATE.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/NNN_PLAN_TEMPLATE.md",
+        "sha256": "9c0cfcb6a5c93e68e890da6e1d2324dd3df384cb367c55bd3c887053c2c041d3"
+      },
+      ".agents/skills/implement/assets/example/003_PLAN.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/example/003_PLAN.md",
+        "sha256": "513e620b669bf4a4112860e2b2699ef5536873f0f8294ebe834616f42220e1f6"
+      },
+      ".agents/skills/implement/assets/example/003_plan/003_PLAN.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/example/003_plan/003_PLAN.html",
+        "sha256": "2bce3893eb57413d0877f6fe42fe066a0d291cf3347ed101baea45bfd28c63a8"
+      },
+      ".agents/skills/implement/assets/example/003_plan/diagrams/dependencies.svg": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/example/003_plan/diagrams/dependencies.svg",
+        "sha256": "2e6659e4cf0a3347b1c769e62d20ce35858d0df33df195e3f64ef136ed6b9817"
+      },
+      ".agents/skills/implement/assets/example/003_plan/validation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/example/003_plan/validation.json",
+        "sha256": "78f31db5ad27e9c915d3055b19787815fa6d64ffd37d4412081b15662ddd0618"
+      },
+      ".agents/skills/implement/assets/example/003_presentation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/example/003_presentation.json",
+        "sha256": "4ee21137728169181bdffce947a406b54663307ad27341049eba938c8fd780fe"
+      },
+      ".agents/skills/implement/assets/plan.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/assets/plan.html",
+        "sha256": "0bf6dc2077785a8821afef747632fdc70061d078b9960742c06b556989439788"
+      },
+      ".agents/skills/implement/checkpoints/__init__.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/checkpoints/__init__.py",
+        "sha256": "81c1ccabd05211994dcd4f66fca08c4401a45fae0d41c2ae3a82879fe8aa6cf0"
+      },
+      ".agents/skills/implement/checkpoints/contract_verify.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/checkpoints/contract_verify.py",
+        "sha256": "3cf6523c59c3fa5a4e14444b0400839426bf2c7da41c0f8b45fe0bb447db1a0d"
+      },
+      ".agents/skills/implement/orchestrator/__init__.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/orchestrator/__init__.py",
+        "sha256": "10926f0f43062e9afca70d1e1091378ca28bf4f7fcf1c1a8100f1b6fbbd86b56"
+      },
+      ".agents/skills/implement/orchestrator/fleet_orchestrator.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/orchestrator/fleet_orchestrator.py",
+        "sha256": "aaa11e14ba498315e5605f936953a5a225ffa1faf14da2b300bcebca42dc29c9"
+      },
+      ".agents/skills/implement/references/WORK_ARTIFACTS.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/WORK_ARTIFACTS.md",
+        "sha256": "0e6d2c3f2108f705389282e26c602d4aef33a0918ae63b50860c1e4db735fae0"
+      },
+      ".agents/skills/implement/references/eval-checklist.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/eval-checklist.md",
+        "sha256": "b59c78aa9e52110a544261cd262b5161e9a002f295e861cd925652ca1afb641d"
+      },
+      ".agents/skills/implement/references/html-plan.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/html-plan.md",
+        "sha256": "5fd354fc2caea7a2fd444afac9893ba0795c81d5df58e7dfa37c21fdf9f285a8"
+      },
+      ".agents/skills/implement/references/interactive-app-bootstrap-checklist.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/interactive-app-bootstrap-checklist.md",
+        "sha256": "054b0e513ed677dd24eb7f0107fa2ebca44e30d6ce2aef4c4979313275069821"
+      },
+      ".agents/skills/implement/references/interactive-app-comparable-harness-contract.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/interactive-app-comparable-harness-contract.md",
+        "sha256": "0a0b7a23217c74e495957d7f673d6bbfdbd47d55fba1997b0e717fe48f2173f1"
+      },
+      ".agents/skills/implement/references/planning.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/planning.md",
+        "sha256": "8e2f1206ab005f50aa20a514074673b849662c8cbf782095a9eb395eb392ddc9"
+      },
+      ".agents/skills/implement/references/runtime-evidence/flaui.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/runtime-evidence/flaui.md",
+        "sha256": "0109272e0c0e597abb969a76d76569e69a2a7b1429bfde536de60db9dc008ca6"
+      },
+      ".agents/skills/implement/references/runtime-evidence/playwright.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/runtime-evidence/playwright.md",
+        "sha256": "27975fb95254e2d763413562e0793ff50b6e5074194d02caee8d6e8519b8526b"
+      },
+      ".agents/skills/implement/references/runtime-evidence/python-gui.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/runtime-evidence/python-gui.md",
+        "sha256": "3f393761ba15c4d584d7333ccd8b6565b6cd93d4297601e09e9405c375f1fab5"
+      },
+      ".agents/skills/implement/references/safe-refactoring.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/safe-refactoring.md",
+        "sha256": "b8a800142af89c9f32f303abef1b5d7735ea121e5eaadda243f8091be58a9c6e"
+      },
+      ".agents/skills/implement/references/verification-communication.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/verification-communication.md",
+        "sha256": "8ca5c0645fb719b2ebadd9755828267039c43c8dee238d5c7ebc0de6884103ed"
+      },
+      ".agents/skills/implement/references/vertical-slice.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/references/vertical-slice.md",
+        "sha256": "30a578b08eb52caa39008c62cd51e1a53fcbc3459184a247cafc55da5f2150c5"
+      },
+      ".agents/skills/implement/scripts/render_plan.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/implement/scripts/render_plan.py",
+        "sha256": "dfe3eb6c61cbb15a33f4cc4f7adb6a5c902247f5672c386abb412ff6e87ef993"
+      },
+      ".agents/skills/to-prd/assets/NNN_PRD_TEMPLATE.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/NNN_PRD_TEMPLATE.md",
+        "sha256": "d2c9d89987e732cb323660cba3929a1be7ef9ec3b392bbfeba6cc7324580b9e1"
+      },
+      ".agents/skills/to-prd/assets/example/005_PRD.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_PRD.md",
+        "sha256": "6bf88bbcb1c8720e822abf2861248ea948ac34ede074bccb7ba412d26a18f551"
+      },
+      ".agents/skills/to-prd/assets/example/005_prd/005_PRD.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_prd/005_PRD.html",
+        "sha256": "5a92a48b1f82ca250a3fbd2209af5fa4f8bb60b6287722952f45069a1d582e37"
+      },
+      ".agents/skills/to-prd/assets/example/005_prd/diagrams/trace.svg": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_prd/diagrams/trace.svg",
+        "sha256": "41ffd55221cf2d02ec89ef591311d137c7a542f3da702dadc54766128dd4bd88"
+      },
+      ".agents/skills/to-prd/assets/example/005_prd/validation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_prd/validation.json",
+        "sha256": "35fc9ba82bbf50521396575d4b1dc1657046a609049724f43f1a806dc664be98"
+      },
+      ".agents/skills/to-prd/assets/example/005_prd/verification.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_prd/verification.md",
+        "sha256": "6643bd2ebf72d1043f9628bec66cf0e3938e9b5976b1ab6ad12c4f76af658cbe"
+      },
+      ".agents/skills/to-prd/assets/example/005_presentation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/example/005_presentation.json",
+        "sha256": "503f89cc93c9a182be8e366ae8a08f74eb960007b2031d907be5c1c7eeabcfe2"
+      },
+      ".agents/skills/to-prd/assets/prd.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/assets/prd.html",
+        "sha256": "e288e058239375b429ce5008dbe14379fa20b197887290459d5ef5e38092ee80"
+      },
+      ".agents/skills/to-prd/references/html-prd.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/references/html-prd.md",
+        "sha256": "fc8fbb6ddfbbecd4c8ee698e9f8e708b7ef0858ac8aa7a230b3c6721801aea06"
+      },
+      ".agents/skills/to-prd/scripts/render_prd.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/to-prd/scripts/render_prd.py",
+        "sha256": "dc214676bbe6452344cb184c61c121c48dd1668fae17a12a897dcbc3f185c487"
+      },
+      ".agents/skills/technical-design/assets/design.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/design.html",
+        "sha256": "dadf0393a21d16ceb3df0bc106170fa451c9168c55dfc40c5eca4283a07e18ae"
+      },
+      ".agents/skills/technical-design/assets/example/001_DESIGN.html": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/001_DESIGN.html",
+        "sha256": "a852fa385ad350993f0b98ae99f123b1e09b8bd75ab789a4fc4b17e30942ba37"
+      },
+      ".agents/skills/technical-design/assets/example/001_TECHNICAL_DESIGN.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/001_TECHNICAL_DESIGN.md",
+        "sha256": "8e876859430f0c05f91fd55ed81006ccae0124d760dd4d6549ef10d61fd6abce"
+      },
+      ".agents/skills/technical-design/assets/example/diagrams/01-components.svg": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/diagrams/01-components.svg",
+        "sha256": "492d68debbb2c6cf50311efe9c28cd1aad8d51ec3e7ec1bd39184327c700bc3a"
+      },
+      ".agents/skills/technical-design/assets/example/diagrams/02-states.svg": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/diagrams/02-states.svg",
+        "sha256": "7f94c4dce869396fc49b56e0790bff1ea2f795794c425873f5540e11424ea330"
+      },
+      ".agents/skills/technical-design/assets/example/presentation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/presentation.json",
+        "sha256": "d5e523cf7b123bb6b45a86ebc65cc15d72939329a04956b0c670aff167c843f5"
+      },
+      ".agents/skills/technical-design/assets/example/validation.json": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/example/validation.json",
+        "sha256": "9b9655774cf59e9864fa9e9e0d8eb5634f743df0fed0d0866a82dcbf4a07f5b2"
+      },
+      ".agents/skills/technical-design/assets/technical-design.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/assets/technical-design.md",
+        "sha256": "b399b8cd8e0462f8c27f47e0eecf837d9363cd2273500b8c6c071616a3df7c9c"
+      },
+      ".agents/skills/technical-design/references/html-design.md": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/references/html-design.md",
+        "sha256": "b4fee3fb3e20476bfd5fa0cb00564bfdc3f3f593132b0cc38f7def79e84e284c"
+      },
+      ".agents/skills/technical-design/scripts/render_design.py": {
+        "source": "evals/openai-first-implement/snapshots/current-v2/baseline/technical-design/scripts/render_design.py",
+        "sha256": "b9ef41d206333f31078cb2e5075b00196bb1a973befbf298a9bc09ae56c29d3d"
+      }
+    }
+  },
+  "tasks": {
+    "docs-boundary": {
+      "family": "docs",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/docs-boundary.md",
+          "sha256": "7d04c067ff1ae67c7b83a70425b37b2729bd034de1e33f79794ce7826774ec54"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/README.md.fixture",
+          "sha256": "7432ee4be4c66cb4126a5159df78cc99a91d5fa5ef84ade5e8932bda12a14dcc"
+        },
+        "workspace/guides/usage.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/guides/usage.md",
+          "sha256": "cc6f2081cf28e58cebcbd642f157564a1f8f283cec76d4da0d076c4fe2e02628"
+        }
+      }
+    },
+    "docs-missing": {
+      "family": "docs",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/docs-missing.md",
+          "sha256": "9e83e7229608a29bc041705b1e39ead60695690385986084a8249f9153588035"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/README.md.fixture",
+          "sha256": "7432ee4be4c66cb4126a5159df78cc99a91d5fa5ef84ade5e8932bda12a14dcc"
+        },
+        "workspace/guides/usage.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/guides/usage.md",
+          "sha256": "cc6f2081cf28e58cebcbd642f157564a1f8f283cec76d4da0d076c4fe2e02628"
+        }
+      }
+    },
+    "docs-normal": {
+      "family": "docs",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/docs-normal.md",
+          "sha256": "601c517280cb0c61fa479b186fcc9561e60d1c7b0c75e3e540254c42b92cbc5a"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/README.md.fixture",
+          "sha256": "7432ee4be4c66cb4126a5159df78cc99a91d5fa5ef84ade5e8932bda12a14dcc"
+        },
+        "workspace/guides/usage.md": {
+          "source": "evals/openai-first-implement/fixtures/docs/guides/usage.md",
+          "sha256": "cc6f2081cf28e58cebcbd642f157564a1f8f283cec76d4da0d076c4fe2e02628"
+        }
+      }
+    },
+    "small-fix-boundary": {
+      "family": "small-fix",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/small-fix-boundary.md",
+          "sha256": "a869f87ae764516a71be2c56e657a4b9a82164e0768b836e4f778269b1a8f0ec"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/README.md",
+          "sha256": "09179c85473c09f49642f29820ded56688e2b29037ab17a2d8e8058bd15089da"
+        },
+        "workspace/arithmetic.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/arithmetic.py",
+          "sha256": "8ba8f290cddfd06986e5beb190a6d65b57da31e201779a1a5b5e5a33c9e81e16"
+        },
+        "workspace/test_numbers.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/test_numbers.py",
+          "sha256": "7db03ef8fb3156398e99ac6b34f3fbf0744e1f942cbb4d129ecd55b3c0bcb1ec"
+        }
+      }
+    },
+    "small-fix-missing": {
+      "family": "small-fix",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/small-fix-missing.md",
+          "sha256": "07254e7713542be4cf6c4375e9f93cf5f39a5109d8171e6ce01a81f37fcb1920"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/README.md",
+          "sha256": "09179c85473c09f49642f29820ded56688e2b29037ab17a2d8e8058bd15089da"
+        },
+        "workspace/arithmetic.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/arithmetic.py",
+          "sha256": "8ba8f290cddfd06986e5beb190a6d65b57da31e201779a1a5b5e5a33c9e81e16"
+        },
+        "workspace/test_numbers.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/test_numbers.py",
+          "sha256": "7db03ef8fb3156398e99ac6b34f3fbf0744e1f942cbb4d129ecd55b3c0bcb1ec"
+        }
+      }
+    },
+    "small-fix-normal": {
+      "family": "small-fix",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/small-fix-normal.md",
+          "sha256": "126a0fb21ab3db38cd7679cbfc54c89fca59029b200fba34261ac32837688661"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/README.md",
+          "sha256": "09179c85473c09f49642f29820ded56688e2b29037ab17a2d8e8058bd15089da"
+        },
+        "workspace/arithmetic.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/arithmetic.py",
+          "sha256": "8ba8f290cddfd06986e5beb190a6d65b57da31e201779a1a5b5e5a33c9e81e16"
+        },
+        "workspace/test_numbers.py": {
+          "source": "evals/openai-first-implement/fixtures/small-fix/test_numbers.py",
+          "sha256": "7db03ef8fb3156398e99ac6b34f3fbf0744e1f942cbb4d129ecd55b3c0bcb1ec"
+        }
+      }
+    },
+    "ui-boundary": {
+      "family": "ui",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/ui-boundary.md",
+          "sha256": "7b43e3a4b22db5200bd1b90a6a8d568ada65b6ffb1300ad069dc22b61616584e"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/ui/README.md",
+          "sha256": "bfd8beeaab3f16d124d5271c301dfa0a7131816b434dd5d3d320361904f7aa9d"
+        },
+        "workspace/index.html": {
+          "source": "evals/openai-first-implement/fixtures/ui/index.html",
+          "sha256": "b30f1490ea4e36c6e6e1fce7218a99f57ebd77e814b05a8ea57c8f4a6286e9f9"
+        }
+      }
+    },
+    "ui-missing": {
+      "family": "ui",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/ui-missing.md",
+          "sha256": "7bc8ad0b9144ed0431aa6cf7261ee940437a716be5c6df32d3053a97f0878a8a"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/ui/README.md",
+          "sha256": "bfd8beeaab3f16d124d5271c301dfa0a7131816b434dd5d3d320361904f7aa9d"
+        },
+        "workspace/index.html": {
+          "source": "evals/openai-first-implement/fixtures/ui/index.html",
+          "sha256": "b30f1490ea4e36c6e6e1fce7218a99f57ebd77e814b05a8ea57c8f4a6286e9f9"
+        }
+      }
+    },
+    "ui-normal": {
+      "family": "ui",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/ui-normal.md",
+          "sha256": "788b9ed7334f4f56d31ea8d204157a48cb9b8d13f251257d18a810925eb66a9a"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/ui/README.md",
+          "sha256": "bfd8beeaab3f16d124d5271c301dfa0a7131816b434dd5d3d320361904f7aa9d"
+        },
+        "workspace/index.html": {
+          "source": "evals/openai-first-implement/fixtures/ui/index.html",
+          "sha256": "b30f1490ea4e36c6e6e1fce7218a99f57ebd77e814b05a8ea57c8f4a6286e9f9"
+        }
+      }
+    },
+    "unapproved-boundary": {
+      "family": "unapproved",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/unapproved-boundary.md",
+          "sha256": "6fc8a1bbdabd4a3c5df60cc5a38dc4fa529e27dbd6f75da1e94e84f8e6f4859a"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/README.md",
+          "sha256": "e94a7c6e6d2f8200261a5fa7645f50947cb5b703c01354bc2243658746631f8c"
+        },
+        "workspace/REQUEST.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/REQUEST.md",
+          "sha256": "4b2c1d402106a5c6048584c1294dec3b701aaba7e22c885220f8147775865043"
+        }
+      }
+    },
+    "unapproved-missing": {
+      "family": "unapproved",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/unapproved-missing.md",
+          "sha256": "ce96b610b3940d77cc8557882f321913d3fb957131a9d068749425fdc7b04feb"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/README.md",
+          "sha256": "e94a7c6e6d2f8200261a5fa7645f50947cb5b703c01354bc2243658746631f8c"
+        },
+        "workspace/REQUEST.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/REQUEST.md",
+          "sha256": "4b2c1d402106a5c6048584c1294dec3b701aaba7e22c885220f8147775865043"
+        }
+      }
+    },
+    "unapproved-normal": {
+      "family": "unapproved",
+      "files": {
+        "task.md": {
+          "source": "evals/openai-first-implement/tasks/unapproved-normal.md",
+          "sha256": "d7eeac8e9bd9a6f8f8016b40a1125b5049cb72e38e2667e8abf0782a214cf7d8"
+        },
+        "workspace/README.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/README.md",
+          "sha256": "e94a7c6e6d2f8200261a5fa7645f50947cb5b703c01354bc2243658746631f8c"
+        },
+        "workspace/REQUEST.md": {
+          "source": "evals/openai-first-implement/fixtures/unapproved/REQUEST.md",
+          "sha256": "4b2c1d402106a5c6048584c1294dec3b701aaba7e22c885220f8147775865043"
+        }
+      }
+    }
+  }
+}

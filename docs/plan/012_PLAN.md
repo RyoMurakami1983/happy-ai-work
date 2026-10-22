@@ -1,5 +1,7 @@
 # implement比較pilot — 実装計画
 
+現状（2026-10-22）: この本文は10月3日の旧案を保持しています。現行baselineとの分離・到達点・未決条件は [PR #54整理記録](../reviews/012_REFRESH_STATUS.md) を正本として確認してください。旧candidateは現行比較には使いません。
+
 Artifacts: `docs/design/012_COMPARATIVE_PILOT.md`, `docs/design/012_DASHBOARD_DATA_CONTRACT.md`。
 設計reviewの範囲別判定は `docs/reviews/012_TECHNICAL_DESIGN_REVIEW.md`。
 

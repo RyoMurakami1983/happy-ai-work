@@ -12,6 +12,10 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 SUITE = Path("evals/openai-first-implement")
+SUITES = {
+    "legacy-v1": (SUITE / "preparation.v1.json", SUITE),
+    "current-v2": (SUITE / "snapshots/current-v2/preparation.json", SUITE / "snapshots/current-v2"),
+}
 
 
 def _portable_path(name: str) -> None:
@@ -35,16 +39,23 @@ def _safe_file(root: Path, name: str) -> Path:
     return path
 
 
-def prepare_bundle(root: Path, condition: str, case_id: str, destination: Path) -> dict[str, Any]:
+def prepare_bundle(
+    root: Path, condition: str, case_id: str, destination: Path, *, suite_id: str = "current-v2",
+) -> dict[str, Any]:
     """Copy only frozen actor inputs; keep grading/other conditions outside the bundle."""
     if condition not in {"baseline", "candidate"}:
         raise ValueError("unknown condition")
+    if suite_id not in SUITES:
+        raise ValueError("unknown preparation suite")
+    manifest_path, input_root = SUITES[suite_id]
     root = root.resolve()
     if destination.exists() or destination.is_symlink():
         raise FileExistsError(destination)
     if destination.resolve().is_relative_to(root):
         raise ValueError("actor input destination must be outside this repository")
-    manifest = json.loads((root / SUITE / "preparation.v1.json").read_text(encoding="utf-8"))
+    manifest = json.loads(_safe_file(root, manifest_path.as_posix()).read_text(encoding="utf-8"))
+    if condition not in manifest["conditions"]:
+        raise ValueError(f"{suite_id} {condition} is not prepared; do not substitute a legacy candidate")
     if case_id not in manifest["tasks"]:
         raise ValueError("unknown development case")
     task = manifest["tasks"][case_id]
@@ -60,8 +71,13 @@ def prepare_bundle(root: Path, condition: str, case_id: str, destination: Path) 
     for output, spec in entries:
         source = spec["source"]
         allowed_prefixes = (
-            f"{SUITE.as_posix()}/{condition}/implement/",
-            f"{SUITE.as_posix()}/{condition}/implementation-plan/",
+            f"{input_root.as_posix()}/{condition}/implement/",
+            *((f"{input_root.as_posix()}/{condition}/implementation-plan/",)
+              if suite_id == "legacy-v1" else tuple(
+                  f"{input_root.as_posix()}/{condition}/{skill}/{directory}/"
+                  for skill in ("to-prd", "technical-design")
+                  for directory in ("references", "assets", "scripts")
+              )),
             f"{SUITE.as_posix()}/fixtures/{task['family']}/",
         )
         if source != f"{SUITE.as_posix()}/tasks/{case_id}.md" and not source.startswith(allowed_prefixes):
@@ -75,6 +91,8 @@ def prepare_bundle(root: Path, condition: str, case_id: str, destination: Path) 
         "kind": "public-development-input-only",
         "case_id": case_id,
         "condition": condition,
+        "suite_id": suite_id,
+        "comparison_ready": False,
         "baseline_revision": manifest["baseline_revision"],
         "isolation_verified": False,
         "trial_authorized": False,
@@ -96,11 +114,13 @@ def prepare_bundle(root: Path, condition: str, case_id: str, destination: Path) 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("condition", choices=["baseline", "candidate"])
+    parser.add_argument("--suite", choices=sorted(SUITES), default="current-v2",
+                        help="current-v2 prepares baseline only; legacy-v1 is historical reproduction")
     parser.add_argument("case_id")
     parser.add_argument("destination", type=Path)
     args = parser.parse_args()
     try:
-        result = prepare_bundle(ROOT, args.condition, args.case_id, args.destination)
+        result = prepare_bundle(ROOT, args.condition, args.case_id, args.destination, suite_id=args.suite)
     except (ValueError, OSError, KeyError) as exc:
         parser.exit(2, f"Preparation failed: {exc}\n")
     print(json.dumps(result, indent=2))

@@ -1,0 +1,16 @@
+test_filter_exact_status_preserves_order_and_rows (test_tasks.TasksTests.test_filter_exact_status_preserves_order_and_rows) ... ERROR
+test_list (test_tasks.TasksTests.test_list) ... ok
+
+======================================================================
+ERROR: test_filter_exact_status_preserves_order_and_rows (test_tasks.TasksTests.test_filter_exact_status_preserves_order_and_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/approved/tests/test_tasks.py", line 15, in test_filter_exact_status_preserves_order_and_rows
+    result = list_tasks(rows, status="open")
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: list_tasks() got an unexpected keyword argument 'status'
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+FAILED (errors=1)

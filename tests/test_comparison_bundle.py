@@ -2,9 +2,13 @@
 
 import tempfile
 import unittest
+from functools import partial
 from pathlib import Path
 
-from scripts.comparison_bundle import prepare_bundle
+from scripts.comparison_bundle import prepare_bundle as prepare_selected_bundle
+
+# Keep every original security/regression case exercising the immutable legacy input set.
+prepare_bundle = partial(prepare_selected_bundle, suite_id="legacy-v1")
 
 ROOT = Path(__file__).resolve().parent.parent
 

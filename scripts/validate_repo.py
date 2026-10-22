@@ -51,7 +51,6 @@ REQUIRED_CODING_SKILLS = {
     "dotnet",
     "dotnet-framework-bridge",
     "implement",
-    "implementation-plan",
     "interview-with-docs",
     "nuget-local",
     "python",
@@ -65,6 +64,7 @@ REQUIRED_CODING_SKILLS = {
     "wpf",
 }
 RETIRED_CODING_SKILLS = {
+    "implementation-plan",
     "coding",
     "debug",
     "design-and-plan",

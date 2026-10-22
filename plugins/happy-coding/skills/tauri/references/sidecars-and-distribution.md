@@ -6,6 +6,14 @@
 - `externalBin`、capability、frontend呼び出し名、target tripleを同じ名前体系にする。
 - secretは平文fileへ常設せず、必要なprocessへ実行時に渡す。
 
+## Python sidecarの生存期間
+
+頻繁なGUI操作ごとに重いPythonバックエンドを起動・終了しない。Tauriの[sidecar連携](https://v2.tauri.app/develop/sidecar/)は子processとの継続通信も扱え、毎要求の再起動はTauriの必須要件ではない。`execute`を`spawn`へ置き換えるだけでなく、起動箇所とhandleの所有者を確認する。要求handler内で毎回`spawn`すれば起動費用は繰り返される。
+
+Python連携を設計・診断するときは[PythonのGUI起動費用](../../python/references/coding-practices.md#guiから使うpythonの起動費用)を読む。アプリ／セッション単位の再利用と軽い処理の分離を比較し、常駐化にはready・timeout・protocol・異常終了・子process回収を含める。単発CLIやEXE、one-file形式の一律禁止ではなく、用途に合う寿命を選ぶ。
+
+下記のTauri application／install後gateでは、初回起動・最初の要求・継続操作を分けて実配布物で測定する。複数要求を含む代表フローの応答とprocess起動数を確認する。非同期化はUI停止の対策であり、起動待ち時間をなくす保証ではない。
+
 ## 昇格gate
 
 1. raw CLI／binary

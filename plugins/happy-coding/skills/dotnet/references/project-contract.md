@@ -24,3 +24,5 @@ dotnet format --verify-no-changes
 ```
 
 同じsolution／configuration／runtimeを使い、ローカルとCIで対象がずれないようにする。失敗時はSDK不一致、restore、compile、test、analyzerのどこで止まったかを分離する。
+
+起動中アプリや並列buildが同じ出力先を使う場合は、検証前に出力lockの競合を確認し、repoで認められた別出力先などで分離する。無断でアプリを終了しない。lockによる未実行をtest失敗と混同せず、同条件で再実行するときは理由を短く残す。必要な修正後の回帰確認は省かない。

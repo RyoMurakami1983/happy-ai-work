@@ -166,7 +166,7 @@ def _build_failure_result(
                 f"\n    Expected: {expected}"
                 f"\n    Actual:   {actual}"
                 f"\n    Action: Upstream artifact changed since design handoff"
-                f"\n    Remediation: Contact upstream team or re-run technical-design and implementation-plan"
+                f"\n    Remediation: Revisit technical-design or the planning phase of implement"
             )
 
     if verified_count > 0:
@@ -180,19 +180,20 @@ def _build_failure_result(
 def save_plan_with_updated_checksums(plan_path: Path, plan_dict: dict[str, Any]) -> None:
     """Save plan.md with updated checksums in YAML front-matter.
 
-    Preserves non-YAML content while updating the YAML front-matter with new checksums.
+    Treat the on-disk front-matter as authoritative for every field except the
+    verified requires checksums. Leave the file untouched when none changed.
     """
     if not plan_path.exists():
         return  # Nothing to save if no file
 
-    # Read original file to preserve non-YAML content
-    original_content = plan_path.read_text(encoding="utf-8")
+    # Keep line endings and the Markdown body byte-for-byte, including EOF.
+    original_content = plan_path.read_bytes().decode("utf-8")
+    lines = original_content.splitlines(keepends=True)
+    if not lines or lines[0].strip() != "---":
+        return
 
     # Find YAML front-matter boundaries
-    lines = original_content.split("\n")
     yaml_end_idx = None
-
-    # Skip first line (opening ---)
     for idx, line in enumerate(lines[1:], start=1):
         if line.strip() == "---":
             yaml_end_idx = idx
@@ -201,19 +202,44 @@ def save_plan_with_updated_checksums(plan_path: Path, plan_dict: dict[str, Any])
     if yaml_end_idx is None:
         return  # No YAML front-matter found, can't update
 
-    # Serialize YAML front-matter using PyYAML
-    front_matter = {}
-    if "project_context" in plan_dict:
-        front_matter["project_context"] = plan_dict["project_context"]
-    if "dependencies" in plan_dict:
-        front_matter["dependencies"] = plan_dict["dependencies"]
+    front_matter = yaml.safe_load("".join(lines[1:yaml_end_idx]))
+    if not isinstance(front_matter, dict):
+        return
 
-    yaml_str = yaml.dump(front_matter, default_flow_style=False, sort_keys=False)
-    yaml_lines = ["---", *yaml_str.rstrip("\n").split("\n"), "---"]
+    # Match contracts by identity rather than overwriting metadata or relying on
+    # list positions: the caller can hold a partial or differently ordered plan.
+    identity_fields = ("source_repo", "artifact", "path", "version")
+    updated_requires = plan_dict.get("dependencies", {}).get("contracts", {}).get("requires", [])
+    updated_checksums = {
+        tuple(require.get(field) for field in identity_fields): require["checksum"]
+        for require in updated_requires
+        if require.get("checksum") is not None
+    }
+    saved_dependencies = front_matter.get("dependencies", {})
+    saved_contracts = saved_dependencies.get("contracts", {})
+    saved_requires = saved_contracts.get("requires", [])
+    merged_requires = []
+    changed = False
+    for require in saved_requires:
+        identity = tuple(require.get(field) for field in identity_fields)
+        checksum = updated_checksums.get(identity)
+        if checksum is not None and require.get("checksum") != checksum:
+            require = {**require, "checksum": checksum}
+            changed = True
+        merged_requires.append(require)
 
-    # Combine YAML with rest of file
-    rest_of_file = "\n".join(lines[yaml_end_idx + 1 :])
-    updated_content = "\n".join(yaml_lines) + "\n" + rest_of_file
+    if not changed:
+        return
 
-    # Write back
-    plan_path.write_text(updated_content, encoding="utf-8")
+    # Copy only the updated path so YAML aliases in other metadata keep their values.
+    front_matter["dependencies"] = {
+        **saved_dependencies,
+        "contracts": {**saved_contracts, "requires": merged_requires},
+    }
+    newline = "\r\n" if lines[0].endswith("\r\n") else "\n"
+    yaml_str = yaml.safe_dump(
+        front_matter, default_flow_style=False, sort_keys=False, allow_unicode=True, line_break=newline
+    )
+    updated_content = lines[0] + yaml_str + "".join(lines[yaml_end_idx:])
+
+    plan_path.write_bytes(updated_content.encode("utf-8"))

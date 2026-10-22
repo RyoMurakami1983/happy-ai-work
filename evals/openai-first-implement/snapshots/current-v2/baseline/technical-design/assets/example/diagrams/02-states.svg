@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">申請確認の状態</title><desc id="desc">入力中、確認待ち、保存中、完了へ進む。保存失敗と応答不明は保留。</desc>
+<rect width="1000" height="600" fill="#ffffff"/>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10" fill="#42668e"/></marker></defs>
+<g font-family="Meiryo,sans-serif" font-size="22" text-anchor="middle" fill="#223348">
+<rect x="55" y="100" width="185" height="100" rx="15" fill="#fff" stroke="#245eac"/><text x="147" y="158">入力中</text>
+<rect x="295" y="100" width="185" height="100" rx="15" fill="#eaf2fc" stroke="#245eac"/><text x="387" y="158">確認待ち</text>
+<rect x="535" y="100" width="185" height="100" rx="15" fill="#eaf2fc" stroke="#245eac"/><text x="627" y="158">保存中</text>
+<rect x="775" y="100" width="185" height="100" rx="15" fill="#ecf7ef" stroke="#4d8160"/><text x="867" y="158">完了</text>
+<rect x="535" y="355" width="185" height="100" rx="15" fill="#fff8eb" stroke="#b8893f"/><text x="627" y="413">保留</text>
+<text x="267" y="85" font-size="17">入力済み</text><text x="507" y="85" font-size="17">確認済み</text><text x="747" y="85" font-size="17">保存成功</text>
+<text x="383" y="275" font-size="18">入力訂正</text><text x="770" y="285" font-size="18">失敗・応答不明</text>
+<text x="500" y="535" font-size="18">保留からの自動復旧は対象外。担当者が外部台帳を確認する。</text>
+</g>
+<g fill="none" stroke="#42668e" stroke-width="3" marker-end="url(#arrow)"><path d="M240 150 H289"/><path d="M480 150 H529"/><path d="M720 150 H769"/><path d="M627 200 V349"/><path d="M387 200 V245 H147 V207"/></g>
+</svg>

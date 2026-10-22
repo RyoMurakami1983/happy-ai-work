@@ -1,0 +1,19 @@
+"""Local, in-memory diagnosis only; this does not implement a schema change."""
+from collections import Counter
+from pathlib import Path
+import sqlite3
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from storage import initialize, import_rows
+
+rows = [("repeated", "first"), ("repeated", "first"), ("repeated", "second")]
+with sqlite3.connect(":memory:") as conn:
+    initialize(conn)
+    import_rows(conn, rows)
+    actual = conn.execute("SELECT external_id, payload FROM imports").fetchall()
+    print("schema:", conn.execute("SELECT sql FROM sqlite_master WHERE name='imports'").fetchone()[0])
+    print("input:", rows)
+    print("stored:", actual)
+    print("expected_count:", len(rows), "actual_count:", len(actual))
+    assert Counter(actual) == Counter(rows), "duplicate input rows were lost"

@@ -1,0 +1,14 @@
+test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows) ... ERROR
+
+======================================================================
+ERROR: test_migrates_preserving_original_rows (test_migration.MigrationTests.test_migrates_preserving_original_rows)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/migration/tests/test_migration.py", line 22, in test_migrates_preserving_original_rows
+    from migration import migrate
+ImportError: cannot import name 'migrate' from 'migration' (/tmp/integrated-planning-probes/migration/migration.py)
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (errors=1)

@@ -1,0 +1,7 @@
+status: FAIL
+Contract verification failed:
+  - Missing artifact: provider
+    Path: provider/api.yaml
+    Action: Check if upstream repo merged PR with this artifact
+    Remediation: Wait for upstream implement to complete, or verify path is correct
+exit_code=1

@@ -1,0 +1,19 @@
+test_csv_round_trip_preserves_input (test_tasks.TasksTests.test_csv_round_trip_preserves_input) ... ERROR
+test_empty_status_is_an_exact_filter (test_tasks.TasksTests.test_empty_status_is_an_exact_filter) ... ok
+test_filter_empty_and_no_matches (test_tasks.TasksTests.test_filter_empty_and_no_matches) ... ok
+test_filter_preserves_order_and_input (test_tasks.TasksTests.test_filter_preserves_order_and_input) ... ok
+test_list (test_tasks.TasksTests.test_list) ... ok
+test_none_keeps_all_rows_in_new_list (test_tasks.TasksTests.test_none_keeps_all_rows_in_new_list) ... ok
+
+======================================================================
+ERROR: test_csv_round_trip_preserves_input (test_tasks.TasksTests.test_csv_round_trip_preserves_input)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/integrated-planning-probes/reorder/tests/test_tasks.py", line 46, in test_csv_round_trip_preserves_input
+    from tasks import export_csv
+ImportError: cannot import name 'export_csv' from 'tasks' (/tmp/integrated-planning-probes/reorder/tasks.py)
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+FAILED (errors=1)
