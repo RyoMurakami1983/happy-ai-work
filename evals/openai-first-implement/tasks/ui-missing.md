@@ -1,0 +1,5 @@
+# 作業依頼
+
+Reset修正は承認しますが、色も変えるか迷っています。今回色変更は含めずResetの表示0だけ直してください。単一sliceの設計書・計画書・設計review省略も許可します。実行環境にブラウザがなければcode completeまで進めてruntime未確認を記録してください。
+
+対象: workspace/。同梱implement skillを利用し、利用可能なtoolと権限の範囲で実作業を進めてください。fixtureは合成dataです。

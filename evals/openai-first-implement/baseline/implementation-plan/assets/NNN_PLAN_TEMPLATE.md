@@ -1,0 +1,104 @@
+# PLAN NNN
+
+## GOAL
+
+[達成したい状態を 1-2 文で固定する]
+
+## Success Criteria
+
+- [観測可能な完了条件]
+- [観測可能な完了条件]
+
+## Out of Scope
+
+- [今回やらないこと]
+
+## Progress
+
+- [ ] Bootstrap / 前提確認
+- [ ] Slice 1: [最初の tracer bullet]
+- [ ] Slice 2: [次の user-visible behavior]
+- [ ] Completion handoff
+
+## Design Artifacts / Fixed Decisions
+
+- [責務を置く module / component]
+- [触らない境界]
+- [public interface / test surface]
+
+## Finalized Contract / Target Trace（該当時だけ）
+
+設計handoffに`finalized_contract`がある場合だけ、採用済みnormative source、短いexclusion ID、主要な恒久targetからsourceへの対応を記録する。比較案のない局所変更ではこのsectionを省略する。
+
+## Behavior List
+
+- [ ] [public interface 経由で観測する振る舞い]
+- [ ] [境界値または失敗系]
+- [ ] [security boundary が関係する場合の確認]
+
+## Vertical Slices
+
+### Slice 1: [slice 名]
+
+- Type: [HITL / AFK]
+- Depends on: [依存するslice。なければなし]
+- Done: [この slice が終わったと判断する状態]
+- Test surface: [public interface / test seam]
+- First test: [最初に書く test 観点]
+- RED command: `[command]`
+- RED expectation: [期待する失敗理由]
+- GREEN command: `[command]`
+- Acceptance command: `[command]`
+- Out of scope: [この slice ではやらないこと]
+
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
+
+### Slice 2: [slice 名]
+
+- Type: [HITL / AFK]
+- Depends on: [依存するslice。なければなし]
+- Done: [この slice が終わったと判断する状態]
+- Test surface: [public interface / test seam]
+- First test: [最初に書く test 観点]
+- RED command: `[command]`
+- RED expectation: [期待する失敗理由]
+- GREEN command: `[command]`
+- Acceptance command: `[command]`
+- Out of scope: [この slice ではやらないこと]
+
+#### HITL Review Contract（このsliceで必要な場合だけ）
+
+- Reviewable milestone: [利用者が直接操作できる状態]
+- Launch: `[同じbuildを起動するcommandまたは手順]`
+- Review actions: [利用者が行う代表操作]
+- Expected observations: [操作後に観測すべき結果]
+- Resume condition: [feedback、承認、または再計画の条件]
+
+## Order Rationale
+
+- [なぜこの順序で進めるか]
+- [依存関係やリスク低減の観点]
+
+## Risks / Unknowns
+
+- [残っている判断や注意点。なければ「なし」]
+
+## Artifacts
+
+```yaml
+artifacts:
+  - docs/plan/NNN_PLAN.md
+```
+
+保存済みPRD / design等が実在する場合だけ、そのpathも追加する。
+
+## Return Conditions
+
+- FAIL: [同じ plan のまま implement に戻す条件]
+- REPLAN_REQUIRED: [implementation-plan / technical-design / interview-with-docs に戻す条件]

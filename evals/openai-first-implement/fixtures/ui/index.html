@@ -1,0 +1,7 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Local counter</title>
+<main><h1>Counter</h1><button id="add">Add</button><button id="reset">Reset</button>
+<output id="value" aria-live="polite">0</output></main><script>
+let count=0;
+document.getElementById('add').onclick=()=>{document.getElementById('value').textContent=++count};
+document.getElementById('reset').onclick=()=>{count=0};
+</script></html>
