@@ -52,6 +52,8 @@ implementation contract
 
 実装に不要な設計議論をここで広げません。必要十分な契約に圧縮してから進みます。
 
+UIを新規作成する、または利用者の操作・画面遷移を変更する場合は、[ui-design](../ui-design/SKILL.md)とそこで案内するprinciples / checklistの関係する観点を参照する。UXの原則・操作設計はui-design、構造判断はtechnical-designが所有し、このskillは採用操作を実装・検証へ落とす。参照済みの合意されたUI設計が十分なら再利用し、参照のためだけの再設計・承認待ち・必須文書を増やさない。非UI変更では起動せず、軽微な文言修正などは影響する観点だけを確認する。
+
 ### 実行前の計画 — 必要な粒度で作る
 
 [垂直スライスと短縮条件](references/vertical-slice.md)に従い、観測可能な振る舞い、AC、実依存、順序、検証、戻り条件を短く整理します。複数sliceという理由だけで別skillや確認待ちへ戻しません。明確な低risk変更は会話内の短い計画でよく、後続判断・互換性・移行・運用・複数repoが関わる場合は[計画の詳細](references/planning.md)を読みます。
@@ -150,6 +152,8 @@ verdict:
 独立評価者は修正せず、先に `PASS / FAIL / REPLAN_REQUIRED` と根拠を返します。並列実装は行わず、verdict確定後に単一writerが修正します。subagentが利用できない場合は、実装時の推論から離れてchecklistと差分を読み直します。
 
 interactive evidenceが必要な場合だけ、対応するtemplateを読みます。
+
+UIの操作・遷移を変更した場合は、[ui-designのruntime確認](../ui-design/references/runtime-evidence.md)に従い、合意済み設計の予測・採用操作・期待結果を代表操作で照合する。物理入力・本人評価を含む未確認範囲は既存のacceptance / HITL契約に沿って扱う。
 
 - web: [playwright.md](references/runtime-evidence/playwright.md)
 - Windows desktop: [flaui.md](references/runtime-evidence/flaui.md)
