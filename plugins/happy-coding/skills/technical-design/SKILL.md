@@ -26,6 +26,8 @@ blockingなrequirement gapが残る部分は確定設計として渡さない。
 
 通常は既存stackと単一repoを前提に、必要最小限の構造判断を行う。
 
+UIを新規作成する、または利用者の操作・画面遷移を変更する場合は、[ui-design](../ui-design/SKILL.md)とそこで案内するprinciples / checklistの関係する観点を参照する。UXの原則・操作設計はui-designを正本とし、このskillは採用操作・状態・検証条件をcomponentの責務と技術contractへ結び付ける。参照済みの合意されたUI設計が十分なら再利用し、参照のためだけの再設計・承認待ち・必須文書を増やさない。非UI変更では起動せず、軽微な文言修正などは影響する観点だけを確認する。
+
 次に該当する場合だけ[balanced-coupling.md](references/balanced-coupling.md)を読む。
 
 - 複数repo、別team、別deployが関係する
