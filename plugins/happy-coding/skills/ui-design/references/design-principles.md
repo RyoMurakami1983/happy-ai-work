@@ -35,6 +35,12 @@ affordanceはcontrolが実際に持つ操作可能性、signifierはlabel、形�
 
 操作後は進行中、成功、失敗、取り消し可能性を適切な場所と時間で示す。表示する値、enabled状態、結果表示は同じsource of truthを表す。
 
+### ラベルとicon
+
+補助説明やtooltipを読まなくても、対象利用者がその画面で操作・対象・結果を一意に判断できる最短のラベルかiconを選ぶ。慣れた文脈で意味が明確なiconは使えるが、複数の解釈が残るiconや略語は避け、短い可視テキストを使う。
+
+短さのために、意味を確定する単位・対象・条件や安全上の警告を省かない。削除・破棄などの破壊的操作は対象と結果を曖昧にせず、iconだけのcontrolにもaccessible nameを付ける。
+
 ## Command hierarchy
 
 primary commandは主タスクを進める一つの明確な操作、secondary commandは補助操作、destructive commandは削除・破棄・不可逆変更である。destructive commandをprimaryと視覚的に競合させず、頻度と回復可能性に応じて確認、undo、隔離を選ぶ。
