@@ -1,5 +1,7 @@
 """Local accident prevention. Requires Python 3 and Gitleaks 8.24+."""
+import os
 import shutil
+import signal
 import subprocess
 import sys
 
@@ -8,12 +10,39 @@ def git(*args):
     return subprocess.check_output(['git', *args], text=True).strip()
 
 
+def scan_timeout():
+    raw = os.environ.get('PROJECT_PROTECTION_SCAN_TIMEOUT', '60')
+    try:
+        seconds = int(raw)
+    except ValueError:
+        raise RuntimeError('PROJECT_PROTECTION_SCAN_TIMEOUT must be an integer from 1 to 600 seconds') from None
+    if not 1 <= seconds <= 600:
+        raise RuntimeError('PROJECT_PROTECTION_SCAN_TIMEOUT must be an integer from 1 to 600 seconds')
+    return seconds
+
+
 def scan(args):
     if not shutil.which('gitleaks'):
         raise RuntimeError('Gitleaks unavailable; scan not executed')
-    result = subprocess.run(['gitleaks', *args, '--redact', '--no-banner'],
-                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    if result.returncode:
+    seconds = scan_timeout()
+    with subprocess.Popen(['gitleaks', *args, '--redact', '--no-banner'],
+                          stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                          start_new_session=True) as process:
+        try:
+            result = process.wait(timeout=seconds)
+        except subprocess.TimeoutExpired:
+            # The POSIX process group also contains any Git child started by Gitleaks.
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.wait()
+            raise RuntimeError(
+                f'Gitleaks timed out after {seconds}s; scan incomplete, operation blocked. '
+                'Retry the same command; for long histories set '
+                'PROJECT_PROTECTION_SCAN_TIMEOUT=300 (maximum 600s). Scanner output suppressed.'
+            ) from None
+    if result:
         raise RuntimeError('Secret scan failed or found a secret; details suppressed')
 
 

@@ -30,6 +30,7 @@ class ProtectionTests(unittest.TestCase):
         self.env = patch.dict(os.environ, {
             'GIT_CONFIG_GLOBAL': str(Path(self.temp.name) / 'global'),
             'GIT_CONFIG_NOSYSTEM': '1',
+            'PROJECT_PROTECTION_SCAN_TIMEOUT': '60',
             'PATH': str(self.bin) + os.pathsep + os.environ['PATH'],
             'GIT_AUTHOR_NAME': 'Test', 'GIT_AUTHOR_EMAIL': 'test@example.invalid',
             'GIT_COMMITTER_NAME': 'Test', 'GIT_COMMITTER_EMAIL': 'test@example.invalid',
@@ -283,6 +284,50 @@ class ProtectionTests(unittest.TestCase):
             protection.apply(self.root, proposal['plan_hash'])
         self.assertEqual(lock.read_text(), 'next writer owns this lock')
         self.assertEqual(self.git('config', '--get', 'core.hooksPath'), '.githooks')
+
+    def test_hanging_scanner_times_out_and_normal_retry_succeeds(self):
+        self.install()
+        self.git('switch', '-c', 'feature')
+        oid = self.commit()
+        self.scanner.write_text(
+            '#!/usr/bin/env python3\nimport sys, time\n'
+            'print("SYNTHETIC_PRIVATE_OUTPUT", flush=True)\n'
+            'print("SYNTHETIC_PRIVATE_ERROR", file=sys.stderr, flush=True)\n'
+            'time.sleep(30)\n')
+        self.scanner.chmod(0o755)
+        commit = ['git', '-C', str(self.root), 'commit', '--allow-empty', '-m', 'scan retry']
+        push = [str(self.root / '.githooks/pre-push')]
+        rows = f"HEAD {oid} refs/heads/feature {'0' * 40}\n"
+        with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '1'}):
+            for command, stdin in ((commit, None), (push, rows)):
+                result = subprocess.run(command, cwd=self.root, input=stdin, text=True,
+                                        capture_output=True, timeout=8)
+                self.assertEqual(result.returncode, 1, result.stderr)
+                self.assertIn('timed out after 1s', result.stderr)
+                self.assertIn('scan incomplete', result.stderr)
+                self.assertIn('PROJECT_PROTECTION_SCAN_TIMEOUT=300', result.stderr)
+                self.assertNotIn('SYNTHETIC_PRIVATE', result.stdout + result.stderr)
+            self.scanner.write_text('#!/bin/sh\nexit 0\n')
+            self.scanner.chmod(0o755)
+            # A successful retry is allowed; timeout does not leave a permanent block.
+            self.git('commit', '--allow-empty', '-m', 'successful retry')
+            self.hook(rows)
+
+    def test_scan_timeout_default_bounds_and_invalid_values(self):
+        guard_spec = importlib.util.spec_from_file_location('protection_guard', SKILL / 'assets/guard.py')
+        assert guard_spec and guard_spec.loader
+        guard = importlib.util.module_from_spec(guard_spec)
+        guard_spec.loader.exec_module(guard)
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual(guard.scan_timeout(), 60)
+        for raw in ('0', '-1', '601', 'infinite', '0.5', ''):
+            with self.subTest(raw=raw), patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': raw}):
+                with self.assertRaises(RuntimeError) as error:
+                    guard.scan_timeout()
+                if raw == 'infinite':
+                    self.assertNotIn(raw, str(error.exception))
+        with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '600'}):
+            self.assertEqual(guard.scan_timeout(), 600)
 
     def test_python_does_not_receive_rust_ci(self):
         (self.root / 'pyproject.toml').write_text('[project]\nname="dummy"\n')
