@@ -1,2 +1,7 @@
 #!/bin/sh
-exec python3 "$(git rev-parse --show-toplevel)/.project-protection/guard.py" pre-push "$@"
+if [ "${OS-}" = Windows_NT ]; then
+  runtime=python
+else
+  runtime=python3
+fi
+exec "$runtime" "$(git rev-parse --show-toplevel)/.project-protection/guard.py" pre-push "$@"

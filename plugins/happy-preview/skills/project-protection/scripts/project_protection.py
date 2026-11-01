@@ -7,6 +7,7 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 ASSETS = Path(__file__).resolve().parents[1] / 'assets'
@@ -21,6 +22,7 @@ def git(root: Path, *args: str) -> str:
 
 
 def inventory(root: Path) -> dict:
+    root = root.resolve()
     repository = subprocess.run(['git', '-C', str(root), 'rev-parse', '--show-toplevel'],
                                 capture_output=True, text=True, timeout=10)
     is_repo = repository.returncode == 0
@@ -67,6 +69,7 @@ def desired() -> dict[str, bytes]:
 
 
 def plan(root: Path, initialize: bool = False) -> dict:
+    root = root.resolve()
     state = inventory(root)
     conflicts = []
     changes = []
@@ -154,6 +157,7 @@ def activate_hooks(root: Path, expected: dict) -> None:
 
 
 def apply(root: Path, approved_hash: str, initialize: bool = False) -> dict:
+    root = root.resolve()
     proposal = plan(root, initialize)
     if proposal['conflicts'] or proposal['plan_hash'] != approved_hash:
         raise RuntimeError('Conflicting or changed plan; inspect and approve a fresh plan')
@@ -174,8 +178,10 @@ def apply(root: Path, approved_hash: str, initialize: bool = False) -> dict:
 
 
 def doctor(root: Path) -> dict:
+    root = root.resolve()
     proposal = plan(root)
-    tools = {'python3': bool(shutil.which('python3')), 'gitleaks': bool(shutil.which('gitleaks'))}
+    runtime = 'python' if sys.platform == 'win32' else 'python3'
+    tools = {runtime: bool(shutil.which(runtime)), 'gitleaks': bool(shutil.which('gitleaks'))}
     return {'target': str(root), 'applicability': proposal['detected'],
             'local_configuration': 'pass' if not proposal['changes'] and not proposal['conflicts'] else 'fail',
             'conflicts': proposal['conflicts'],

@@ -2,11 +2,13 @@
 import importlib.util
 import json
 import os
+import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 SKILL = ROOT / 'plugins/happy-preview/skills/project-protection'
@@ -24,19 +26,30 @@ class ProtectionTests(unittest.TestCase):
         self.root.mkdir()
         self.bin = Path(self.temp.name) / 'bin'
         self.bin.mkdir()
-        self.scanner = self.bin / 'gitleaks'
-        self.scanner.write_text('#!/bin/sh\ncat >/dev/null\nexit "${SCAN_RESULT:-0}"\n')
-        self.scanner.chmod(0o755)
+        self.scanner = self.bin / ('gitleaks.exe' if sys.platform == 'win32' else 'gitleaks')
+        self.base_python = Path(getattr(sys, '_base_executable', sys.executable))
+        self.write_scanner('import os, sys\nsys.exit(int(os.environ.get("SCAN_RESULT", "0")))\n')
         self.env = patch.dict(os.environ, {
             'GIT_CONFIG_GLOBAL': str(Path(self.temp.name) / 'global'),
             'GIT_CONFIG_NOSYSTEM': '1',
             'PROJECT_PROTECTION_SCAN_TIMEOUT': '60',
-            'PATH': str(self.bin) + os.pathsep + os.environ['PATH'],
+            'PATH': os.pathsep.join([str(self.bin), str(self.base_python.parent), os.environ['PATH']]),
+            'PYTHONHOME': sys.base_prefix,
             'GIT_AUTHOR_NAME': 'Test', 'GIT_AUTHOR_EMAIL': 'test@example.invalid',
             'GIT_COMMITTER_NAME': 'Test', 'GIT_COMMITTER_EMAIL': 'test@example.invalid',
         })
         self.env.start()
         self.addCleanup(self.env.stop)
+
+    def write_scanner(self, body):
+        # A native Python executable accepts the first Gitleaks argument "git" as
+        # its script. This scanner double works without shebang execution on Windows.
+        if not self.scanner.exists():
+            if sys.platform == 'win32':
+                shutil.copy2(self.base_python, self.scanner)
+            else:
+                self.scanner.symlink_to(self.base_python)
+        (self.root / 'git').write_text(body, encoding='utf-8')
 
     def git(self, *args, expected=0):
         result = subprocess.run(['git', '-C', str(self.root), *args], text=True, capture_output=True)
@@ -49,7 +62,7 @@ class ProtectionTests(unittest.TestCase):
         return protection.apply(self.root, proposal['plan_hash'], True)
 
     def hook(self, rows, expected=0):
-        result = subprocess.run([str(self.root / '.githooks/pre-push')], cwd=self.root,
+        result = subprocess.run(['sh', str(self.root / '.githooks/pre-push')], cwd=self.root,
                                 input=rows, text=True, capture_output=True)
         self.assertEqual(result.returncode, expected, result.stderr)
 
@@ -67,6 +80,7 @@ class ProtectionTests(unittest.TestCase):
         report = protection.doctor(self.root)
         self.assertEqual(report['remote_protection'], 'remote_not_created')
         self.assertEqual(report['secret_scan'], 'not_run')
+        self.assertIn('python' if sys.platform == 'win32' else 'python3', report['tools'])
         self.assertEqual(before, {str(p): p.read_bytes() for p in self.root.rglob('*') if p.is_file()})
 
     def test_commit_main_denied_feature_allowed_tool_missing_and_dummy_detection(self):
@@ -80,8 +94,7 @@ class ProtectionTests(unittest.TestCase):
         self.assertFalse(protection.doctor(self.root)['tools']['gitleaks'])
         self.git('commit', '--allow-empty', '-m', 'missing', expected=1)
         # Synthetic scanner finding, never an actual credential.
-        self.scanner.write_text('#!/bin/sh\nexit 1\n')
-        self.scanner.chmod(0o755)
+        self.write_scanner('import sys\nsys.exit(1)\n')
         self.git('commit', '--allow-empty', '-m', 'dummy finding', expected=1)
 
     def test_all_push_destinations_and_deletion(self):
@@ -169,7 +182,7 @@ class ProtectionTests(unittest.TestCase):
     @unittest.skipUnless(os.environ.get('GITLEAKS_TEST_BINARY'), 'optional real Gitleaks integration')
     def test_real_scanner_staged_dummy_and_push_history(self):
         self.scanner.unlink()
-        self.scanner.symlink_to(os.environ['GITLEAKS_TEST_BINARY'])
+        shutil.copy2(os.environ['GITLEAKS_TEST_BINARY'], self.scanner)
         self.install()
         self.git('switch', '-c', 'feature')
         (self.root / '.gitleaks.toml').write_text(
@@ -289,14 +302,13 @@ class ProtectionTests(unittest.TestCase):
         self.install()
         self.git('switch', '-c', 'feature')
         oid = self.commit()
-        self.scanner.write_text(
-            '#!/usr/bin/env python3\nimport sys, time\n'
+        self.write_scanner(
+            'import sys, time\n'
             'print("SYNTHETIC_PRIVATE_OUTPUT", flush=True)\n'
             'print("SYNTHETIC_PRIVATE_ERROR", file=sys.stderr, flush=True)\n'
             'time.sleep(30)\n')
-        self.scanner.chmod(0o755)
         commit = ['git', '-C', str(self.root), 'commit', '--allow-empty', '-m', 'scan retry']
-        push = [str(self.root / '.githooks/pre-push')]
+        push = ['sh', str(self.root / '.githooks/pre-push')]
         rows = f"HEAD {oid} refs/heads/feature {'0' * 40}\n"
         with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '1'}):
             for command, stdin in ((commit, None), (push, rows)):
@@ -307,8 +319,7 @@ class ProtectionTests(unittest.TestCase):
                 self.assertIn('scan incomplete', result.stderr)
                 self.assertIn('PROJECT_PROTECTION_SCAN_TIMEOUT=300', result.stderr)
                 self.assertNotIn('SYNTHETIC_PRIVATE', result.stdout + result.stderr)
-            self.scanner.write_text('#!/bin/sh\nexit 0\n')
-            self.scanner.chmod(0o755)
+            self.write_scanner('import sys\nsys.exit(0)\n')
             # A successful retry is allowed; timeout does not leave a permanent block.
             self.git('commit', '--allow-empty', '-m', 'successful retry')
             self.hook(rows)
@@ -328,6 +339,38 @@ class ProtectionTests(unittest.TestCase):
                     self.assertNotIn(raw, str(error.exception))
         with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '600'}):
             self.assertEqual(guard.scan_timeout(), 600)
+
+    def test_noncanonical_root_is_normalized_without_allowing_nested_targets(self):
+        self.git('init', '-b', 'main')
+        holder = self.root.parent / 'holder'
+        holder.mkdir()
+        alias = holder / '..' / self.root.name
+        canonical = self.root.resolve()
+        self.assertEqual(protection.plan(alias), protection.plan(canonical))
+        proposal = protection.plan(alias)
+        self.assertEqual(protection.apply(alias, proposal['plan_hash'])['local_configuration'], 'pass')
+        self.assertEqual(protection.doctor(alias)['target'], str(canonical))
+        nested = self.root / 'nested'
+        nested.mkdir()
+        with self.assertRaisesRegex(RuntimeError, 'repository root'):
+            protection.plan(nested)
+
+    def test_windows_termination_keeps_timeout_failure_and_uses_fallback(self):
+        guard_spec = importlib.util.spec_from_file_location('guard_windows_test', SKILL / 'assets/guard.py')
+        assert guard_spec and guard_spec.loader
+        guard = importlib.util.module_from_spec(guard_spec)
+        guard_spec.loader.exec_module(guard)
+        process = Mock()
+        process.pid = 12345
+        process.poll.return_value = None
+        with patch.object(guard.sys, 'platform', 'win32'), patch.object(guard.subprocess, 'run') as run:
+            run.side_effect = subprocess.TimeoutExpired('taskkill', 10)
+            guard.stop_scanner(process)
+        process.kill.assert_called_once()
+        process.wait.assert_called_once_with(timeout=10)
+        self.assertEqual(run.call_args.args[0], ['taskkill', '/PID', '12345', '/T', '/F'])
+        self.assertEqual(run.call_args.kwargs['stdout'], subprocess.DEVNULL)
+        self.assertEqual(run.call_args.kwargs['stderr'], subprocess.DEVNULL)
 
     def test_python_does_not_receive_rust_ci(self):
         (self.root / 'pyproject.toml').write_text('[project]\nname="dummy"\n')

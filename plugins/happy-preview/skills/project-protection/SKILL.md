@@ -27,5 +27,6 @@ description: ローカルの新規フォルダ、既存repo、clone、worktree�
 Rustは既存の[検査候補](../../../happy-coding/skills/rust/references/project-setup.md)を再利用する。
 Python等は対象repoの検査入口を読む。既存CIを優先し、このbootstrapでは言語CIを生成しない。
 
-Windowsの配布・実機検証は後続。Python 3、POSIX shell、Git、Gitleaks 8.24以降を前提とする。
+Windowsの配布・利用者実機検証は後続。Python 3、Git、Gitleaks 8.24以降を前提とする。
+WindowsではGit for WindowsのshとPATH上のpythonを使い、POSIX環境ではshとpython3を使う。
 ツールを勝手にグローバル導入しない。依存なしのPython標準ライブラリを使い、環境への変更を小さくする。

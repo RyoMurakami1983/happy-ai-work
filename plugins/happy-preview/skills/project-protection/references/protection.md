@@ -66,11 +66,19 @@ CLIの終了コード0は診断処理の完了を示す。保護合格は各JSON
 ## 秘密検査の実行時間
 
 Gitleaksは1回の呼出しにつき既定60秒で停止する。timeoutではscannerと子Gitプロセスの
-POSIX process groupを終了し、秘密を含み得る出力を抑制したままcommit/pushを拒否する。
+POSIX process group、またはWindowsのtaskkill /T /Fで通常の子processを含めて終了し、
+秘密を含み得る出力を抑制したままcommit/pushを拒否する。
 未完了の検査を成功や秘密なしとして扱わない。複数refのpushはrefごとの検査にこの上限を適用する。
 
 遅いディスクや長い履歴では正常な検査も60秒を超えるため、同じcommit/pushを再試行するか、
 そのコマンドだけ `PROJECT_PROTECTION_SCAN_TIMEOUT=300 git push ...` のように延長する。
 値は整数1〜600秒で、未指定は60秒、範囲外・不正値は拒否する。無期限値は設けない。
 グローバル設定や検査範囲を変更せず、検査を省略して進めない。最大600秒でも未完了なら、
-別途同じ対象履歴を検査できる環境で原因を調べ、未確認として扱う。Windowsのprocess制御は後続検証とする。
+別途同じ対象履歴を検査できる環境で原因を調べ、未確認として扱う。Windowsではtaskkillにも10秒の上限を設け、scannerが残っていればkillで停止する。taskkill自体が失敗した場合、このfallbackが停止するのは
+scanner本体で、子process全体の終了は未確認とする。
+終了処理の失敗も検査成功へ読み替えない。WindowsはGit for Windows、PATH上のPython 3と
+Gitleaks実行ファイルを使う範囲を対象とし、GUI配布、特殊な子process、利用者PCは後続検証とする。
+
+Windowsの一時path（短縮名を含む）とGitのroot表記は、API入口で両方をresolveして比較する。
+repo配下の別フォルダをrootと誤認しない境界は維持する。Windows/Ubuntu CIでは同じ受入試験を実行し、
+実Gitleaks統合試験は明示したテスト用binaryがある場合に実行する。

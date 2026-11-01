@@ -21,22 +21,36 @@ def scan_timeout():
     return seconds
 
 
+def stop_scanner(process):
+    if sys.platform == 'win32':
+        # taskkill handles the scanner's ordinary child processes on Windows.
+        try:
+            subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+        if process.poll() is None:
+            process.kill()
+    else:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    process.wait(timeout=10)
+
+
 def scan(args):
-    if not shutil.which('gitleaks'):
+    scanner = shutil.which('gitleaks')
+    if not scanner:
         raise RuntimeError('Gitleaks unavailable; scan not executed')
     seconds = scan_timeout()
-    with subprocess.Popen(['gitleaks', *args, '--redact', '--no-banner'],
+    with subprocess.Popen([scanner, *args, '--redact', '--no-banner'],
                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                          start_new_session=True) as process:
+                          start_new_session=sys.platform != 'win32') as process:
         try:
             result = process.wait(timeout=seconds)
         except subprocess.TimeoutExpired:
-            # The POSIX process group also contains any Git child started by Gitleaks.
-            try:
-                os.killpg(process.pid, signal.SIGKILL)
-            except ProcessLookupError:
-                pass
-            process.wait()
+            stop_scanner(process)
             raise RuntimeError(
                 f'Gitleaks timed out after {seconds}s; scan incomplete, operation blocked. '
                 'Retry the same command; for long histories set '
