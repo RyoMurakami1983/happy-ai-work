@@ -29,4 +29,5 @@ Python等は対象repoの検査入口を読む。既存CIを優先し、このbo
 
 Windowsの配布・利用者実機検証は後続。Python 3、Git、Gitleaks 8.24以降を前提とする。
 WindowsではGit for WindowsのshとPATH上のpythonを使い、POSIX環境ではshとpython3を使う。
+ARM実機の再試験では[条件確認と最小手順](references/arm-validation.md)を読む。
 ツールを勝手にグローバル導入しない。依存なしのPython標準ライブラリを使い、環境への変更を小さくする。

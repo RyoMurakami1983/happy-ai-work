@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from unittest.mock import Mock, patch
@@ -18,10 +19,39 @@ protection = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(protection)
 
 
+class FixtureWindowsError(PermissionError):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.winerror = code
+
+
+def load_guard():
+    guard_spec = importlib.util.spec_from_file_location('guard_fixture', SKILL / 'assets/guard.py')
+    assert guard_spec and guard_spec.loader
+    guard = importlib.util.module_from_spec(guard_spec)
+    guard_spec.loader.exec_module(guard)
+    return guard
+
+
+def unlink_exited_executable(path, process):
+    """Retry only transient Windows access denial, after a waited/closed probe."""
+    if process.poll() is None:
+        raise RuntimeError('Scanner process has not exited; cleanup not attempted')
+    for attempt in range(20):
+        try:
+            path.unlink()
+            return
+        except PermissionError as error:
+            if getattr(error, 'winerror', None) != 5 or attempt == 19:
+                raise
+            time.sleep(0.05)
+
+
+
 class ProtectionTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
-        self.addCleanup(self.temp.cleanup)
+        self.addCleanup(self.cleanup_fixture)
         self.root = Path(self.temp.name) / 'repo'
         self.root.mkdir()
         self.bin = Path(self.temp.name) / 'bin'
@@ -29,7 +59,7 @@ class ProtectionTests(unittest.TestCase):
         self.scanner = self.bin / ('gitleaks.exe' if sys.platform == 'win32' else 'gitleaks')
         self.base_python = Path(getattr(sys, '_base_executable', sys.executable))
         self.write_scanner('import os, sys\nsys.exit(int(os.environ.get("SCAN_RESULT", "0")))\n')
-        self.env = patch.dict(os.environ, {
+        overrides = {
             'GIT_CONFIG_GLOBAL': str(Path(self.temp.name) / 'global'),
             'GIT_CONFIG_NOSYSTEM': '1',
             'PROJECT_PROTECTION_SCAN_TIMEOUT': '60',
@@ -37,9 +67,50 @@ class ProtectionTests(unittest.TestCase):
             'PYTHONHOME': sys.base_prefix,
             'GIT_AUTHOR_NAME': 'Test', 'GIT_AUTHOR_EMAIL': 'test@example.invalid',
             'GIT_COMMITTER_NAME': 'Test', 'GIT_COMMITTER_EMAIL': 'test@example.invalid',
-        })
+        }
+        self.fixture_env = {**os.environ, **overrides}
+        self.fake_scanner = self.scanner
+        self.env = patch.dict(os.environ, overrides)
         self.env.start()
         self.addCleanup(self.env.stop)
+
+    def cleanup_fixture(self):
+        if sys.platform == 'win32' and self.fake_scanner.exists():
+            # Hook commands have returned; explicitly wait for a final native
+            # scanner probe and close its handle before the narrow cleanup retry.
+            with subprocess.Popen([str(self.fake_scanner), '--version'], env=self.fixture_env,
+                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL) as probe:
+                try:
+                    probe.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    probe.kill()
+                    probe.wait(timeout=5)
+                    raise
+            if probe.returncode != 0:
+                raise RuntimeError('Fixture probe failed; native executable cleanup unconfirmed')
+            unlink_exited_executable(self.fake_scanner, probe)
+        self.temp.cleanup()
+
+    def assert_missing_scanner(self):
+        empty = Path(self.temp.name) / 'missing-tools'
+        empty.mkdir(exist_ok=True)
+        guard = load_guard()
+        # Retain Git for the read-only doctor, isolate only its scanner lookup.
+        find = shutil.which
+        with patch.object(protection.shutil, 'which',
+                          side_effect=lambda name: find(name, path=str(empty)) if name == 'gitleaks' else find(name)):
+            self.assertFalse(protection.doctor(self.root)['tools']['gitleaks'])
+        with patch.dict(os.environ, {'PATH': str(empty)}), patch.object(guard, 'git', return_value='feature'), \
+                patch.object(guard.sys, 'argv', ['guard.py', 'pre-commit']):
+            self.assertIsNone(shutil.which('gitleaks'))
+            with self.assertRaisesRegex(RuntimeError, 'Gitleaks unavailable'):
+                guard.main()
+            oid = self.git_oid
+            result = subprocess.run([sys.executable, str(self.root / '.project-protection/guard.py'), 'pre-push'],
+                                    cwd=self.root, input=f"HEAD {oid} refs/heads/feature {'0' * 40}\n",
+                                    text=True, capture_output=True, timeout=10)
+            self.assertEqual(result.returncode, 1)
+            self.assertIn('Gitleaks unavailable', result.stderr)
 
     def write_scanner(self, body):
         # A native Python executable accepts the first Gitleaks argument "git" as
@@ -89,10 +160,8 @@ class ProtectionTests(unittest.TestCase):
         self.git('add', 'file')
         self.git('commit', '-m', 'denied', expected=1)
         self.git('switch', '-c', 'feature')
-        self.commit()
-        self.scanner.unlink()
-        self.assertFalse(protection.doctor(self.root)['tools']['gitleaks'])
-        self.git('commit', '--allow-empty', '-m', 'missing', expected=1)
+        self.git_oid = self.commit()
+        self.assert_missing_scanner()
         # Synthetic scanner finding, never an actual credential.
         self.write_scanner('import sys\nsys.exit(1)\n')
         self.git('commit', '--allow-empty', '-m', 'dummy finding', expected=1)
@@ -181,8 +250,11 @@ class ProtectionTests(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get('GITLEAKS_TEST_BINARY'), 'optional real Gitleaks integration')
     def test_real_scanner_staged_dummy_and_push_history(self):
-        self.scanner.unlink()
+        real_bin = Path(self.temp.name) / 'real-scanner'
+        real_bin.mkdir()
+        self.scanner = real_bin / self.scanner.name
         shutil.copy2(os.environ['GITLEAKS_TEST_BINARY'], self.scanner)
+        os.environ['PATH'] = str(real_bin) + os.pathsep + os.environ['PATH']
         self.install()
         self.git('switch', '-c', 'feature')
         (self.root / '.gitleaks.toml').write_text(
@@ -245,8 +317,17 @@ class ProtectionTests(unittest.TestCase):
         external = Path(self.temp.name) / 'external-config'
         original = config.read_bytes()
         external.write_bytes(original)
+        link = self.root / '.git/config-link'
+        try:
+            link.symlink_to(external)
+        except OSError as error:
+            if getattr(error, 'winerror', None) == 1314:
+                self.assertEqual(config.read_bytes(), original)
+                self.fail('UNVERIFIED real Windows symlink: WinError 1314; privilege unavailable. '
+                          'Original config preserved; mock coverage is a separate test, not a pass for this case.')
+            raise
         config.unlink()
-        config.symlink_to(external)
+        link.rename(config)
         proposal = protection.plan(self.root)
         self.assertTrue(proposal['conflicts'])
         with self.assertRaises(RuntimeError):
@@ -371,6 +452,74 @@ class ProtectionTests(unittest.TestCase):
         self.assertEqual(run.call_args.args[0], ['taskkill', '/PID', '12345', '/T', '/F'])
         self.assertEqual(run.call_args.kwargs['stdout'], subprocess.DEVNULL)
         self.assertEqual(run.call_args.kwargs['stderr'], subprocess.DEVNULL)
+
+    def test_missing_scanner_isolated_even_with_ambient_scanner_on_path(self):
+        self.install()
+        self.git('switch', '-c', 'feature')
+        self.git_oid = self.commit()
+        ambient = Path(self.temp.name) / 'ambient-tools'
+        ambient.mkdir()
+        candidate = ambient / self.scanner.name
+        shutil.copy2(self.base_python, candidate)
+        with patch.dict(os.environ, {'PATH': str(ambient) + os.pathsep + os.environ['PATH']}):
+            found = shutil.which('gitleaks')
+            assert found is not None
+            self.assertEqual(Path(found).resolve(), candidate.resolve())
+            self.assert_missing_scanner()
+        self.assertTrue(self.fake_scanner.exists())
+        self.assertTrue(candidate.exists())
+
+    def test_config_symlink_detection_mock_without_creation_privilege(self):
+        self.git('init', '-b', 'main')
+        config = (self.root / '.git/config').resolve()
+        original = config.read_bytes()
+        real_is_symlink = Path.is_symlink
+        with patch.object(Path, 'is_symlink', lambda path: path == config or real_is_symlink(path)):
+            proposal = protection.plan(self.root)
+            self.assertTrue(any('symlink' in conflict for conflict in proposal['conflicts']))
+            with self.assertRaises(RuntimeError):
+                protection.apply(self.root, proposal['plan_hash'])
+        self.assertEqual(config.read_bytes(), original)
+        self.assertFalse(config.is_symlink())
+
+    def test_real_symlink_privilege_failure_is_not_reported_as_pass(self):
+        denied = FixtureWindowsError(1314, 'synthetic privilege failure')
+        with patch.object(Path, 'symlink_to', side_effect=denied):
+            with self.assertRaisesRegex(AssertionError, 'UNVERIFIED real Windows symlink.*1314'):
+                self.test_external_config_symlink_is_rejected()
+        self.assertTrue((self.root / '.git/config').is_file())
+        self.assertFalse((self.root / '.git/config').is_symlink())
+
+    def test_executable_cleanup_retries_only_exited_winerror5_with_short_bound(self):
+        exited = Mock()
+        exited.poll.return_value = 0
+        transient = FixtureWindowsError(5, 'synthetic transient access denial')
+        path = Mock()
+        path.unlink.side_effect = [transient, None]
+        with patch.object(time, 'sleep') as sleep:
+            unlink_exited_executable(path, exited)
+        self.assertEqual(path.unlink.call_count, 2)
+        sleep.assert_called_once_with(0.05)
+        path.reset_mock()
+        path.unlink.side_effect = transient
+        with patch.object(time, 'sleep') as sleep:
+            with self.assertRaises(PermissionError):
+                unlink_exited_executable(path, exited)
+        self.assertEqual(path.unlink.call_count, 20)
+        self.assertEqual(sleep.call_count, 19)
+        other = FixtureWindowsError(32, 'different failure')
+        path.reset_mock()
+        path.unlink.side_effect = other
+        with patch.object(time, 'sleep') as sleep:
+            with self.assertRaises(PermissionError):
+                unlink_exited_executable(path, exited)
+        self.assertEqual(path.unlink.call_count, 1)
+        sleep.assert_not_called()
+        path.reset_mock()
+        exited.poll.return_value = None
+        with self.assertRaisesRegex(RuntimeError, 'has not exited'):
+            unlink_exited_executable(path, exited)
+        path.unlink.assert_not_called()
 
     def test_python_does_not_receive_rust_ci(self):
         (self.root / 'pyproject.toml').write_text('[project]\nname="dummy"\n')
