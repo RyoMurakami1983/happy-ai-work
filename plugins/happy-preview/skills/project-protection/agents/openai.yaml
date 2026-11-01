@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Protection（試用版）"
+  short_description: "ローカル起点でプロジェクトの事故防止設定を計画・診断する"
+  default_prompt: "$project-protection を使って、このフォルダの保護状態を診断し導入差分を示してください。"
