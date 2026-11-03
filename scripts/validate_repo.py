@@ -58,6 +58,7 @@ REQUIRED_CODING_SKILLS = {
     "rust",
     "tauri",
     "technical-design",
+    "technical-design-review",
     "to-prd",
     "typescript",
     "ui-design",

@@ -18,11 +18,11 @@
 
 ## プレビュー配布
 
-`happy-preview`には実利用検証中の`video-game-design`、`unity-beginner-development`、`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+`happy-preview`には実利用検証中の`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
 
 `to-prototype`はUI設計案の操作と状態を実装前に試し、反応を設計へ戻すプレビューskill。初版は共通のHTML土台と初期化・基本検証だけを提供し、案件の画面構成を共通テンプレートで固定しない。
 
-`technical-design-review`もプレビューとして追加する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
+`technical-design-review`はhappy-codingへ昇格する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
 
 ## Yohakuの境界
 
@@ -30,11 +30,9 @@
 
 homeの常設原則は`home-bootstrap/assets/AGENTS.md`、読者に合わせた調整はYohakuへ分ける。両者は単独でも使え、他の圧縮skillを必須にしない。配置と試用条件は[設計記録](design/005_YOHAKU.md)を参照する。
 
-## ゲーム制作の境界
+## 配布変更（2026-11-03）
 
-`video-game-design`は、遊びの核・ルール・導入を試作と人の観察で判断する。宮本茂を軸とする14名の根拠カードと第三者分析を持ち、本人発言・証言・制作記録・分析・推定を分ける。ゲーム以外の画面設計は`ui-design`、ソフトウェアの構造判断は`technical-design`が担当する。
-
-`unity-beginner-development`は、UnityのEditor・component・Scene・Prefab・入力・buildの接続を担当する。一般.NETのSDK契約は`dotnet`、工程管理は`implement`へ分け、Unityの動作確認を`dotnet test`で代替しない。両skillとも子ども向け制作に使えるが、年齢・2D・ジャンルを固定しない。
+`technical-design-review`は実利用と既存評価の範囲を整理し、通常配布へ移動する。未使用の`video-game-design`、`unity-beginner-development`は所有者の依頼で配布を終了する。過去の設計・評価・利用記録は保持し、削除した配布物はGit履歴から復元できる。[判断根拠・未確認範囲・移行](design/017_SKILL_DISTRIBUTION.md)を参照する。
 
 ## 既存skillへ統合したもの
 
