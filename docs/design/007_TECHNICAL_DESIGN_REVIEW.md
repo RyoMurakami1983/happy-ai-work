@@ -44,3 +44,7 @@ Constitution 1.0.0の正確さ、評価整合性、人間の所有権、最小�
 ## 後続判断（2026-09-22）
 
 利用者の合意により、使われないcoding routerを削除した。DR-01のcoding入口への接続は廃止し、個別skillのdescriptionと既存のtechnical-designのhandoffで担当を区別する。interview-with-docsの条件付きモデリングと新規レビューskillは維持する。この変更はレビューskillの本文・基準を変えず、上記評価の対象版と結果は保持する。
+
+## 後続の配布判断（2026-11-03）
+
+上記は当時の試用設計・評価記録として保持する。通常配布への移動案、実利用証拠の範囲と版差分、移行案内は[配布判断](017_SKILL_DISTRIBUTION.md)を参照する。現在の配布先はhappy-coding。

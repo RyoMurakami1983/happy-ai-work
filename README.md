@@ -59,6 +59,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - UI設計・評価: `ui-design`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
+- [technical-design-review](plugins/happy-coding/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 
 依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
 
@@ -68,19 +69,18 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 `implementation-plan`は配布外へアーカイブし、計画機能を`implement`へ統合しました。計画のみの依頼では実装せず、実装まで任された場合は必要な計画調整を同じskill内で行います。保存済みplanは再利用できます。[判断と移行](docs/adr/0011-integrated-implementation-planning.md)を参照してください。
 
+`technical-design-review`はhappy-previewからhappy-codingへ移動しました。happy-codingを導入・更新し、呼出しnamespaceも変更してください。未使用の`video-game-design`／`unity-beginner-development`は配布を終了しました。既存インストールが自動削除されるとは限りません。happy-previewも更新し、古い登録が残る場合は旧skillを無効化・削除してください。他の試用skillを使う場合はplugin全体を無効化しないでください。[判断と制約](docs/design/017_SKILL_DISTRIBUTION.md)を参照してください。
+
 ### happy-preview（試用版）
 
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
-- [video-game-design](plugins/happy-preview/skills/video-game-design/SKILL.md): 宮本茂を軸に14名の知見から遊び・試作・観察を設計
-- [unity-beginner-development](plugins/happy-preview/skills/unity-beginner-development/SKILL.md): Unity初心者の実装・Scene接続・動作確認
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
-- [technical-design-review](plugins/happy-preview/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 - [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
 
-初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
+初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 
