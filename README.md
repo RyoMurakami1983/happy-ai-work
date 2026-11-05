@@ -14,7 +14,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価 |
+| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価、文章・コード・設計の推敲 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
@@ -49,6 +49,10 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
 - `skill-eval`: 実務に即した通常課題・難問で、素のモデルや旧版との差、triggerと振る舞いを評価
 
+- [tanka-to-haiku](plugins/happy-core/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ
+
+短歌と俳句は短縮前の本文を採用し、happy-previewからhappy-coreへ移動しました。旧preview版を利用していた場合はcoreを導入・更新し、previewも更新してください。古い登録が残れば旧skillを無効化・削除し、他のpreview skillを使う場合はplugin全体を無効化しないでください。明示呼出しのplugin namespaceはcoreへ変更します。[移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照してください。
+
 ### happy-coding
 
 - 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implement`
@@ -79,9 +83,6 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 - [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
-- [tanka-to-haiku](plugins/happy-preview/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ（実利用検証中）
-
-短歌と俳句は[試用範囲と基本確認](docs/tanka-to-haiku-preview.md)を参照してください。短さだけを目的にせず、独立した効果比較と実利用での確認はこれからです。
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 

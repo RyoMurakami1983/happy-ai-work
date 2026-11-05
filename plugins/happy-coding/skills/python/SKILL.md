@@ -5,25 +5,14 @@ description: Pythonリポジトリの環境・依存・lint・型検査・テス
 
 # Python
 
-既存repoのpackage manager、lockfile、formatter、linter、type checker、test runnerを先に確認し、greenfield向け既定で上書きしない。
+既存repoのpackage manager・lockfile・formatter・linter・type checker・test runnerを尊重し、greenfield既定で上書きしない。
 
-## ワークフロー
+1. `pyproject.toml`、lockfile、tool設定、README、CIからPython versionと実行入口を確定し、既存入口を使う。Windows sandboxでPython／uv起動やcache pathが失敗したら[windows-sandbox-and-uv.md](references/windows-sandbox-and-uv.md)で一度のpreflightから入口変更を判断する。新規構築の依頼時だけ[project-setup.md](references/project-setup.md)で最小構成を選ぶ。
+2. [coding-practices.md](references/coding-practices.md)を読み、変更に関係する型境界・例外処理・I/O分離・path操作を確認する。
+3. formatter、lint、type check、focused testはrepo所定の順序を優先して実行し、必要なら全体testへ広げる。CLI／scriptは終了コード・stdout／stderr・文字コード・Windows／WSLのpath差も確認する。
 
-1. `pyproject.toml`、lockfile、tool設定、README、CIからPython versionと実行入口を確定する。
-2. 既存環境がある場合はその入口を使う。Windows sandboxでPython／uvの起動やcache pathが失敗した場合は[windows-sandbox-and-uv.md](references/windows-sandbox-and-uv.md)を読み、実行入口の変更を一度のpreflightで判断する。新規構築を依頼された場合だけ[project-setup.md](references/project-setup.md)から最小構成を選ぶ。
-3. 型境界、例外処理、I/O分離、path操作を変更内容に合わせて確認する。詳細は[coding-practices.md](references/coding-practices.md)を読む。
-4. formatter、lint、type check、focused testをrepoの順序で実行し、必要なら全体testへ広げる。
-5. CLIやscriptでは終了コード、標準出力／標準エラー、文字コード、Windows／WSLのpath差を確認する。
+常用GUIの頻繁な入力確認・保存ごとに重いPython全体を起動・終了しない。EXE化・非同期化だけでは起動費用は消えない。設計時に頻度とprocess寿命を確認し、常駐再利用や軽い処理の分離を検討する。[coding-practices.md](references/coding-practices.md)のGUI項目に従い、実配布物の初回起動と継続操作を別々に測る。単発CLI・EXE・one-file自体は禁止しない。
 
-## GUIバックエンドのNGパターン
+永続的な規約追加の依頼時は[AGENTS.fragment.md](assets/AGENTS.fragment.md)をrepoに合わせ、最寄りの`AGENTS.md`へ統合する。
 
-常用GUIの頻繁な入力確認・保存などのたびに、重いPythonバックエンド全体を起動・終了する構成は採用しない。EXE化や非同期呼出しだけでは起動費用は消えない。
-GUI連携では設計時に呼出し頻度とprocessの生存期間を確認し、常駐processの再利用や軽い処理の分離を検討する。[coding-practices.md](references/coding-practices.md)のGUI項目に従い、実配布物の初回起動と継続操作を分けて測る。単発CLI、EXE、one-file形式自体の一律禁止ではない。
-
-repoへ永続的なPython規約を追加する依頼では、[AGENTS.fragment.md](assets/AGENTS.fragment.md)を対象repoに合わせて最寄りの`AGENTS.md`へ統合する。
-
-## 境界
-
-- `uv`、Ruff、pytest等はgreenfieldの有力候補であり、既存Poetry／pip-tools／PDM／mypy等を無断置換しない。
-- 型注釈やdocstringを機械的に全コードへ追加せず、公開境界と変更箇所を優先する。
-- formatterが扱うstyleをskill本文へ大量に複製しない。
+`uv`・Ruff・pytestはgreenfieldの候補であり、Poetry／pip-tools／PDM／mypy等を無断置換しない。型注釈・docstringは公開境界と変更箇所を優先し、全コードへ機械追加しない。formatterのstyleを本文へ大量複製しない。
