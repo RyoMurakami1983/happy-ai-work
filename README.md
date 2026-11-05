@@ -47,7 +47,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
 - `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
 - `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
-- `skill-eval`: 既存skillのtriggerと振る舞いをrealistic scenarioで評価
+- `skill-eval`: 実務に即した通常課題・難問で、素のモデルや旧版との差、triggerと振る舞いを評価
 
 ### happy-coding
 
@@ -79,6 +79,9 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 - [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
+- [tanka-to-haiku](plugins/happy-preview/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ（実利用検証中）
+
+短歌と俳句は[試用範囲と基本確認](docs/tanka-to-haiku-preview.md)を参照してください。短さだけを目的にせず、独立した効果比較と実利用での確認はこれからです。
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
