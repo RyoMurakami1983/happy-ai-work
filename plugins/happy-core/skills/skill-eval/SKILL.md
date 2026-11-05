@@ -1,6 +1,6 @@
 ---
 name: skill-eval
-description: 既存skillや再利用promptの実際の振る舞いをrealistic scenarioで評価し、baseline／current比較、誤起動・未起動、曖昧さ、回帰を証拠として残す。skillの作成ではなく、公開前や大幅変更後のbehavioral evaluationで使う。
+description: 既存skillや再利用promptの振る舞いを実務に即した通常課題・難問で評価し、素のモデルや旧版に対する追加価値、失敗、誤起動・未起動、回帰を証拠として残す。公開前・大幅変更後の検証や、満点続きで差が見えない比較の見直しに使う。skillの作成は扱わない。
 ---
 
 # Skill evaluation
@@ -14,12 +14,12 @@ skillの文章を好みで採点せず、期待する起動、期待しない起
 ## ワークフロー
 
 1. 評価する問いを一つに絞る。trigger精度、workflow遵守、成果物品質、旧版との差、曖昧さを混ぜない。
-2. typical scenario、edge case、should-not-triggerを含む2〜5件のpromptを用意する。
-3. scenarioごとにcritical要件、通常要件、禁止事項、観測方法を実行前に固定する。
-4. 可能なら白紙の別task／独立実行者へ、対象skill、scenario、必要最小限のartifactだけを渡す。利用できなければ独立性不足を明示し、静的reviewをbehavioral評価と呼ばない。
+2. まず2〜5件のtypical scenario、実務上の境界・例外・曖昧さを含む難問、should-not-triggerを用意する。比較や難度の予備調整では[prompt-evaluation.md](references/prompt-evaluation.md)の測定設計を先に読み、調整用と未使用の本評価を分ける。低得点や都合のよい差を目標にしない。
+3. scenarioごとにcritical要件、通常要件、禁止事項、観測方法と、比較条件・反復数・終了条件を実行前に固定する。
+4. 条件ごとに白紙の別task／独立実行者を使い、scenario、必要なartifactとその条件のskillだけを渡す。生成役へrubric・他条件の出力を渡さず、採点役へ条件名を伏せる。実際の入力・環境・skill適用状況を記録する。独立実行が利用できなければ不足を明示し、静的reviewをbehavioral評価と呼ばない。
 5. 要件達成、誤起動／未起動、裁量補完、余分な手順、失敗理由を記録する。全skill共通のコミュニケーション品質は[prompt-evaluation.md](references/prompt-evaluation.md)を読み、発言・通知時点と短い判定根拠を残す。未観測を成功へ補完しない。
-6. 旧版と比較する場合は同じscenarioと判定基準を使い、一度に一つの変更テーマだけ評価する。
-7. 修正が必要なら公式`skill-creator`へ戻し、同じscenarioを再実行する。
+6. 素のモデルや旧版との比較では同じscenario・環境・判定基準を使い、一度に一つの変更テーマだけ評価する。通常課題と難問の結果を分け、満点続きなら識別力を点検する。差が観測されないだけで同等性を主張しない。
+7. 修正が必要なら公式`skill-creator`へ戻す。既知caseで回帰を確認し、未使用caseで追加価値を検証する。調整後の評価は新runとして残す。
 
 評価資産をrepoへ残す場合はraw runではなく、version付きcaseとsanitize済みappend-only recordだけを昇格する。機械判定できるschema、path、field、secret patternはvalidatorへ任せる。
 

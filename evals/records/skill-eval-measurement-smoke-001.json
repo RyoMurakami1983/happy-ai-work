@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "record_id": "skill-eval-measurement-smoke-001",
+  "target_revision": "f3609c5522490b56c1d90e2267e8055d87ace954 plus frozen measurement-v1 candidate",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "6.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-11-05T14:59:43.338005+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Three known public synthetic smoke cases; no final adoption or comparative effectiveness claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "/root",
+    "generators": {
+      "plan": "/root/eval_plan",
+      "saturation": "/root/eval_saturation",
+      "reader": "/root/eval_reader"
+    },
+    "blind_grader": "/root/eval_blind_grader",
+    "evaluator": "/root/eval_blind_grader",
+    "independence": {
+      "status": "valid",
+      "reason": "Fresh generators received only the candidate instructions and their own prompt, not rubric or peer outputs. Separate grader received fixed cases and raw answers, not implementation or parent conclusions. Single candidate; no comparative labels to conceal."
+    }
+  },
+  "conditions": {
+    "execution": {
+      "comparison": "single candidate, one fresh generation per case, no baseline or automatic trigger test",
+      "precommitment": "v4 cases and all critical/normal/prohibited items written before generation; no changes after observing results",
+      "instructions": "Read-only candidate path and necessary references; no evaluation assets, other agent outputs, modifications or external operations; report files read. Actual prompts were v4 case prompts."
+    },
+    "environment": {
+      "model": "inherited session model; exact runtime identifier and sampling settings not independently observed",
+      "input": "public synthetic prompts and packaged SKILL.md/prompt-evaluation.md; no real handoff documents or target skill",
+      "application": "Explicit skill path; generators reported reading SKILL.md and prompt-evaluation.md. Full tool traces and runtime injection were not independently audited; self-reports are not treated as verified application evidence.",
+      "common_instructions": "Fresh task; apply specified skill and references, do not read evals or peer outputs, do not modify files or perform experiments; record paths read."
+    },
+    "evidence": {
+      "response_hashes": {
+        "plan": "81f63d1954155a29542484b9db288698ffbba5d079f3da1e1d6c5ecd958d7d2c",
+        "saturation": "c31246c832381eb4e96eafa8e45fd680358c91644869d578c714a04546ef9392",
+        "reader": "7531a2429df34b6c1d91d0234db1068f362bdbf727dc72fb5f103e462be1d731"
+      },
+      "scoring": "Frozen per-item rubric; independent grader. Omitted normal requirements retained as failures; no rubric or candidate adjustment after grading."
+    },
+    "decision": {
+      "limitations": [
+        "No old-version or skill-free comparison",
+        "No unused sealed hold-out or generalization evidence",
+        "No automatic invocation test",
+        "No real reader judgment or human time measurement",
+        "Single response per case; no variance estimate",
+        "Incomplete runtime model/settings capture limits reproducibility",
+        "Actual instruction application not independently verified from complete tool traces"
+      ],
+      "normal_omissions": [
+        "Saturation answer omitted explicit boundary/exception case construction and per-case/per-repeat reporting",
+        "Reader answer omitted future capture plan for input/environment/application evidence"
+      ],
+      "new_record": "required"
+    }
+  },
+  "case_results": [
+    {
+      "condition": "skill-eval-comparison-design-004",
+      "critical_passed": 5,
+      "critical_total": 5,
+      "normal_passed": 2,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "skill-eval-saturated-pilot-004",
+      "critical_passed": 5,
+      "critical_total": 5,
+      "normal_passed": 0,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    },
+    {
+      "condition": "skill-eval-reader-uncertainty-004",
+      "critical_passed": 5,
+      "critical_total": 5,
+      "normal_passed": 1,
+      "normal_total": 2,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0
+    }
+  ],
+  "artifact_hashes": {
+    "evals/skill-eval/cases.v4.json": "ba948736ff8505c13e4153dd297933a0a495352a2f7a71b17b74e4dd7c030013",
+    "evals/skill-eval/snapshots/measurement-v1/SKILL.md.txt": "009a873bbac3020c8c467a90dd40c9fb946ca32ecf68a629b5cb814ad0eed90d",
+    "evals/skill-eval/snapshots/measurement-v1/prompt-evaluation.md.txt": "3510f6a183e871435a1cb688aa52581f8411830577f95e49947260b32d7d2812"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/records/skill-eval-measurement-smoke-001.json",
+      "evals/skill-eval/cases.v4.json",
+      "evals/skill-eval/snapshots/measurement-v1/SKILL.md.txt",
+      "evals/skill-eval/snapshots/measurement-v1/prompt-evaluation.md.txt"
+    ],
+    "session_only_not_persisted": [
+      "Raw generator answers and independent grader notes",
+      "Execution context and tool histories"
+    ]
+  },
+  "decision_summary": "Bounded smoke: critical 15/15, normal 3/6, prohibited 0. Continue with normal omissions preserved. No superiority, equivalence, automatic trigger, reader-effect or final-adoption claim."
+}
