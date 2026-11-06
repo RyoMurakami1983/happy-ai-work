@@ -1,9 +1,11 @@
 # 短歌と俳句の試用範囲
 
 Date: 2026-11-05 (UTC)
-Status: Preview / 実利用での効果は検証中
+Status: 初版Preview時点の記録（現行はhappy-core）
 
-[tanka-to-haiku](../plugins/happy-preview/skills/tanka-to-haiku/SKILL.md)は、観察・凝縮・取り合わせ・推敲によって、小さな形に意味を宿すためのskillである。利用者が確認した短歌・俳句案を核とし、Yohakuとの統合や既存Yohakuの変更は行わない。
+所有者は短縮前の本文を採用し、happy-coreへの移動を承認しました。[現在の配布・移行と検証範囲](design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照してください。以下は初版時点の記録であり、現在の配布状態や追加評価結果を示しません。
+
+[tanka-to-haiku](../plugins/happy-core/skills/tanka-to-haiku/SKILL.md)は、観察・凝縮・取り合わせ・推敲によって、小さな形に意味を宿すためのskillである。利用者が確認した短歌・俳句案を核とし、Yohakuとの統合や既存Yohakuの変更は行わない。
 
 比較実験で観測された「短くても必要情報を伝える傾向」を試用の動機とする。小規模な比較では情報保持が全条件満点であり、一般的優位やコード・設計の品質向上は証明されていない。今回追加した指示も、過去の比較対象と同一のものとして扱わない。
 

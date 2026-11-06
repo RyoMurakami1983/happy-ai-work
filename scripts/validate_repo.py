@@ -79,6 +79,7 @@ REQUIRED_CORE_SKILLS = {
     "improvement-loop",
     "interview-me",
     "skill-eval",
+    "tanka-to-haiku",
     "workspace-bootstrap",
 }
 

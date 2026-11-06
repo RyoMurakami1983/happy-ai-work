@@ -74,6 +74,8 @@ scriptはrepoルートから実行する。Python標準libraryのみを使う。
 
 happy-previewは任意導入のまま。試用希望と導入が確認できた場合だけ、`--plugin happy-preview`、対応するsource、installedPathで比較する。未導入なら「未導入・更新対象外」と記録し、チェックを通すために導入しない。
 
+短歌と俳句のcore移動では、coreの`skills/tanka-to-haiku/SKILL.md`と`agents/openai.yaml`を比較し、previewの`skills/tanka-to-haiku`がsource/installed双方で不在か確認する。旧directoryだけの残存も不一致になる。12件の本文凝縮も対象SKILL.mdをallowlistへ追加している。これは選んだfileの一致確認で、plugin全体の一致ではない。[配布版・既存利用者の移行](design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照し、旧namespaceを使う呼出しをcoreへ変更する。preview未導入者へ検査のためだけに導入しない。preview導入済みでも実path未確認なら移動元の除去は未確認と記録する。
+
 ## 2. 対応する方法で更新する
 
 [公式CLIコマンド](https://learn.chatgpt.com/docs/developer-commands)と導入先の`--help`を照合する（資料確認日: 2026-10-01）。Git登録の対象marketplaceだけを更新する。
