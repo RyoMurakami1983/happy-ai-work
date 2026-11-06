@@ -42,7 +42,7 @@ Status: 所有者承認済みの変更案。PRで検証し、マージは別途�
 
 `happy-preview/skills/tanka-to-haiku`を`happy-core/skills/tanka-to-haiku`へ移動する。本文は基準commitと完全一致させ、frontmatterのPreview表示とUIの「試用版」表示だけを除く。名前とdefault promptは維持する。旧短縮案の「一景で届くなら」「意味を立ち上げる」の省略を採用しない。
 
-この通常配布は所有者の明示判断による。[ADR 0004](../adr/0004-preview-plugin-distribution.md)が求める異なる実案件での複数回有用性確認を、新たに完了したとは主張しない。[初版時点の記録](../tanka-to-haiku-preview.md)も保持する。品質の普遍的優位を主張する昇格ではない。
+この通常配布は[ADR 0004の当該本文だけの限定判断](../adr/0004-preview-plugin-distribution.md)に従う。通常の昇格gateにある異なる実案件での複数回有用性確認は未完了のまま保持し、所有者の明示承認に基づく今回限定の移動として区別する。[初版時点の記録](../tanka-to-haiku-preview.md)も保持する。品質の普遍的優位を主張する昇格ではない。
 
 | plugin | 基準版→今回 |
 | --- | --- |
