@@ -82,6 +82,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
+- [project-protection](plugins/happy-preview/skills/project-protection/SKILL.md): ローカル起点でmain直接操作・秘密混入の事故防止設定を計画・診断（実利用検証中）
 - [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
