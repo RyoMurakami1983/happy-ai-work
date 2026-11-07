@@ -8,6 +8,8 @@ description: 合意済みの目的・要件から、module責務、public interf
 要求の「何を実現するか」を、実装可能な「どの構造で実現するか」へ変換する。
 このskillは構造判断とレビューに必要な根拠の準備を所有する。目的・要件はPRDまたは同等の合意記録を参照し、業務上のモデル・不変条件は `domain-modeling`、実装順序やvertical sliceの進捗計画は `implement`の計画段階 へ渡す。
 
+目的と構造の関係や説明を整えるときは、利用可能な`happy-core`の`tanka-to-haiku`を読み、適用する。本文を複製せず、採用済みcontract・対象外・Unknownsを保つ。未導入なら導入待ちにせず既存手順で進める。
+
 ## 入力ゲート
 
 次を確認する。
@@ -104,6 +106,7 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 ```markdown
 # Technical Design NNN: [Name]
 
+## Decision Summary
 ## Goal / Success Criteria / Out of Scope
 ## Normative Inputs
 ## Purpose / Requirement Trace
@@ -121,6 +124,8 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 ## Review Readiness / Handoff
 ## Artifacts
 ```
+
+冒頭に、目的・主な選択と理由・代償・重要risk・未決事項・人が判断することを短く置き、詳細のcontract・AC・失敗時挙動・根拠へつなぐ。概要と詳細は同じ設計正本の入口と本文とし、独立した仕様にしない。人もAIも必要な詳細へ進めるようにし、決定状態・対象外・Unknowns・保証範囲を照合する。
 
 見出しは規模に応じて統合・省略してよい。根拠から設計・検証への対応、適用するcontract、未決事項とレビュー要否は、短い設計でも追えるようにする。domain model文書がない場合はその列を省き、必要な業務条件を合意記録へ直接結び付ける。
 
