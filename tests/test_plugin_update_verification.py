@@ -53,6 +53,39 @@ class PluginUpdateVerificationTests(unittest.TestCase):
         self.assertTrue(set(PLANNING_SAMPLES).issubset(SAMPLES["happy-coding"]))
         self.assertIn("skills/implementation-plan", ABSENT_PATHS["happy-coding"])
 
+    def test_stale_or_missing_moved_skill_cannot_match_core(self):
+        for relative in ("skills/tanka-to-haiku/SKILL.md", "skills/tanka-to-haiku/agents/openai.yaml"):
+            with self.subTest(file=relative):
+                path = self.installed / relative
+                path.write_text("stale preview copy", encoding="utf-8")
+                report = self.report()
+                self.assertEqual(report["status"], "mismatch")
+                self.assertEqual([entry["file"] for entry in report["files"] if not entry["matches"]], [relative])
+                path.unlink()
+                self.assertEqual(self.report()["status"], "mismatch")
+                path.write_bytes((self.source / relative).read_bytes())
+                self.assertEqual(self.report()["status"], "samples_match")
+
+    def test_preview_update_must_remove_old_tanka_entrypoint_and_directory(self):
+        self.source = Path(self.directory.name) / "preview-source"
+        self.installed = Path(self.directory.name) / "preview-installed"
+        self.populate_samples("happy-preview")
+        self.assertEqual(self.report("happy-preview")["status"], "samples_match")
+        retired = self.installed / "skills/tanka-to-haiku"
+        retired.mkdir()
+        for entrypoint in (False, True):
+            with self.subTest(entrypoint=entrypoint):
+                if entrypoint:
+                    (retired / "SKILL.md").write_text("old preview skill", encoding="utf-8")
+                report = self.report("happy-preview")
+                self.assertTrue(all(entry["matches"] for entry in report["files"]))
+                self.assertEqual(report["status"], "mismatch")
+                self.assertEqual(report["absent_paths"][0]["installed"]["state"], "present")
+                self.assertEqual(report["session_load"], "not_checked")
+        (retired / "SKILL.md").unlink()
+        retired.rmdir()
+        self.assertEqual(self.report("happy-preview")["status"], "samples_match")
+
     def test_stale_planning_reference_alone_does_not_match(self):
         self.populate_samples("happy-coding")
         self.assertEqual(self.report("happy-coding")["status"], "samples_match")

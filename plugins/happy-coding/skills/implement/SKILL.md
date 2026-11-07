@@ -5,210 +5,97 @@ description: >
   実装計画だけの依頼にも使い、その場合は計画で停止する。PR作成やふりかえりは別skill。
 ---
 
-# implement — TDD で実装して閉じる
+# implement — TDDで実装して閉じる
 
-実装に必要な計画と実行を一つのloopで扱います。必要な粒度で順序・slice・検証を決め、承認済みの範囲を実装します。構造判断は`technical-design`が所有します。
-計画だけの依頼（plan-only）では、調査と計画成果物の作成までで停止し、実装コード・test・設定の変更や実行へ進みません。実装の明示依頼がある場合は、計画への別の承認を機械的に挟みません。計画への賛意だけは実装許可にしません。
-PR 作成、PR review 対応、pre-PR review、furikaeri は別 skill に任せます。
+要求・設計・issueから順序とvertical sliceを計画し、許可範囲を実装・検証してhandoffで閉じる。構造判断は`technical-design`、PR作成・PR review対応・pre-PR review・furikaeriは別skillが所有する。
 
-## こんなときに使う
+計画・命名・処理・完了報告を整えるときは、利用可能な`happy-core`の`tanka-to-haiku`を読み、適用する。本文を複製せず、AC・許可範囲・検証証拠・振る舞いを保つ。未導入なら導入待ちにせず既存手順で進める。
 
-- 実装計画だけを作りたいとき、または計画からローカル実装まで任せたいとき
-- 受け入れ条件を vertical slice に分けたいとき
-- TDD の RED/GREEN/REFACTOR を崩さず進めたいとき
-- slice ごとに evidence gate を通したいとき
-- 実装完了後に handoff だけ残して閉じたいとき
+## 1. 契約と許可
 
-## Core Loop
+最初にplan-onlyか実装までかを区別する。plan-onlyは調査・計画成果物で停止し、実装コード・test・設定の変更／実行をしない。計画に実装許可は不要。実装直前に明示依頼・承認の根拠を確認する。明示実装依頼へ計画承認を機械的に挟まず、同じ許可を聞き直さない。計画への賛意だけは実装許可ではない。
+
+契約として次を整理し、必要十分な形へ圧縮する。要求不足は`interview-with-docs`／`to-prd`、新しい構造判断は`technical-design`へ戻し、不要な設計議論を広げない。
+
+- 目的・対象・非対象・AC、主要なuser-visible behavior／外部観測contract
+- その範囲の実装開始を許可した利用者発言。handoff自己申告だけでなく会話と最新制約を照合し、Issue選択・PRD／計画への賛意・設計review PASSで代替しない
+- 省略工程・理由・同じ範囲と省略内容への許可。根拠不足や範囲変更は影響部分を開始せず確認へ戻す
+- `finalized_contract`があれば採用normative source・exclusions・unknowns・主要target trace
+- `artifacts:`があれば保存pathか、例外理由付き`conversation-only`か
+- test／build／launch commandと戻り先。`FAIL`は実装修正、計画調整はこのskill、真の契約変更は`REPLAN_REQUIRED`として所有者へ戻す
+
+新規UIまたは操作・遷移変更は[ui-design](../ui-design/SKILL.md)と関係するprinciples／checklistを参照する。UX原則・操作設計はui-design、構造はtechnical-designが所有し、採用操作を実装・検証へ落とす。十分な合意済みUI設計は再利用し、参照だけの再設計・承認待ち・文書を増やさない。非UI変更では起動せず、軽微な文言修正は影響観点だけ確認する。
+
+## 2. 計画とbootstrap
+
+[垂直スライスと短縮条件](references/vertical-slice.md)で振る舞い・AC・実依存・順序・検証・戻り条件を整理する。複数sliceだけを理由に別skillや確認待ちへ戻さない。明確な低risk変更は短い会話内計画でもよい。後続判断・互換性・移行・運用・複数repoが関われば[計画の詳細](references/planning.md)を読む。
+
+saved-by-defaultで`docs/plan/NNN_PLAN.md`へ必要な計画を保存し、[成果物規約](references/WORK_ARTIFACTS.md)に沿い実在pathか具体的なconversation-only例外理由を残す。既存plan・`finalized_contract`・HITL契約は今回の許可と現状に照合して再利用し、旧skillのplanを再作成／移動させない。
+
+conversation-onlyを選んでも、会話内計画の説明だけで終了しない。最後の利用者向け報告に次の2行を必ず含める。
 
 ```text
-implementation contract
-  -> lightweight plan or saved plan
-  -> plan-only handoff OR authorized implementation
-  -> bootstrap check
-  -> slice contract
-  -> RED
-  -> GREEN
-  -> REFACTOR
-  -> slice gate
-  -> next slice or completion handoff
+artifacts: conversation-only
+exception reason: <文書不要の明示指定、小さな低risk sliceで後続判断記録不要など、今回の具体的理由>
 ```
 
-## ワークフロー: TDD で実装して閉じる
+これは既存の成果物契約の宣言であり、追加ファイル・計画再承認・重いhandoffを要求しない。保存する場合は`artifacts:`に実在pathを列挙する。終了報告を送る直前に、選択した保存方針とこの宣言の対応を照合し、不足を補う。
 
-### ステップ 1 — 実装契約を確認する
+plan-onlyは計画・未確定・許可状態・次の判断を返して停止する。計画／review PASSを実装済みとせず、PLAN_DONEへ改名しない。
 
-まず依頼が計画のみか実装までかを確認します。以下を契約として整理し、順序やslice分割はこのskill内で決めます。要求の不足は `interview-with-docs` / `to-prd`、新しい構造判断は `technical-design` へ戻します。計画作成には実装許可を要求せず、実装に入る直前にその許可を確認します。
+検証command前に[検証の通知と報告](references/verification-communication.md)を読む。全件suiteの長い試験は目的・合成／実環境・時間見込みを事前通知し、終了時に結果・未確認・必要な判断を伝える。通知で許可を聞き直さず、短い通常testに待ちを増やさない。
 
-- 目的、対象、非対象
-- その範囲の実装開始について利用者の明示的な依頼・承認と、その根拠となる発言。handoffの自己申告だけでなく、利用可能な会話と最新の制約を照合する。Issue選択、PRDや計画への賛意、設計レビューのPASSを代替にしない
-- 工程を省略した場合は、その工程と理由、同じ範囲・省略内容への許可。根拠不足や範囲変更があれば影響部分を開始せず確認へ戻す。取得済みの同じ許可は聞き直さない
-- 受け入れ条件
-- 主要な user-visible behavior または外から観測できる contract
-- handoffに`finalized_contract`がある場合は、採用済みnormative source、exclusions、unknowns、主要target trace
-- handoff に `artifacts:` フィールドがある場合は、その意味（保存済み path か、例外理由付きの `conversation-only` か）
-- 実行する test / build / launch command
-- 失敗時の戻り先: `FAIL` は実装修正、計画調整はこのskill内、真の契約変更は `REPLAN_REQUIRED` として所有者へ戻す
+bootstrapでrepo instructions・local hooks・workflow・git状態・build／test／launchを確認する。interactive appは`references/interactive-app-bootstrap-checklist.md`、複数repoで`plan.md`に`dependencies.contracts.requires`がある場合だけ`checkpoints/contract_verify.py`でrequired artifactを検証する。
 
-実装に不要な設計議論をここで広げません。必要十分な契約に圧縮してから進みます。
+handoffの`artifacts:`列挙pathは実在を確認し、欠落／誤記を調べ、根拠が揃う計画はこの段階で修復する。未確認contractを推測して実装しない。`conversation-only`は`exception reason:`と例外条件を確認し、保存必須なら実装前に保存する。保存禁止と安全な引継ぎが両立しないときは競合だけ確認する。今のsliceを壊すbootstrap不足は直し、無関係な整備は混ぜない。
 
-UIを新規作成する、または利用者の操作・画面遷移を変更する場合は、[ui-design](../ui-design/SKILL.md)とそこで案内するprinciples / checklistの関係する観点を参照する。UXの原則・操作設計はui-design、構造判断はtechnical-designが所有し、このskillは採用操作を実装・検証へ落とす。参照済みの合意されたUI設計が十分なら再利用し、参照のためだけの再設計・承認待ち・必須文書を増やさない。非UI変更では起動せず、軽微な文言修正などは影響する観点だけを確認する。
+## 3. slice contract
 
-### 実行前の計画 — 必要な粒度で作る
+planの有無を問わず直前に固定する。新事実による分割・統合・順序変更は、目的・AC・公開契約・採用構造・許可範囲・実依存・HITL・回復可能性を保てるなら、理由と影響検証を計画へ更新して継続する。境界／順序の変更だけを`REPLAN_REQUIRED`にしない。契約変更・根拠不明・追加権限は影響部分を止め所有者へ戻す。外部前提待ちのsliceだけ保留し、独立した許可済み作業は進められる。
 
-[垂直スライスと短縮条件](references/vertical-slice.md)に従い、観測可能な振る舞い、AC、実依存、順序、検証、戻り条件を短く整理します。複数sliceという理由だけで別skillや確認待ちへ戻しません。明確な低risk変更は会話内の短い計画でよく、後続判断・互換性・移行・運用・複数repoが関わる場合は[計画の詳細](references/planning.md)を読みます。
+最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
 
-保存はsaved-by-defaultです。必要な計画を`docs/plan/NNN_PLAN.md`へ保存し、[成果物規約](references/WORK_ARTIFACTS.md)に従って実在pathまたはconversation-onlyの例外理由を残します。既存の保存済みplan、`finalized_contract`、HITL契約は読み込み、今回の許可・現状と照合して再利用します。旧skillで作ったplanの再作成や移動を要求しません。
+HITL review contract付きinteractive sliceはreviewable milestone・launch・代表操作・期待結果・再開条件も固定する。人間の主観／実端末／外部appのacceptanceを自動testで代替しない。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
 
-plan-onlyなら、計画、未確定事項、許可の状態、次に必要な判断を返してここで停止します。計画済み・レビューPASSを実装済みと報告せず、PLAN_DONEへの改名も行いません。
+## 4. RED → GREEN → REFACTOR
 
-### ステップ 2 — bootstrap を軽く確認する
+対象理由で失敗するtestを1つ書いてREDを実測し、通す最小実装でGREEN、振る舞いを保って読みやすさ・重複・境界を整える。次testも同じslice内で繰り返す。保守性改善が主なら[safe-refactoring.md](references/safe-refactoring.md)で守る振る舞いと比較手段を先に固定する。
 
-検証commandの実行前に[検証の通知と報告](references/verification-communication.md)を読む。全件suiteに含まれる長い試験の目的・合成/実環境・所要時間の見込みを事前通知し、終了時は結果・未確認・必要な判断を伝える。通知で承認済み作業を再確認せず、短い通常testに待ちを増やさない。
+1 test→1 minimal implementation、public interface経由の振る舞いを守る。private methodや内部collaborator回数を固定せず、mockは外部API・時刻・乱数・file I/O・command等system boundaryに限る。speculative codeとall tests firstのhorizontal slicingを避ける。docs-only／config-onlyなどREDが成立しなければTDDを装わずverification commandと期待結果を契約へ残す。
 
-対象 repo で次を確認します。
+## 5. gateとHITL
 
-- repo instructions、local hooks、workflow の有無
-- git 管理状態
-- build / test / launch command
-- interactive app なら `references/interactive-app-bootstrap-checklist.md`
-- 複数リポで `plan.md` の `dependencies.contracts.requires` がある場合だけ、`checkpoints/contract_verify.py` で required artifact を検証する
-- handoff に `artifacts:` フィールドがあり path が列挙されている場合は、その file が repo に存在することを確認する。存在しない場合は、誤記か欠落かを調べ、根拠が揃う計画はこの計画段階で修復する。未確認の契約を推測して実装しない
-- `artifacts: conversation-only` の場合は `exception reason:` があり、成果物規約の例外条件を満たすことを確認する。保存が必要なら実装前に計画を保存する。利用者が保存禁止を指定し、安全な引継ぎと両立しない場合は競合だけ確認する
+各sliceでRED実測と失敗理由の一致・GREEN実測・acceptance成功・public interface確認・speculation／不要抽象化／過剰mockの不在・contract差分の`FAIL`／`REPLAN_REQUIRED`分類を証拠で評価する。詳細は[eval-checklist.md](references/eval-checklist.md)の関係項目だけを使う。
 
-bootstrap の不足が今の slice を壊すなら修正します。関係ない整備は実装 scope に混ぜません。
+- `PASS`: 次sliceへ
+- `FAIL`: 同sliceの実装へ
+- `REPLAN_REQUIRED`: 要求／ACは`to-prd`／`interview-with-docs`、構造／公開契約は`technical-design`、権限は利用者へ。安全な順序／分割調整は計画更新で継続する
 
-### ステップ 3 — slice contract を固定する
+GUI／interactive観測、trust boundary・migration・data loss・concurrency等高risk、広い回帰、弱い自己評価evidence、利用者指定では、利用可能なら別の動的subagentにslice contract・差分・RED／GREEN／acceptance evidenceだけを渡す。評価者は修正せずverdictと根拠を先に返し、確定後に単一writerが直す。並列実装しない。subagent不可なら実装時推論から離れてchecklistと差分を再読する。
 
-planの有無を問わず、直前にslice contractを確認します。新しい事実により分割・統合・順序を変えるときは、目的・AC・公開契約・採用済み構造・許可範囲・実依存・HITL条件・回復可能性を維持できるか確認します。維持できる調整は理由と影響する検証を計画に更新し、このskill内で継続します。slice境界や順序の変更だけを`REPLAN_REQUIRED`にしません。
-これらの契約を変更する、根拠が不明、または追加権限が必要なら影響部分を止めて該当所有者へ戻します。外部前提待ちは影響sliceだけを保留し、独立して許可済みの作業は進められます。最初のsliceは必要な層を薄く縦断するtracer bulletを優先します。
+interactive evidenceが必要な場合だけ、webは[playwright.md](references/runtime-evidence/playwright.md)、Windowsは[flaui.md](references/runtime-evidence/flaui.md)、Python GUI／pygameは[python-gui.md](references/runtime-evidence/python-gui.md)を読む。操作／遷移変更は[ui-designのruntime確認](../ui-design/references/runtime-evidence.md)で合意設計の予測・採用操作・期待結果を代表操作と照合し、物理入力／本人評価の未確認はacceptance／HITL契約に従う。
 
-各 slice で必ず短く固定すること:
+自動gate後、直接触れる状態のHITL契約付きsliceをreview milestoneとして渡す。同じbuildの起動、利用者の代表操作1〜5個と期待表示・遷移・操作感、自動確認済み／人間判断残り、feedback・承認・`REPLAN_REQUIRED`の再開条件を示す。`code complete`・`runtime verified`・`user validated`を区別し、build／test／自動runtimeだけでuser validatedとしない。不具合は再現可能なら`debug-and-fix`、contract誤りは前段へ戻す。
 
-- 対象振る舞い
-- 非対象
-- public interface 経由の確認観点
-- 最初に追加または更新する test
-- `RED` を確認する command と期待する失敗理由
-- `GREEN` を確認する command
-- acceptance command
+HITLがacceptanceなら`HITL pending`を保ち、feedback／承認までPASSやcompletion handoffへ進まない。完成後の探索的製品評価でacceptance非blockingの場合だけ、user validated未完了を残してローカル実装を閉じられる。HITL契約がなく自動runtimeでacceptanceを確定できるsliceは入力待ちだけで停止しない。
 
-planでHITL review contractが指定されたinteractive sliceでは、reviewable milestone、launch方法、代表操作、期待結果、再開条件も固定する。人間の主観判断や実端末・外部app確認がacceptanceに含まれる場合、その判断を自動testの成功で代替しない。
+## 6. completion handoff
 
-`finalized_contract`がある場合は、そのsliceと追加する主要な恒久targetがどのnormative sourceに対応するかも確認します。exclusion由来の新しい責務が必要になった、sourceが不明、または採用decisionが変わった場合は実装で補完せず`REPLAN_REQUIRED`とします。
+全slice PASSで実装を閉じる。利用者報告は[検証の通知と報告](references/verification-communication.md)に従い、主要関心への対応と成果物の現在地を先に示し、証拠一覧をそのまま転記しない。
 
-層ごとに「DB だけ」「UI だけ」「テストだけ」を横に広げる horizontal slice は避けます。
+handoffは完了slice、実行commandと結果、主な変更file／artifact、確認design／planの実在path、残件／対象外、次のfile／command、戻り先skillと理由を残す。`finalized_contract`付きは主要恒久targetとnormative sourceの対応・exclusion残骸なしの確認、interactive UIはcode complete／runtime verified／user validatedと残HITLも残す。
 
-### ステップ 4 — TDD loop を回す
+今回の`docs/plan/NNN_PLAN.md`は完了時だけ`docs/plan/NNN_PLAN_DONE.md`へ改名する。未完了は次plan／handoffへ切り出す。
 
-各 slice は次の順で進めます。
+実装中に仕様の穴を埋めず必要判断を前段へ戻す。phase／sliceは自動停止点ではなく、blocker・HITL・REPLAN_REQUIREDがなければ継続する。並列化でも確定slice contractとTDD loopを各workerへ渡し、未確定sliceを並列化しない。PR／review／furikaeriは別skillへ渡す。
 
-1. **RED**: 失敗する test を 1 つ書く。失敗理由が対象振る舞いと一致することを確認する。
-2. **GREEN**: その test を通す最小実装だけを入れる。
-3. **REFACTOR**: 振る舞いを変えずに読みやすさ、重複、境界を整える。
-4. 次の test が必要なら同じ slice 内で繰り返す。
+## 必要時のリソース
 
-既存コードの保守性改善が主目的の場合は、[safe-refactoring.md](references/safe-refactoring.md)を読み、守る振る舞いと比較手段を先に固定する。
-
-TDD の規律:
-
-- 1 test → 1 minimal implementation を守る
-- test は public interface 経由の振る舞いを主語にする
-- private method や内部 collaborator の呼び出し回数を固定しない
-- mock は外部 API、時刻、乱数、ファイル I/O、コマンド実行など system boundary に限る
-- speculative code を足さない
-- all tests first の horizontal slicing をしない
-
-docs-only / config-only など RED が成立しない slice では、TDD を装いません。代わりに verification command と期待結果を slice contract に明記します。
-
-### ステップ 5 — slice gate で評価する
-
-各 slice の最後に、実装者の自己正当化ではなく証拠として gate を通します。
-
-詳細観点が必要なら[eval-checklist.md](references/eval-checklist.md)から関係する項目だけを使います。
-
-- RED を実際に見たか
-- RED の失敗理由は対象振る舞いと一致したか
-- GREEN を実際に見たか
-- acceptance command は通ったか
-- public interface 経由で確認しているか
-- speculative code、不要な抽象化、過剰な mock を入れていないか
-- contract と違う発見があれば `FAIL` か `REPLAN_REQUIRED` に分類したか
-
-verdict:
-
-- `PASS`: 次の slice へ進む
-- `FAIL`: 同じ slice の実装に戻る
-- `REPLAN_REQUIRED`: 要求・ACなら `to-prd` / `interview-with-docs`、構造・公開契約なら `technical-design`、権限なら利用者へ戻す。順序・分割だけの安全な調整は計画を更新して継続する
-
-次に該当する場合は、利用可能なら実装者とは別の動的subagentへ、slice contract、差分、RED/GREEN/acceptance evidenceだけを渡して独立評価を依頼します。
-
-- GUIやinteractive runtimeの観測が必要
-- trust boundary、migration、data loss、concurrency等の高risk変更
-- 回帰範囲が広い
-- 実装者の自己評価だけではevidenceが弱い
-- ユーザーが独立評価を指定
-
-独立評価者は修正せず、先に `PASS / FAIL / REPLAN_REQUIRED` と根拠を返します。並列実装は行わず、verdict確定後に単一writerが修正します。subagentが利用できない場合は、実装時の推論から離れてchecklistと差分を読み直します。
-
-interactive evidenceが必要な場合だけ、対応するtemplateを読みます。
-
-UIの操作・遷移を変更した場合は、[ui-designのruntime確認](../ui-design/references/runtime-evidence.md)に従い、合意済み設計の予測・採用操作・期待結果を代表操作で照合する。物理入力・本人評価を含む未確認範囲は既存のacceptance / HITL契約に沿って扱う。
-
-- web: [playwright.md](references/runtime-evidence/playwright.md)
-- Windows desktop: [flaui.md](references/runtime-evidence/flaui.md)
-- Python GUI / pygame: [python-gui.md](references/runtime-evidence/python-gui.md)
-
-### HITL review gate（必要なsliceのみ）
-
-自動gateを通過して利用者が直接触れられる状態になったら、HITL review contractがあるsliceだけを明示的なreview milestoneとして渡す。
-
-- 同じbuildを起動するcommandまたは手順
-- 利用者が行う1〜5個の代表操作
-- 各操作で期待する表示、状態遷移、操作感
-- 自動確認済みの範囲と、人間の判断が残る範囲
-- feedback受領、承認、または`REPLAN_REQUIRED`となる再開条件
-
-状態は`code complete`、`runtime verified`、`user validated`を区別する。build/testと自動runtime evidenceだけで`user validated`と報告しない。feedbackで不具合が見つかった場合は再現loopを作れるなら`debug-and-fix`、contractの誤りなら前段へ戻る。
-
-HITLの結果がsliceのacceptanceに含まれる場合は、自動gateが通っても`HITL pending`として保持し、feedbackまたは承認を得るまでsliceを`PASS`やcompletion handoffに進めない。HITLが完成後の探索的な製品評価でありacceptanceをブロックしない場合だけ、`user validated`が未完了であることを残してローカル実装フェーズを閉じられる。
-
-HITL review contractがなく、自動runtime evidenceでacceptanceを確定できるsliceは、利用者入力を待つためだけに停止しない。
-
-### ステップ 6 — completion handoff で閉じる
-
-全 slice が `PASS` したら、実装フェーズを閉じます。
-
-利用者向けの完了報告は[検証の通知と報告](references/verification-communication.md)に従い、主要関心への対応と成果物の現在地を先に示します。以下の証拠一覧をそのまま回答へ転記しません。
-
-handoff に残すもの:
-
-- 完了した slice
-- 実行した command と結果
-- 変更した主な file / artifact
-- 確認に使った design / plan artifact path
-- 残件、または明示的に対象外にしたもの
-- `finalized_contract`がある場合は、追加した主要な恒久targetとnormative sourceの対応、およびexclusion由来の残骸がない確認結果
-- 次に開く file または確認 command
-- 戻り先 skill がある場合はその理由
-- interactive UIでは`code complete`、`runtime verified`、`user validated`の到達状況と、残っているHITL review gate
-
-`docs/plan/NNN_PLAN.md` が今回の実装 plan なら、完了時に `docs/plan/NNN_PLAN_DONE.md` へリネームします。未完了項目が残る場合は、次の plan または handoff に切り出します。
-
-## 注意点
-
-- 実装中に仕様の穴を埋めない。判断が必要なら前段へ戻す。
-- phase / slice は自動停止点ではない。blocker、HITL 判断、`REPLAN_REQUIRED` がなければ次へ進む。
-- 並列化する場合も、各 worker に slice contract と TDD loop を渡す。未確定の slice を並列化しない。
-- PR、review、furikaeri はここで扱わない。必要になった時点で別 skill を起動する。
-
-## 共通リソース
-
-- [planning.md](references/planning.md) — 依存・移行・HITL・保存計画が必要な場合
-- [html-plan.md](references/html-plan.md) — 任意の図入り計画HTML
-- `references/interactive-app-bootstrap-checklist.md` — interactive app の bootstrap 前提
-- `references/interactive-app-comparable-harness-contract.md` — interactive app の比較前提
-- `references/safe-refactoring.md` — 振る舞いを維持した小さい改善単位
-- `references/eval-checklist.md` — slice gateの詳細観点
-- `references/runtime-evidence/` — interactive appで必要時だけ使うevidence template
-- `checkpoints/contract_verify.py` — 複数リポ環境での contract 検証
+- [planning.md](references/planning.md): 依存・移行・HITL・保存計画
+- [html-plan.md](references/html-plan.md): 任意の図入り計画HTML
+- `references/interactive-app-bootstrap-checklist.md`: bootstrap前提
+- `references/interactive-app-comparable-harness-contract.md`: 比較前提
+- `references/safe-refactoring.md`: 振る舞いを保つ改善単位
+- `references/eval-checklist.md`: gate詳細
+- `references/runtime-evidence/`: interactive evidence template
+- `checkpoints/contract_verify.py`: 複数repo contract検証

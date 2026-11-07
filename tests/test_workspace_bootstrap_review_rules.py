@@ -11,13 +11,17 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
     def test_repo_onboarding_routes_missing_agents_without_writing(self) -> None:
         skill = self.read("plugins/happy-coding/skills/repo-onboarding/SKILL.md")
 
-        self.assertIn("親directoryやhomeの共通指示", skill)
-        self.assertIn("`AGENTS.override.md`、`AGENTS.md`、`project_doc_fallback_filenames`", skill)
-        self.assertIn("または設定済みfallbackがない場合", skill)
-        self.assertIn("`workspace-bootstrap`が利用可能な場合", skill)
-        self.assertIn("専用機能が現在利用できない", skill)
-        self.assertIn("明示的なhandoff候補", skill)
-        self.assertIn("onboarding中には作成しない", skill)
+        self.assertIn("親／home指示があっても", skill)
+        self.assertIn(
+            "各directoryのinstruction chainは`AGENTS.override.md`→`AGENTS.md`→"
+            "`project_doc_fallback_filenames`の設定済みfallbackの順で解決する",
+            skill,
+        )
+        self.assertIn("repo内にrepo管理の有効な`AGENTS.override.md`・`AGENTS.md`・設定済みfallbackがなければ", skill)
+        self.assertIn("導入価値があり`workspace-bootstrap`が使えればhandoff候補にし", skill)
+        self.assertIn("使えなければ必要性と専用機能の利用不可を伝える", skill)
+        self.assertIn("handoff候補にし", skill)
+        self.assertIn("どちらでもonboarding中は作成しない", skill)
 
     def test_workspace_bootstrap_preserves_and_deduplicates_instructions(self) -> None:
         skill = self.read("plugins/happy-core/skills/workspace-bootstrap/SKILL.md")
@@ -25,20 +29,20 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
         for expected in (
             "`.github/copilot-instructions.md`",
             "`.github/instructions/*.instructions.md`",
-            "`AGENTS.override.md`、`AGENTS.md`、`project_doc_fallback_filenames`",
-            "それに隠れる`AGENTS.md`を新規提案しない",
-            "overrideの廃止",
-            "通常AGENTSへの移行",
-            "新規`AGENTS.md`がそれをshadowする影響",
-            "fallbackの制約を保持する統合差分",
-            "fallbackからの移行",
-            "`applyTo`付きのルール",
-            "対応する最寄りの`AGENTS.md`",
+            "instruction chainを`AGENTS.override.md`→`AGENTS.md`→設定済み`project_doc_fallback_filenames`で解決する",
+            "overrideが有効なら隠れるAGENTSを新設提案しない",
+            "override廃止",
+            "通常AGENTS移行",
+            "fallbackが有効なら新AGENTSのshadow影響",
+            "fallback制約を保つ統合差分",
+            "fallback移行は別変更として明示承認を得る",
+            "`applyTo`の範囲をrootへ一般化せず",
+            "最寄りAGENTSまたはscope明示指示で保つ",
             "`AGENTS.fragment.md`",
-            "全文置換せず",
-            "全文を複製せず",
+            "有効な既存指示の構造・管理内容を保ち、全文置換しない",
+            "Copilot指示は全文複製せず",
             "重複させず",
-            "優先順位と適用範囲",
+            "矛盾は優先順位・scopeを確認して解消する",
         ):
             with self.subTest(expected=expected):
                 self.assertIn(expected, skill)
@@ -52,12 +56,12 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
             "採用済みAcceptance Criteria",
             "外部contract",
             "安全invariant",
-            "重大な誤動作",
-            "データ損失",
-            "誤った正常終了",
-            "実装、CI、事故記録は必要性と適用範囲を確認する証拠",
-            "非採用挙動は恒久ルールへ昇格させない",
-            "一般的なlint／style／テスト推奨は入れない",
+            "重大誤動作",
+            "data損失",
+            "誤正常終了",
+            "実装・CI・事故記録は必要性とscopeの証拠",
+            "一時workaround・検討過程・非採用挙動を恒久化しない",
+            "一般lint／style／test推奨は入れない",
         ):
             with self.subTest(expected=expected):
                 self.assertIn(expected, skill if expected != "## Code Review Rules" else template)

@@ -14,7 +14,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価 |
+| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価、文章・コード・設計の推敲 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
@@ -47,7 +47,11 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
 - `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
 - `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
-- `skill-eval`: 既存skillのtriggerと振る舞いをrealistic scenarioで評価
+- `skill-eval`: 実務に即した通常課題・難問で、素のモデルや旧版との差、triggerと振る舞いを評価
+
+- [tanka-to-haiku](plugins/happy-core/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ
+
+短歌と俳句は短縮前の本文を採用し、happy-previewからhappy-coreへ移動しました。旧preview版を利用していた場合はcoreを導入・更新し、previewも更新してください。古い登録が残れば旧skillを無効化・削除し、他のpreview skillを使う場合はplugin全体を無効化しないでください。明示呼出しのplugin namespaceはcoreへ変更します。[移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照してください。
 
 ### happy-coding
 
@@ -59,6 +63,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - UI設計・評価: `ui-design`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
+- [technical-design-review](plugins/happy-coding/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 
 依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
 
@@ -68,20 +73,19 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 `implementation-plan`は配布外へアーカイブし、計画機能を`implement`へ統合しました。計画のみの依頼では実装せず、実装まで任された場合は必要な計画調整を同じskill内で行います。保存済みplanは再利用できます。[判断と移行](docs/adr/0011-integrated-implementation-planning.md)を参照してください。
 
+`technical-design-review`はhappy-previewからhappy-codingへ移動しました。happy-codingを導入・更新し、呼出しnamespaceも変更してください。未使用の`video-game-design`／`unity-beginner-development`は配布を終了しました。既存インストールが自動削除されるとは限りません。happy-previewも更新し、古い登録が残る場合は旧skillを無効化・削除してください。他の試用skillを使う場合はplugin全体を無効化しないでください。[判断と制約](docs/design/017_SKILL_DISTRIBUTION.md)を参照してください。
+
 ### happy-preview（試用版）
 
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
-- [video-game-design](plugins/happy-preview/skills/video-game-design/SKILL.md): 宮本茂を軸に14名の知見から遊び・試作・観察を設計
-- [unity-beginner-development](plugins/happy-preview/skills/unity-beginner-development/SKILL.md): Unity初心者の実装・Scene接続・動作確認
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
-- [technical-design-review](plugins/happy-preview/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 - [project-protection](plugins/happy-preview/skills/project-protection/SKILL.md): ローカル起点でmain直接操作・秘密混入の事故防止設定を計画・診断（実利用検証中）
 - [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
 
-初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。ゲーム設計では試作へ渡せたか、Unityでは接続・実行できたかを確かめます。記録に実名や実案件の未加工データは不要です。
+初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 

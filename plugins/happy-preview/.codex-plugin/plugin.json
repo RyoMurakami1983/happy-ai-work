@@ -1,6 +1,6 @@
 {
   "name": "happy-preview",
-  "version": "0.4.2",
+  "version": "0.6.2",
   "description": "正式採用前のCodex skillsを任意導入して試用するプレビュープラグイン。実利用検証中です。",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,10 +9,10 @@
   "interface": {
     "displayName": "Happy Preview（試用版）",
     "shortDescription": "実利用検証中のskillsを試し、正式採用へ改善する",
-    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。ゲームデザイン、初心者向けUnity開発、Linuxデプロイ、人が理解・判断・行動しやすい出力へ整えるYohaku、技術実現性調査、実装前の技術設計レビュー、操作可能なUI試作、明示依頼されたPRのマージと安全な整理、ローカル起点のプロジェクト保護を収録。実利用での効果は検証中です。試用結果を基に改善し、採用したskillはhappy-coreまたはhappy-codingへ移します。",
+    "longDescription": "通常配布前のskillsを試用するための任意導入pluginです。Linuxデプロイ、人が理解・判断・行動しやすい出力へ整えるYohaku、技術実現性調査、操作可能なUI試作、明示依頼されたPRのマージと安全な整理、ローカル起点のプロジェクト保護を収録。実利用での効果は検証中です。試用結果を基に改善し、採用したskillはhappy-coreまたはhappy-codingへ移します。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],
-    "defaultPrompt": "$video-game-design を使って小さなゲームの核と試作・観察方法を決めてください。"
+    "defaultPrompt": "依頼に合う試用skillを選び、成果と制約、次に確認することを示してください。"
   }
 }

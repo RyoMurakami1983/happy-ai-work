@@ -4,6 +4,7 @@
 
 フックは `--no-verify` や設定変更で回避できる事故防止策であり、サーバー保護の代替ではない。
 pre-commitは通常のmain commitを拒否する。featureで作業する。
+detached HEADでのcommitは未対応で、branchを確認できなければscan前に拒否する。
 pre-pushのstdinにある全refの宛先を検査し、`feature:main`、`HEAD:main`、複数ref、main削除を拒否する。
 mainからfeatureへのpushは許可する。main以外の削除には履歴scanは不要。
 既存hookの自動chain・上書き、global設定の変更はしない。
@@ -18,6 +19,7 @@ worktreeでは共通local設定を変更すると他worktreeにも影響する�
 Gitleaksは候補として採用する。既存scannerがある場合は二重導入せず統合方針を決める。
 実秘密を入力例・ログ・テストへ書かない。フックは出力を抑制しredactも指定する。
 失敗・ツール不在は成功扱いしない。検出と実行エラーは同じ拒否結果になる。
+検査成功は選択した設定・ルール・対象範囲で検出されなかったことを示すだけで、すべての秘密情報の不在を保証しない。
 
 - commit前: `gitleaks git --pre-commit --staged` でindexを検査する。
 - push前: 既存refは `remote_oid..local_oid`、新規refはlocal_oidから到達する全履歴を検査する。

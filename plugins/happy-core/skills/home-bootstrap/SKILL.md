@@ -5,34 +5,28 @@ description: Codexホームの AGENTS.md を安全に導入・更新し、Codex�
 
 # Home Bootstrap
 
-`scripts/home_bootstrap.py` は、`CODEX_HOME` があればその配下、なければ `~/.codex/AGENTS.md` を対象にする。管理対象マーカー内だけを追加・更新し、既存の他セクションは変更しない。
+`scripts/home_bootstrap.py`は`CODEX_HOME`配下、未設定なら`~/.codex/AGENTS.md`の管理マーカー内のみ追加・更新し、管理外を保つ。
 
-skillやテンプレートの改善依頼ではrepo内の成果物を更新する。実homeへの適用も依頼されている場合は、対象と差分を示してその承認範囲で進める。既に得た適用承認を聞き直さない。
+skill／template改善はrepo成果物を更新する。実home適用も依頼された場合は対象・差分を示し、既に得た承認範囲で進め、承認を聞き直さない。template検証には一時ファイルを`--target`指定できる。
 
-実homeへ導入・更新する場合は次の手順を使う。テンプレートの動作確認は、一時ファイルを`--target`に指定して行える。
+## 実homeへの適用
 
-1. 対象の管理領域・周辺の個人設定を確認する。
-2. `python scripts/home_bootstrap.py --dry-run` を実行して対象pathとdiffを示す。
-3. ユーザーが適用を明示した場合だけ、確認した差分と同じ引数で `--apply` を実行する。
-4. 既存ファイルを変更するときは、同じディレクトリへtimestamp付きbackupを作る。
-5. 適用後に管理対象セクションと管理外の内容が保持されていることを確認する。
+1. 管理領域と周辺の個人設定を読む。
+2. `python scripts/home_bootstrap.py --dry-run`で対象path・diffを示す。
+3. 明示適用承認がある場合のみ、確認した差分と同じ引数で`--apply`する。
+4. 既存変更時は同じdirectoryへtimestamp付きbackupを作る。
+5. 適用後、管理対象と管理外内容の保持を確認する。
 
-home指示には普遍的な作業方針だけを置く。言語・framework・test commandなどrepo固有の規則は各repoの `AGENTS.md` に置く。
+homeには普遍的な作業方針のみ置き、言語・framework・test command等repo固有規則は各repoの`AGENTS.md`へ置く。
 
-## 共通方針への融合
+## 共通方針
 
-基本方針の正本は [assets/AGENTS.md](assets/AGENTS.md)。
+正本は[assets/AGENTS.md](assets/AGENTS.md)。「目的を把握する」は会話・repoからの判断、「必要な情報から報告する」は伝達の段階とする。指定の詳しさ・書式・判断条件を短さのために削らない。
 
-「目的を把握する」は会話やrepoから判断する段階、「必要な情報から報告する」は伝える段階として扱う。指定された詳しさや書式、判断に必要な条件を短さのために削らない。
+実homeでは管理領域と周辺設定、templateのみの改善ではrepo管理領域の意味重複・競合を確認する。管理外個人設定を自動削除せず、競合箇所・影響・融合案を示してから適用する。
 
-実homeへの適用時は対象ファイルの管理領域と周辺の利用者設定を読み、意味の重複や競合を確認する。配布テンプレートだけの改善ではrepo内の管理領域を対象にする。管理外の個人設定は自動削除しない。競合があれば該当箇所と影響を示し、融合案を提示してから適用する。
+## Git設定・Hooks
 
-## Git設定
+AGENTS.mdにGit固有指示を追加しない。home初回導入またはGit設定依頼時は[Git設定ガイド](references/git-settings.md)を読み、3入力欄用文面と「準備完了時に自動マージ」ONの手順を示す。共通方針のみの更新は変更結果に絞る。設定画面を確実に自動操作できなければ設定済みと推測せず、手動入力が必要と示す。
 
-AGENTS.mdへGit固有の指示を追加しない。homeの初回導入、またはユーザーがGit設定を求めたときは、[Git設定ガイド](references/git-settings.md)を読み、3つの入力欄へ貼り付ける文面と「準備完了時に自動マージ」をONにする手順を表示する。既存の共通方針だけを更新する依頼では、その変更結果に絞る。
-
-Codexアプリ自身の設定画面を確実に自動操作できない場合、設定済みと推測せず手動入力が必要だと明記する。
-
-## Hooks
-
-Hooksの確認または設定を求められたときは、[Hooks初期設定ガイド](references/codex-hooks.md)を読む。未設定は異常ではない。既定ではhookを書き込まず、既存設定のinventoryと候補の説明まで行う。設定変更は候補ごとに影響を示し、dry-run、差分確認、ユーザーの明示承認、backup付き適用、Trust確認の順に進める。
+Hooks確認・設定依頼時のみ[Hooks初期設定ガイド](references/codex-hooks.md)を読む。未設定は異常でなく、既定は既存inventoryと候補説明まで。候補ごとの影響提示→dry-run→差分確認→明示承認→backup付き適用→Trust確認の順を守る。

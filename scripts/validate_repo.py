@@ -58,6 +58,7 @@ REQUIRED_CODING_SKILLS = {
     "rust",
     "tauri",
     "technical-design",
+    "technical-design-review",
     "to-prd",
     "typescript",
     "ui-design",
@@ -78,6 +79,7 @@ REQUIRED_CORE_SKILLS = {
     "improvement-loop",
     "interview-me",
     "skill-eval",
+    "tanka-to-haiku",
     "workspace-bootstrap",
 }
 

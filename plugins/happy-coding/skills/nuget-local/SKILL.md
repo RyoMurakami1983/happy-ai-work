@@ -5,20 +5,12 @@ description: 自作NuGet packageをローカルfeedへpackし、consumer repoで
 
 # Local NuGet workflow
 
-producerとconsumerの失敗境界を混ぜず、package identity、version、source precedence、artifactを明示して検証する。
+producerとconsumerを分け、package identity・version・source precedence・artifactを根拠にlocal pack／consumeを検証する。公開は扱わない。
 
-## ワークフロー
+1. 両repoのSDK、project形式、target framework、NuGet config、central package managementを確認する。
+2. package ID・テストversionを固定し、public packageとの衝突とdependency confusionを避ける。
+3. producerは[pack.md](references/pack.md)でRelease build→pack→nupkg内容を確認する。
+4. consumerは[consume.md](references/consume.md)でfeed登録→参照追加→restore→build→testを確認する。source直参照とpackage経由を区別し、実際に選ばれたsource・versionを記録する。
+5. 一時feed・config・cache・test versionの残置／削除を明示する。
 
-1. producer／consumerのSDK、project形式、target framework、NuGet config、central package managementを確認する。
-2. package IDとテスト用versionを固定し、既存public packageとの衝突やdependency confusionを避ける。
-3. package作成側では[pack.md](references/pack.md)を使い、Release build、pack、nupkg内容を確認する。
-4. consumer側では[consume.md](references/consume.md)を使い、feed登録、参照追加、restore、build、testを順に確認する。
-5. producer sourceを直接参照した状態とpackage経由を混同せず、consumerが実際に選んだsourceとversionを記録する。
-6. 検証後は一時feed、config、cache、test versionを残すか削除するか明示する。
-
-## 境界
-
-- machine固有の絶対pathを共有`NuGet.Config`へcommitしない。
-- `dotnet add package`等で表現できる操作はcommandを優先し、project file手編集はlegacy不整合の局所修正に限る。
-- credential付きprivate feedは別の認証workflowとして扱い、secretをconfigへ書かない。
-- package公開は扱わない。localでのpack／consume検証までとする。
+machine固有の絶対pathを共有`NuGet.Config`へcommitしない。`dotnet add package`等のcommandを優先し、project手編集はlegacy不整合の局所修正に限る。credential付きprivate feedは別認証workflowとし、secretをconfigへ書かない。

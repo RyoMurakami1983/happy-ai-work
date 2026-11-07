@@ -12,6 +12,10 @@ SAMPLES = {
         ".codex-plugin/plugin.json",
         "skills/home-bootstrap/SKILL.md",
         "skills/home-bootstrap/assets/AGENTS.md",
+        "skills/interview-me/SKILL.md",
+        "skills/workspace-bootstrap/SKILL.md",
+        "skills/tanka-to-haiku/SKILL.md",
+        "skills/tanka-to-haiku/agents/openai.yaml",
     ),
     "happy-coding": (
         ".codex-plugin/plugin.json",
@@ -24,17 +28,28 @@ SAMPLES = {
         "skills/implement/references/verification-communication.md",
         "skills/debug-and-fix/SKILL.md",
         "skills/dotnet/SKILL.md",
+        "skills/ci-debug/SKILL.md",
+        "skills/deep-review/SKILL.md",
+        "skills/domain-modeling/SKILL.md",
+        "skills/nuget-local/SKILL.md",
+        "skills/python/SKILL.md",
+        "skills/repo-onboarding/SKILL.md",
+        "skills/rust/SKILL.md",
     ),
     "happy-preview": (
         ".codex-plugin/plugin.json",
         "skills/pr-delivery/SKILL.md",
         "skills/pr-delivery/agents/openai.yaml",
+        "skills/technical-feasibility-research/SKILL.md",
     ),
 }
 
 # Checking the directory also catches an obsolete SKILL.md entrypoint, without
 # enumerating or reading any retired content in the selected installation.
-ABSENT_PATHS = {"happy-coding": ("skills/implementation-plan",)}
+ABSENT_PATHS = {
+    "happy-coding": ("skills/implementation-plan",),
+    "happy-preview": ("skills/tanka-to-haiku",),
+}
 
 
 def fingerprint(root: Path, relative: str) -> dict[str, str]:

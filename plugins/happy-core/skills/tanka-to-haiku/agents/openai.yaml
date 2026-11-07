@@ -1,0 +1,4 @@
+interface:
+  display_name: "短歌と俳句"
+  short_description: "観察・凝縮・取り合わせ・推敲で、文章・コード・設計の意味を研ぐ"
+  default_prompt: "$tanka-to-haiku を使い、必要な意味を保って、この文章・コード・設計の核と関係が伝わる形へ研いでください。"
