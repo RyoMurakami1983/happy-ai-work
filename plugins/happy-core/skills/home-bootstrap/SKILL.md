@@ -17,6 +17,8 @@ skill／template改善はrepo成果物を更新する。実home適用も依頼�
 4. 既存変更時は同じdirectoryへtimestamp付きbackupを作る。
 5. 適用後、管理対象と管理外内容の保持を確認する。
 
+適用完了と会話への自動読込は別に確認する。`CODEX_HOME`とoverrideを確認する。[Codexの読込仕様](https://learn.chatgpt.com/docs/agent-configuration/agents-md)では空でない`AGENTS.override.md`が優先されるため、`AGENTS.md`の更新だけで有効になるとは扱わず、overrideを無断変更しない。Workでも同じhomeが読まれるとは推測しない。明示的なファイル読取だけでは自動読込の証拠にしない。
+
 homeには普遍的な作業方針のみ置き、言語・framework・test command等repo固有規則は各repoの`AGENTS.md`へ置く。
 
 ## 共通方針
