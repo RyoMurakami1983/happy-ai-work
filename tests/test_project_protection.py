@@ -587,6 +587,34 @@ class ProtectionTests(unittest.TestCase):
         self.assertEqual(external.read_bytes(), original)
         self.assertTrue(config.is_symlink())
 
+    def test_worktree_config_symlink_cannot_enable_future_branch_hooks(self):
+        self.git('init', '-b', 'main')
+        self.git('config', 'extensions.worktreeConfig', 'true')
+        tracked_config = self.root / 'branch-config'
+        tracked_config.write_text('[user]\n name = Test\n')
+        (self.root / '.git/config.worktree').symlink_to(tracked_config)
+        proposal = protection.plan(self.root)
+        self.assertIn('config.worktree', ' '.join(proposal['detected']['config_symlinks']))
+        self.assertTrue(proposal['conflicts'])
+        with self.assertRaises(RuntimeError):
+            protection.apply(self.root, proposal['plan_hash'])
+        self.assertEqual(tracked_config.read_text(), '[user]\n name = Test\n')
+        self.assertFalse(self.bundle().exists())
+        (self.root / '.git/config.worktree').unlink()
+        self.install()
+        self.git('switch', '-c', 'feature')
+        self.commit()
+        linked = Path(self.temp.name) / 'linked'
+        self.git('worktree', 'add', '-b', 'linked', str(linked))
+        linked_config = Path(protection.git(linked, 'rev-parse', '--absolute-git-dir')) / 'config.worktree'
+        tracked_config = linked / 'branch-config'
+        tracked_config.write_text('[user]\n name = Test\n')
+        linked_config.symlink_to(tracked_config)
+        report = protection.doctor(linked)
+        self.assertEqual(report['local_configuration'], 'fail')
+        self.assertIn(str(linked_config), report['applicability']['config_symlinks'])
+        self.assertEqual(protection.doctor(self.root)['local_configuration'], 'pass')
+
     def test_concurrent_config_before_activation_is_preserved(self):
         self.git('init', '-b', 'main')
         proposal = protection.plan(self.root)

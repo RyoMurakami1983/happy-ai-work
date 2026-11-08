@@ -82,8 +82,10 @@ def inventory(root: Path) -> dict:
     if is_repo:
         common = git(root, 'rev-parse', '--path-format=absolute', '--git-common-dir')
         result['common_directory'] = common
-        config_path = Path(common) / 'config'
-        result['config_symlinks'] = [str(p) for p in (config_path, *config_path.parents) if linked(p)]
+        git_directory = Path(git(root, 'rev-parse', '--absolute-git-dir'))
+        configs = (Path(common) / 'config', git_directory / 'config.worktree')
+        result['config_symlinks'] = sorted({str(p) for config in configs
+                                            for p in (config, *config.parents) if linked(p)})
         result['worktrees'] = [entry.removeprefix('worktree ') for entry in
                                git(root, 'worktree', 'list', '--porcelain', '-z').split('\0')
                                if entry.startswith('worktree ')]
