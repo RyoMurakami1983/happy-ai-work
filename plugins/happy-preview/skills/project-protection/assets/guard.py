@@ -6,8 +6,42 @@ import subprocess
 import sys
 
 
+def trusted_path():
+    """Never search a relative PATH entry or the checkout for executable tools."""
+    checkout = os.path.normcase(os.path.realpath(os.getcwd()))
+    directories = []
+    for entry in os.get_exec_path():
+        if not os.path.isabs(entry):
+            continue
+        directory = os.path.normcase(os.path.realpath(entry))
+        try:
+            if os.path.commonpath([directory, checkout]) == checkout:
+                continue
+        except ValueError:  # Different Windows drives.
+            pass
+        directories.append(entry)
+    return os.pathsep.join(directories)
+
+
+def trusted_executable(name):
+    # A qualified path avoids Windows' implicit current-directory lookup. Native
+    # tools only: do not introduce shell execution through PATHEXT scripts.
+    suffixes = ('.exe', '.com') if sys.platform == 'win32' else ('',)
+    for directory in trusted_path().split(os.pathsep):
+        if not directory:
+            continue
+        for suffix in suffixes:
+            candidate = shutil.which(os.path.join(directory, name + suffix))
+            if candidate and (sys.platform != 'win32' or os.path.splitext(candidate)[1].lower() in ('.exe', '.com')):
+                return candidate
+    return None
+
+
 def git(*args):
-    return subprocess.check_output(['git', *args], text=True).strip()
+    executable = trusted_executable('git')
+    if not executable:
+        raise RuntimeError('Git unavailable on trusted PATH')
+    return subprocess.check_output([executable, *args], text=True).strip()
 
 
 def scan_timeout():
@@ -25,7 +59,10 @@ def stop_scanner(process):
     if sys.platform == 'win32':
         # taskkill handles the scanner's ordinary child processes on Windows.
         try:
-            subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'],
+            taskkill = trusted_executable('taskkill')
+            if not taskkill:
+                raise OSError('taskkill unavailable on trusted PATH')
+            subprocess.run([taskkill, '/PID', str(process.pid), '/T', '/F'],
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=10)
         except (OSError, subprocess.TimeoutExpired):
             pass
@@ -40,11 +77,12 @@ def stop_scanner(process):
 
 
 def scan(args):
-    scanner = shutil.which('gitleaks')
+    scanner = trusted_executable('gitleaks')
     if not scanner:
         raise RuntimeError('Gitleaks unavailable; scan not executed')
     seconds = scan_timeout()
-    with subprocess.Popen([scanner, *args, '--redact', '--no-banner'],
+    environment = dict(os.environ, PATH=trusted_path(), NoDefaultCurrentDirectoryInExePath='1')
+    with subprocess.Popen([scanner, *args, '--redact', '--no-banner'], env=environment,
                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                           start_new_session=sys.platform != 'win32') as process:
         try:

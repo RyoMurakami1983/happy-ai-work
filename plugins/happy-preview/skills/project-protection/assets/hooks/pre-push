@@ -4,4 +4,6 @@ if [ "${OS-}" = Windows_NT ]; then
 else
   runtime=python3
 fi
-exec "$runtime" "$(git rev-parse --show-toplevel)/.project-protection/guard.py" pre-push "$@"
+# core.hooksPath is absolute; never resolve executable code through the checkout.
+hook_directory=${0%/*}
+exec "$runtime" -I "$hook_directory/../guard.py" pre-push "$@"
