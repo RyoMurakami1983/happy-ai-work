@@ -19,6 +19,9 @@ SAMPLES = {
     ),
     "happy-coding": (
         ".codex-plugin/plugin.json",
+        "skills/pr-delivery/SKILL.md",
+        "skills/pr-delivery/agents/openai.yaml",
+        "skills/pr-delivery/references/conditional-delete.md",
         "skills/implement/SKILL.md",
         "skills/implement/references/planning.md",
         "skills/implement/references/html-plan.md",
@@ -38,8 +41,6 @@ SAMPLES = {
     ),
     "happy-preview": (
         ".codex-plugin/plugin.json",
-        "skills/pr-delivery/SKILL.md",
-        "skills/pr-delivery/agents/openai.yaml",
         "skills/technical-feasibility-research/SKILL.md",
     ),
 }
@@ -48,7 +49,7 @@ SAMPLES = {
 # enumerating or reading any retired content in the selected installation.
 ABSENT_PATHS = {
     "happy-coding": ("skills/implementation-plan",),
-    "happy-preview": ("skills/tanka-to-haiku",),
+    "happy-preview": ("skills/tanka-to-haiku", "skills/pr-delivery"),
 }
 
 

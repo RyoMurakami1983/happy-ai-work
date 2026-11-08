@@ -105,7 +105,7 @@ codex plugin add happy-coding@happy-ai-work-marketplace --json
 更新後は対象pluginを有効にした新しい会話で、pluginの対象skillが利用可能か、どの導入済みcopyから読まれたかを確認する。旧会話の継続やrepo内fileの直接読取を、この証拠の代わりにしない。
 
 - #46: installedの`implement`/`debug-and-fix`/`dotnet`と通知referenceを確認し、新しい会話で検証の事前通知・終了報告の指示が読み込まれるか確認する。長時間試験を実行する必要はない。実際の通知品質の観測は#44/#45で別に扱う
-- #47: preview試用者だけ、新しい会話で`pr-delivery`の利用可能性・読込元を確認する。読込確認のためにPRをmergeしない。明示指定での読込と自動選択は別に記録する
+- #47: 新しい会話で`happy-coding:pr-delivery`の利用可能性・読込元を確認する。preview側の旧登録が残っていないことも確認する。読込確認のためにPRをmergeしない。明示指定での読込と自動選択は別に記録する
 - #59: 新しい会話で`implement`の統合計画referenceが利用され、旧`implementation-plan`が独立したskillとして残っていないかを別に確認する。source/installedのsample一致と廃止pathの不在だけでは、この会話での状態は未確認
 - coreのhome-bootstrap配布templateが更新されても、実homeへ自動反映されない。実home適用はこの更新確認の対象外。別途依頼時にdry-run・差分・backup・明示承認を経る。通知指示の配布template、実home適用、新しい会話での有効化を混同しない
 - 読込元を確認できない、CLIが未対応、認証/接続で止まる場合は「未確認」と停止理由を残す。hash一致だけで完了へ繰り上げない

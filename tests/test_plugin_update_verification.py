@@ -66,24 +66,26 @@ class PluginUpdateVerificationTests(unittest.TestCase):
                 path.write_bytes((self.source / relative).read_bytes())
                 self.assertEqual(self.report()["status"], "samples_match")
 
-    def test_preview_update_must_remove_old_tanka_entrypoint_and_directory(self):
+    def test_preview_update_must_remove_promoted_entrypoints_and_directories(self):
         self.source = Path(self.directory.name) / "preview-source"
         self.installed = Path(self.directory.name) / "preview-installed"
         self.populate_samples("happy-preview")
         self.assertEqual(self.report("happy-preview")["status"], "samples_match")
-        retired = self.installed / "skills/tanka-to-haiku"
-        retired.mkdir()
-        for entrypoint in (False, True):
-            with self.subTest(entrypoint=entrypoint):
-                if entrypoint:
-                    (retired / "SKILL.md").write_text("old preview skill", encoding="utf-8")
-                report = self.report("happy-preview")
-                self.assertTrue(all(entry["matches"] for entry in report["files"]))
-                self.assertEqual(report["status"], "mismatch")
-                self.assertEqual(report["absent_paths"][0]["installed"]["state"], "present")
-                self.assertEqual(report["session_load"], "not_checked")
-        (retired / "SKILL.md").unlink()
-        retired.rmdir()
+        for relative in ("skills/tanka-to-haiku", "skills/pr-delivery"):
+            retired = self.installed / relative
+            retired.mkdir()
+            for entrypoint in (False, True):
+                with self.subTest(path=relative, entrypoint=entrypoint):
+                    if entrypoint:
+                        (retired / "SKILL.md").write_text("old preview skill", encoding="utf-8")
+                    report = self.report("happy-preview")
+                    self.assertTrue(all(entry["matches"] for entry in report["files"]))
+                    self.assertEqual(report["status"], "mismatch")
+                    entry = next(item for item in report["absent_paths"] if item["path"] == relative)
+                    self.assertEqual(entry["installed"]["state"], "present")
+                    self.assertEqual(report["session_load"], "not_checked")
+            (retired / "SKILL.md").unlink()
+            retired.rmdir()
         self.assertEqual(self.report("happy-preview")["status"], "samples_match")
 
     def test_stale_planning_reference_alone_does_not_match(self):

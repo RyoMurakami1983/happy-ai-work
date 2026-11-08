@@ -63,6 +63,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - UI設計・評価: `ui-design`
 - 調査・修正: `repo-onboarding`、`debug-and-fix`
 - 品質: `deep-review`、`ci-debug`
+- [pr-delivery](plugins/happy-coding/skills/pr-delivery/SKILL.md): 明示されたPRのマージから、base同期と安全な対象branch・専用worktree整理まで完了
 - [technical-design-review](plugins/happy-coding/skills/technical-design-review/SKILL.md): 実装前の技術設計を目的・要件・契約から独立レビューし、判定と戻り先を提示
 
 依頼に合う個別skillを使います。`coding` routerは廃止しました。旧版で利用していた場合はpluginを更新し、設計は`technical-design`、実装は`implement`等を直接指定してください。
@@ -77,13 +78,14 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 ### happy-preview（試用版）
 
+`pr-delivery`はhappy-codingへ昇格しました。codingとpreviewの両方を更新し、明示呼出しは`happy-coding:pr-delivery`へ変更してください。旧登録が残れば旧skillを無効化・削除し、他の試用skillは維持してください。[採用判断・移行・検証方針](docs/design/021_PR_DELIVERY_PROMOTION.md)を参照してください。
+
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
 - [project-protection](plugins/happy-preview/skills/project-protection/SKILL.md): ローカル起点でmain直接操作・秘密混入の事故防止設定を計画・診断（実利用検証中）
-- [pr-delivery](plugins/happy-preview/skills/pr-delivery/SKILL.md): 「マージして」の明示依頼から、base同期と安全な対象branch・専用worktree整理まで完了（実利用検証中）
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
