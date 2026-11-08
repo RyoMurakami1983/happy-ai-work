@@ -1,0 +1,4 @@
+interface:
+  display_name: "WPF・WebView2・TypeScript"
+  short_description: "既存C#を生かし、Web UIとの境界・寿命・負荷を整える"
+  default_prompt: "$happy-preview:wpf-webview-typescript を使い、WPF・WebView2・TypeScriptと既存C#の接点を確認し、依頼範囲で設計・実装・検証してください。"
