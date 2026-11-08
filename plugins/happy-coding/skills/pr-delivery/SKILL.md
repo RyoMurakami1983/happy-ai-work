@@ -1,11 +1,11 @@
 ---
 name: pr-delivery
-description: 「マージして」「merge PR」という対象PRの明示依頼、またはマージ済みPRの「マージ後整理」を受け、最新checks・マージ結果・base同期・安全な対象branch/worktree整理・結果報告まで進める試用skill。PR作成、review、CI監視だけの依頼ではマージしない。
+description: 「マージして」「merge PR」という対象PRの明示依頼、またはマージ済みPRの「マージ後整理」を受け、最新checks・マージ結果・base同期・安全な対象branch/worktree整理・結果報告まで進める。PR作成、review、CI監視だけの依頼ではマージしない。
 ---
 
 # PR Delivery
 
-明示された対象PRをマージし、その作業を安全に閉じる。実利用検証中のpreviewであり、自然文からの自動選択を保証しない。
+明示された対象PRをマージし、その作業を安全に閉じる。自然文からの自動選択を保証しない。
 
 ## 対象と許可
 

@@ -44,6 +44,7 @@ SECRET_RE = re.compile(
     r"(?:gh" + r"p_|github_" + r"pat_|s" + r"k-[A-Za-z0-9_-]{20,}|AK" + r"IA[0-9A-Z]{16})"
 )
 REQUIRED_CODING_SKILLS = {
+    "pr-delivery",
     "ci-debug",
     "debug-and-fix",
     "deep-review",
