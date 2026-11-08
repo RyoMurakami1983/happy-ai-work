@@ -137,7 +137,8 @@ class ProtectionTests(unittest.TestCase):
         return Path(protection.plan(root or self.root)['trusted_bundle'])
 
     def hook(self, rows, expected=0):
-        result = subprocess.run(['sh', str(self.bundle() / 'hooks/pre-push')], cwd=self.root,
+        # Match the absolute forward-slash hooksPath passed by Git for Windows.
+        result = subprocess.run(['sh', (self.bundle() / 'hooks/pre-push').as_posix()], cwd=self.root,
                                 input=rows, text=True, capture_output=True)
         self.assertEqual(result.returncode, expected, result.stderr)
 
@@ -391,7 +392,7 @@ class ProtectionTests(unittest.TestCase):
         common = Path(self.temp.name) / 'git metadata 日本語'
         self.git('init', '--template=', '-b', 'main', '--separate-git-dir', str(common))
         self.assertEqual(self.install()['local_configuration'], 'pass')
-        self.assertTrue(self.bundle().is_relative_to(common))
+        self.assertTrue(self.bundle().resolve().is_relative_to(common.resolve()))
         self.git('switch', '-c', 'feature')
         self.commit()
 
@@ -669,7 +670,7 @@ class ProtectionTests(unittest.TestCase):
             'print("SYNTHETIC_PRIVATE_ERROR", file=sys.stderr, flush=True)\n'
             'time.sleep(30)\n')
         commit = ['git', '-C', str(self.root), 'commit', '--allow-empty', '-m', 'scan retry']
-        push = ['sh', str(self.bundle() / 'hooks/pre-push')]
+        push = ['sh', (self.bundle() / 'hooks/pre-push').as_posix()]
         rows = f"HEAD {oid} refs/heads/feature {'0' * 40}\n"
         with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '1'}):
             for command, stdin in ((commit, None), (push, rows)):
