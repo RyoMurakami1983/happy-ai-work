@@ -7,6 +7,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parent.parent
 SCRIPT = (
@@ -26,6 +27,45 @@ class HomeBootstrapTests(unittest.TestCase):
             capture_output=True, text=True, encoding="utf-8",
             env={**os.environ, "PYTHONIOENCODING": "utf-8"},
         )
+
+    def test_codex_home_uses_configured_path_or_user_default(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            home = Path(temporary)
+            for configured in (None, "", str(home / "custom"), "~/profile"):
+                with self.subTest(configured=configured):
+                    with patch.dict(os.environ, {}, clear=False), patch.object(Path, "home", return_value=home):
+                        if configured is None:
+                            os.environ.pop("CODEX_HOME", None)
+                        else:
+                            os.environ["CODEX_HOME"] = configured
+                        expected = Path(configured).expanduser() if configured else home / ".codex"
+                        self.assertEqual(MODULE.codex_home(), expected)
+
+    def test_cli_installs_template_in_configured_home_without_touching_override(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            home = Path(temporary) / "profile"
+            home.mkdir()
+            override = home / "AGENTS.override.md"
+            override_content = b"# Personal override\r\nkeep this\r\n"
+            override.write_bytes(override_content)
+            target = home / "AGENTS.md"
+            command = [sys.executable, str(SCRIPT)]
+            env = {**os.environ, "CODEX_HOME": str(home), "PYTHONIOENCODING": "utf-8"}
+            dry_run = subprocess.run(
+                [*command, "--dry-run"], capture_output=True, text=True, encoding="utf-8", env=env,
+            )
+            self.assertEqual(dry_run.returncode, 0, dry_run.stderr)
+            self.assertIn(str(target), dry_run.stdout)
+            self.assertFalse(target.exists())
+            self.assertEqual(override.read_bytes(), override_content)
+            applied = subprocess.run(
+                [*command, "--apply"], capture_output=True, text=True, encoding="utf-8", env=env,
+            )
+            self.assertEqual(applied.returncode, 0, applied.stderr)
+            template = SCRIPT.parent.parent / "assets" / "AGENTS.md"
+            self.assertEqual(target.read_bytes(), template.read_bytes())
+            self.assertEqual(override.read_bytes(), override_content)
+            self.assertEqual(sorted(p.name for p in home.iterdir()), ["AGENTS.md", "AGENTS.override.md"])
 
     def test_cli_update_removes_enabled_yohaku(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
