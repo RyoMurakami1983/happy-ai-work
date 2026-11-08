@@ -8,17 +8,20 @@ description: ローカルの新規フォルダ、既存repo、clone、worktree�
 ローカルフォルダから始める開発を維持する。GitHub repoを先に作らせない。
 実利用未検証のプレビューとして扱い、[判断基準](references/protection.md)を読む。
 
-1. 対象root、AGENTS.md、branch、変更状態、既存hook・設定を読み取る。
+1. 信頼済み配布元のこのskillを使い、対象root、AGENTS.md、branch、変更状態、既存hook・設定を読み取る。
+   未レビューの対象branch内にあるinstallerを実行しない。
 2. `python3 scripts/project_protection.py plan <root>` で検出と差分計画を出す。
    Git未作成の既存フォルダでは `--init` を加える。フォルダ自体は事前に作る。
-3. 対象、追加内容、local hooksPath設定、初期branch main、必要ツールを示す。
+3. 対象、共通Git管理領域への追加内容、absolute local hooksPath、共有worktree、初期branch main、必要ツールを示す。
    既存承認があればその範囲で進め、実利用先への適用が未承認なら承認を得る。
 4. 同じ引数に `--apply <plan_hash>` を付けた `bootstrap` で適用する。
    変更された計画、既存hook、global/worktree設定、管理外変更は上書きせず停止する。
 5. `doctor <root>` で再診断する。設定合格と実行検証、remote保護を別々に報告する。
    doctorは設定を書き換えず、scanやnetwork操作を実行しない。
 
-新しいcloneやworktreeごとにplanから始める。追跡ファイルだけではGit設定は伝わらない。
+新しいcloneは導入が必要。linked worktreeは共通の実行資産を使い、各worktreeでdoctorを確認する。
+実行資産は追跡せず、branch切替で変更されないGit管理領域に置く。
+旧版の `.githooks` 設定は自動更新しない。[明示移行の条件](references/protection.md#旧版からの移行)を読む。
 `assets/` を資産の正本とし、GitHubテンプレートは将来これを使う別入口とする。
 今回はテンプレートrepoを変更しない。
 

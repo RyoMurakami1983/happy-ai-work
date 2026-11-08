@@ -95,6 +95,7 @@ class ProtectionTests(unittest.TestCase):
         empty = Path(self.temp.name) / 'missing-tools'
         empty.mkdir(exist_ok=True)
         guard = load_guard()
+        installed_guard = self.bundle() / 'guard.py'
         # Retain Git for the read-only doctor, isolate only its scanner lookup.
         find = shutil.which
         with patch.object(protection.shutil, 'which',
@@ -106,7 +107,7 @@ class ProtectionTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'Gitleaks unavailable'):
                 guard.main()
             oid = self.git_oid
-            result = subprocess.run([sys.executable, str(self.root / '.project-protection/guard.py'), 'pre-push'],
+            result = subprocess.run([sys.executable, str(installed_guard), 'pre-push'],
                                     cwd=self.root, input=f"HEAD {oid} refs/heads/feature {'0' * 40}\n",
                                     text=True, capture_output=True, timeout=10)
             self.assertEqual(result.returncode, 1)
@@ -132,8 +133,11 @@ class ProtectionTests(unittest.TestCase):
         self.assertEqual(proposal['conflicts'], [])
         return protection.apply(self.root, proposal['plan_hash'], True)
 
+    def bundle(self, root=None):
+        return Path(protection.plan(root or self.root)['trusted_bundle'])
+
     def hook(self, rows, expected=0):
-        result = subprocess.run(['sh', str(self.root / '.githooks/pre-push')], cwd=self.root,
+        result = subprocess.run(['sh', str(self.bundle() / 'hooks/pre-push')], cwd=self.root,
                                 input=rows, text=True, capture_output=True)
         self.assertEqual(result.returncode, expected, result.stderr)
 
@@ -186,18 +190,15 @@ class ProtectionTests(unittest.TestCase):
 
     def test_conflicts_stale_plan_and_partial(self):
         proposal = protection.plan(self.root, True)
-        (self.root / '.githooks').mkdir()
-        (self.root / '.githooks/pre-commit').write_text('existing')
+        self.git('init', '-b', 'main')
         with self.assertRaises(RuntimeError):
             protection.apply(self.root, proposal['plan_hash'], True)
-        self.assertFalse((self.root / '.git').exists())
-        (self.root / '.githooks/pre-commit').unlink()
         self.install()
-        (self.root / '.githooks/pre-push').unlink()
+        (self.bundle() / 'hooks/pre-push').unlink()
         self.assertEqual(protection.doctor(self.root)['local_configuration'], 'fail')
         proposal = protection.plan(self.root)
         protection.apply(self.root, proposal['plan_hash'])
-        (self.root / '.project-protection/guard.py').write_text('modified')
+        (self.bundle() / 'guard.py').write_text('modified')
         self.assertTrue(protection.plan(self.root)['conflicts'])
 
     def test_global_hooks_and_existing_hooks_are_preserved(self):
@@ -214,9 +215,7 @@ class ProtectionTests(unittest.TestCase):
     def test_worktree_clone_and_remote_are_not_assumed_protected(self):
         self.install()
         self.git('switch', '-c', 'feature')
-        for name in protection.desired():
-            self.git('add', name)
-        self.git('commit', '-m', 'assets')
+        self.commit()
         worktree = Path(self.temp.name) / 'worktree'
         self.git('worktree', 'add', '-b', 'other', str(worktree))
         self.assertEqual(protection.plan(worktree)['conflicts'], [])
@@ -227,6 +226,260 @@ class ProtectionTests(unittest.TestCase):
         proposal = protection.plan(clone)
         protection.apply(clone, proposal['plan_hash'])
         self.assertEqual(protection.doctor(clone)['remote_protection'], 'unverified')
+
+    def legacy_installation(self):
+        self.git('init', '--template=', '-b', 'main')
+        files = {'.project-protection/guard.py': (ROOT / 'tests/fixtures/project-protection-v1/guard.py').read_bytes()}
+        for mode in ('pre-commit', 'pre-push'):
+            files['.githooks/' + mode] = (
+                '#!/bin/sh\nif [ "${OS-}" = Windows_NT ]; then\n  runtime=python\nelse\n'
+                '  runtime=python3\nfi\n'
+                f'exec "$runtime" "$(git rev-parse --show-toplevel)/.project-protection/guard.py" {mode} "$@"\n'
+            ).encode()
+        files['.project-protection/manifest.json'] = json.dumps(protection.LEGACY_DIGESTS, sort_keys=True).encode()
+        for name, content in files.items():
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(content)
+            if name.startswith('.githooks/'):
+                path.chmod(0o755)
+        self.git('config', '--local', 'core.hooksPath', '.githooks')
+        return files
+
+    def test_legacy_migration_is_explicit_and_preserves_tracked_assets(self):
+        files = self.legacy_installation()
+        self.assertTrue(protection.plan(self.root)['conflicts'])
+        self.assertEqual(protection.doctor(self.root)['local_configuration'], 'fail')
+        proposal = protection.plan(self.root, migrate_legacy=True)
+        self.assertEqual(proposal['conflicts'], [])
+        with self.assertRaises(RuntimeError):
+            protection.apply(self.root, proposal['plan_hash'])
+        report = protection.apply(self.root, proposal['plan_hash'], migrate_legacy=True)
+        self.assertEqual(report['local_configuration'], 'pass')
+        self.assertEqual({name: (self.root / name).read_bytes() for name in files}, files)
+        self.assertNotEqual(self.git('config', '--get', 'core.hooksPath'), '.githooks')
+        self.git('switch', '-c', 'feature')
+        self.commit()
+
+    def test_legacy_migration_rejects_forged_manifest_and_extra_hooks(self):
+        files = self.legacy_installation()
+        config = (self.root / '.git/config').read_bytes()
+        guard = self.root / '.project-protection/guard.py'
+        guard.write_text('raise SystemExit(0)\n')
+        # Forging the manifest cannot authorize different executable bytes.
+        manifest = self.root / '.project-protection/manifest.json'
+        forged = dict(protection.LEGACY_DIGESTS)
+        forged['.project-protection/guard.py'] = protection.hashlib.sha256(guard.read_bytes()).hexdigest()
+        manifest.write_text(json.dumps(forged, sort_keys=True))
+        proposal = protection.plan(self.root, migrate_legacy=True)
+        self.assertTrue(proposal['conflicts'])
+        with self.assertRaises(RuntimeError):
+            protection.apply(self.root, proposal['plan_hash'], migrate_legacy=True)
+        self.assertEqual((self.root / '.git/config').read_bytes(), config)
+        for name, content in files.items():
+            (self.root / name).write_bytes(content)
+        extra = self.root / '.githooks/post-checkout'
+        extra.write_text('#!/bin/sh\ntouch PWNED\n')
+        extra.chmod(0o755)
+        self.assertTrue(protection.plan(self.root, migrate_legacy=True)['conflicts'])
+        self.assertFalse((self.root / 'PWNED').exists())
+        self.assertEqual((self.root / '.git/config').read_bytes(), config)
+
+    def test_branch_replacements_and_new_post_checkout_never_execute(self):
+        self.install()
+        trusted = self.bundle()
+        self.git('switch', '-c', 'feature')
+        baseline = self.commit()
+        self.git('branch', 'clean', baseline)
+        for mode in ('pre-commit', 'pre-push', 'post-checkout'):
+            path = self.root / '.githooks' / mode
+            path.parent.mkdir(exist_ok=True)
+            path.write_text('#!/bin/sh\necho ran > PWNED\nexit 0\n')
+            path.chmod(0o755)
+        guard = self.root / '.project-protection/guard.py'
+        guard.parent.mkdir()
+        guard.write_text('from pathlib import Path\nPath("PWNED").touch()\n')
+        self.git('add', '.githooks', '.project-protection')
+        self.git('commit', '-m', 'untrusted tracked replacements')
+        self.git('switch', 'clean')
+        self.git('switch', 'feature')
+        self.assertFalse((self.root / 'PWNED').exists())
+        self.git('commit', '--allow-empty', '-m', 'still trusted')
+        remote = Path(self.temp.name) / 'bare'
+        subprocess.run(['git', 'init', '--bare', '--template=', str(remote)], check=True, capture_output=True)
+        self.git('remote', 'add', 'origin', str(remote))
+        self.git('push', 'origin', 'HEAD:refs/heads/feature')
+        self.git('push', 'origin', 'HEAD:refs/heads/main', expected=1)
+        self.git('switch', '-c', 'main')
+        self.git('commit', '--allow-empty', '-m', 'main denied', expected=1)
+        self.assertFalse((self.root / 'PWNED').exists())
+        self.assertEqual(self.bundle(), trusted)
+        self.assertEqual(protection.doctor(self.root)['local_configuration'], 'pass')
+
+    def test_linked_worktree_without_assets_keeps_protection(self):
+        self.install()
+        self.git('switch', '-c', 'feature')
+        self.commit()
+        linked = Path(self.temp.name) / 'linked space 日本語'
+        self.git('worktree', 'add', '-b', 'linked', str(linked))
+        shutil.copy2(self.root / 'git', linked / 'git')  # Scanner double, not a protection asset.
+        self.assertEqual(self.bundle(linked), self.bundle())
+        self.assertFalse((linked / '.project-protection').exists())
+        self.assertFalse((linked / '.githooks').exists())
+        result = subprocess.run(['git', '-C', str(linked), 'commit', '--allow-empty', '-m', 'linked'],
+                                capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.git('config', 'extensions.worktreeConfig', 'true')
+        subprocess.run(['git', '-C', str(linked), 'config', '--worktree', 'core.hooksPath', '.githooks'], check=True)
+        self.assertEqual(protection.doctor(linked)['local_configuration'], 'fail')
+
+    def test_trusted_bundle_tampering_and_extra_hook_are_rejected(self):
+        self.install()
+        for name in ('guard.py', 'manifest.json', 'hooks/pre-commit', 'hooks/post-checkout'):
+            with self.subTest(name=name):
+                path = self.bundle() / name
+                original = path.read_bytes() if path.exists() else None
+                path.write_text('unmanaged content')
+                proposal = protection.plan(self.root)
+                self.assertTrue(proposal['conflicts'])
+                self.assertEqual(protection.doctor(self.root)['local_configuration'], 'fail')
+                with self.assertRaises(RuntimeError):
+                    protection.apply(self.root, proposal['plan_hash'])
+                if original is None:
+                    path.unlink()
+                else:
+                    path.write_bytes(original)
+        self.assertEqual(protection.doctor(self.root)['local_configuration'], 'pass')
+
+    def test_bundle_symlink_and_windows_junction_detection(self):
+        self.git('init', '-b', 'main')
+        store = self.bundle().parent
+        external = Path(self.temp.name) / 'external'
+        external.mkdir()
+        store.symlink_to(external, target_is_directory=True)
+        proposal = protection.plan(self.root)
+        self.assertTrue(proposal['conflicts'])
+        with self.assertRaises(RuntimeError):
+            protection.apply(self.root, proposal['plan_hash'])
+        self.assertEqual(list(external.iterdir()), [])
+        store.unlink()
+        with patch.object(Path, 'is_junction', lambda path: path == store, create=True):
+            self.assertTrue(protection.plan(self.root)['conflicts'])
+
+    def test_asset_change_invalidates_approved_plan(self):
+        proposal = protection.plan(self.root, True)
+        assets = Path(self.temp.name) / 'assets'
+        shutil.copytree(SKILL / 'assets', assets)
+        (assets / 'guard.py').write_text('raise SystemExit(0)\n')
+        with patch.object(protection, 'ASSETS', assets):
+            with self.assertRaises(RuntimeError):
+                protection.apply(self.root, proposal['plan_hash'], True)
+        self.assertFalse((self.root / '.git').exists())
+
+    def test_inactive_conditional_config_include_is_rejected(self):
+        self.git('init', '-b', 'main')
+        included = self.root / 'branch-config'
+        included.write_text('[core]\n hooksPath = .githooks\n')
+        self.git('config', 'includeIf.onbranch:untrusted.path', str(included))
+        self.assertTrue(protection.plan(self.root)['conflicts'])
+        self.assertIn('includes', ' '.join(protection.plan(self.root)['conflicts']))
+
+    def test_external_git_directory_and_paths_with_spaces(self):
+        new_root = self.root.with_name('repo space 日本語')
+        self.root.rename(new_root)
+        self.root = new_root
+        common = Path(self.temp.name) / 'git metadata 日本語'
+        self.git('init', '--template=', '-b', 'main', '--separate-git-dir', str(common))
+        self.assertEqual(self.install()['local_configuration'], 'pass')
+        self.assertTrue(self.bundle().is_relative_to(common))
+        self.git('switch', '-c', 'feature')
+        self.commit()
+
+    def test_git_directory_inside_trackable_worktree_is_rejected(self):
+        self.git('init', '--template=', '-b', 'main', '--separate-git-dir', str(self.root / 'tracked-git'))
+        proposal = protection.plan(self.root)
+        self.assertIn('trackable worktree', ' '.join(proposal['conflicts']))
+        with self.assertRaises(RuntimeError):
+            protection.apply(self.root, proposal['plan_hash'])
+
+    def test_python_imports_ignore_checkout_and_pythonpath(self):
+        self.install()
+        self.git('switch', '-c', 'feature')
+        marker = Path(self.temp.name) / 'import-marker'
+        for name in ('sitecustomize.py', 'shutil.py', 'subprocess.py'):
+            (self.root / name).write_text(f'from pathlib import Path\nPath({str(marker)!r}).touch()\n')
+        # main is rejected before the scanner double (a separate Python process).
+        self.commit()
+        self.git('switch', '-c', 'main')
+        with patch.dict(os.environ, {'PYTHONPATH': str(self.root)}):
+            self.git('commit', '--allow-empty', '-m', 'main denied', expected=1)
+        self.assertFalse(marker.exists())
+
+    def test_executable_search_excludes_checkout_and_relative_path_entries(self):
+        guard = load_guard()
+        before = Path.cwd()
+        try:
+            os.chdir(self.root)
+            with patch.dict(os.environ, {'PATH': os.pathsep.join([
+                '', '.', 'relative-tools', str(self.root), str(self.root / 'bin'), str(self.bin)
+            ])}):
+                self.assertEqual(guard.trusted_path(), str(self.bin))
+                self.assertEqual(Path(guard.trusted_executable('gitleaks')), self.scanner)
+        finally:
+            os.chdir(before)
+
+    def test_scanner_children_get_explicit_path_without_windows_cwd_search(self):
+        guard = load_guard()
+        process = Mock()
+        process.wait.return_value = 0
+        process.__enter__ = Mock(return_value=process)
+        process.__exit__ = Mock(return_value=False)
+        with patch.object(guard, 'trusted_executable', return_value=str(self.scanner)), \
+                patch.object(guard, 'trusted_path', return_value=str(self.bin)), \
+                patch.object(guard.subprocess, 'Popen', return_value=process) as popen:
+            guard.scan(['git', '--staged'])
+        self.assertEqual(popen.call_args.args[0][0], str(self.scanner))
+        environment = popen.call_args.kwargs['env']
+        self.assertEqual(environment['PATH'], str(self.bin))
+        self.assertEqual(environment['NoDefaultCurrentDirectoryInExePath'], '1')
+
+    @unittest.skipUnless(sys.platform == 'win32', 'native Windows executable search regression')
+    def test_windows_checkout_executables_cannot_shadow_trusted_tools(self):
+        self.install()
+        self.git('switch', '-c', 'feature')
+        marker = self.root / 'EXECUTED_UNTRUSTED_TOOL'
+        for name in ('git.exe', 'gitleaks.exe'):
+            shutil.copy2(self.base_python, self.root / name)
+        (self.root / 'symbolic-ref').write_text(
+            f'from pathlib import Path\nPath({str(marker)!r}).touch()\nprint("feature")\n')
+        self.write_scanner(
+            'import sys\nfrom pathlib import Path\n'
+            f'if Path(sys.executable).parent == Path.cwd(): Path({str(marker)!r}).touch()\n')
+        self.git('add', 'git.exe', 'gitleaks.exe', 'symbolic-ref')
+        self.git('commit', '-m', 'untrusted native executable fixtures')
+        oid = self.git('rev-parse', 'HEAD')
+        self.hook(f"HEAD {oid} refs/heads/feature {'0' * 40}\n")
+        self.assertFalse(marker.exists())
+        before = Path.cwd()
+        try:
+            os.chdir(self.root)
+            self.assertEqual(protection.doctor(self.root)['local_configuration'], 'pass')
+            self.assertEqual(protection.plan(self.root)['conflicts'], [])
+        finally:
+            os.chdir(before)
+        self.assertFalse(marker.exists())
+
+    def test_installer_git_lookup_excludes_target_and_current_directory(self):
+        external = Path(protection.git_executable(self.root)).resolve()
+        before = Path.cwd()
+        try:
+            os.chdir(self.root)
+            with patch.dict(os.environ, {'PATH': os.pathsep.join([
+                '', '.', str(self.root), str(external.parent)
+            ])}):
+                self.assertEqual(Path(protection.git_executable(self.root)).resolve(), external)
+        finally:
+            os.chdir(before)
 
     def test_timeout_is_not_pass(self):
         with patch.object(protection.subprocess, 'run', side_effect=subprocess.TimeoutExpired('git', 10)):
@@ -239,8 +492,7 @@ class ProtectionTests(unittest.TestCase):
         extra = hooks / 'post-checkout'
         extra.write_text('#!/bin/sh\nexit 1\n')
         extra.chmod(0o755)
-        self.assertTrue(protection.plan(self.root, True)['conflicts'])
-        extra.unlink()
+        self.assertEqual(protection.plan(self.root, True)['conflicts'], [])
         template = Path(self.temp.name) / 'template/hooks'
         template.mkdir(parents=True)
         (template / 'pre-commit').write_text('unmanaged template')
@@ -377,7 +629,7 @@ class ProtectionTests(unittest.TestCase):
         with patch.object(protection.os, 'replace', interleaved_replace):
             protection.apply(self.root, proposal['plan_hash'])
         self.assertEqual(lock.read_text(), 'next writer owns this lock')
-        self.assertEqual(self.git('config', '--get', 'core.hooksPath'), '.githooks')
+        self.assertEqual(self.git('config', '--get', 'core.hooksPath'), (self.bundle() / 'hooks').as_posix())
 
     def test_hanging_scanner_times_out_and_normal_retry_succeeds(self):
         self.install()
@@ -389,7 +641,7 @@ class ProtectionTests(unittest.TestCase):
             'print("SYNTHETIC_PRIVATE_ERROR", file=sys.stderr, flush=True)\n'
             'time.sleep(30)\n')
         commit = ['git', '-C', str(self.root), 'commit', '--allow-empty', '-m', 'scan retry']
-        push = ['sh', str(self.root / '.githooks/pre-push')]
+        push = ['sh', str(self.bundle() / 'hooks/pre-push')]
         rows = f"HEAD {oid} refs/heads/feature {'0' * 40}\n"
         with patch.dict(os.environ, {'PROJECT_PROTECTION_SCAN_TIMEOUT': '1'}):
             for command, stdin in ((commit, None), (push, rows)):
@@ -444,12 +696,13 @@ class ProtectionTests(unittest.TestCase):
         process = Mock()
         process.pid = 12345
         process.poll.return_value = None
-        with patch.object(guard.sys, 'platform', 'win32'), patch.object(guard.subprocess, 'run') as run:
+        with patch.object(guard.sys, 'platform', 'win32'), patch.object(guard.subprocess, 'run') as run, \
+                patch.object(guard, 'trusted_executable', return_value='C:/Windows/System32/taskkill.exe'):
             run.side_effect = subprocess.TimeoutExpired('taskkill', 10)
             guard.stop_scanner(process)
         process.kill.assert_called_once()
         process.wait.assert_called_once_with(timeout=10)
-        self.assertEqual(run.call_args.args[0], ['taskkill', '/PID', '12345', '/T', '/F'])
+        self.assertEqual(run.call_args.args[0], ['C:/Windows/System32/taskkill.exe', '/PID', '12345', '/T', '/F'])
         self.assertEqual(run.call_args.kwargs['stdout'], subprocess.DEVNULL)
         self.assertEqual(run.call_args.kwargs['stderr'], subprocess.DEVNULL)
 

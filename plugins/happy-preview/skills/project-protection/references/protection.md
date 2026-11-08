@@ -9,7 +9,14 @@ pre-pushのstdinにある全refの宛先を検査し、`feature:main`、`HEAD:ma
 mainからfeatureへのpushは許可する。main以外の削除には履歴scanは不要。
 既存hookの自動chain・上書き、global設定の変更はしない。
 worktreeでは共通local設定を変更すると他worktreeにも影響する。planの対象と共有範囲を説明する。
-管理資産とmanifestは追跡する。設定を共有するworktreeでも各checkoutの資産を確認する。
+実行資産とmanifestは共通Git管理ディレクトリの `project-protection/<内容hash>/` に置き、追跡しない。
+`core.hooksPath` はその `hooks/` の絶対pathを指す。hookは自身のpathからguardを参照し、
+Pythonの `-I` でcheckoutやPYTHONPATHからのimportを除外する。`.githooks` や
+`.project-protection` がbranchで置換・削除されたり、post-checkoutを追加されても実行しない。
+通常の `.git/` または全worktreeの外のGit管理領域を使い、追跡可能なディレクトリやsymlink／junctionを拒否する。
+内容hashは版の識別用であり、doctorはmanifestだけでなく信頼済み配布資産との実byte一致と余分なファイルも確認する。
+branchによる書換えから分離する設計であり、所有者や同じ権限のprocessに対するOSの改変禁止・sandboxではない。
+絶対pathのためrepo移動時はdoctorが不合格になる。新しいpathへの設定変更は手動で差分を確認し、再導入する。
 部分導入はdoctorで不合格とし、planが安全に追加できる欠落のみ補完する。
 管理外変更はバックアップし、所有者が比較・調整してから新しい計画を作る。
 既存内容を削除して再導入する操作を暗黙に行わない。
@@ -52,11 +59,15 @@ doctorの非破壊を確認する。実Gitleaks・GitHub API・Windows・利用�
 
 新規Git初期化では計画に示す `git init --template= -b main` を使い、利用者のinitテンプレートから
 未確認のhookをコピーしない。この選択も承認した計画の一部とする。
-既存 `.githooks` 内の管理対象以外のファイルも、hooksPath変更で有効化しないよう競合とする。
+既存のworktree内 `.githooks` は新規導入で有効化も変更もしない。Git既定の `hooks/`、
+既存hooksPath、trusted bundle内の管理対象以外のファイルは競合とする。
+Git configのinclude／includeIfは、今は無効でもbranch変更後にhook設定を有効化し得るので手動調整へ戻す。
+無関係なincludeも自動変更せず、現行設定を保つ。
 
 planは共通Gitディレクトリと全worktreeのpathを示す。複数worktreeがすでにありhooksPathが
 未導入の場合は、共有設定の初回変更を停止して手動調整へ戻す。導入済みrepoから作る新worktreeは
-資産の追跡状態を確認して使う。既存worktreeを一律に変更する機能は持たない。
+同じbundleを使う。各worktreeのdoctorでworktree固有のoverrideも確認し、1か所のpassを他worktreeの合格と呼ばない。
+既存worktreeを一律に変更する機能は持たない。
 remoteの存在はoriginに限定せず全remote名で確認し、URLは出力しない。
 
 設定ファイルまたは祖先ディレクトリのsymlinkは競合とする。設定有効化ではGitの
@@ -84,3 +95,27 @@ Gitleaks実行ファイルを使う範囲を対象とし、GUI配布、特殊な
 Windowsの一時path（短縮名を含む）とGitのroot表記は、API入口で両方をresolveして比較する。
 repo配下の別フォルダをrootと誤認しない境界は維持する。Windows/Ubuntu CIでは同じ受入試験を実行し、
 実Gitleaks統合試験は明示したテスト用binaryがある場合に実行する。
+
+## 旧版からの移行
+
+旧版のlocal `core.hooksPath=.githooks` は安全な実行領域ではない。未信頼branchをcheckoutする前に、
+信頼済み配布元のinstallerから `plan <root> --migrate-legacy` を実行する。
+対象・共通Git管理領域・新hooksPath・旧資産を削除しないことを確認し、承認後に
+`bootstrap <root> --migrate-legacy --apply <plan_hash>` を実行する。
+
+- 旧版はPR #67の既知guard・2つのhook・manifestと完全一致する場合だけ移行できる。
+  checkout内のmanifestを書き換えても承認根拠にはならない。追加hook、欠落、変更、symlink／junctionは停止する。
+- 共有worktreeが複数、global/worktree override、既存Git hookがある場合は一括変更しない。
+- 新bundleを先に検証し、config.lockを使って設定を最後に変更する。途中失敗は旧設定と作成済み資産を残す。
+  失敗中は旧hookの危険も残るため、通常commit/push/checkoutへ戻らず診断する。
+- 旧追跡ファイルは削除・実行・chainしない。移行後のdoctorと実行確認が済んでから、所有者が別の差分で整理する。
+- 既に旧資産が改変されているときは、そのhookを有効にしたままbranch切替で復旧しない。
+  設定・ファイルを保存し、所有者と旧hookの無効化および既存機能の統合方針を確認して手動調整する。
+
+installerと配布assets、Git/Python/Gitleaksとそれらの検索環境は信頼済みであることを前提とする。
+PATHにcheckoutや空要素を含めない。guardはGit/Gitleaks/taskkillを絶対PATHのcheckout外ディレクトリから
+絶対pathへ解決し、Windowsのcurrent directoryにある同名exeを選ばない。scannerにも同じPATHと
+`NoDefaultCurrentDirectoryInExePath=1` を渡し、子Gitの暗黙current-directory検索を避ける。
+任意のローカル設定・実行ファイル改変を防ぐ機能ではない。
+Gitleaksのrepo内設定・ignore規則は引き続き対象repoの方針に従うため、悪意あるscanner設定による
+検査弱化を防ぐ保証はない。server側の検査・保護と併用する。
