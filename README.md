@@ -82,6 +82,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
+- [wpf-webview-typescript](plugins/happy-preview/skills/wpf-webview-typescript/SKILL.md): 既存C#とWeb UIの境界、待ち時間、取消し後の入力保持、切断後の再開を設計・検証（実利用検証中）
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
@@ -92,6 +93,8 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 
 技術実現性調査の初版はGPT-6向けに設計し、GPT-6 Astraによる5件の架空ケースを独立採点しました。[評価記録](evals/records/technical-feasibility-research-preview-001.json)の範囲で基本検証済みです。実案件での効果、自動起動、他モデルでの再現性は未検証です。
+
+WPF・WebView2・TypeScript連携の初版は[試用条件と検証範囲](docs/wpf-webview-typescript-preview.md)を参照してください。個人用の同名スキルを使っていた場合、preview導入後は重複利用を避け、呼出しを`$happy-preview:wpf-webview-typescript`へ切り替えてください。
 
 実利用と修正後の確認を経て、採用したskillは通常pluginへ移します。移動先と導入変更はその際に案内します。配布・正式化・公式機能への移行方針は[ADR 0004](docs/adr/0004-preview-plugin-distribution.md)を参照してください。
 
