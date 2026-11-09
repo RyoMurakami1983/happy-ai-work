@@ -76,6 +76,8 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 `technical-design-review`はhappy-previewからhappy-codingへ移動しました。happy-codingを導入・更新し、呼出しnamespaceも変更してください。未使用の`video-game-design`／`unity-beginner-development`は配布を終了しました。既存インストールが自動削除されるとは限りません。happy-previewも更新し、古い登録が残る場合は旧skillを無効化・削除してください。他の試用skillを使う場合はplugin全体を無効化しないでください。[判断と制約](docs/design/017_SKILL_DISTRIBUTION.md)を参照してください。
 
+`implement`と`technical-design`には、再利用できそうな手戻りだけを`happy-add-issue`で改善候補へ整理する「手戻りfeedback（Preview）」を試験的に組み込んでいます。元の仕事を先に返し、自動投稿せず、効果は未確認として試します。新しいpreview skillの配布ではなく、既存skill内の条件付き導線です。[範囲・試用条件・撤回方法](docs/design/022_REWORK_FEEDBACK_PREVIEW.md)を参照してください。
+
 ### happy-preview（試用版）
 
 `pr-delivery`はhappy-codingへ昇格しました。codingとpreviewの両方を更新し、明示呼出しは`happy-coding:pr-delivery`へ変更してください。旧登録が残れば旧skillを無効化・削除し、他の試用skillは維持してください。[採用判断・移行・検証方針](docs/design/021_PR_DELIVERY_PROMOTION.md)を参照してください。
