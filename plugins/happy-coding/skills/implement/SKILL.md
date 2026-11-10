@@ -89,6 +89,12 @@ handoffは完了slice、実行commandと結果、主な変更file／artifact、�
 
 実装中に仕様の穴を埋めず必要判断を前段へ戻す。phase／sliceは自動停止点ではなく、blocker・HITL・REPLAN_REQUIREDがなければ継続する。並列化でも確定slice contractとTDD loopを各workerへ渡し、未確定sliceを並列化しない。PR／review／furikaeriは別skillへ渡す。
 
+## 手戻りfeedback（Preview）
+
+実際の手戻りや利用者の修正指示から、Happy AI Workの指示・境界・検証へ再利用できそうな改善が見えたときだけ、元の作業の完了報告（未完了ならblockerと再開点）を先に渡し、利用可能な`happy-core`の`happy-add-issue`にある「手戻りfeedback（Preview）」へ候補を渡す。単発の好み・誤字・通常のTDDだけでは起動せず、原因をskillへ自動帰属しない。同じ出来事は設計・実装をまたいでも一候補にまとめ、既に提示・保留・辞退された候補を再提示しない。
+
+これは実利用で効果を確認する試用導線であり、自動投稿や作業の完了条件ではない。候補がない、利用者が試用を望まない、または`happy-add-issue`が未導入なら、このための追加確認・導入待ちを増やさず元の作業を閉じる。
+
 ## 必要時のリソース
 
 - [planning.md](references/planning.md): 依存・移行・HITL・保存計画
