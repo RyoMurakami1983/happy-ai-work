@@ -24,6 +24,10 @@
 
 `technical-design-review`はhappy-codingへ昇格する。実装前の設計案を目的・要件・契約から検証し、判定と戻り先を返す独立目的を持つ。設計を作る`technical-design`、実装差分を検査する`deep-review`とは入力と判定対象を分ける。[設計・試用条件](design/007_TECHNICAL_DESIGN_REVIEW.md)を参照する。
 
+## 極めと残心の境界
+
+`kime-zanshin`は、受理・進行・確定・失敗／結果不明をつなぎ、相手が待つ・進む・戻るを判断できる応答と終わり方を扱うプレビューskill。表現・構造を研ぐ`tanka-to-haiku`、情報量と見せ方を整える`yohaku`とは目的を分ける。UI状態・技術contract・実装検証の具体策は既存coding skillが所有し、非機能品質全般を新skillへ集約しない。[試用・比較・撤回条件](design/023_KIME_ZANSHIN_PREVIEW.md)に沿い、独立skillとしての価値は実利用と比較で判断する。
+
 ## Yohakuの境界
 
 `yohaku`は、人が正しく理解・判断・行動できる情報量と見せ方を整える。文章の企画や主張・構成の深い推敲は対象外とし、領域固有の判断・検証は対象skillが担当する。実装の簡素化は依頼範囲にある場合だけ扱う。

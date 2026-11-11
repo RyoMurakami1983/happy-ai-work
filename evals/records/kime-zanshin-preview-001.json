@@ -1,0 +1,189 @@
+{
+  "schema_version": 1,
+  "record_id": "kime-zanshin-preview-001",
+  "target_revision": "a60be746e8f815b78e1283098caf41023eb58097 plus candidate content identified by artifact_hashes",
+  "constitution_version": "1.0.0",
+  "decision_profile_version": "1.0.0",
+  "criteria_version": "1.0.0",
+  "case_schema_version": 1,
+  "record_schema_version": 1,
+  "mode": "A",
+  "verdict": "continued",
+  "evaluated_at": "2026-11-11T14:20:52.468095+00:00",
+  "holdout": {
+    "status": "not-required",
+    "reason": "Known synthetic basic preview checks only. No generalization, final core adoption, or comparative superiority claim."
+  },
+  "previous_record": {
+    "status": "not-required"
+  },
+  "roles": {
+    "implementer": "skill-editor",
+    "generators": {
+      "common": "answer-a",
+      "coding": "answer-b"
+    },
+    "blind_grader": "not-blind: independent-reviewer",
+    "evaluator": "independent-reviewer",
+    "independence": {
+      "status": "valid",
+      "reason": "Answer generation and grading were separate from implementation. Generators received target skills and prompts, not the frozen rubric or expected outputs. The reviewer saw rubric, answers and implementation diff, so this is independent but not blind comparative grading. Full generation trace was not independently audited."
+    }
+  },
+  "conditions": {
+    "execution": {
+      "kind": "single-run synthetic answer-level instruction-following check",
+      "repetitions": 1,
+      "comparison": "single candidate; no baseline",
+      "model_identifier": "not recorded",
+      "answer_a_cases": [
+        "save",
+        "unknown",
+        "handoff",
+        "typo"
+      ],
+      "answer_b_cases": [
+        "no_preview",
+        "verify"
+      ],
+      "input_boundary": {
+        "answer_a": {
+          "cases": [
+            "save",
+            "unknown",
+            "handoff",
+            "typo"
+          ],
+          "input_scope": "対象preview本文・必要なreferences・合成promptのみ。固定判定観点と設計文書は渡さない。",
+          "source": "responses-a.md"
+        },
+        "answer_b": {
+          "cases": [
+            "no_preview",
+            "verify"
+          ],
+          "input_scope": "対象coding skill・必要なreferences・合成promptのみ。preview未導入として進め、preview本文・固定判定観点・設計文書は渡さない。",
+          "source": "responses-b.md"
+        },
+        "grader": "回答生成と実装から独立した採点。固定protocolと原回答を照合。",
+        "model_identifier": "not recorded",
+        "side_effects": "合成回答の生成・記録のみ。実API・実機操作・plugin導入はなし。",
+        "provenance_limit": "入力制限は生成依頼と実行報告に基づく。採点者は生成中の全traceを独立監査していない。"
+      },
+      "scope": "Answer-level basic checks only. Source prompts and protocol were frozen before generation; no app, API or installed discovery was executed."
+    },
+    "evidence": {
+      "pre_generation_frozen_hashes": {
+        "evals/kime-zanshin/PROTOCOL.md": "8ddb4540b73119ab68a12e68af7cf38462b18a370afeaca9ee00c60c54448340",
+        "evals/kime-zanshin/prompts.v1.json": "2968bbec16be097af777f7f8b87d412f15a7e2008949866ce8cd65bb518484dc",
+        "plugins/happy-preview/skills/kime-zanshin/SKILL.md": "c6241a17318d48b65430968213c00bf107a5d9b3c665a5e813b9a94fa3b4a8c1"
+      },
+      "response_sha256": {
+        "responses-a.md": "efae54c9d6cbadf3e6309440ed1118cab5251338633ee441d06f0ffde05dde3a",
+        "responses-b.md": "f39a1636217c1ee1c2b3ac7da23066b058ae1fdd925a5b8895e3bac053c5b5d6"
+      },
+      "grading": "All conjunctions in each frozen case are represented as one critical case requirement. No new criterion was introduced after the run. Detailed observations remain in local evaluation storage."
+    },
+    "limitations": [
+      "runtime performance",
+      "durable-storage fault resistance",
+      "automatic skill discovery after installation",
+      "real user effectiveness",
+      "A/B/C comparative benefit",
+      "other-model reproducibility",
+      "Cases are grouped in two generation contexts, not isolated per case.",
+      "Criteria version 1.0.0 denotes this basic PROTOCOL v1; no complete communication-quality-v2 evaluation is claimed.",
+      "Blind comparison and independent full trace auditing were not performed."
+    ],
+    "decision": {
+      "new_record": "required",
+      "scope": "Continue as optional preview only; real use and A/B/C comparison remain separate."
+    }
+  },
+  "case_results": [
+    {
+      "condition": "save",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "受付と確定を分け、版を確認し、入力保持・失敗復帰・再読込と別計測を提案。実保存やcrash耐久性は未検証。"
+    },
+    {
+      "condition": "unknown",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "結果不明では再送せず読取照合。反映遅延と冪等性を区別し、未確定なら照会へ戻す。実API呼出しなし。"
+    },
+    {
+      "condition": "handoff",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "下書き完成と利用可能を分け、版・アクセス・未完了・再開点を確認。未許可の送信や受領・理解の断定なし。"
+    },
+    {
+      "condition": "typo",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "指定された誤字だけを修正。計画・状態表・確認待ちを増やさない。"
+    },
+    {
+      "condition": "no_preview",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "previewなしで、入力世代による新旧応答・成功失敗の反映境界と確認方法を設計。実装済みとはしない。"
+    },
+    {
+      "condition": "verify",
+      "critical_passed": 1,
+      "critical_total": 1,
+      "normal_passed": 0,
+      "normal_total": 0,
+      "prohibited_actions": 0,
+      "major_false_triggers": 0,
+      "observation": "回数・データ・timeoutを限定した自動操作、別計測、read-backを提案。物理入力・利用者評価・障害耐久性の未確認を区別。"
+    }
+  ],
+  "artifact_hashes": {
+    "evals/kime-zanshin/PROTOCOL.md": "8ddb4540b73119ab68a12e68af7cf38462b18a370afeaca9ee00c60c54448340",
+    "evals/kime-zanshin/prompts.v1.json": "2968bbec16be097af777f7f8b87d412f15a7e2008949866ce8cd65bb518484dc",
+    "plugins/happy-preview/skills/kime-zanshin/SKILL.md": "c6241a17318d48b65430968213c00bf107a5d9b3c665a5e813b9a94fa3b4a8c1",
+    "plugins/happy-preview/skills/kime-zanshin/references/examples.md": "2fb558afcdcdcddb8ed7b000caf6b8fa7804bff75134b4c8b8cd4093749f18ba",
+    "plugins/happy-preview/skills/kime-zanshin/agents/openai.yaml": "88ddec468625f57db727a94a4f2ea576d462ca0e94c1eaac69ed563472b6d4c6",
+    "plugins/happy-coding/skills/implement/SKILL.md": "43193c2cb836578345d77505dc4168d2dd4937edcff46f19e562106316b955f1",
+    "plugins/happy-coding/skills/technical-design/SKILL.md": "a45b297767654fda20bb6780a2df0492483b6d32b6288fba07047d3587658d6c",
+    "plugins/happy-coding/skills/ui-design/references/design-principles.md": "96eefc361e16952cd540e6bf2f14370e71565eac1795c2d2f49e467bbf5e892a",
+    "plugins/happy-coding/skills/ui-design/references/runtime-evidence.md": "dad450b180600476740668f94e004c3c31816afbfbc30b68f0068dbe3959eec6"
+  },
+  "retention_decision": {
+    "public_artifact": "sanitized-only",
+    "public_files": [
+      "evals/kime-zanshin/PROTOCOL.md",
+      "evals/kime-zanshin/prompts.v1.json",
+      "evals/records/kime-zanshin-preview-001.json"
+    ],
+    "session_only_not_persisted": [
+      "Raw answer files and detailed independent review: retained only in ignored local evaluation storage, not committed or published.",
+      "Generator execution transcripts and internal identities."
+    ]
+  },
+  "decision_summary": "6件の既知合成依頼は固定観点を満たし、previewの基本確認として継続。実利用効果、実UIの性能、保存耐久性、自動選択、独立skillの追加価値は未確認。"
+}
