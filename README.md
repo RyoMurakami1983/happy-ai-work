@@ -84,6 +84,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
+- [kime-zanshin](plugins/happy-preview/skills/kime-zanshin/SKILL.md): 極めと残心。応答・確定のタイミングから結果確認・回復までをつなぐ共通の観点（実利用未検証）
 - [wpf-webview-typescript](plugins/happy-preview/skills/wpf-webview-typescript/SKILL.md): 既存C#とWeb UIの境界、待ち時間、取消し後の入力保持、切断後の再開を設計・検証（実利用検証中）
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
@@ -91,6 +92,8 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 - [project-protection](plugins/happy-preview/skills/project-protection/SKILL.md): ローカル起点でmain直接操作・秘密混入の事故防止設定を計画・診断（実利用検証中）
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
+
+極めと残心はhappy-previewで任意試用し、設計・実装からは必要時だけ参照します。具体的なUI・保存・計測手順はhappy-codingが所有し、preview未導入でも既存手順を続けられます。[範囲・基本検証・比較方針](docs/design/023_KIME_ZANSHIN_PREVIEW.md)を参照してください。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 
