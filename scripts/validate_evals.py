@@ -239,9 +239,26 @@ def historical_artifacts(
     """Resolve explicitly archived evidence without editing its immutable record."""
     if path.resolve().parent != (ROOT / "evals" / "records").resolve():
         return {}
-    history_path = ROOT / "evals" / "history" / path.name
-    if not history_path.exists():
-        return {}
+    history_root = ROOT / "evals" / "history"
+    paths = [history_root / path.name]
+    paths.extend(sorted((history_root / path.stem).glob("*.json")))
+    result: dict[str, Path] = {}
+    for history_path in paths:
+        if not history_path.exists():
+            continue
+        mappings = historical_mapping(path, payload, history_path, failures)
+        for original, snapshot in mappings.items():
+            if original in result:
+                failures.append(f"{history_path.relative_to(ROOT)}: duplicate archived artifact: {original}")
+            else:
+                result[original] = snapshot
+    return result
+
+
+def historical_mapping(
+    path: Path, payload: dict[str, Any], history_path: Path, failures: list[str]
+) -> dict[str, Path]:
+    """Validate one immutable mapping; follow-up mappings may only add artifacts."""
     history = load_json(history_path, failures)
     label = str(history_path.relative_to(ROOT))
     if not isinstance(history, dict) or set(history) != {"record_sha256", "artifacts"}:

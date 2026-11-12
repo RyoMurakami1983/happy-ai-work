@@ -27,6 +27,8 @@ class EvaluationHistoryTests(unittest.TestCase):
             payload["artifact_hashes"] = {
                 "skill.md": hashlib.sha256(snapshot.read_bytes()).hexdigest()
             }
+            if change == "append-distinct":
+                payload["artifact_hashes"]["second.md"] = payload["artifact_hashes"]["skill.md"]
             record_path.write_text(json.dumps(payload), encoding="utf-8")
             history = root / "evals/history/example.json"
             history.parent.mkdir(parents=True)
@@ -44,6 +46,17 @@ class EvaluationHistoryTests(unittest.TestCase):
             elif change == "unmapped":
                 mapping["artifacts"] = {"other.md": "evals/example/snapshots/v1/skill.md"}
             history.write_text(json.dumps(mapping), encoding="utf-8")
+            if change.startswith("append"):
+                addition = root / "evals/history/example/followup.json"
+                addition.parent.mkdir(parents=True)
+                followup = dict(mapping)
+                if change == "append-distinct":
+                    followup["artifacts"] = {"second.md": "evals/example/snapshots/v1/skill.md"}
+                addition.write_text(json.dumps(followup), encoding="utf-8")
+                if change not in {"append-duplicate", "append-distinct"}:
+                    history.unlink()
+                if change == "append-tampered":
+                    snapshot.write_text("tampered", encoding="utf-8")
             if change == "no-history":
                 history.unlink()
             failures: list[str] = []
@@ -53,6 +66,18 @@ class EvaluationHistoryTests(unittest.TestCase):
 
     def test_archived_record_matches_snapshot_after_skill_changes(self) -> None:
         self.assertEqual(self.check_record(), [])
+
+    def test_append_only_followup_mapping_is_supported(self) -> None:
+        self.assertEqual(self.check_record(change="append"), [])
+
+    def test_followup_adds_to_existing_mapping_without_rewriting_it(self) -> None:
+        self.assertEqual(self.check_record(change="append-distinct"), [])
+
+    def test_followup_cannot_override_existing_mapping(self) -> None:
+        self.assertTrue(any("duplicate archived" in x for x in self.check_record(change="append-duplicate")))
+
+    def test_followup_still_requires_original_hash(self) -> None:
+        self.assertTrue(any("hash mismatch" in x for x in self.check_record(change="append-tampered")))
 
     def test_snapshot_tampering_is_rejected(self) -> None:
         self.assertTrue(any("hash mismatch" in x for x in self.check_record(change="snapshot")))
