@@ -34,7 +34,7 @@ repo規約、既存用語集、`CONTEXT.md`、存在すれば`CONTEXT-MAP.md`、
 
 ## 保存とhandoff
 
-`CONTEXT.md`は簡潔な用語・意味境界に留め、既存Mission等を削除・再編せず詳細ルール／技術設計を詰め込まない。モデルは既存正本へ反映し、なければ`docs/domain/NNN_DOMAIN_MODEL.md`へ保存する。同案件のPRD／designと番号を共有し、新規は既存番号を調べて採番する。文書不要が明示された場合だけ同情報を会話で返し、未保存を示す。
+`CONTEXT.md`は簡潔な用語・意味境界に留め、既存Mission等を削除・再編せず詳細ルール／技術設計を詰め込まない。モデルは既存正本へ反映し、なければ`docs/domain/NNN_DOMAIN_MODEL.md`へ保存する。同案件のPRD／designと番号を共有し、新規は既存番号を調べて採番する。保存例外は共通の[Work Artifacts](../implement/references/WORK_ARTIFACTS.md#conversation-only-exceptions)に従う。低riskで後続handoff・判断記録が不要な場合は会話で返せるが、長期的な境界・所有責任やpublic contract等の保存必須条件を文書不要指定だけで省略しない。競合時はその点だけ確認し、例外時は`artifacts: conversation-only`と具体的な`exception reason:`を示す。
 
 長期的なドメイン境界・業務所有責任はrepo ADR規約と[ADR-FORMAT.md](references/ADR-FORMAT.md)で理由を残す。技術のlong-lived structure／compatibility／migration／operationsに影響する判断はADRを省略せず`technical-design`へ渡す。
 

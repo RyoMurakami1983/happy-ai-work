@@ -16,7 +16,7 @@ description: 現在作業しているGitHub repoの追跡価値がある具体�
 3. 公開repoなら、private repo名、顧客名、内部URL、秘密情報、特定可能な業務dataを除外または匿名化する。
 4. タイトル、背景、問題、提案または期待結果、Acceptance Criteria、必要な証拠、Non-goalsを必要な範囲だけ整える。
 5. repoに実在するlabelだけを候補にする。labelやassigneeを推測で新設しない。
-6. 作成前に、正確なrepo、公開範囲、title、body、labelをpreviewし、ユーザーの確認を得る。
+6. 作成前に、正確なrepo、公開範囲、title、body、labelをpreviewし、ユーザーの確認を得る。 前段でユーザーが承認した同じ登録先・公開範囲・title・body・必要なlabel等の指定は、承認の根拠と一致を確認して引き継ぎ、同内容を聞き直さない。未承認の項目や重要な変更だけ再確認する。上位規則が操作時の確認を要求する場合はそれに従い、委譲元の主張だけをユーザー承認とみなさない。
 7. 利用可能なGitHub connectorを優先し、必要なら`gh`を使う。どちらも使えなければ投稿可能なdraftを返す。
 8. 作成後はIssue URLと、Notionの次のタスクへ置く一歩を返す。
 

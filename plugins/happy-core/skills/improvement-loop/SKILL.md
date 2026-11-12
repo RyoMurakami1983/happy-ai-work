@@ -25,7 +25,7 @@ description: furikaeriなどで選択済みの改善候補を、批判的に検�
 6. 日付指定がなければ「次のタスク」とし、次の作業日を候補として提示する。「明日」と勝手に確定しない。
 7. Notionを実行タスクと実験ledgerの正本とする。GitHub Issueが必要なら、Issueを技術課題の正本にし、NotionにはIssueリンク、今回の一歩、改善仮説、反証条件、検証結果、判断を置く。Issue本文は複製しない。
 8. 外部書き込み前に、タスク、実行日、完了条件、登録先、公開範囲、送信内容を一度にpreviewし、候補ごとにユーザーの確認を得る。
-9. 利用可能な専門skillへ一段だけ委譲する。再帰的に`furikaeri`や`improvement-loop`を呼ばない。
+9. 承認された登録先・公開範囲・送信内容・label等の指定と承認の根拠を添えて、利用可能な専門skillへ一段だけ委譲する。再帰的に`furikaeri`や`improvement-loop`を呼ばない。
 10. 実行後は検証結果をledgerへ戻し、`adopted`、`continued`、`rejected`、`deferred`のいずれかで閉じる。登録済み、実行済み、効果確認済みを区別する。
 
 ## Dispatch

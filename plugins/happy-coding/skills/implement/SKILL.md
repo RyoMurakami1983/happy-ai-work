@@ -73,7 +73,7 @@ HITL review contract付きinteractive sliceはreviewable milestone・launch・�
 - `FAIL`: 同sliceの実装へ
 - `REPLAN_REQUIRED`: 要求／ACは`to-prd`／`interview-with-docs`、構造／公開契約は`technical-design`、権限は利用者へ。安全な順序／分割調整は計画更新で継続する
 
-GUI／interactive観測、trust boundary・migration・data loss・concurrency等高risk、広い回帰、弱い自己評価evidence、利用者指定では、利用可能なら別の動的subagentにslice contract・差分・RED／GREEN／acceptance evidenceだけを渡す。評価者は修正せずverdictと根拠を先に返し、確定後に単一writerが直す。並列実装しない。subagent不可なら実装時推論から離れてchecklistと差分を再読する。
+GUI／interactive観測、trust boundary・migration・data loss・concurrency等高risk、広い回帰、弱い自己評価evidence、利用者指定では、利用可能なら別の動的subagentにslice contract・差分・RED／GREEN／acceptance evidenceだけを渡す。評価中は対象sliceの評価対象版を固定する。評価者は修正せずverdictと根拠を先に返し、確定後の修正は同sliceの単一writerが行う。独立した確定済みsliceの並列実装は、変更対象・依存契約・統合責任を分離できる場合に限る。subagent不可なら実装時推論から離れてchecklistと差分を再読する。
 
 interactive evidenceが必要な場合だけ、webは[playwright.md](references/runtime-evidence/playwright.md)、Windowsは[flaui.md](references/runtime-evidence/flaui.md)、Python GUI／pygameは[python-gui.md](references/runtime-evidence/python-gui.md)を読む。操作／遷移変更は[ui-designのruntime確認](../ui-design/references/runtime-evidence.md)で合意設計の予測・採用操作・期待結果を代表操作と照合し、物理入力／本人評価の未確認はacceptance／HITL契約に従う。
 
