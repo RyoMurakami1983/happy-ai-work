@@ -15,3 +15,7 @@ Yohaku本体は明示利用・比較用に残す。この除去はYohakuの無�
 2026-09-30、所有者は[PRコメント](https://github.com/RyoMurakami1983/happy-ai-work/pull/46#issuecomment-5916874103)で、READMEとhome-bootstrapには現在の結果だけを残し、Yohakuへの言及・移行説明を削除するよう依頼した。READMEの紹介・利用説明・移行段落とhome-bootstrapの説明を削除し、scriptの旧状態専用guardも取り除く。管理マーカー検証、既定テンプレートへの更新、管理外保護、dry-run、backupは維持する。ユーザーが明示指定するcustom templateは通常の管理マーカー検証で扱う。
 
 判断履歴はこのADRと既存の凍結評価証拠に保持し、現在の利用手順へ再展開しない。Yohaku本体の削除は今回の依頼に含まれず、明示利用・比較用のskillとして残す。既定更新で旧開始時設定が復活しない回帰testも保持する。
+
+## 2026-11-13: 余白の判断軸としての再定義方針
+
+[ADR 0012](0012-core-principles-and-method-evaluation.md)で、余白を挑戦・判断・変化の余地を見るcore判断軸へ作り直す方針を決定した。従来の文章整理手順は短歌と俳句との重複を確認して扱いを決める。本文・配置は未変更であり、本ADRの旧評価を新しい余白の効果証拠へ転用しない。homeの旧開始時生成や本文複製を復活させる決定ではない。
