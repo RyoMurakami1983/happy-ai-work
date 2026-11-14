@@ -12,7 +12,7 @@ SAMPLES = {
         ".codex-plugin/plugin.json",
         "skills/home-bootstrap/SKILL.md",
         "skills/home-bootstrap/assets/AGENTS.md",
-        "skills/interview-me/SKILL.md",
+        "skills/toi-to-mikiwame/SKILL.md",
         "skills/yohaku/SKILL.md",
         "skills/kime-zanshin/SKILL.md",
         "skills/kime-zanshin/agents/openai.yaml",
@@ -59,6 +59,7 @@ SAMPLES = {
 # enumerating or reading any retired content in the selected installation.
 ABSENT_PATHS = {
     "happy-core": (
+        "skills/interview-me",
         "skills/workspace-bootstrap",
         "skills/improvement-loop",
         "skills/happy-add-issue",

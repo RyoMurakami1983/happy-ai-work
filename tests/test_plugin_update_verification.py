@@ -49,6 +49,10 @@ class PluginUpdateVerificationTests(unittest.TestCase):
                 with self.subTest(plugin=plugin, absent_path=relative):
                     self.assertFalse((root / plugin / relative).exists())
 
+    def test_core_rename_checks_new_files_and_rejects_old_entrypoint(self):
+        self.assertIn("skills/toi-to-mikiwame/SKILL.md", SAMPLES["happy-core"])
+        self.assertIn("skills/interview-me", ABSENT_PATHS["happy-core"])
+
     def test_integrated_planning_samples_are_allowlisted(self):
         self.assertTrue(set(PLANNING_SAMPLES).issubset(SAMPLES["happy-coding"]))
         self.assertIn("skills/implementation-plan", ABSENT_PATHS["happy-coding"])

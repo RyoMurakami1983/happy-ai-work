@@ -75,7 +75,7 @@ RETIRED_CODING_SKILLS = {
     "implementation-eval-gate",
 }
 REQUIRED_CORE_SKILLS = {
-    "iwakan-to-omoi", "home-bootstrap", "interview-me", "tanka-to-haiku",
+    "iwakan-to-omoi", "home-bootstrap", "toi-to-mikiwame", "tanka-to-haiku",
     "yohaku", "kime-zanshin",
 }
 REQUIRED_IMPROVEMENT_SKILLS = {

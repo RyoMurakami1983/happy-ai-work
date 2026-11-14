@@ -42,7 +42,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 | 判断軸 | 見るもの |
 | --- | --- |
-| [問いと見極め](plugins/happy-core/skills/interview-me/SKILL.md) (`interview-me`) | 何を確かめれば選べるか、十分に分かっているか |
+| [問と見極め](plugins/happy-core/skills/toi-to-mikiwame/SKILL.md) (`toi-to-mikiwame`) | 何を確かめれば選べるか、十分に分かっているか |
 | [違和感と想い](plugins/happy-core/skills/iwakan-to-omoi/SKILL.md) | 自他の望みや引っかかりを見落としていないか |
 | [余白](plugins/happy-core/skills/yohaku/SKILL.md) | 必要十分なものを保ち、次に考え・選び・変える余地があるか |
 | [極めと残心](plugins/happy-core/skills/kime-zanshin/SKILL.md) | 必要な時機に結果が届き、その後を確かめ立て直せるか |
@@ -171,3 +171,7 @@ ADR 0012 に基づく配置変更と、後続の「違和感と想い」の定�
 `furikaeri`と`improvement-loop`は同じ任意pluginに置きます。coreの`iwakan-to-omoi`は改善pluginを呼ばず単独で判断軸として使えます。furikaeriにはcore参照先が使えない場合の明示的な縮退を記述しましたが、導入済みCodexでの動作と効果は未確認です。
 
 通常の実装backlogを整理する`github-issue`はhappy-codingへ移し、標準のcore＋coding導入で配布します。軽いHappy AI Work feedbackへの委譲先`happy-add-issue`は任意plugin側です。その未導入時の実行時fallbackは今回追加していません。
+
+### 問と見極めの名称移行
+
+旧`interview-me`は`toi-to-mikiwame`（問と見極め）へ改名しました。旧IDのaliasはありません。利用先に残る明示呼出しは`$toi-to-mikiwame`へ更新してください。過去の評価記録の名称は当時のまま保持しています。
