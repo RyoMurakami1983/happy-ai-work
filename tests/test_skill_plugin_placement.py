@@ -12,11 +12,11 @@ class SkillPlacementTests(unittest.TestCase):
         for p in ROOT.glob('plugins/*/skills/*/SKILL.md'):
             self.assertNotIn(p.parent.name, owners)
             owners[p.parent.name] = p.parts[-4]
-        for name in ('happy-add-issue', 'improvement-loop', 'skill-eval'):
+        for name in ('happy-add-issue', 'improvement-loop', 'skill-eval', 'furikaeri'):
             self.assertEqual(owners[name], 'happy-improvement')
         self.assertEqual(owners['workspace-bootstrap'], 'happy-coding')
         self.assertEqual(owners['github-issue'], 'happy-coding')
-        for name in ('home-bootstrap', 'yohaku', 'kime-zanshin'):
+        for name in ('home-bootstrap', 'yohaku', 'kime-zanshin', 'iwakan-to-omoi'):
             self.assertEqual(owners[name], 'happy-core')
 
     def test_developer_plugin_is_opt_in_not_normal_install(self):

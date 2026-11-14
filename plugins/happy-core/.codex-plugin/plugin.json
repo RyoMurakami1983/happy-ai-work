@@ -1,6 +1,6 @@
 {
   "name": "happy-core",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "判断軸とhome環境への導入を支えるCodex skills",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Core",
     "shortDescription": "判断軸とhome初期化を提供",
-    "longDescription": "意思決定の深掘り、ふりかえり、余白、極めと残心、短歌と俳句とhome初期化を収録。配置変更のみで本文の再定義や効果の実証を意味しません。",
+    "longDescription": "意思決定の深掘り、違和感と想い、余白、極めと残心、短歌と俳句とhome初期化を収録。判断軸の採用は効果の実証を意味しません。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],

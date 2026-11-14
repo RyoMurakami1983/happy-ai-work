@@ -14,7 +14,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | 判断軸とhome初期化、意思決定、ふりかえり、余白、極めと残心、短歌と俳句 |
+| `happy-core` | 判断軸とhome初期化、意思決定、違和感と想い、余白、極めと残心、短歌と俳句 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
@@ -42,7 +42,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 - `interview-me`: 重要な意思決定を具体例・反例まで質問で深掘り
 - `home-bootstrap`: `~/.codex/AGENTS.md` の管理対象部分を安全に導入・更新し、Git指示とHooksの初期設定を案内
-- `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
+- `iwakan-to-omoi`（違和感と想い）: 自他の望みと引っかかりを見落とさず、事実と意図を確かめる
 
 - [tanka-to-haiku](plugins/happy-core/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ
 
@@ -81,6 +81,8 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 `implement`と`technical-design`には、再利用できそうな手戻りだけを`happy-add-issue`で改善候補へ整理する「手戻りfeedback（Preview）」を試験的に組み込んでいます。元の仕事を先に返し、自動投稿せず、効果は未確認として試します。新しいpreview skillの配布ではなく、既存skill内の条件付き導線です。[範囲・試用条件・撤回方法](docs/design/022_REWORK_FEEDBACK_PREVIEW.md)を参照してください。
 
 ### happy-improvement（強化と改善・任意導入）
+
+- `furikaeri`（ふりかえり）: 今日の実績からY／W／T、通常タスク、改善候補を整理
 
 - `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
 - `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
@@ -152,17 +154,17 @@ MIT License
 
 ## 配置変更の移行案内
 
-ADR 0012 に基づく配置変更です。判断軸・手順・skill ID は変更していません。coreへの移動を効果検証済みという意味には扱いません。
+ADR 0012 に基づく配置変更と、後続の「違和感と想い」の定義です。初回配置変更では本文を維持し、後続変更で判断軸とふりかえり手段を分離しました。coreへの移動を効果検証済みという意味には扱いません。
 
 - `workspace-bootstrap`、`github-issue`: happy-core → happy-coding。
 - `improvement-loop`、`happy-add-issue`、`skill-eval`: happy-core → 任意導入のhappy-improvement。
 - `yohaku`、`kime-zanshin`: happy-preview → happy-core。
 - core/coding/previewを更新し、明示呼出しのnamespaceを新配置へ切り替えてください。移動元の古い登録が残る場合はそのskillのみ無効化・削除し、他のpreview skillまで削除しないでください。自動削除は保証されません。
 - 改善・評価・Happy AI Workへのfeedback専用skillが必要な利用者だけhappy-improvementを追加します。一般利用者への自動導入やアクセス制限は行いません。
-- 改名・本文の再定義・新しいcore参照の追加は後続変更です。
+- `furikaeri`: happy-core → happy-improvement。IDは維持し、表示名を「ふりかえり」にします。coreには判断軸`iwakan-to-omoi`（違和感と想い）を追加しました。他のcore本文の再定義はまだ行っていません。
 
 ### 任意導入の機能境界と未確認
 
-`furikaeri`本文は改善候補を`improvement-loop`へ渡します。後者を未導入にした場合の実行時fallbackは今回追加していません。改善候補を実行・評価する導線にはhappy-improvementが必要です。未導入のCodexでふりかえり全体が滞りなく完了するかは未確認です。
+`furikaeri`と`improvement-loop`は同じ任意pluginに置きます。coreの`iwakan-to-omoi`は改善pluginを呼ばず単独で判断軸として使えます。furikaeriにはcore参照先が使えない場合の明示的な縮退を記述しましたが、導入済みCodexでの動作と効果は未確認です。
 
 通常の実装backlogを整理する`github-issue`はhappy-codingへ移し、標準のcore＋coding導入で配布します。軽いHappy AI Work feedbackへの委譲先`happy-add-issue`は任意plugin側です。その未導入時の実行時fallbackは今回追加していません。

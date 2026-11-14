@@ -1,6 +1,6 @@
 {
   "name": "happy-improvement",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "スキル開発者向けの強化と改善・課題化・評価を任意導入するCodex skills",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "強化と改善",
     "shortDescription": "スキル開発者向けの任意導入ツール",
-    "longDescription": "改善ループ、Happy AI Workへの利用feedback、skill評価を収録。スキル開発者向けの任意導入pluginです。",
+    "longDescription": "ふりかえり、改善ループ、Happy AI Workへの利用feedback、skill評価を収録。スキル開発者向けの任意導入pluginです。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],
