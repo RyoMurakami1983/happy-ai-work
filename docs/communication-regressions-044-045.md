@@ -4,7 +4,7 @@
 
 ## 変更と境界
 
-既存の[communication基準2.0.0](../plugins/happy-core/skills/skill-eval/references/prompt-evaluation.md)で求める情報保持・適切な通知時点を、実行時に使う箇所へ具体化した。新たな評価軸・Critical gate・固定回答templateは追加しない。
+既存の[communication基準2.0.0](../plugins/happy-improvement/skills/skill-eval/references/prompt-evaluation.md)で求める情報保持・適切な通知時点を、実行時に使う箇所へ具体化した。新たな評価軸・Critical gate・固定回答templateは追加しない。
 
 | 困りごとの一般形 | 変更箇所と維持する境界 |
 | --- | --- |

@@ -41,8 +41,8 @@ codingは開発・repo固有の作業を、強化と改善（仮称）は課題�
 | 配置方針 | 対象 |
 | --- | --- |
 | core | 問いと見極め（現interview-me）、ふりかえりと想い（現furikaeri）、余白、極めと残心、短歌と俳句、home-bootstrap（改名検討） |
-| 強化と改善（仮称） | improvement-loop、happy-add-issue、github-issue、skill-eval |
-| coding | workspace-bootstrap |
+| 強化と改善（仮称） | improvement-loop、happy-add-issue、skill-eval |
+| coding | workspace-bootstrap、github-issue |
 
 skill-evalのアーカイブ案は採用せず、強化と改善側で評価手段として保持する。home-bootstrapをcodingへ移す先行案も採用しない。github-issueは通常の作業依頼にも使うため、改善だけに用途を狭めない。
 
@@ -114,3 +114,7 @@ CONSTITUTION.mdは引き続き公式projectの判断原則と統治境界の正�
 - [ADR 0004](0004-preview-plugin-distribution.md)
 - [ADR 0006](0006-evaluation-history-snapshots.md)
 - [ADR 0007](0007-communication-and-explicit-yohaku.md)
+
+## 配置方針の更新（2026-11-14）
+
+所有者の明示決定「Github-issueはcodingに入れましょう」により、github-issueは強化と改善ではなくhappy-codingへ配置する。通常の実装backlog整理を、スキル開発者向け任意pluginの導入に依存させないためである。軽いHappy AI Work feedbackを扱うhappy-add-issueは強化と改善に残す。今回の配置変更でskill本文・手順・名前は変えない。

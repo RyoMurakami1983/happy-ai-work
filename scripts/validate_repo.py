@@ -44,6 +44,8 @@ SECRET_RE = re.compile(
     r"(?:gh" + r"p_|github_" + r"pat_|s" + r"k-[A-Za-z0-9_-]{20,}|AK" + r"IA[0-9A-Z]{16})"
 )
 REQUIRED_CODING_SKILLS = {
+    "github-issue",
+    "workspace-bootstrap",
     "pr-delivery",
     "ci-debug",
     "debug-and-fix",
@@ -73,15 +75,11 @@ RETIRED_CODING_SKILLS = {
     "implementation-eval-gate",
 }
 REQUIRED_CORE_SKILLS = {
-    "furikaeri",
-    "github-issue",
-    "happy-add-issue",
-    "home-bootstrap",
-    "improvement-loop",
-    "interview-me",
-    "skill-eval",
-    "tanka-to-haiku",
-    "workspace-bootstrap",
+    "furikaeri", "home-bootstrap", "interview-me", "tanka-to-haiku",
+    "yohaku", "kime-zanshin",
+}
+REQUIRED_IMPROVEMENT_SKILLS = {
+    "improvement-loop", "happy-add-issue", "skill-eval",
 }
 
 
@@ -131,7 +129,7 @@ def validate_json(failures: list[str]) -> None:
         fail("marketplace plugins must be a list", failures)
         return
     if [entry.get("name") if isinstance(entry, dict) else None for entry in entries] != [
-        "happy-core", "happy-coding", "happy-preview"
+        "happy-core", "happy-coding", "happy-preview", "happy-improvement"
     ]:
         fail("marketplace plugin order or names are incorrect", failures)
     for entry in entries:
@@ -150,8 +148,8 @@ def validate_json(failures: list[str]) -> None:
         if not isinstance(policy, dict):
             fail(f"{name}: marketplace policy must be an object", failures)
             policy = {}
-        if name == "happy-preview" and policy.get("installation") != "AVAILABLE":
-            fail("happy-preview: installation must be opt-in (AVAILABLE)", failures)
+        if name in {"happy-preview", "happy-improvement"} and policy.get("installation") != "AVAILABLE":
+            fail(f"{name}: installation must be opt-in (AVAILABLE)", failures)
         if not {"installation", "authentication"} <= policy.keys():
             fail(f"{name}: marketplace policy is incomplete", failures)
         manifest_path = ROOT / "plugins" / name / ".codex-plugin" / "plugin.json"
@@ -200,6 +198,12 @@ def validate_skills(failures: list[str]) -> None:
     missing_core = REQUIRED_CORE_SKILLS - core_skills
     if missing_core:
         fail(f"happy-core: missing required skills {sorted(missing_core)}", failures)
+
+    improvement_skills = {
+        p.parent.name for p in skill_files if p.parts[-4] == "happy-improvement"
+    }
+    if improvement_skills != REQUIRED_IMPROVEMENT_SKILLS:
+        fail("happy-improvement: skill inventory differs from placement contract", failures)
 
     incubator_skills = list((ROOT / "incubator").rglob("SKILL.md"))
     if incubator_skills:

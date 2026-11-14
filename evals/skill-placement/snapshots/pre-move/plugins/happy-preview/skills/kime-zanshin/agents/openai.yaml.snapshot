@@ -1,0 +1,4 @@
+interface:
+  display_name: "極めと残心（試用版）"
+  short_description: "相手と場を観て、届くタイミングから結果確認・回復まで整える"
+  default_prompt: "$kime-zanshin を使い、相手と状況に合う応答・確定のタイミングと、結果確認・回復の観点から、この仕事を見直してください。"

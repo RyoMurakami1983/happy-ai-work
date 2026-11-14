@@ -2,7 +2,7 @@
 
 Status: Accepted for implementation（2026-09-30、所有者が1→2→3の実装・検証とdraft PRを承認。mergeは保留）
 
-Refs #45 / #44。新しい共通評価軸・改善優先度は[基準移行判断](../../plugins/happy-core/skills/skill-eval/references/evaluation-criteria-v2.md)に記録する。Constitution 1.0.0の原則と順位を変更しない。
+Refs #45 / #44。新しい共通評価軸・改善優先度は[基準移行判断](../../plugins/happy-improvement/skills/skill-eval/references/evaluation-criteria-v2.md)に記録する。Constitution 1.0.0の原則と順位を変更しない。
 
 ADR 0005の決定4（home-bootstrapによるYohakuの開始時生成・選択保持）を置き換える。生成・保持経路とCLIオプションを除去し、旧管理領域は通常更新で基本方針へ移行する。管理外の個人設定は保持し、実homeは明示承認範囲の差分とbackup付きで更新する。旧scriptへのdowngradeでは復活する可能性があるため、更新に使うscriptとdiffを確認する。過去の設計・評価は保存し、当時の結論を現在へ読み替えない。
 
