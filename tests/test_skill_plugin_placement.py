@@ -20,17 +20,17 @@ class SkillPlacementTests(unittest.TestCase):
             self.assertEqual(owners[name], 'happy-core')
 
     def test_developer_plugin_is_opt_in_not_normal_install(self):
-        entries = json.loads((ROOT / '.agents/plugins/marketplace.json').read_text())['plugins']
+        entries = json.loads((ROOT / '.agents/plugins/marketplace.json').read_text(encoding="utf-8"))['plugins']
         entry = next(e for e in entries if e['name'] == 'happy-improvement')
         self.assertEqual(entry['policy']['installation'], 'AVAILABLE')
-        readme = (ROOT / 'README.md').read_text()
+        readme = (ROOT / 'README.md').read_text(encoding="utf-8")
         normal = readme.split('### happy-core')[0]
         self.assertNotIn('codex plugin add happy-improvement', normal)
 
     def test_coding_without_developer_plugin_has_no_install_wait(self):
         # Static availability contract, not an installed Codex execution test.
         for name in ('implement', 'technical-design'):
-            body = (ROOT / 'plugins/happy-coding/skills' / name / 'SKILL.md').read_text()
+            body = (ROOT / 'plugins/happy-coding/skills' / name / 'SKILL.md').read_text(encoding="utf-8")
             self.assertIn('`happy-improvement`の`happy-add-issue`', body)
             self.assertIn('`happy-add-issue`が未導入', body)
             self.assertIn('追加確認・導入待ちを増やさず元の作業を閉じる', body)
