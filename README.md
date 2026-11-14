@@ -40,16 +40,19 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 ### happy-core
 
-- `interview-me`: 重要な意思決定を具体例・反例まで質問で深掘り
-- `home-bootstrap`: `~/.codex/AGENTS.md` の管理対象部分を安全に導入・更新し、Git指示とHooksの初期設定を案内
-- `iwakan-to-omoi`（違和感と想い）: 自他の望みと引っかかりを見落とさず、事実と意図を確かめる
+| 判断軸 | 見るもの |
+| --- | --- |
+| [問いと見極め](plugins/happy-core/skills/interview-me/SKILL.md) (`interview-me`) | 何を確かめれば選べるか、十分に分かっているか |
+| [違和感と想い](plugins/happy-core/skills/iwakan-to-omoi/SKILL.md) | 自他の望みや引っかかりを見落としていないか |
+| [余白](plugins/happy-core/skills/yohaku/SKILL.md) | 必要十分なものを保ち、次に考え・選び・変える余地があるか |
+| [極めと残心](plugins/happy-core/skills/kime-zanshin/SKILL.md) | 必要な時機に結果が届き、その後を確かめ立て直せるか |
+| [短歌と俳句](plugins/happy-core/skills/tanka-to-haiku/SKILL.md) | 核と関係が、意味を薄めない形で届くか |
 
-- [tanka-to-haiku](plugins/happy-core/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ
+[home-bootstrap](plugins/happy-core/skills/home-bootstrap/SKILL.md)は判断軸ではなく、共通方針をhomeへ安全に届ける導入機能です。home設定は別途明示承認の対象です。
 
-短歌と俳句は短縮前の本文を採用し、happy-previewからhappy-coreへ移動しました。旧preview版を利用していた場合はcoreを導入・更新し、previewも更新してください。古い登録が残れば旧skillを無効化・削除し、他のpreview skillを使う場合はplugin全体を無効化しないでください。明示呼出しのplugin namespaceはcoreへ変更します。[移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照してください。
+各判断軸の本文を正本とし、この一覧は選ぶための見取り図です。全軸を毎回使う順序表ではありません。実務で必要な軸を読み、観察できる過程と結果に照らして使います。コア同士の一律の優先順位は設けず、依頼の目的・制約に照らし、所有者の判断が必要な衝突は確認します。coreはpreview対象外ですが、採用と実利用での効果実証は別です。
 
-
-- [kime-zanshin](plugins/happy-core/skills/kime-zanshin/SKILL.md): 極めと残心。応答・確定のタイミングから結果確認・回復までをつなぐ共通の観点（実利用未検証）
+旧previewの短歌と俳句・余白・極めと残心を利用していた場合はcoreとpreviewを更新し、明示呼出しのnamespaceをcoreへ変更してください。古い登録が残れば旧skillのみ無効化・削除し、他のpreview skillまで削除しないでください。短歌と俳句の[過去の移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)は当時の記録として維持します。
 
 ### happy-coding
 
@@ -161,7 +164,7 @@ ADR 0012 に基づく配置変更と、後続の「違和感と想い」の定�
 - `yohaku`、`kime-zanshin`: happy-preview → happy-core。
 - core/coding/previewを更新し、明示呼出しのnamespaceを新配置へ切り替えてください。移動元の古い登録が残る場合はそのskillのみ無効化・削除し、他のpreview skillまで削除しないでください。自動削除は保証されません。
 - 改善・評価・Happy AI Workへのfeedback専用skillが必要な利用者だけhappy-improvementを追加します。一般利用者への自動導入やアクセス制限は行いません。
-- `furikaeri`: happy-core → happy-improvement。IDは維持し、表示名を「ふりかえり」にします。coreには判断軸`iwakan-to-omoi`（違和感と想い）を追加しました。他のcore本文の再定義はまだ行っていません。
+- `furikaeri`: happy-core → happy-improvement。IDは維持し、表示名を「ふりかえり」にします。coreには判断軸`iwakan-to-omoi`（違和感と想い）を追加しました。その後、余白とコア全体の役割・境界も同じPRで整理しました。
 
 ### 任意導入の機能境界と未確認
 
