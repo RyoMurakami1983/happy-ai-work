@@ -63,13 +63,13 @@ class ConstitutionContractTests(unittest.TestCase):
                 self.assertIn("CONSTITUTION_SUMMARY.md", text)
 
     def test_behavior_changing_skills_route_to_governance_references(self) -> None:
-        skill_eval = self.read("plugins/happy-core/skills/skill-eval/SKILL.md")
+        skill_eval = self.read("plugins/happy-improvement/skills/skill-eval/SKILL.md")
         eval_governance = self.read(
-            "plugins/happy-core/skills/skill-eval/references/evaluation-governance.md"
+            "plugins/happy-improvement/skills/skill-eval/references/evaluation-governance.md"
         )
-        improvement_loop = self.read("plugins/happy-core/skills/improvement-loop/SKILL.md")
+        improvement_loop = self.read("plugins/happy-improvement/skills/improvement-loop/SKILL.md")
         constitution_governance = self.read(
-            "plugins/happy-core/skills/improvement-loop/references/constitution-governance.md"
+            "plugins/happy-improvement/skills/improvement-loop/references/constitution-governance.md"
         )
 
         self.assertIn("evaluation-governance.md", skill_eval)

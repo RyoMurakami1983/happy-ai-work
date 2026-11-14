@@ -1,0 +1,4 @@
+interface:
+  display_name: "ふりかえり"
+  short_description: "実績と想いを振り返り、学び・次のタスク・改善候補を区別する"
+  default_prompt: "$furikaeri を使い、今回の実績と判断を振り返り、学びと必要な次の行動を整理してください。"

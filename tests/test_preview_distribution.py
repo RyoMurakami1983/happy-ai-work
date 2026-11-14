@@ -29,7 +29,7 @@ class PreviewDistributionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             entries = []
-            for name in ("happy-core", "happy-coding", "happy-preview"):
+            for name in ("happy-core", "happy-coding", "happy-preview", "happy-improvement"):
                 manifest = root / "plugins" / name / ".codex-plugin" / "plugin.json"
                 manifest.parent.mkdir(parents=True)
                 manifest.write_text(
@@ -43,7 +43,7 @@ class PreviewDistributionTests(unittest.TestCase):
             marketplace = root / ".agents" / "plugins" / "marketplace.json"
             marketplace.parent.mkdir(parents=True)
             for installation in ("AVAILABLE", "INSTALLED_BY_DEFAULT"):
-                entries[-1]["policy"] = {
+                entries[2]["policy"] = {
                     "installation": installation, "authentication": "ON_INSTALL"
                 }
                 marketplace.write_text(json.dumps({
@@ -59,6 +59,7 @@ class PreviewDistributionTests(unittest.TestCase):
                         "happy-preview: installation must be opt-in (AVAILABLE)"
                     ])
 
+            entries[2]["policy"]["installation"] = "AVAILABLE"
             del entries[-1]["name"]
             marketplace.write_text(json.dumps({
                 "name": "happy-ai-work-marketplace", "plugins": entries
@@ -84,7 +85,7 @@ class PreviewDistributionTests(unittest.TestCase):
                     manifest.write_text(json.dumps({
                         "name": entry["name"], "skills": "./skills/"
                     }), encoding="utf-8")
-                original["plugins"][-1]["policy"] = invalid_policy
+                original["plugins"][2]["policy"] = invalid_policy
                 marketplace = root / ".agents/plugins/marketplace.json"
                 marketplace.parent.mkdir(parents=True)
                 marketplace.write_text(json.dumps(original), encoding="utf-8")

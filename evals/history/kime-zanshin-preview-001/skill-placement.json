@@ -1,0 +1,10 @@
+{
+  "record_sha256": "57308df970085f3999ef122dc88c7229943797c788af85bb6a3207b8ac137ede",
+  "artifacts": {
+    "plugins/happy-preview/skills/kime-zanshin/references/examples.md": "evals/skill-placement/snapshots/pre-move/plugins/happy-preview/skills/kime-zanshin/references/examples.md.snapshot",
+    "plugins/happy-preview/skills/kime-zanshin/agents/openai.yaml": "evals/skill-placement/snapshots/pre-move/plugins/happy-preview/skills/kime-zanshin/agents/openai.yaml.snapshot",
+    "plugins/happy-coding/skills/technical-design/SKILL.md": "evals/skill-placement/snapshots/pre-move/plugins/happy-coding/skills/technical-design/SKILL.md.snapshot",
+    "plugins/happy-coding/skills/ui-design/references/design-principles.md": "evals/skill-placement/snapshots/pre-move/plugins/happy-coding/skills/ui-design/references/design-principles.md.snapshot",
+    "plugins/happy-coding/skills/ui-design/references/runtime-evidence.md": "evals/skill-placement/snapshots/pre-move/plugins/happy-coding/skills/ui-design/references/runtime-evidence.md.snapshot"
+  }
+}

@@ -18,7 +18,7 @@
 
 ## プレビュー配布
 
-`happy-preview`には実利用検証中の`yohaku`を置く。通常pluginには同梱しない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
+`yohaku`と`kime-zanshin`はADR 0012に基づきhappy-coreへ配置を変更する。本文の再定義と効果検証は別変更であり、移動を実利用検証PASSとは扱わない。基本検証後の試用と正式化は[ADR 0004](adr/0004-preview-plugin-distribution.md)に従う。
 
 `to-prototype`はUI設計案の操作と状態を実装前に試し、反応を設計へ戻すプレビューskill。初版は共通のHTML土台と初期化・基本検証だけを提供し、案件の画面構成を共通テンプレートで固定しない。
 
@@ -26,7 +26,7 @@
 
 ## 極めと残心の境界
 
-`kime-zanshin`は、受理・進行・確定・失敗／結果不明をつなぎ、相手が待つ・進む・戻るを判断できる応答と終わり方を扱うプレビューskill。表現・構造を研ぐ`tanka-to-haiku`、情報量と見せ方を整える`yohaku`とは目的を分ける。UI状態・技術contract・実装検証の具体策は既存coding skillが所有し、非機能品質全般を新skillへ集約しない。[試用・比較・撤回条件](design/023_KIME_ZANSHIN_PREVIEW.md)に沿い、独立skillとしての価値は実利用と比較で判断する。
+`kime-zanshin`は、受理・進行・確定・失敗／結果不明をつなぎ、相手が待つ・進む・戻るを判断できる応答と終わり方を扱うcore skill（配置のみ変更、効果は未実証）。表現・構造を研ぐ`tanka-to-haiku`、情報量と見せ方を整える`yohaku`とは目的を分ける。UI状態・技術contract・実装検証の具体策は既存coding skillが所有し、非機能品質全般を新skillへ集約しない。[試用・比較・撤回条件](design/023_KIME_ZANSHIN_PREVIEW.md)に沿い、独立skillとしての価値は実利用と比較で判断する。
 
 ## Yohakuの境界
 

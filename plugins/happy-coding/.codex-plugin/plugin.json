@@ -1,6 +1,6 @@
 {
   "name": "happy-coding",
-  "version": "0.8.3",
+  "version": "0.9.0",
   "description": "要求整理・UI設計・technical design・実装計画・実装・debug-and-fix・レビューをつなぐ Codex skills",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Coding",
     "shortDescription": "要件から検証済み実装までをつなぐ開発 skills",
-    "longDescription": "Happy Coding は、インタビュー、PRD、UI設計、technical design、implementation plan、実装、言語・framework支援、debug-and-fix、実装前の技術設計レビュー、実装差分の独立レビュー、CI対応、明示依頼されたPRのマージと安全な整理を Codex 向けに提供します。",
+    "longDescription": "Happy Coding は、インタビュー、PRD、UI設計、technical design、implementation plan、実装、言語・framework支援、debug-and-fix、実装前の技術設計レビュー、実装差分の独立レビュー、CI対応、明示依頼されたPRのマージと安全な整理を Codex 向けに提供します。 repo固有のworkspace初期化も収録します。 通常の実装backlogを整理するGitHub Issueも収録します。",
     "developerName": "RyoMurakami1983",
     "category": "DeveloperTools",
     "capabilities": [],
