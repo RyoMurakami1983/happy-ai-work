@@ -9,19 +9,6 @@ description: >
 
 要求・設計・issueから順序とvertical sliceを計画し、許可範囲を実装・検証してhandoffで閉じる。構造判断は`technical-design`、PR作成・PR review対応・pre-PR review・furikaeriは別skillが所有する。
 
-## コアを実装の判断に使う
-
-利用可能な`happy-core`の該当skill本文を読み、次の判断場面に適用する。全軸を一律に読み込まず、本文を計画やコードへ複製しない。
-
-- **到達点からの実装順と計画調整**: sliceの順序や分け方、進め方を選び直すときは`mokuteki-to-michi`（目的と道）を参照する。合意済みの目的・ACから、何を先に確かめれば成果へ届くかを見て、下記のtracer bullet・計画更新へ結び付ける。作業件数やtest成功だけを目的達成とせず、採用構造や公開契約を変える必要があれば`technical-design`へ戻す。複数案の実装を一律に始めない。
-- **意味が伝わる名前・処理・計画**: `tanka-to-haiku`（短歌と俳句）を参照し、必要な意味と振る舞いが伝わる形へ整える。短さだけを良しとせず、AC・許可範囲・検証証拠を保つ。適切な既存表現を参照のためだけに書き換えない。
-- **実装・REFACTORの過不足**: 過剰な抽象化や将来機能を足す、または簡素化で必要な振る舞い・検証・回復手段を落とす懸念があるときは`yohaku`（余白）を参照する。合意したcontractを満たしながら理解・変更できる形を選び、下記の最小実装と振る舞いを保つREFACTORで確かめる。新しい構造判断を独断で混ぜない。
-- **実装判断を左右する未知**: contract・artifact・失敗理由の根拠が足りないときは`toi-to-mikiwame`（問いと見極め）を参照し、何を調べ、どこを保留し、何は進められるかを見極める。推測で仕様の穴を埋めず、下記の`FAIL`／`REPLAN_REQUIRED`と戻り先を使う。コア参照だけで追加インタビューを始めない。
-- **依存条件と今の前進**: 外部前提やHITLの待ち、sliceの優先順、引き継ぎ後の進め方が判断点なら`sennosen-to-gonosen`（先の先と後の先）を参照する。保留する部分、回答に依存しない許可済み作業、再開条件を分け、既存の計画とhandoffへ残す。短く終わる作業だけを優先せず、未承認の判断・外部連絡・実装を先回りで行わない。plan-onlyとHITLの停止条件は維持する。
-- **応答・確定・復帰と完了**: タイミングや失敗後の復帰、完了判断が論点になる場合は`kime-zanshin`（極めと残心）を参照する。既存のAC・contractに沿って相手が使う場所で結果を確かめ、code complete／runtime verified／user validatedを区別する。具体的な方式・検証はこのskillと`ui-design`で扱い、必要な確認後は閉じる。
-
-参照できない場合も導入待ちや新しい確認工程を増やさず、既存の実装契約で進め、未参照をhandoffに明記する。判断軸は許可内の選択を支え、目的・要件・採用構造の変更合意、実装承認、独立評価やHITLを代替しない。
-
 ## 1. 契約と許可
 
 最初にplan-onlyか実装までかを区別する。plan-onlyは調査・計画成果物で停止し、実装コード・test・設定の変更／実行をしない。計画に実装許可は不要。実装直前に明示依頼・承認の根拠を確認する。明示実装依頼へ計画承認を機械的に挟まず、同じ許可を聞き直さない。計画への賛意だけは実装許可ではない。
@@ -64,7 +51,7 @@ handoffの`artifacts:`列挙pathは実在を確認し、欠落／誤記を調べ
 
 planの有無を問わず直前に固定する。新事実による分割・統合・順序変更は、目的・AC・公開契約・採用構造・許可範囲・実依存・HITL・回復可能性を保てるなら、理由と影響検証を計画へ更新して継続する。境界／順序の変更だけを`REPLAN_REQUIRED`にしない。契約変更・根拠不明・追加権限は影響部分を止め所有者へ戻す。外部前提待ちのsliceだけ保留し、独立した許可済み作業は進められる。
 
-最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
+目的・ACに届くため何を先に確かめるかでsliceの順序を選び、短く終わる作業だけを優先しない。回答待ちは確認先と再開条件を計画へ残し、許可のない外部連絡は行わない。最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
 
 HITL review contract付きinteractive sliceはreviewable milestone・launch・代表操作・期待結果・再開条件も固定する。人間の主観／実端末／外部appのacceptanceを自動testで代替しない。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
 
@@ -76,7 +63,7 @@ HITL review contract付きinteractive sliceはreviewable milestone・launch・�
 
 ## 5. gateとHITL
 
-各sliceでRED実測と失敗理由の一致・GREEN実測・acceptance成功・public interface確認・speculation／不要抽象化／過剰mockの不在・contract差分の`FAIL`／`REPLAN_REQUIRED`分類を証拠で評価する。詳細は[eval-checklist.md](references/eval-checklist.md)の関係項目だけを使う。 コアが選択に関わった場合は、既存の計画・差分にある選択理由と、AC・実測証拠に照らした結果を対応させる。参照したことや手順の消化を効果の証明にせず、未観測は未確認として残す。別の評価表や全軸の報告は増やさない。
+各sliceでRED実測と失敗理由の一致・GREEN実測・acceptance成功・public interface確認・speculation／不要抽象化／過剰mockの不在・contract差分の`FAIL`／`REPLAN_REQUIRED`分類を証拠で評価する。詳細は[eval-checklist.md](references/eval-checklist.md)の関係項目だけを使う。 既存の計画・差分にある選択理由と、AC・実測証拠に照らした結果を対応させる。手順の消化を効果の証明にせず、未観測は未確認として残す。
 
 - `PASS`: 次sliceへ
 - `FAIL`: 同sliceの実装へ
