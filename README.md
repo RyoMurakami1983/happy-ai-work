@@ -2,7 +2,7 @@
 
 > 仕事・学習・ライティング・コーディングを継続的に改善する Codex 用 skills／plugins／workspace template の母艦。
 
-CodexデスクトップアプリとCodex CLIで再利用するワークフローを、通常配布の2つのpluginと試用用pluginとして管理します。
+CodexデスクトップアプリとCodex CLIで再利用するワークフローを、通常配布の2つのplugin、開発者向けの任意plugin、試用用pluginとして管理します。
 
 ## Constitution
 
@@ -16,6 +16,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 | --- | --- |
 | `happy-core` | 判断軸とhome初期化、意思決定、目的と道、先の先と後の先、違和感と想い、余白、極めと残心、短歌と俳句 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
+| `happy-improvement` | スキル開発者向けの強化と改善（任意導入、標準導入に含めない） |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
 ## 導入
@@ -113,7 +114,7 @@ codex plugin add happy-improvement@happy-ai-work-marketplace
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
-極めと残心はhappy-coreへ配置を変更し、設計・実装からは必要時だけ参照します。具体的なUI・保存・計測手順はhappy-codingが所有し、preview未導入でも既存手順を続けられます。[範囲・基本検証・比較方針](docs/design/023_KIME_ZANSHIN_PREVIEW.md)を参照してください。
+極めと残心はhappy-coreへ配置を変更しました。設計・実装には仕事に即した判断を記述し、coreの読込を前提にしません。具体的なUI・保存・計測手順はhappy-codingが所有し、preview未導入でも既存手順を続けられます。[範囲・基本検証・比較方針](docs/design/023_KIME_ZANSHIN_PREVIEW.md)を参照してください。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 
@@ -170,10 +171,12 @@ ADR 0012 に基づく配置変更と、後続の「違和感と想い」の定�
 
 ### 任意導入の機能境界と未確認
 
-`furikaeri`と`improvement-loop`は同じ任意pluginに置きます。coreの`iwakan-to-omoi`は改善pluginを呼ばず単独で判断軸として使えます。furikaeriにはcore参照先が使えない場合の明示的な縮退を記述しましたが、導入済みCodexでの動作と効果は未確認です。
+`furikaeri`と`improvement-loop`は同じ任意pluginに置きます。coreの`iwakan-to-omoi`は改善pluginを呼ばず単独で判断軸として使えます。furikaeriは実務に即した判断を本文へ織り込み、coreの参照や導入を前提にしません。導入済みCodexでの動作と効果は未確認です。
 
-通常の実装backlogを整理する`github-issue`はhappy-codingへ移し、標準のcore＋coding導入で配布します。軽いHappy AI Work feedbackへの委譲先`happy-add-issue`は任意plugin側です。その未導入時の実行時fallbackは今回追加していません。
+通常の実装backlogを整理する`github-issue`はhappy-codingへ移し、標準のcore＋coding導入で配布します。軽いHappy AI Work feedbackへの委譲先`happy-add-issue`は任意plugin側です。未導入なら導入待ちせず元の仕事を閉じる本文上の契約はありますが、実行時の動作は未検証です。
 
 ### 問いと見極めの名称移行
 
 旧`interview-me`は`toi-to-mikiwame`（問いと見極め）へ改名しました。旧IDのaliasはありません。利用先に残る明示呼出しは`$toi-to-mikiwame`へ更新してください。過去の評価記録の名称は当時のまま保持しています。
+
+移動・改名の対応表と未導入時の確認範囲は[今回の移行確認](docs/plugin-update-verification.md#スキル再配置の移行確認adr-0012)を参照してください。

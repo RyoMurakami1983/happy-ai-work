@@ -13,6 +13,9 @@ SAMPLES = {
         "skills/home-bootstrap/SKILL.md",
         "skills/home-bootstrap/assets/AGENTS.md",
         "skills/toi-to-mikiwame/SKILL.md",
+        "skills/iwakan-to-omoi/SKILL.md",
+        "skills/mokuteki-to-michi/SKILL.md",
+        "skills/sennosen-to-gonosen/SKILL.md",
         "skills/yohaku/SKILL.md",
         "skills/kime-zanshin/SKILL.md",
         "skills/kime-zanshin/agents/openai.yaml",
@@ -22,11 +25,15 @@ SAMPLES = {
     "happy-improvement": (
         ".codex-plugin/plugin.json",
         "skills/improvement-loop/SKILL.md",
+        "skills/furikaeri/SKILL.md",
         "skills/skill-eval/SKILL.md",
         "skills/happy-add-issue/SKILL.md",
     ),
     "happy-coding": (
         "skills/github-issue/SKILL.md",
+        "skills/interview-with-docs/SKILL.md",
+        "skills/to-prd/SKILL.md",
+        "skills/technical-design/SKILL.md",
         "skills/workspace-bootstrap/SKILL.md",
         ".codex-plugin/plugin.json",
         "skills/pr-delivery/SKILL.md",
@@ -60,6 +67,8 @@ SAMPLES = {
 ABSENT_PATHS = {
     "happy-core": (
         "skills/interview-me",
+        "skills/furikaeri",
+        "skills/sen-no-sen-to-go-no-sen",
         "skills/workspace-bootstrap",
         "skills/improvement-loop",
         "skills/happy-add-issue",

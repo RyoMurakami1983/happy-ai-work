@@ -53,6 +53,27 @@ class PluginUpdateVerificationTests(unittest.TestCase):
         self.assertIn("skills/toi-to-mikiwame/SKILL.md", SAMPLES["happy-core"])
         self.assertIn("skills/interview-me", ABSENT_PATHS["happy-core"])
 
+    def test_rearchitecture_samples_and_retired_paths_are_covered(self):
+        expected = {
+            "happy-core": ("iwakan-to-omoi", "mokuteki-to-michi", "sennosen-to-gonosen"),
+            "happy-coding": ("interview-with-docs", "to-prd", "technical-design"),
+            "happy-improvement": ("furikaeri",),
+        }
+        for plugin, skills in expected.items():
+            self.populate_samples(plugin)
+            for skill in skills:
+                relative = f"skills/{skill}/SKILL.md"
+                self.assertIn(relative, SAMPLES[plugin])
+                path = self.installed / relative
+                path.write_text("stale", encoding="utf-8")
+                self.assertEqual(self.report(plugin)["status"], "mismatch")
+                path.unlink()
+                self.assertEqual(self.report(plugin)["status"], "mismatch")
+                path.write_bytes((self.source / relative).read_bytes())
+                self.assertEqual(self.report(plugin)["status"], "samples_match")
+        for old in ("furikaeri", "sen-no-sen-to-go-no-sen"):
+            self.assertIn(f"skills/{old}", ABSENT_PATHS["happy-core"])
+
     def test_integrated_planning_samples_are_allowlisted(self):
         self.assertTrue(set(PLANNING_SAMPLES).issubset(SAMPLES["happy-coding"]))
         self.assertIn("skills/implementation-plan", ABSENT_PATHS["happy-coding"])

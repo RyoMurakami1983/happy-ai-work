@@ -138,3 +138,26 @@ preview: opt-in有無 / 明示指定読込 / 自動選択は別記
 ## この変更の検証範囲
 
 cloud上の開発と合成fixtureのテストは、実利用先の更新を証明しない。テストは同versionの内容差、新versionでも古い内容、計画referenceだけの古い内容、計画assetの内容差・missing、廃止directory・entrypoint・symlinkの残存、未確認path、preview非選択、root外symlink、個人pathを含まないCLI結果を扱う。対象外fileは検査しないことと`session_load`が常に未確認であることも確認する。公開PRにはテストしたcommitとCI結果を残す。利用者のinstalled plugin更新、実home適用、新しい会話での読込は、別途実測するまで未確認。
+
+## スキル再配置の移行確認（ADR 0012）
+
+このPRは未マージの検討版。配布commitは最終採用時に確定し、versionはそのcommitのmanifestで確認する。以下は配布・更新の契約であり、利用先での読込や品質効果の実証ではない。
+
+| 移動前 | 移動後 |
+| --- | --- |
+| happy-core:workspace-bootstrap / github-issue | happy-coding:同じID |
+| happy-core:improvement-loop / happy-add-issue / skill-eval / furikaeri | happy-improvement:同じID |
+| happy-preview:yohaku / kime-zanshin | happy-core:同じID |
+| happy-core:interview-me | happy-core:toi-to-mikiwame |
+| happy-core:sen-no-sen-to-go-no-sen | happy-core:sennosen-to-gonosen |
+
+旧IDのaliasはない。保存済みの明示呼出し、リンク、個別コピーは利用者が管理する範囲で確認し、新配置へ切り替える。移動元pluginも更新し、旧登録が残る場合は対象skillだけを無効化・削除する。他のpreview skillやhome設定は削除しない。cacheを手で編集して移行済みにしない。
+
+- **標準利用**: core＋codingを導入・更新する。happy-improvementはmarketplaceで`AVAILABLE`、通常の導入コマンドやcore/coding manifestに自動導入の指定はない。開発者専用という用途の区分であり、非公開化やアクセス制御ではない。
+- **改善・評価も使う場合**: happy-improvementを別途明示導入する。これまでcoreで使えたふりかえり等はcore更新だけでは新配置から利用できない。不要な利用者には導入を要求しない。
+- **任意pluginが未導入**: 更新確認のために追加しない。「未導入・更新対象外」と記録する。実務側のfeedback導線は元の仕事を閉じる契約だが、実Codexでの挙動は別に確認する。
+- **任意pluginが導入済み**: 確認した実際のinstalledPathで`--plugin happy-improvement`を指定して比較する。core/codingの比較成功で代用しない。
+
+固定allowlistは、新判断軸と今回整えた実務本文、移動先のfurikaeriを含む。coreの旧furikaeriと旧識別子も残存検知する。これは選択fileのbytesと指定旧pathの不在を調べるだけで、自動選択・新会話での読込・実home適用・全file一致は判定しない。
+
+導入先を変更せずに行った合成fixtureによる比較testと、実導入の確認を混同しない。実Codexは今回モデル開始前の起動障害で検証未完了。変更された配布物の読込回帰が確認されたという意味でもない。
