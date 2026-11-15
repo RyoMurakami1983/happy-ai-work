@@ -16,7 +16,8 @@ class SkillPlacementTests(unittest.TestCase):
             self.assertEqual(owners[name], 'happy-improvement')
         self.assertEqual(owners['workspace-bootstrap'], 'happy-coding')
         self.assertEqual(owners['github-issue'], 'happy-coding')
-        for name in ('home-bootstrap', 'yohaku', 'kime-zanshin', 'iwakan-to-omoi'):
+        for name in ('home-bootstrap', 'yohaku', 'kime-zanshin', 'iwakan-to-omoi',
+                     'mokuteki-to-michi', 'sen-no-sen-to-go-no-sen'):
             self.assertEqual(owners[name], 'happy-core')
 
     def test_developer_plugin_is_opt_in_not_normal_install(self):
