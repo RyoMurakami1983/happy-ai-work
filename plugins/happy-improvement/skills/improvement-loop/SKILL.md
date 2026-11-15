@@ -50,7 +50,7 @@ description: furikaeriなどで選択済みの改善候補を、批判的に検�
 
 tokenやcredentialが入力に含まれる場合は値を反復せず、外部送信を止める。実際に露出した可能性があれば、対象serviceでのrevoke／rotationと影響範囲確認をユーザーへ案内するが、自動実行しない。
 
-skill変更では編集前にbaselineを固定し、同じscenarioでcurrentを比較する。重要な変更は[評価シナリオ](references/eval-scenarios.md)に沿って`skill-eval`へ委譲する。
+skill変更では編集前にbaselineと今回確かめる成果を固定し、同じscenarioでcurrentを比較する。評価用の基準を実務本文へ列挙して答え合わせさせず、必要な変更はその仕事の判断・手順として記述する。重要な変更は[評価シナリオ](references/eval-scenarios.md)に沿って`skill-eval`へ委譲する。
 
 ## 停止条件
 
