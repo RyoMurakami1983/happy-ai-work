@@ -14,7 +14,7 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | 判断軸とhome初期化、意思決定、違和感と想い、余白、極めと残心、短歌と俳句 |
+| `happy-core` | 判断軸とhome初期化、意思決定、目的と道、違和感と想い、余白、極めと残心、短歌と俳句 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
@@ -42,6 +42,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 | 判断軸 | 見るもの |
 | --- | --- |
+| [目的と道](plugins/happy-core/skills/mokuteki-to-michi/SKILL.md) | 到達したい状態から、限られた力で届く道を選び直せているか |
 | [問いと見極め](plugins/happy-core/skills/toi-to-mikiwame/SKILL.md) (`toi-to-mikiwame`) | 何を確かめれば選べるか、十分に分かっているか |
 | [違和感と想い](plugins/happy-core/skills/iwakan-to-omoi/SKILL.md) | 自他の望みや引っかかりを見落としていないか |
 | [余白](plugins/happy-core/skills/yohaku/SKILL.md) | 必要十分なものを保ち、次に考え・選び・変える余地があるか |
