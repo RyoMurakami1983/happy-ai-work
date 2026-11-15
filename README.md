@@ -43,7 +43,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 | 判断軸 | 見るもの |
 | --- | --- |
 | [目的と道](plugins/happy-core/skills/mokuteki-to-michi/SKILL.md) | 到達したい状態から、限られた力で届く道を選び直せているか |
-| [先の先と後の先](plugins/happy-core/skills/sen-no-sen-to-go-no-sen/SKILL.md) | 相手に価値が届くまでの流れを見て、今すり合わせること・進めること・待つことを選べているか |
+| [先の先と後の先](plugins/happy-core/skills/sennosen-to-gonosen/SKILL.md) | 相手に価値が届くまでの流れを見て、今すり合わせること・進めること・待つことを選べているか |
 | [問いと見極め](plugins/happy-core/skills/toi-to-mikiwame/SKILL.md) (`toi-to-mikiwame`) | 何を確かめれば選べるか、十分に分かっているか |
 | [違和感と想い](plugins/happy-core/skills/iwakan-to-omoi/SKILL.md) | 自他の望みや引っかかりを見落としていないか |
 | [余白](plugins/happy-core/skills/yohaku/SKILL.md) | 必要十分なものを保ち、次に考え・選び・変える余地があるか |

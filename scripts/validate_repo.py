@@ -75,7 +75,7 @@ RETIRED_CODING_SKILLS = {
     "implementation-eval-gate",
 }
 REQUIRED_CORE_SKILLS = {
-    "mokuteki-to-michi", "sen-no-sen-to-go-no-sen",
+    "mokuteki-to-michi", "sennosen-to-gonosen",
     "iwakan-to-omoi", "home-bootstrap", "toi-to-mikiwame", "tanka-to-haiku",
     "yohaku", "kime-zanshin",
 }

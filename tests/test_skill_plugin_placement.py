@@ -17,7 +17,7 @@ class SkillPlacementTests(unittest.TestCase):
         self.assertEqual(owners['workspace-bootstrap'], 'happy-coding')
         self.assertEqual(owners['github-issue'], 'happy-coding')
         for name in ('home-bootstrap', 'yohaku', 'kime-zanshin', 'iwakan-to-omoi',
-                     'mokuteki-to-michi', 'sen-no-sen-to-go-no-sen'):
+                     'mokuteki-to-michi', 'sennosen-to-gonosen'):
             self.assertEqual(owners[name], 'happy-core')
 
     def test_developer_plugin_is_opt_in_not_normal_install(self):
@@ -35,3 +35,16 @@ class SkillPlacementTests(unittest.TestCase):
             self.assertIn('`happy-improvement`の`happy-add-issue`', body)
             self.assertIn('`happy-add-issue`が未導入', body)
             self.assertIn('追加確認・導入待ちを増やさず元の作業を閉じる', body)
+
+    def test_sennosen_identifier_migration(self):
+        old = 'sen-no-sen-to-go-no-sen'
+        new = 'sennosen-to-gonosen'
+        for plugin in (ROOT / 'plugins').iterdir():
+            self.assertFalse((plugin / 'skills' / old).exists())
+        skill = ROOT / 'plugins/happy-core/skills' / new
+        self.assertIn(f'name: {new}', (skill / 'SKILL.md').read_text(encoding="utf-8"))
+        self.assertIn(f'${new}', (skill / 'agents/openai.yaml').read_text(encoding="utf-8"))
+        for path in (ROOT / 'plugins').rglob('*'):
+            if path.suffix in ('.md', '.yaml', '.json'):
+                self.assertNotIn(old, path.read_text(encoding="utf-8"), str(path))
+        self.assertNotIn(old, (ROOT / 'README.md').read_text(encoding="utf-8"))
