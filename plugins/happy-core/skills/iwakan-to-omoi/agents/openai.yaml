@@ -1,0 +1,4 @@
+interface:
+  display_name: "違和感と想い"
+  short_description: "自分や相手の望みと引っかかりを見落とさず、事実と意図を確かめる"
+  default_prompt: "$iwakan-to-omoi に沿って、この案が誰の望みに応え、どんな引っかかりが残るか確かめてください。"

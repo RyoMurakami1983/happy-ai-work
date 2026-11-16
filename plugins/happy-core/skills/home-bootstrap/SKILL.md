@@ -5,6 +5,8 @@ description: Codexホームの AGENTS.md を安全に導入・更新し、Codex�
 
 # Home Bootstrap
 
+共通方針をhome環境へ安全に届ける導入機能であり、判断軸そのものではない。coreを参照したことをhome設定の変更許可とみなさない。
+
 `scripts/home_bootstrap.py`は`CODEX_HOME`配下、未設定なら`~/.codex/AGENTS.md`の管理マーカー内のみ追加・更新し、管理外を保つ。
 
 skill／template改善はrepo成果物を更新し、実home適用も依頼された場合だけ実homeへ進む。template検証には一時ファイルを`--target`指定できる。

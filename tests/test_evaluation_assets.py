@@ -294,12 +294,12 @@ class EvaluationAssetTests(unittest.TestCase):
 
     def test_skill_eval_requires_high_risk_decision_checkpoint(self) -> None:
         skill = (
-            ROOT / "plugins" / "happy-core" / "skills" / "skill-eval" / "SKILL.md"
+            ROOT / "plugins" / "happy-improvement" / "skills" / "skill-eval" / "SKILL.md"
         ).read_text(encoding="utf-8")
         governance = (
             ROOT
             / "plugins"
-            / "happy-core"
+            / "happy-improvement"
             / "skills"
             / "skill-eval"
             / "references"
@@ -343,7 +343,7 @@ class EvaluationAssetTests(unittest.TestCase):
         text = (
             ROOT
             / "plugins"
-            / "happy-core"
+            / "happy-improvement"
             / "skills"
             / "skill-eval"
             / "references"

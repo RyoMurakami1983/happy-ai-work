@@ -49,12 +49,39 @@ class PluginUpdateVerificationTests(unittest.TestCase):
                 with self.subTest(plugin=plugin, absent_path=relative):
                     self.assertFalse((root / plugin / relative).exists())
 
+    def test_core_rename_checks_new_files_and_rejects_old_entrypoint(self):
+        self.assertIn("skills/toi-to-mikiwame/SKILL.md", SAMPLES["happy-core"])
+        self.assertIn("skills/interview-me", ABSENT_PATHS["happy-core"])
+
+    def test_rearchitecture_samples_and_retired_paths_are_covered(self):
+        expected = {
+            "happy-core": ("iwakan-to-omoi", "mokuteki-to-michi", "sennosen-to-gonosen"),
+            "happy-coding": ("interview-with-docs", "to-prd", "technical-design"),
+            "happy-improvement": ("furikaeri",),
+        }
+        for plugin, skills in expected.items():
+            self.populate_samples(plugin)
+            for skill in skills:
+                relative = f"skills/{skill}/SKILL.md"
+                self.assertIn(relative, SAMPLES[plugin])
+                path = self.installed / relative
+                path.write_text("stale", encoding="utf-8")
+                self.assertEqual(self.report(plugin)["status"], "mismatch")
+                path.unlink()
+                self.assertEqual(self.report(plugin)["status"], "mismatch")
+                path.write_bytes((self.source / relative).read_bytes())
+                self.assertEqual(self.report(plugin)["status"], "samples_match")
+        for old in ("furikaeri", "sen-no-sen-to-go-no-sen"):
+            self.assertIn(f"skills/{old}", ABSENT_PATHS["happy-core"])
+
     def test_integrated_planning_samples_are_allowlisted(self):
         self.assertTrue(set(PLANNING_SAMPLES).issubset(SAMPLES["happy-coding"]))
         self.assertIn("skills/implementation-plan", ABSENT_PATHS["happy-coding"])
 
     def test_stale_or_missing_moved_skill_cannot_match_core(self):
-        for relative in ("skills/tanka-to-haiku/SKILL.md", "skills/tanka-to-haiku/agents/openai.yaml"):
+        for relative in ("skills/tanka-to-haiku/SKILL.md", "skills/tanka-to-haiku/agents/openai.yaml",
+                         "skills/yohaku/SKILL.md", "skills/kime-zanshin/SKILL.md",
+                         "skills/kime-zanshin/agents/openai.yaml"):
             with self.subTest(file=relative):
                 path = self.installed / relative
                 path.write_text("stale preview copy", encoding="utf-8")
@@ -71,7 +98,7 @@ class PluginUpdateVerificationTests(unittest.TestCase):
         self.installed = Path(self.directory.name) / "preview-installed"
         self.populate_samples("happy-preview")
         self.assertEqual(self.report("happy-preview")["status"], "samples_match")
-        for relative in ("skills/tanka-to-haiku", "skills/pr-delivery"):
+        for relative in ABSENT_PATHS["happy-preview"]:
             retired = self.installed / relative
             retired.mkdir()
             for entrypoint in (False, True):
@@ -87,6 +114,32 @@ class PluginUpdateVerificationTests(unittest.TestCase):
             (retired / "SKILL.md").unlink()
             retired.rmdir()
         self.assertEqual(self.report("happy-preview")["status"], "samples_match")
+
+    def test_core_update_rejects_each_moved_out_skill(self):
+        for relative in ABSENT_PATHS["happy-core"]:
+            with self.subTest(path=relative):
+                retired = self.installed / relative
+                retired.mkdir()
+                self.assertEqual(self.report()["status"], "mismatch")
+                (retired / "SKILL.md").write_text("stale core skill", encoding="utf-8")
+                report = self.report()
+                self.assertEqual(report["status"], "mismatch")
+                self.assertTrue(all(entry["matches"] for entry in report["files"]))
+                (retired / "SKILL.md").unlink()
+                retired.rmdir()
+                self.assertEqual(self.report()["status"], "samples_match")
+
+    def test_improvement_update_checks_each_moved_skill(self):
+        self.populate_samples("happy-improvement")
+        for relative in SAMPLES["happy-improvement"]:
+            with self.subTest(file=relative):
+                path = self.installed / relative
+                path.write_text("stale", encoding="utf-8")
+                self.assertEqual(self.report("happy-improvement")["status"], "mismatch")
+                path.unlink()
+                self.assertEqual(self.report("happy-improvement")["status"], "mismatch")
+                path.write_bytes((self.source / relative).read_bytes())
+                self.assertEqual(self.report("happy-improvement")["status"], "samples_match")
 
     def test_stale_planning_reference_alone_does_not_match(self):
         self.populate_samples("happy-coding")

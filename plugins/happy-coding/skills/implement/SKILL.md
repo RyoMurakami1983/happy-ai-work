@@ -9,10 +9,6 @@ description: >
 
 要求・設計・issueから順序とvertical sliceを計画し、許可範囲を実装・検証してhandoffで閉じる。構造判断は`technical-design`、PR作成・PR review対応・pre-PR review・furikaeriは別skillが所有する。
 
-計画・命名・処理・完了報告を整えるときは、利用可能な`happy-core`の`tanka-to-haiku`を読み、適用する。本文を複製せず、AC・許可範囲・検証証拠・振る舞いを保つ。未導入なら導入待ちにせず既存手順で進める。
-
-応答・確定のタイミングや失敗後の復帰が判断点になる場合だけ、利用可能なら`happy-preview`の`kime-zanshin`を参照する。共通の問いを既存のAC・contractへ織り込み、具体的な設計・検証はこのskillと`ui-design`が所有する。本文を複製せず、未導入なら導入待ちや新しい確認工程を増やさず既存手順で進める。
-
 ## 1. 契約と許可
 
 最初にplan-onlyか実装までかを区別する。plan-onlyは調査・計画成果物で停止し、実装コード・test・設定の変更／実行をしない。計画に実装許可は不要。実装直前に明示依頼・承認の根拠を確認する。明示実装依頼へ計画承認を機械的に挟まず、同じ許可を聞き直さない。計画への賛意だけは実装許可ではない。
@@ -55,7 +51,7 @@ handoffの`artifacts:`列挙pathは実在を確認し、欠落／誤記を調べ
 
 planの有無を問わず直前に固定する。新事実による分割・統合・順序変更は、目的・AC・公開契約・採用構造・許可範囲・実依存・HITL・回復可能性を保てるなら、理由と影響検証を計画へ更新して継続する。境界／順序の変更だけを`REPLAN_REQUIRED`にしない。契約変更・根拠不明・追加権限は影響部分を止め所有者へ戻す。外部前提待ちのsliceだけ保留し、独立した許可済み作業は進められる。
 
-最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
+目的・ACに届くため何を先に確かめるかでsliceの順序を選び、短く終わる作業だけを優先しない。回答待ちは確認先と再開条件を計画へ残し、許可のない外部連絡は行わない。最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
 
 HITL review contract付きinteractive sliceはreviewable milestone・launch・代表操作・期待結果・再開条件も固定する。人間の主観／実端末／外部appのacceptanceを自動testで代替しない。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
 
@@ -67,7 +63,7 @@ HITL review contract付きinteractive sliceはreviewable milestone・launch・�
 
 ## 5. gateとHITL
 
-各sliceでRED実測と失敗理由の一致・GREEN実測・acceptance成功・public interface確認・speculation／不要抽象化／過剰mockの不在・contract差分の`FAIL`／`REPLAN_REQUIRED`分類を証拠で評価する。詳細は[eval-checklist.md](references/eval-checklist.md)の関係項目だけを使う。
+各sliceでRED実測と失敗理由の一致・GREEN実測・acceptance成功・public interface確認・speculation／不要抽象化／過剰mockの不在・contract差分の`FAIL`／`REPLAN_REQUIRED`分類を証拠で評価する。詳細は[eval-checklist.md](references/eval-checklist.md)の関係項目だけを使う。 既存の計画・差分にある選択理由と、AC・実測証拠に照らした結果を対応させる。手順の消化を効果の証明にせず、未観測は未確認として残す。
 
 - `PASS`: 次sliceへ
 - `FAIL`: 同sliceの実装へ
@@ -93,7 +89,7 @@ handoffは完了slice、実行commandと結果、主な変更file／artifact、�
 
 ## 手戻りfeedback（Preview）
 
-実際の手戻りや利用者の修正指示から、Happy AI Workの指示・境界・検証へ再利用できそうな改善が見えたときだけ、元の作業の完了報告（未完了ならblockerと再開点）を先に渡し、利用可能な`happy-core`の`happy-add-issue`にある「手戻りfeedback（Preview）」へ候補を渡す。単発の好み・誤字・通常のTDDだけでは起動せず、原因をskillへ自動帰属しない。同じ出来事は設計・実装をまたいでも一候補にまとめ、既に提示・保留・辞退された候補を再提示しない。
+実際の手戻りや利用者の修正指示から、Happy AI Workの指示・境界・検証へ再利用できそうな改善が見えたときだけ、元の作業の完了報告（未完了ならblockerと再開点）を先に渡し、利用可能な`happy-improvement`の`happy-add-issue`にある「手戻りfeedback（Preview）」へ候補を渡す。単発の好み・誤字・通常のTDDだけでは起動せず、原因をskillへ自動帰属しない。同じ出来事は設計・実装をまたいでも一候補にまとめ、既に提示・保留・辞退された候補を再提示しない。
 
 これは実利用で効果を確認する試用導線であり、自動投稿や作業の完了条件ではない。候補がない、利用者が試用を望まない、または`happy-add-issue`が未導入なら、このための追加確認・導入待ちを増やさず元の作業を閉じる。
 

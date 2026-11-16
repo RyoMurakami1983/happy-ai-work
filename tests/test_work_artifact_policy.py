@@ -67,7 +67,7 @@ class WorkArtifactPolicyTests(unittest.TestCase):
 
     def test_skill_eval_covers_exception_and_required_save_cases(self) -> None:
         scenarios = self.read(
-            "plugins/happy-core/skills/skill-eval/references/prompt-evaluation.md"
+            "plugins/happy-improvement/skills/skill-eval/references/prompt-evaluation.md"
         )
 
         self.assertIn("small one-slice", scenarios)

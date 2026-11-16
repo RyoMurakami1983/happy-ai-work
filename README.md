@@ -2,7 +2,7 @@
 
 > 仕事・学習・ライティング・コーディングを継続的に改善する Codex 用 skills／plugins／workspace template の母艦。
 
-CodexデスクトップアプリとCodex CLIで再利用するワークフローを、通常配布の2つのpluginと試用用pluginとして管理します。
+CodexデスクトップアプリとCodex CLIで再利用するワークフローを、通常配布の2つのplugin、開発者向けの任意plugin、試用用pluginとして管理します。
 
 ## Constitution
 
@@ -14,8 +14,9 @@ CodexデスクトップアプリとCodex CLIで再利用するワークフロー
 
 | plugin | 用途 |
 | --- | --- |
-| `happy-core` | home／workspace初期化、意思決定、ふりかえり、改善ループ、Issue捕捉、skill評価、文章・コード・設計の推敲 |
+| `happy-core` | 判断軸とhome初期化、意思決定、目的と道、先の先と後の先、違和感と想い、余白、極めと残心、短歌と俳句 |
 | `happy-coding` | インタビュー、PRD、設計、実装、言語／framework支援、デバッグ、評価、レビュー、CI対応 |
+| `happy-improvement` | スキル開発者向けの強化と改善（任意導入、標準導入に含めない） |
 | `happy-preview` | 正式採用前のskillsを任意導入して試用（実利用検証中） |
 
 ## 導入
@@ -40,20 +41,27 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 ### happy-core
 
-- `interview-me`: 重要な意思決定を具体例・反例まで質問で深掘り
-- `home-bootstrap`: `~/.codex/AGENTS.md` の管理対象部分を安全に導入・更新し、Git指示とHooksの初期設定を案内
-- `workspace-bootstrap`: repo用 `AGENTS.md` と最小基盤を対話的に準備
-- `github-issue`: 現repoの後続作業を実行可能なGitHub Issueへ整理
-- `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
-- `furikaeri`: 今日の実績からY／W／T、通常タスク、改善候補を整理
-- `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
-- `skill-eval`: 実務に即した通常課題・難問で、素のモデルや旧版との差、triggerと振る舞いを評価
+| 判断軸 | 見るもの |
+| --- | --- |
+| [目的と道](plugins/happy-core/skills/mokuteki-to-michi/SKILL.md) | 到達したい状態から、限られた力で届く道を選び直せているか |
+| [先の先と後の先](plugins/happy-core/skills/sennosen-to-gonosen/SKILL.md) | 相手に価値が届くまでの流れを見て、今すり合わせること・進めること・待つことを選べているか |
+| [問いと見極め](plugins/happy-core/skills/toi-to-mikiwame/SKILL.md) (`toi-to-mikiwame`) | 何を確かめれば選べるか、十分に分かっているか |
+| [違和感と想い](plugins/happy-core/skills/iwakan-to-omoi/SKILL.md) | 自他の望みや引っかかりを見落としていないか |
+| [余白](plugins/happy-core/skills/yohaku/SKILL.md) | 必要十分なものを保ち、次に考え・選び・変える余地があるか |
+| [極めと残心](plugins/happy-core/skills/kime-zanshin/SKILL.md) | 必要な時機に結果が届き、その後を確かめ立て直せるか |
+| [短歌と俳句](plugins/happy-core/skills/tanka-to-haiku/SKILL.md) | 核と関係が、意味を薄めない形で届くか |
 
-- [tanka-to-haiku](plugins/happy-core/skills/tanka-to-haiku/SKILL.md): 短歌と俳句の観察・凝縮・取り合わせ・推敲で、文章・コード・設計の核と関係を研ぐ
+[home-bootstrap](plugins/happy-core/skills/home-bootstrap/SKILL.md)は判断軸ではなく、共通方針をhomeへ安全に届ける導入機能です。home設定は別途明示承認の対象です。
 
-短歌と俳句は短縮前の本文を採用し、happy-previewからhappy-coreへ移動しました。旧preview版を利用していた場合はcoreを導入・更新し、previewも更新してください。古い登録が残れば旧skillを無効化・削除し、他のpreview skillを使う場合はplugin全体を無効化しないでください。明示呼出しのplugin namespaceはcoreへ変更します。[移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)を参照してください。
+各判断軸の本文を正本とし、この一覧は選ぶための見取り図です。全軸を毎回使う順序表ではありません。実務で必要な軸を読み、観察できる過程と結果に照らして使います。コア同士の一律の優先順位は設けず、依頼の目的・制約に照らし、所有者の判断が必要な衝突は確認します。coreはpreview対象外ですが、採用と実利用での効果実証は別です。
+
+旧previewの短歌と俳句・余白・極めと残心を利用していた場合はcoreとpreviewを更新し、明示呼出しのnamespaceをcoreへ変更してください。古い登録が残れば旧skillのみ無効化・削除し、他のpreview skillまで削除しないでください。短歌と俳句の[過去の移行と検証範囲](docs/design/018_SKILL_COMPRESSION_AND_TANKA_MIGRATION.md)は当時の記録として維持します。
 
 ### happy-coding
+
+- `github-issue`: 現repoの後続作業を実行可能なGitHub Issueへ整理
+
+- `workspace-bootstrap`: repo用 `AGENTS.md` と最小基盤を対話的に準備
 
 - 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implement`
 - 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
@@ -78,13 +86,26 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 `implement`と`technical-design`には、再利用できそうな手戻りだけを`happy-add-issue`で改善候補へ整理する「手戻りfeedback（Preview）」を試験的に組み込んでいます。元の仕事を先に返し、自動投稿せず、効果は未確認として試します。新しいpreview skillの配布ではなく、既存skill内の条件付き導線です。[範囲・試用条件・撤回方法](docs/design/022_REWORK_FEEDBACK_PREVIEW.md)を参照してください。
 
+### happy-improvement（強化と改善・任意導入）
+
+- `furikaeri`（ふりかえり）: 今日の実績からY／W／T、通常タスク、改善候補を整理
+
+- `improvement-loop`: 選択済みの改善候補を次のタスク、検証、採否判断へつなぐ
+- `happy-add-issue`: Happy AI Workへのfeedbackを母艦Issueへ安全に記録
+- `skill-eval`: 実務に即した通常課題・難問で、素のモデルや旧版との差、triggerと振る舞いを評価
+
+スキル開発者向けの任意導入です。一般利用の標準導入には含めません。通常のIssue整理はhappy-codingの`github-issue`を使います。implement／technical-designには、feedback先が未導入なら導入待ちせず元の作業を閉じる既存契約があります。これは実セッションでの動作確認済みという意味ではありません。
+
+```sh
+codex plugin add happy-improvement@happy-ai-work-marketplace
+```
+
 ### happy-preview（試用版）
 
 `pr-delivery`はhappy-codingへ昇格しました。codingとpreviewの両方を更新し、明示呼出しは`happy-coding:pr-delivery`へ変更してください。旧登録が残れば旧skillを無効化・削除し、他の試用skillは維持してください。[採用判断・移行・検証方針](docs/design/021_PR_DELIVERY_PROMOTION.md)を参照してください。
 
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
-- [kime-zanshin](plugins/happy-preview/skills/kime-zanshin/SKILL.md): 極めと残心。応答・確定のタイミングから結果確認・回復までをつなぐ共通の観点（実利用未検証）
 - [wpf-webview-typescript](plugins/happy-preview/skills/wpf-webview-typescript/SKILL.md): 既存C#とWeb UIの境界、待ち時間、取消し後の入力保持、切断後の再開を設計・検証（実利用検証中）
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
@@ -93,7 +114,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 初版は基本検証と模擬依頼を確認済みで、実制作での検証はこれからです。試用時は「作りたかったもの、実際の成果、困った点、次に直すこと」を残します。記録に実名や実案件の未加工データは不要です。
 
-極めと残心はhappy-previewで任意試用し、設計・実装からは必要時だけ参照します。具体的なUI・保存・計測手順はhappy-codingが所有し、preview未導入でも既存手順を続けられます。[範囲・基本検証・比較方針](docs/design/023_KIME_ZANSHIN_PREVIEW.md)を参照してください。
+極めと残心はhappy-coreへ配置を変更しました。設計・実装には仕事に即した判断を記述し、coreの読込を前提にしません。具体的なUI・保存・計測手順はhappy-codingが所有し、preview未導入でも既存手順を続けられます。[範囲・基本検証・比較方針](docs/design/023_KIME_ZANSHIN_PREVIEW.md)を参照してください。
 
 Linuxデプロイの初版は模擬判断と読取コマンドを確認し、実デプロイ・障害復旧は未検証です。[設計と試用条件](docs/linux-deploy-preview.md)に従い、確認漏れと修正再実行を減らせるかを確かめます。
 
@@ -136,3 +157,26 @@ WSL2の確認範囲は [docs/WSL2.md](docs/WSL2.md) を参照してください�
 ## ライセンス
 
 MIT License
+
+## 配置変更の移行案内
+
+ADR 0012 に基づく配置変更と、後続の「違和感と想い」の定義です。初回配置変更では本文を維持し、後続変更で判断軸とふりかえり手段を分離しました。coreへの移動を効果検証済みという意味には扱いません。
+
+- `workspace-bootstrap`、`github-issue`: happy-core → happy-coding。
+- `improvement-loop`、`happy-add-issue`、`skill-eval`: happy-core → 任意導入のhappy-improvement。
+- `yohaku`、`kime-zanshin`: happy-preview → happy-core。
+- core/coding/previewを更新し、明示呼出しのnamespaceを新配置へ切り替えてください。移動元の古い登録が残る場合はそのskillのみ無効化・削除し、他のpreview skillまで削除しないでください。自動削除は保証されません。
+- 改善・評価・Happy AI Workへのfeedback専用skillが必要な利用者だけhappy-improvementを追加します。一般利用者への自動導入やアクセス制限は行いません。
+- `furikaeri`: happy-core → happy-improvement。IDは維持し、表示名を「ふりかえり」にします。coreには判断軸`iwakan-to-omoi`（違和感と想い）を追加しました。その後、余白とコア全体の役割・境界も同じPRで整理しました。
+
+### 任意導入の機能境界と未確認
+
+`furikaeri`と`improvement-loop`は同じ任意pluginに置きます。coreの`iwakan-to-omoi`は改善pluginを呼ばず単独で判断軸として使えます。furikaeriは実務に即した判断を本文へ織り込み、coreの参照や導入を前提にしません。導入済みCodexでの動作と効果は未確認です。
+
+通常の実装backlogを整理する`github-issue`はhappy-codingへ移し、標準のcore＋coding導入で配布します。軽いHappy AI Work feedbackへの委譲先`happy-add-issue`は任意plugin側です。未導入なら導入待ちせず元の仕事を閉じる本文上の契約はありますが、実行時の動作は未検証です。
+
+### 問いと見極めの名称移行
+
+旧`interview-me`は`toi-to-mikiwame`（問いと見極め）へ改名しました。旧IDのaliasはありません。利用先に残る明示呼出しは`$toi-to-mikiwame`へ更新してください。過去の評価記録の名称は当時のまま保持しています。
+
+移動・改名の対応表と未導入時の確認範囲は[今回の移行確認](docs/plugin-update-verification.md#スキル再配置の移行確認adr-0012)を参照してください。

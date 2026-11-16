@@ -1,0 +1,4 @@
+interface:
+  display_name: "先の先と後の先"
+  short_description: "相手と仕事の先の流れを見て、今すり合わせること・進めること・待つことを選ぶ"
+  default_prompt: "$sennosen-to-gonosen の先の先と後の先に沿って、相手待ちや依存関係を見直し、今できる前進を選んでください。"

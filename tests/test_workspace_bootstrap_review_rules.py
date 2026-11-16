@@ -24,7 +24,7 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
         self.assertIn("どちらでもonboarding中は作成しない", skill)
 
     def test_workspace_bootstrap_preserves_and_deduplicates_instructions(self) -> None:
-        skill = self.read("plugins/happy-core/skills/workspace-bootstrap/SKILL.md")
+        skill = self.read("plugins/happy-coding/skills/workspace-bootstrap/SKILL.md")
 
         for expected in (
             "`.github/copilot-instructions.md`",
@@ -48,8 +48,8 @@ class WorkspaceBootstrapReviewRulesTests(unittest.TestCase):
                 self.assertIn(expected, skill)
 
     def test_review_rules_are_optional_and_limited_to_high_impact_constraints(self) -> None:
-        skill = self.read("plugins/happy-core/skills/workspace-bootstrap/SKILL.md")
-        template = self.read("plugins/happy-core/skills/workspace-bootstrap/assets/AGENTS.md")
+        skill = self.read("plugins/happy-coding/skills/workspace-bootstrap/SKILL.md")
+        template = self.read("plugins/happy-coding/skills/workspace-bootstrap/assets/AGENTS.md")
 
         for expected in (
             "## Code Review Rules",

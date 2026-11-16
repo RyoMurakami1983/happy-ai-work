@@ -12,12 +12,29 @@ SAMPLES = {
         ".codex-plugin/plugin.json",
         "skills/home-bootstrap/SKILL.md",
         "skills/home-bootstrap/assets/AGENTS.md",
-        "skills/interview-me/SKILL.md",
-        "skills/workspace-bootstrap/SKILL.md",
+        "skills/toi-to-mikiwame/SKILL.md",
+        "skills/iwakan-to-omoi/SKILL.md",
+        "skills/mokuteki-to-michi/SKILL.md",
+        "skills/sennosen-to-gonosen/SKILL.md",
+        "skills/yohaku/SKILL.md",
+        "skills/kime-zanshin/SKILL.md",
+        "skills/kime-zanshin/agents/openai.yaml",
         "skills/tanka-to-haiku/SKILL.md",
         "skills/tanka-to-haiku/agents/openai.yaml",
     ),
+    "happy-improvement": (
+        ".codex-plugin/plugin.json",
+        "skills/improvement-loop/SKILL.md",
+        "skills/furikaeri/SKILL.md",
+        "skills/skill-eval/SKILL.md",
+        "skills/happy-add-issue/SKILL.md",
+    ),
     "happy-coding": (
+        "skills/github-issue/SKILL.md",
+        "skills/interview-with-docs/SKILL.md",
+        "skills/to-prd/SKILL.md",
+        "skills/technical-design/SKILL.md",
+        "skills/workspace-bootstrap/SKILL.md",
         ".codex-plugin/plugin.json",
         "skills/pr-delivery/SKILL.md",
         "skills/pr-delivery/agents/openai.yaml",
@@ -48,9 +65,20 @@ SAMPLES = {
 # Checking the directory also catches an obsolete SKILL.md entrypoint, without
 # enumerating or reading any retired content in the selected installation.
 ABSENT_PATHS = {
+    "happy-core": (
+        "skills/interview-me",
+        "skills/furikaeri",
+        "skills/sen-no-sen-to-go-no-sen",
+        "skills/workspace-bootstrap",
+        "skills/improvement-loop",
+        "skills/happy-add-issue",
+        "skills/github-issue",
+        "skills/skill-eval",
+    ),
     "happy-coding": ("skills/implementation-plan",),
-    "happy-preview": ("skills/tanka-to-haiku", "skills/pr-delivery"),
+    "happy-preview": ("skills/tanka-to-haiku", "skills/pr-delivery", "skills/yohaku", "skills/kime-zanshin"),
 }
+
 
 
 def fingerprint(root: Path, relative: str) -> dict[str, str]:

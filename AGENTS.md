@@ -10,7 +10,7 @@
 - 公式upstreamの判断原則と統治境界: `CONSTITUTION.md`
 - 日常のConstitution参照: `docs/CONSTITUTION_SUMMARY.md`
 - 製品・用語・境界: `CONTEXT.md`
-- 配布物: `plugins/happy-core/`、`plugins/happy-coding/`、試用用`plugins/happy-preview/`
+- 配布物: `plugins/happy-core/`、`plugins/happy-coding/`、任意の`plugins/happy-improvement/`、試用用`plugins/happy-preview/`
 - marketplace: `.agents/plugins/marketplace.json`
 - 品質契約: `scripts/validate_repo.py` と `.github/workflows/`
 

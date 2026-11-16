@@ -1,0 +1,4 @@
+interface:
+  display_name: "目的と道"
+  short_description: "到達したい状態から道筋を選び、限られた力で成果に届く見通しを確かめる"
+  default_prompt: "$mokuteki-to-michi の目的と道に沿って、この計画が目指す状態とそこへ届く道筋を見直してください。"
