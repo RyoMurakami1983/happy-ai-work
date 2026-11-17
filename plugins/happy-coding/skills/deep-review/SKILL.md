@@ -5,7 +5,7 @@ description: 実装者と独立した視点で差分をレビューし、再現�
 
 # Deep Review
 
-固定agentファイルに依存しない。subagentが利用可能なら、差分と最小要件だけを渡して独立レビューを依頼する。利用できなければ新しい観点でローカル差分を読み直す。Copilot CLIはユーザー明示時だけ実験的に追加し、結果をコード・testで再検証する。
+固定agentファイルに依存しない。subagentが利用可能なら、差分と最小要件だけを渡して独立レビューを依頼する。複数モジュールにまたがる移行の互換性や、データ損失につながる失敗経路を追う場合は、利用可能な `gpt-6.2-astra` をレビュアーの候補にする。subagentが利用できなければ新しい観点でローカル差分を読み直す。Copilot CLIはユーザー明示時だけ実験的に追加し、結果をコード・testで再検証する。
 
 変更前の準備・正本・非破壊性・配布経路の確認、および複数案／決定変更後にAGENTS.md・SKILL.md・reference・README・実装・test等の恒久成果物を変更した場合は[preflight.md](references/preflight.md)を読み、instruction finalizationを独立確認する。module境界・結合構造自体が主題なら[modularity.md](references/modularity.md)を読む。
 
