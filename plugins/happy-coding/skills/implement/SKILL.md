@@ -41,7 +41,7 @@ exception reason: <文書不要の明示指定、小さな低risk sliceで後続
 
 plan-onlyは計画・未確定・許可状態・次の判断を返して停止する。計画／review PASSを実装済みとせず、PLAN_DONEへ改名しない。
 
-検証command前に[検証の通知と報告](references/verification-communication.md)を読む。全件suiteの長い試験は目的・合成／実環境・時間見込みを事前通知し、終了時に結果・未確認・必要な判断を伝える。通知で許可を聞き直さず、短い通常testに待ちを増やさない。
+検証コマンドの実行前に[検証の通知と報告](references/verification-communication.md)を読む。全件スイートに長い試験が含まれるか確認する。長い試験を含むコマンドは実行ツールの直前に通知し、終了報告は同ガイドに従う。
 
 bootstrapでrepo instructions・local hooks・workflow・git状態・build／test／launchを確認する。interactive appは`references/interactive-app-bootstrap-checklist.md`、複数repoで`plan.md`に`dependencies.contracts.requires`がある場合だけ`checkpoints/contract_verify.py`でrequired artifactを検証する。
 

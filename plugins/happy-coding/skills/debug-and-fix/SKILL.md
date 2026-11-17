@@ -24,7 +24,7 @@ description: 特定の不具合、回帰、flaky failure、性能劣化につい
 
 再現commandを決めるためのread-only調査（関連コード、既存test、設定、履歴、redact済みlog、公式docs）はred確認前から行ってよい。調査と再現を短く往復し、既知の事実と未検証の仮説を分ける。再現できないことを理由に読取調査まで止めず、調査のためという理由で本番instrumentationやdata mutationへ権限を広げない。
 
-計画がなくても、再現・検証commandの実行前に[検証の通知と報告](../implement/references/verification-communication.md)を読む。長い試験は目的・合成/実環境・所要時間の見込みを事前通知し、終了時は結果・未確認・必要な判断を伝える。通知を承認要求にせず、承認済みの同じ作業は再確認しない。短い通常testには待ちを増やさない。
+計画の有無にかかわらず、再現・検証コマンドを実行する前に[検証の通知と報告](../implement/references/verification-communication.md)を読み、必要な事前通知と終了報告を行う。
 
 次を満たす再実行可能なcommandを既存入口から選ぶか作り、症状を検出できるredを確認する。確認できるまでは調査中として扱う。
 
