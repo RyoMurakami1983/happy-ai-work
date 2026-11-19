@@ -1,0 +1,24 @@
+name: PR 91 Windows symlink verification
+on:
+  push:
+    branches: [ci/verify-pr91-windows]
+permissions:
+  contents: read
+jobs:
+  symlink:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 5fb1fec6275b3e6c7d571d35a69188803bfc15c4
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Verify checkout and run three Windows tests
+        shell: pwsh
+        run: |
+          $sha = git rev-parse HEAD
+          Write-Output $sha
+          if ($sha -ne '5fb1fec6275b3e6c7d571d35a69188803bfc15c4') { throw 'Unexpected checkout' }
+          python -m unittest -v tests.test_project_protection.ProtectionTests.test_bundle_symlink_and_windows_junction_detection tests.test_project_protection.ProtectionTests.test_external_config_symlink_is_rejected tests.test_project_protection.ProtectionTests.test_worktree_config_symlink_cannot_enable_future_branch_hooks
