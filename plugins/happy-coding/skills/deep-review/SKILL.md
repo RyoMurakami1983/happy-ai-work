@@ -9,6 +9,8 @@ description: 実装者と独立した視点で差分をレビューし、再現�
 
 変更前の準備・正本・非破壊性・配布経路の確認、および複数案／決定変更後にAGENTS.md・SKILL.md・reference・README・実装・test等の恒久成果物を変更した場合は[preflight.md](references/preflight.md)を読み、instruction finalizationを独立確認する。module境界・結合構造自体が主題なら[modularity.md](references/modularity.md)を読む。
 
+外部ツールのテストでは、[実行ファイルの代役に関する基準](../implement/references/verification-communication.md)に照らして別製品名での配置を指摘する。
+
 ## レビュー手順
 
 1. diff、合意した目的・AC、test結果、repo instructionsを照合する。局所修正やtest成功だけで目的へ届くとみなさず、未合意の要件を追加しない。
