@@ -20,7 +20,7 @@
 uv run --script scripts/validate_quality.py
 ```
 
-この入口をPython version、tool version、実行順の正本とし、一時uv環境からrepo validator、unit test、lint、type check、`git diff --check`を実行します。対象repoへdependencyやlockfileを追加しません。
+各検証の実行順・バージョンの正本はこのスクリプトとする。対象repoにdependencyやlockfileを追加しない。
 
 ## Boundaries
 
