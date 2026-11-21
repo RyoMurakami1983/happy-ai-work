@@ -1,6 +1,6 @@
 {
   "name": "happy-preview",
-  "version": "0.10.1",
+  "version": "0.11.1",
   "description": "正式採用前のCodex skillsを任意導入して試用するプレビュープラグイン。実利用検証中です。",
   "author": {
     "name": "RyoMurakami1983"
@@ -9,7 +9,7 @@
   "interface": {
     "displayName": "Happy Preview（試用版）",
     "shortDescription": "実利用検証中のskillsを試し、正式採用へ改善する",
-    "longDescription": "通常配布前の実務skillsを試用する任意導入plugin。Linuxデプロイ、技術実現性調査、UI試作、プロジェクト保護、WPF・WebView2・TypeScript連携設計を収録。実利用での効果は検証中です。",
+    "longDescription": "通常配布前の実務skillsを試用する任意導入plugin。エージェントチーム編成、Linuxデプロイ、技術実現性調査、UI試作、プロジェクト保護、WPF・WebView2・TypeScript連携設計を収録。実利用での効果は検証中です。",
     "developerName": "RyoMurakami1983",
     "category": "Productivity",
     "capabilities": [],

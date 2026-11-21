@@ -7,9 +7,6 @@ x64エミュレーションのPython/Git Bashが混在する環境は、クラ�
 この手順の作成だけではARM実機の再検証済みとしない。OS権限、セキュリティ設定、global Git設定を変更しない。
 
 以前の実機では実Gitleaksの検出、mainガード、ローカルbare repoへのpushが成功していた。
-残るfixture上の問題は、ambient Gitleaksを拾う不在試験、終了後のコピーexeの一時的WinError 5、
-実symlink作成のWinError 1314である。exe保持元は未特定で、製品不具合の原因解明とは扱わない。
-
 追加の条件確認では通常ユーザー（Medium Mandatory Level）でGit BashとGitHub通信が成功し、
 旧headの不在試験もPATH隔離fixtureで成功した。Gitleaks 8.30.1 ARM64は公式archive checksumと
 既存exeの一致が確認された。実symlink作成だけはWinError 1314で未実行のままであり、
@@ -33,7 +30,7 @@ $LASTEXITCODE
 `sh` が `NtCreateDirectoryObject`、`0xC0000022` 等で起動できなければ、環境条件でblockedと記録して
 止める。製品試験の成功/失敗に読み替えず、通常ユーザーの実行状態を確認する。OS権限設定は変更しない。
 
-3. 通常権限で次を実行する。環境変数はこのPowerShell processだけで設定し、元の値へ戻す。
+3. 修正済みのhappy-ai-work作業ツリーで、管理されたWindows検証環境から次を実行する。旧版のテストを含むcheckoutには適用しない。環境変数はこのPowerShell processだけで設定し、元の値へ戻す。
 
 ```powershell
 $priorGitleaksTestBinary = $env:GITLEAKS_TEST_BINARY
@@ -53,15 +50,9 @@ $testExitCode
 
 ## 試験の区別と期待する結果
 
-- ツール不在: 実行済みfake exeを途中で削除しない。空PATHでscanner lookupを検査し、
-  pre-commitのbranch照会だけはmockしてscanner不在に到達する。pre-pushは絶対Python pathから
-  実際のguard subprocessを起動する。doctorはGitを維持しscanner lookupだけ空PATHにする。
-  ambient scannerが存在する回帰試験も別に実行する。
-- dummy検出: fake scannerのPython scriptだけを書き換えて既存hookから失敗を確認する。
-  実Gitleaks統合では別binを使い、実行済みのfake exeを上書き/削除しない。
-- exe cleanup: 全hook command完了後に最終native probeをwaitしhandleを閉じ、終了をpollで確認する。
-  WinError 5だけ最大20回、間隔50ms（待機合計最大0.95秒）でunlinkを再試行する。
-  未終了、他error、上限到達は失敗を残す。probe自体のtimeoutも失敗であり、成功扱いしない。
+- 通常の試験は正規名のPythonで専用スクリプトを起動し、成功・検出・故障の結果を模擬する。
+  不在は空の検索パスで検査する。時間切れ時は操作が拒否され、子プロセスが終了し、再試行が成功することを確認する。
+- 実Gitleaks試験は指定した正規名の実行ファイルを元の場所から使い、無害なダミーデータでcommitとpushを検証する。
 - `test_external_config_symlink_is_rejected`: 実symlinkを作成する統合試験。
   link作成後にのみ一時configを切り替える。WinError 1314は元configを保全したまま
   `UNVERIFIED real Windows symlink` として失敗させる。skipにしない。
