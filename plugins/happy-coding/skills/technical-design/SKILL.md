@@ -105,27 +105,7 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 
 成果物は保存を既定（saved-by-default）とし、設計正本をMarkdownへ保存する。従来ルートは `docs/design/NNN_TECHNICAL_DESIGN.md`。新規のHTML併用資料は `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` と `NNN_DESIGN.html`、必要な図・編集用ソース・検証記録を同じ案件ディレクトリにまとめてよい。repoの規約と既存の公開pathを優先し、既存資料は自動移動しない。移動が依頼された場合は相対リンク・生成処理・Artifactsと既知の参照元を更新する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
 
-```markdown
-# Technical Design NNN: [Name]
-
-## Decision Summary
-## Goal / Success Criteria / Out of Scope
-## Normative Inputs
-## Purpose / Requirement Trace
-## Current Structure and Observed Harms
-## Change Scenarios / Expected Locality
-## Structure Decisions
-## Public Interfaces
-## Domain Invariants / Interface Contracts
-## State / Data Flow
-## Security Boundaries
-## Compatibility / Migration
-## Alternatives and Trade-offs
-## Risks / Unknowns
-## ADRs
-## Review Readiness / Handoff
-## Artifacts
-```
+設計書の構成や記入項目の詳細が必要な場合は、[設計書テンプレート](assets/technical-design.md)を参照する。
 
 冒頭に、目的・主な選択と理由・代償・重要risk・未決事項・人が判断することを短く置き、詳細のcontract・AC・失敗時挙動・根拠へつなぐ。概要と詳細は同じ設計正本の入口と本文とし、独立した仕様にしない。人もAIも必要な詳細へ進めるようにし、決定状態・対象外・Unknowns・保証範囲を照合する。
 
