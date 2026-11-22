@@ -73,6 +73,8 @@ GUI／interactive観測、trust boundary・migration・data loss・concurrency�
 
 interactive evidenceが必要な場合だけ、webは[playwright.md](references/runtime-evidence/playwright.md)、Windowsは[flaui.md](references/runtime-evidence/flaui.md)、Python GUI／pygameは[python-gui.md](references/runtime-evidence/python-gui.md)を読む。操作／遷移変更は[ui-designのruntime確認](../ui-design/references/runtime-evidence.md)で合意設計の予測・採用操作・期待結果を代表操作と照合し、物理入力／本人評価の未確認はacceptance／HITL契約に従う。
 
+画面とC#間の互換性を保つ要件がある場合は、旧版で実際に配布した JavaScript を含む画面成果物を確保し、そのまま変更後のC#ホストと組み合わせて実画面を操作する。表示結果を確かめ、ホストが実際に送った JSON をアプリで定めた旧契約（項目・型・値）と照合する。検証に使った画面成果物の版やハッシュ、操作と応答を記録する。再実行例は [Happy .NET Foundation](https://github.com/RyoMurakami1983/happy-dotnet-foundation) の WebView2 A/B 検証 `examples/Verify-WpfCoupling.ps1 -Stack WebView2`。
+
 自動gate後、直接触れる状態のHITL契約付きsliceをreview milestoneとして渡す。同じbuildの起動、利用者の代表操作1〜5個と期待表示・遷移・操作感、自動確認済み／人間判断残り、feedback・承認・`REPLAN_REQUIRED`の再開条件を示す。`code complete`・`runtime verified`・`user validated`を区別し、build／test／自動runtimeだけでuser validatedとしない。不具合は再現可能なら`debug-and-fix`、contract誤りは前段へ戻す。
 
 HITLがacceptanceなら`HITL pending`を保ち、feedback／承認までPASSやcompletion handoffへ進まない。完成後の探索的製品評価でacceptance非blockingの場合だけ、user validated未完了を残してローカル実装を閉じられる。HITL契約がなく自動runtimeでacceptanceを確定できるsliceは入力待ちだけで停止しない。
