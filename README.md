@@ -63,8 +63,7 @@ plugin配下を変更したPRでは、CIが対象pluginのversion増加を自動
 
 - `workspace-bootstrap`: repo用 `AGENTS.md` と最小基盤を対話的に準備
 
-- 要求から実装: `interview-with-docs`、`business-understanding-survey`、`domain-modeling`、`to-prd`、`technical-design`、`implement`
-- 業務理解の収集: `business-understanding-survey`（資料の未知を、目的に合う確認・選択・比較・自由記述へ変換）
+- 要求から実装: `interview-with-docs`、`domain-modeling`、`to-prd`、`technical-design`、`implement`
 - 回答フォーム: [html-questionnaire](plugins/happy-coding/skills/html-questionnaire/SKILL.md)（決まった質問からオフラインHTMLを生成し、回答をJSONで受け取る）
 - 言語／ecosystem: `dotnet`、`python`、`typescript`、`rust`、`dotnet-framework-bridge`、`nuget-local`
 - framework: `wpf`、`tauri`
