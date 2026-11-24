@@ -29,7 +29,7 @@ docs/
 
 成果物は保存を既定とし、handoff の `artifacts` には実在する確定pathを列挙します。
 
-- repoに `CONTEXT.md` がなければ作成し、あれば案件で確定した用語・境界を反映する
+- 用語集の作成・更新は[用語と意味の境界の保存](../../domain-modeling/references/CONTEXT-FORMAT.md)に従う
 - `to-prd` は `docs/prd/NNN_PRD.md` を保存する
 - `domain-modeling` のモデル化は既存のドメイン文書、なければ `docs/domain/NNN_DOMAIN_MODEL.md` へ保存する。用語整理だけなら用語集の更新で終え、モデル文書は作らない
 - `technical-design` はMarkdownのみなら `docs/design/NNN_TECHNICAL_DESIGN.md`、新規のHTML併用案件なら `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` を正本として保存する。形式は同skillの出力契約に従う
@@ -60,7 +60,6 @@ small one-sliceや工程省略を判断するときは[垂直スライスと短�
 
 ## Write timing
 
-- `CONTEXT.md` は開始時に存在を確認し、用語解決ごとに inline 更新する
 - grill結果を後続PRDへ引き継がない場合は grill 完了時に保存する
 - PRD / design は各skillの完了時、planは実装に入る前（plan-onlyなら計画完了時）にcanonical pathへ保存する
 - `implement` の completion handoff まで終わったら、必要に応じて `docs/plan/NNN_PLAN_DONE.md` へリネームする
