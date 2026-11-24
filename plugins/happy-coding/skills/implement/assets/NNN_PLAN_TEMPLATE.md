@@ -43,9 +43,11 @@
 
 ## Vertical Slices
 
+通常はAFK。HITLは利用者の依頼または合意済み受け入れ条件が、人による確認・承認を完了条件として明示する場合だけ使う。
+
 ### Slice 1: [slice 名]
 
-- Type: [HITL / AFK]
+- Type: [AFK / 明示された受け入れ条件がある場合はHITL]
 - Depends on: [依存するslice。なければなし]
 - Done: [この slice が終わったと判断する状態]
 - Test surface: [public interface / test seam]
@@ -56,8 +58,9 @@
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
 
-#### HITL Review Contract（このsliceで必要な場合だけ）
+#### HITL Review Contract（明示された場合だけ）
 
+- Basis: [利用者の発言または合意済みの受け入れ条件]
 - Reviewable milestone: [利用者が直接操作できる状態]
 - Launch: `[同じbuildを起動するcommandまたは手順]`
 - Review actions: [利用者が行う代表操作]
@@ -66,7 +69,7 @@
 
 ### Slice 2: [slice 名]
 
-- Type: [HITL / AFK]
+- Type: [AFK / 明示された受け入れ条件がある場合はHITL]
 - Depends on: [依存するslice。なければなし]
 - Done: [この slice が終わったと判断する状態]
 - Test surface: [public interface / test seam]
@@ -77,8 +80,9 @@
 - Acceptance command: `[command]`
 - Out of scope: [この slice ではやらないこと]
 
-#### HITL Review Contract（このsliceで必要な場合だけ）
+#### HITL Review Contract（明示された場合だけ）
 
+- Basis: [利用者の発言または合意済みの受け入れ条件]
 - Reviewable milestone: [利用者が直接操作できる状態]
 - Launch: `[同じbuildを起動するcommandまたは手順]`
 - Review actions: [利用者が行う代表操作]

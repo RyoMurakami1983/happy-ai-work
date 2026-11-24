@@ -15,7 +15,7 @@
 
 ## HITLと外部前提
 
-HITLは人の主観、実端末、外部appの確認がacceptanceに必要な境界だけに置く。reviewable milestone、launch、代表操作、期待結果、feedbackや承認による再開条件を残す。自動runtime evidenceで足りるsliceをUIという理由だけで止めない。
+通常のsliceはAFKで計画する。HITLは、利用者が依頼または合意済みの受け入れ条件で、人による確認・承認を完了条件として明示したsliceにだけ置く。根拠となる発言または受け入れ条件、reviewable milestone、確認手順、期待結果、再開条件を残す。実機・外部appでの検証が必要な場合も、利用できる手段で検証し、未確認範囲を記録する。対象環境・権限などの開始条件は依存関係として扱う。
 
 外部artifactが未着でも、依存しない許可済みsliceは進められる。外部データを捏造してgateを通さず、artifactの版・hash・互換性など契約で定めた証拠が揃うまで影響sliceは待つ。複数repoの既存`plan.md` YAMLと`checkpoints/contract_verify.py`の形式を変更せず使い、人間向け`docs/plan/NNN_PLAN.md`と混同しない。
 

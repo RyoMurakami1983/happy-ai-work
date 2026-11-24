@@ -7,13 +7,13 @@
 <text x="480" y="65" font-size="24" font-weight="bold">G0 実装開始の許可：未取得</text><text x="480" y="101" font-size="19">全sliceの開始条件。今回の例は計画作成のみ。</text>
 <rect x="70" y="176" width="490" height="108" rx="8" fill="#eaf2fc" stroke="#245eac"/>
 <text x="315" y="213" font-size="24" font-weight="bold">S1 入力検証 → 模擬プレビュー</text><text x="315" y="247" font-size="20">AFK／未着手／更新adapterは呼ばない</text>
-<rect x="70" y="353" width="490" height="126" rx="8" fill="#fff8eb" stroke="#b8893f"/>
-<text x="315" y="392" font-size="24" font-weight="bold">S2 対象選択と取消</text><text x="315" y="428" font-size="20">HITL／未着手／操作結果を確認</text><text x="315" y="459" font-size="18">不一致はS2へ、要求不足は要求整理へ</text>
+<rect x="70" y="353" width="490" height="126" rx="8" fill="#eaf2fc" stroke="#245eac"/>
+<text x="315" y="392" font-size="24" font-weight="bold">S2 対象選択と取消</text><text x="315" y="428" font-size="20">AFK／未着手／操作結果を自動確認</text><text x="315" y="459" font-size="18">不一致はS2へ、要求不足は要求整理へ</text>
 <rect x="635" y="353" width="275" height="126" rx="8" fill="#f1f5f9" stroke="#afbccb"/>
 <text x="772" y="392" font-size="23" font-weight="bold">G1 検証先・権限</text><text x="772" y="428" font-size="19">未確認／S3だけに影響</text><text x="772" y="459" font-size="18">管理者の確認記録が必要</text>
-<rect x="220" y="578" width="520" height="130" rx="8" fill="#fff8eb" stroke="#b8893f"/>
-<text x="480" y="619" font-size="24" font-weight="bold">S3 確認した対象の取込</text><text x="480" y="655" font-size="20">HITL／未着手／S2＋G1に依存</text><text x="480" y="687" font-size="18">許可した検証先のみ。失敗は成功と表示しない。</text>
-<text x="480" y="765" font-size="19">矢印：実装依存　青：模擬検証　橙：人の確認　灰：開始条件</text>
+<rect x="220" y="578" width="520" height="130" rx="8" fill="#eaf2fc" stroke="#245eac"/>
+<text x="480" y="619" font-size="24" font-weight="bold">S3 確認した対象の取込</text><text x="480" y="655" font-size="20">AFK／未着手／S2＋G1に依存</text><text x="480" y="687" font-size="18">許可した検証先のみ。失敗は成功と表示しない。</text>
+<text x="480" y="765" font-size="19">矢印：実装依存　青：自動検証　灰：開始条件</text>
 <text x="480" y="798" font-size="18">日程・工数は未見積り。予定commandを実行済みとは扱わない。</text>
 </g>
 <g fill="none" stroke="#42668e" stroke-width="2.5" marker-end="url(#arrow)">

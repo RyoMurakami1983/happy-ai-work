@@ -68,7 +68,7 @@ small one-sliceや工程省略を判断するときは[垂直スライスと短�
 
 `docs/plan/NNN_PLAN.md` は人間向けの進捗計画です。
 `implement` は各 slice の直前に slice contract を再固定し、TDD loop と slice gate を実行します。
-handoff には必ず `artifacts:` フィールドを含めます。通常は `artifacts:` の下に保存したpathを列挙します。例外時だけ `artifacts: conversation-only` と `exception reason:` を併記します。`implement` は bootstrap でpathの存在と例外条件を確認します。
+次の工程・担当者へ渡すhandoffには `artifacts:` フィールドを含めます。通常は保存したpathを列挙し、例外時は `artifacts: conversation-only` と `exception reason:` を併記します。`implement` は bootstrap でpathの存在と例外条件を確認します。会話内計画で進めた明確な低risk変更が引き継ぎなしで完了する場合は、利用者への完了報告にこれらのフィールドは不要です。
 
 multirepository fleet の contract verification が読む repo root の `plan.md` YAML front-matter とは別物として扱います。
 

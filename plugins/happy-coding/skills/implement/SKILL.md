@@ -28,16 +28,9 @@ description: >
 
 [垂直スライスと短縮条件](references/vertical-slice.md)で振る舞い・AC・実依存・順序・検証・戻り条件を整理する。複数sliceだけを理由に別skillや確認待ちへ戻さない。明確な低risk変更は短い会話内計画でもよい。後続判断・互換性・移行・運用・複数repoが関われば[計画の詳細](references/planning.md)を読む。
 
-saved-by-defaultで`docs/plan/NNN_PLAN.md`へ必要な計画を保存し、[成果物規約](references/WORK_ARTIFACTS.md)に沿い実在pathか具体的なconversation-only例外理由を残す。既存plan・`finalized_contract`・HITL契約は今回の許可と現状に照合して再利用し、旧skillのplanを再作成／移動させない。
+計画は既定で`docs/plan/NNN_PLAN.md`へ保存する（saved-by-default）。省略条件と引き継ぎ時の記録は[成果物規約](references/WORK_ARTIFACTS.md)に従う。既存plan・`finalized_contract`・HITL契約は今回の許可と現状に照合して再利用し、旧skillのplanを再作成／移動させない。
 
-conversation-onlyを選んでも、会話内計画の説明だけで終了しない。最後の利用者向け報告に次の2行を必ず含める。
-
-```text
-artifacts: conversation-only
-exception reason: <文書不要の明示指定、小さな低risk sliceで後続判断記録不要など、今回の具体的理由>
-```
-
-これは既存の成果物契約の宣言であり、追加ファイル・計画再承認・重いhandoffを要求しない。保存する場合は`artifacts:`に実在pathを列挙する。終了報告を送る直前に、選択した保存方針とこの宣言の対応を照合し、不足を補う。
+明確な低risk変更を会話内計画で進め、その場で完了する場合は、変更内容と検証結果を短く報告する。次の工程・担当者へのhandoffが必要な場合は、成果物規約の形式で計画の所在または省略理由を渡す。
 
 plan-onlyは計画・未確定・許可状態・次の判断を返して停止する。計画／review PASSを実装済みとせず、PLAN_DONEへ改名しない。
 
@@ -53,7 +46,7 @@ planの有無を問わず直前に固定する。新事実による分割・統�
 
 目的・ACに届くため何を先に確かめるかでsliceの順序を選び、短く終わる作業だけを優先しない。回答待ちは確認先と再開条件を計画へ残し、許可のない外部連絡は行わない。最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
 
-HITL review contract付きinteractive sliceはreviewable milestone・launch・代表操作・期待結果・再開条件も固定する。人間の主観／実端末／外部appのacceptanceを自動testで代替しない。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
+明示されたHITL受け入れ条件があるsliceでは、その根拠・reviewable milestone・確認手順・期待結果・再開条件も固定する。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
 
 ## 4. RED → GREEN → REFACTOR
 
@@ -79,13 +72,13 @@ interactive evidenceが必要な場合だけ、webは[playwright.md](references/
 
 自動gate後、直接触れる状態のHITL契約付きsliceをreview milestoneとして渡す。同じbuildの起動、利用者の代表操作1〜5個と期待表示・遷移・操作感、自動確認済み／人間判断残り、feedback・承認・`REPLAN_REQUIRED`の再開条件を示す。`code complete`・`runtime verified`・`user validated`を区別し、build／test／自動runtimeだけでuser validatedとしない。不具合は再現可能なら`debug-and-fix`、contract誤りは前段へ戻す。
 
-HITLがacceptanceなら`HITL pending`を保ち、feedback／承認までPASSやcompletion handoffへ進まない。完成後の探索的製品評価でacceptance非blockingの場合だけ、user validated未完了を残してローカル実装を閉じられる。HITL契約がなく自動runtimeでacceptanceを確定できるsliceは入力待ちだけで停止しない。
+利用者が依頼または合意済みの受け入れ条件で、人による確認・承認を完了条件として明示した場合だけ、その条件を満たすまで該当sliceを`HITL pending`とする。既存planのHITL表記だけで判断せず、明示の根拠を照合する。それ以外は、人の返答を待たず実行可能な検証を進める。本人評価や実機確認が未実施ならその範囲を明記する。合意済みの受け入れ条件を検証できなかった場合は未確認と報告し、該当条件をPASSにしない。
 
 ## 6. completion handoff
 
 全slice PASSで実装を閉じる。利用者報告は[検証の通知と報告](references/verification-communication.md)に従い、主要関心への対応と成果物の現在地を先に示し、証拠一覧をそのまま転記しない。
 
-handoffは完了slice、実行commandと結果、主な変更file／artifact、確認design／planの実在path、残件／対象外、次のfile／command、戻り先skillと理由を残す。`finalized_contract`付きは主要恒久targetとnormative sourceの対応・exclusion残骸なしの確認、interactive UIはcode complete／runtime verified／user validatedと残HITLも残す。
+次の工程・担当者へ引き継ぐ場合は、完了slice、実行commandと結果、主な変更file／artifact、確認design／planの実在path、残件／対象外、次のfile／command、戻り先skillと理由を残す。`finalized_contract`付きは主要恒久targetとnormative sourceの対応・exclusion残骸なしの確認、interactive UIはcode complete／runtime verified／user validatedと残HITLも残す。
 
 今回の`docs/plan/NNN_PLAN.md`は完了時だけ`docs/plan/NNN_PLAN_DONE.md`へ改名する。未完了は次plan／handoffへ切り出す。
 
