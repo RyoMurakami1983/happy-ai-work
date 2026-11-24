@@ -46,7 +46,7 @@ planの有無を問わず直前に固定する。新事実による分割・統�
 
 目的・ACに届くため何を先に確かめるかでsliceの順序を選び、短く終わる作業だけを優先しない。回答待ちは確認先と再開条件を計画へ残し、許可のない外部連絡は行わない。最初は必要な層を薄く縦断するtracer bulletを優先し、DBだけ・UIだけ・testだけのhorizontal sliceを避ける。各sliceで対象振る舞い・非対象・public interfaceの確認観点・最初の追加／更新test・RED commandと期待失敗理由・GREEN command・acceptance commandを短く固定する。
 
-HITL review contract付きinteractive sliceはreviewable milestone・launch・代表操作・期待結果・再開条件も固定する。人間の主観／実端末／外部appのacceptanceを自動testで代替しない。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
+明示されたHITL受け入れ条件があるsliceでは、その根拠・reviewable milestone・確認手順・期待結果・再開条件も固定する。`finalized_contract`付きではsliceと主要な恒久targetのnormative source対応を確認し、exclusion由来の責務・source不明・採用decision変更は補完せず`REPLAN_REQUIRED`とする。
 
 ## 4. RED → GREEN → REFACTOR
 
@@ -72,7 +72,7 @@ interactive evidenceが必要な場合だけ、webは[playwright.md](references/
 
 自動gate後、直接触れる状態のHITL契約付きsliceをreview milestoneとして渡す。同じbuildの起動、利用者の代表操作1〜5個と期待表示・遷移・操作感、自動確認済み／人間判断残り、feedback・承認・`REPLAN_REQUIRED`の再開条件を示す。`code complete`・`runtime verified`・`user validated`を区別し、build／test／自動runtimeだけでuser validatedとしない。不具合は再現可能なら`debug-and-fix`、contract誤りは前段へ戻す。
 
-HITLがacceptanceなら`HITL pending`を保ち、feedback／承認までPASSやcompletion handoffへ進まない。完成後の探索的製品評価でacceptance非blockingの場合だけ、user validated未完了を残してローカル実装を閉じられる。HITL契約がなく自動runtimeでacceptanceを確定できるsliceは入力待ちだけで停止しない。
+利用者が依頼または合意済みの受け入れ条件で、人による確認・承認を完了条件として明示した場合だけ、その条件を満たすまで該当sliceを`HITL pending`とする。既存planのHITL表記だけで判断せず、明示の根拠を照合する。それ以外は、人の返答を待たず実行可能な検証を進める。本人評価や実機確認が未実施ならその範囲を明記する。合意済みの受け入れ条件を検証できなかった場合は未確認と報告し、該当条件をPASSにしない。
 
 ## 6. completion handoff
 

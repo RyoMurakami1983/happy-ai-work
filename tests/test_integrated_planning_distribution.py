@@ -2,6 +2,8 @@
 
 import hashlib
 import json
+import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -19,16 +21,30 @@ class IntegratedPlanningDistributionTests(unittest.TestCase):
             with self.subTest(artifact=relative):
                 self.assertEqual(hashlib.sha256((archive / relative).read_bytes()).hexdigest(), expected)
 
-    def test_rendering_assets_are_relocated_without_content_changes(self) -> None:
+    def test_renderer_and_template_match_relocated_assets(self) -> None:
         archive = ROOT / "archive/implementation-plan"
         current = ROOT / "plugins/happy-coding/skills/implement"
-        for relative in (
-            "scripts/render_plan.py", "assets/plan.html", "assets/example/003_PLAN.md",
-            "assets/example/003_presentation.json", "assets/example/003_plan/003_PLAN.html",
-            "assets/example/003_plan/diagrams/dependencies.svg", "assets/example/003_plan/validation.json",
-        ):
+        for relative in ("scripts/render_plan.py", "assets/plan.html"):
             with self.subTest(artifact=relative):
                 self.assertEqual((current / relative).read_bytes(), (archive / relative).read_bytes())
+
+    def test_distributed_plan_example_matches_its_sources(self) -> None:
+        current = ROOT / "plugins/happy-coding/skills/implement"
+        example = current / "assets/example"
+        result = subprocess.run(
+            [
+                sys.executable,
+                str(current / "scripts/render_plan.py"),
+                str(example / "003_presentation.json"),
+                "--output",
+                str(example / "003_plan/003_PLAN.html"),
+                "--check",
+            ],
+            capture_output=True,
+            encoding="utf-8",
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":

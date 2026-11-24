@@ -59,7 +59,7 @@ CSVの形式不備を更新前に発見し、対象行を確認してから取�
 
 ### S2 対象選択と取消
 
-- Type: HITL
+- Type: AFK
 - Depends on: S1
 - Done: 行の選択変更と取消が画面と確認対象へ同じ状態で反映される。
 - Test surface: 公開選択操作、表示状態、確定候補。
@@ -68,20 +68,12 @@ CSVの形式不備を更新前に発見し、対象行を確認してから取�
 - RED expectation: 選択状態と確定候補の同期が未実装で失敗。
 - GREEN command: `python tests/check_import.py --case deselect-row`
 - Acceptance command: `python tests/check_import.py --slice S2`
-- Verification context: 合成入力10行、自動検証の時間は不明、60秒・1回の上限案。操作確認は10分のセッション上限案。
+- Verification context: 合成入力10行。UI自動操作で選択・解除・取消・再選択を実行し、対象数・候補・表示状態の一致と、取消時に更新がないことを確認する。所要時間は不明、60秒・1回の上限案。
 - Out of scope: 実接続、更新adapterの実装。
-
-#### HITL Review Contract
-
-- Reviewable milestone: 合成CSVのプレビューで対象を変更できる画面。
-- Launch: 予定 `python app.py --demo`。実装時に同じbuildを起動する実在手順へ確定。
-- Review actions: 行を選択、解除、取消、再選択し確定候補を確認。
-- Expected observations: 対象数・表示状態・候補の一致。取消時は更新されない。
-- Resume condition: 操作結果が一致すれば次へ。不一致はS2修正、業務判断の不足は要求整理へ戻す。
 
 ### S3 確認した対象の取込
 
-- Type: HITL
+- Type: AFK（G1成立後）
 - Depends on: S2、G1
 - Done: 検証先に確認済み対象だけ反映し、接続失敗時に成功表示しない。
 - Test surface: 更新adapter、確認対象、完了表示。
@@ -90,16 +82,8 @@ CSVの形式不備を更新前に発見し、対象行を確認してから取�
 - RED expectation: 失敗時の完了表示抑止が未実装で失敗。
 - GREEN command: `python tests/check_import.py --case connection-failed`
 - Acceptance command: `python tests/check_import.py --slice S3 --profile authorized-test`
-- Verification context: 管理者が許可した検証先のみ、架空2行。所要時間は不明、15分・1セッションの上限案。対象と変更内容を事前通知。
+- Verification context: 管理者が許可した検証先で架空2行を使い、反映された対象と成功・失敗の表示を自動照合する。所要時間は不明、15分・1回の上限案。対象と変更内容を事前通知。
 - Out of scope: 本番更新、認証方式変更、失敗時の自動復旧。
-
-#### HITL Review Contract
-
-- Reviewable milestone: 検証先の反映結果と画面の結果を確認できる状態。
-- Launch: 実装時にG1の対象を指定する実在手順へ確定。
-- Review actions: 対象2行の確定、検証先への反映確認、接続失敗時の表示確認。
-- Expected observations: 確認対象と反映結果が一致。失敗時は完了扱いにならない。
-- Resume condition: G1の対象・許可を確認してから実行。結果不一致はS3修正。権限未確認ならS3のみ保留。
 
 ## Dependencies / Start Conditions
 
@@ -112,7 +96,7 @@ G1待ちの間も、G0取得後であればS1/S2を進められる。G0未取得
 
 ## Order Rationale
 
-S1で入力拒否とプレビューを薄く縦断し、S2で人の判断に必要な操作を確認する。S3はS2とG1の成立後に進める。矢印は実装依存であり、工数・暦日・並列実装の指示ではない。
+S1で入力拒否とプレビューを薄く縦断し、S2で操作結果を自動確認する。S3はS2とG1の成立後に進める。矢印は実装依存であり、工数・暦日・並列実装の指示ではない。
 
 ## Risks / Unknowns
 
