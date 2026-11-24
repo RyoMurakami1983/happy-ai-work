@@ -28,16 +28,9 @@ description: >
 
 [垂直スライスと短縮条件](references/vertical-slice.md)で振る舞い・AC・実依存・順序・検証・戻り条件を整理する。複数sliceだけを理由に別skillや確認待ちへ戻さない。明確な低risk変更は短い会話内計画でもよい。後続判断・互換性・移行・運用・複数repoが関われば[計画の詳細](references/planning.md)を読む。
 
-saved-by-defaultで`docs/plan/NNN_PLAN.md`へ必要な計画を保存し、[成果物規約](references/WORK_ARTIFACTS.md)に沿い実在pathか具体的なconversation-only例外理由を残す。既存plan・`finalized_contract`・HITL契約は今回の許可と現状に照合して再利用し、旧skillのplanを再作成／移動させない。
+計画は既定で`docs/plan/NNN_PLAN.md`へ保存する（saved-by-default）。省略条件と引き継ぎ時の記録は[成果物規約](references/WORK_ARTIFACTS.md)に従う。既存plan・`finalized_contract`・HITL契約は今回の許可と現状に照合して再利用し、旧skillのplanを再作成／移動させない。
 
-conversation-onlyを選んでも、会話内計画の説明だけで終了しない。最後の利用者向け報告に次の2行を必ず含める。
-
-```text
-artifacts: conversation-only
-exception reason: <文書不要の明示指定、小さな低risk sliceで後続判断記録不要など、今回の具体的理由>
-```
-
-これは既存の成果物契約の宣言であり、追加ファイル・計画再承認・重いhandoffを要求しない。保存する場合は`artifacts:`に実在pathを列挙する。終了報告を送る直前に、選択した保存方針とこの宣言の対応を照合し、不足を補う。
+明確な低risk変更を会話内計画で進め、その場で完了する場合は、変更内容と検証結果を短く報告する。次の工程・担当者へのhandoffが必要な場合は、成果物規約の形式で計画の所在または省略理由を渡す。
 
 plan-onlyは計画・未確定・許可状態・次の判断を返して停止する。計画／review PASSを実装済みとせず、PLAN_DONEへ改名しない。
 
@@ -85,7 +78,7 @@ HITLがacceptanceなら`HITL pending`を保ち、feedback／承認までPASSやc
 
 全slice PASSで実装を閉じる。利用者報告は[検証の通知と報告](references/verification-communication.md)に従い、主要関心への対応と成果物の現在地を先に示し、証拠一覧をそのまま転記しない。
 
-handoffは完了slice、実行commandと結果、主な変更file／artifact、確認design／planの実在path、残件／対象外、次のfile／command、戻り先skillと理由を残す。`finalized_contract`付きは主要恒久targetとnormative sourceの対応・exclusion残骸なしの確認、interactive UIはcode complete／runtime verified／user validatedと残HITLも残す。
+次の工程・担当者へ引き継ぐ場合は、完了slice、実行commandと結果、主な変更file／artifact、確認design／planの実在path、残件／対象外、次のfile／command、戻り先skillと理由を残す。`finalized_contract`付きは主要恒久targetとnormative sourceの対応・exclusion残骸なしの確認、interactive UIはcode complete／runtime verified／user validatedと残HITLも残す。
 
 今回の`docs/plan/NNN_PLAN.md`は完了時だけ`docs/plan/NNN_PLAN_DONE.md`へ改名する。未完了は次plan／handoffへ切り出す。
 
