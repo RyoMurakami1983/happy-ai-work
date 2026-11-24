@@ -95,7 +95,7 @@ PRDを書く前に、次が会話または資料に存在するか確認する�
 | AC-01 | R-01 | [条件・操作] | [合否を判定できる結果] |
 ```
 
-成果物は保存を既定（saved-by-default）とし、下記の共通成果物契約で例外を選ぶ場合を除き、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+成果物は保存を既定（saved-by-default）とし、下記の共通成果物契約で例外を選ぶ場合を除き、同じ案件の `NNN` を使って `docs/prd/NNN_PRD.md` へ保存する。`NNN` は同案件のgrill / design / planと共有し、既存番号がなければrepo内の最大番号+1を使う。用語集は[保存条件](../domain-modeling/references/CONTEXT-FORMAT.md)に従う。
 
 HTMLを併用しても正本の保存先を保ち、`docs/prd/NNN_presentation.json` と `docs/prd/NNN_prd/NNN_PRD.html` 等を追加する。既存資料をHTML化だけで移動しない。正本を変更したら表示用入力・図を照合して再生成し、handoffには正本と派生資料の実在pathを含める。HTMLの生成や要求への合意を、実装開始の許可として扱わない。
 

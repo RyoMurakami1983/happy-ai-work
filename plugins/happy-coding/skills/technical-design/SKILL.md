@@ -105,7 +105,7 @@ HTML併用時は、Markdown正本と要約・図の決定状態、対象外、Un
 
 ## 出力
 
-成果物は保存を既定（saved-by-default）とし、設計正本をMarkdownへ保存する。従来ルートは `docs/design/NNN_TECHNICAL_DESIGN.md`。新規のHTML併用資料は `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` と `NNN_DESIGN.html`、必要な図・編集用ソース・検証記録を同じ案件ディレクトリにまとめてよい。repoの規約と既存の公開pathを優先し、既存資料は自動移動しない。移動が依頼された場合は相対リンク・生成処理・Artifactsと既知の参照元を更新する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。repoの `CONTEXT.md` がなければ作成し、案件で確定した用語・境界があれば更新する。
+成果物は保存を既定（saved-by-default）とし、設計正本をMarkdownへ保存する。従来ルートは `docs/design/NNN_TECHNICAL_DESIGN.md`。新規のHTML併用資料は `docs/design/NNN_design/NNN_TECHNICAL_DESIGN.md` と `NNN_DESIGN.html`、必要な図・編集用ソース・検証記録を同じ案件ディレクトリにまとめてよい。repoの規約と既存の公開pathを優先し、既存資料は自動移動しない。移動が依頼された場合は相対リンク・生成処理・Artifactsと既知の参照元を更新する。`NNN` は同案件のPRD / grill / planと共有し、既存番号がなければrepo内の最大番号+1を使う。用語集は[保存条件](../domain-modeling/references/CONTEXT-FORMAT.md)に従う。
 
 設計書の構成や記入項目の詳細が必要な場合は、[設計書テンプレート](assets/technical-design.md)を参照する。
 
