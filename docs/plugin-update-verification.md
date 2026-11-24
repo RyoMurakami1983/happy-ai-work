@@ -6,6 +6,8 @@ Refs [#48](https://github.com/RyoMurakami1983/happy-ai-work/issues/48)。repo更
 
 内容が変わったpluginは、次の配布でmanifestの数値versionを上げる。同じversionを異なる配布内容へ再利用せず、build metadataの日付だけに識別を頼らない。修正はpatch、後方互換のskill追加はminorを目安に、各pluginを個別判断する。manifestと変更を同じcommitに含め、PRで配布対象のfull commit SHAとversionを対応づける。commit自身のSHAをmanifestへ埋め込まない。
 
+同じpluginを変更する先行PRがマージされたら、後続PRはマージ前に最新の`main`を取り込み、配布versionが`main`より大きいことと、更新後の`quality` CIの成功を確認する。
+
 今回の配布識別は次のとおり。skillの振る舞いは変更しない。
 
 | plugin | 旧version | 今回 |
