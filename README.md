@@ -106,7 +106,7 @@ codex plugin add happy-improvement@happy-ai-work-marketplace
 試したい場合だけ、marketplaceの`Happy Preview（試用版）`を導入してください。通常pluginへの同梱や既定導入は行いません。導入後のskillは通常どおり自動選択されます。
 
 - [wpf-webview-typescript](plugins/happy-preview/skills/wpf-webview-typescript/SKILL.md): 既存C#とWeb UIの境界、待ち時間、取消し後の入力保持、切断後の再開を設計・検証（実利用検証中）
-- [agent-team](plugins/happy-preview/skills/agent-team/SKILL.md) — Sol指揮で作業を分担し、通常はSol、難問はAstraが独立レビュー。再現テストで修正の採否を決める
+- [agent-team](plugins/happy-preview/skills/agent-team/SKILL.md) — 指揮役が最新のLuna・Terra・Solから担当ごとのモデルと推論量を選び、必要な独立レビューと受け入れ確認まで進める
 - [linux-deploy](plugins/happy-preview/skills/linux-deploy/SKILL.md): Linuxへの配置・更新を実測、データ権限の検証、失敗診断・再実行まで扱う
 - [technical-feasibility-research](plugins/happy-preview/skills/technical-feasibility-research/SKILL.md): 未知の外部技術を同じ要件・証拠基準で比較し、利益と負担を含む採用・見送りの推奨を提示
 - [to-prototype](plugins/happy-preview/skills/to-prototype/SKILL.md): UI設計案を操作可能なオフラインHTMLで試し、利用者の反応を設計へ戻す
