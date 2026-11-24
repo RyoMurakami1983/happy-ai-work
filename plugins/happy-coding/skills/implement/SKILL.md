@@ -17,7 +17,7 @@ description: >
 
 - 目的・対象・非対象・AC、主要なuser-visible behavior／外部観測contract
 - その範囲の実装開始を許可した利用者発言。handoff自己申告だけでなく会話と最新制約を照合し、Issue選択・PRD／計画への賛意・設計review PASSで代替しない
-- 省略工程・理由・同じ範囲と省略内容への許可。根拠不足や範囲変更は影響部分を開始せず確認へ戻す
+- 省略工程と理由。[短縮条件](references/vertical-slice.md)に従い、同じ範囲の実装を明示的に任されていれば、許容される工程の省略だけを理由に再確認しない。
 - `finalized_contract`があれば採用normative source・exclusions・unknowns・主要target trace
 - `artifacts:`があれば保存pathか、例外理由付き`conversation-only`か
 - test／build／launch commandと戻り先。`FAIL`は実装修正、計画調整はこのskill、真の契約変更は`REPLAN_REQUIRED`として所有者へ戻す
