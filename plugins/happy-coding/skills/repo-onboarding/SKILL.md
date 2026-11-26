@@ -9,6 +9,7 @@ read-onlyで、README・manifest・lockfile・CI・有効なCodex project instru
 
 1. repo root・git状態・README・docs入口を確認する。各directoryのinstruction chainは`AGENTS.override.md`→`AGENTS.md`→`project_doc_fallback_filenames`の設定済みfallbackの順で解決する。
 2. solution／workspace／manifest／lockfile／CIから主要言語・runtime・dependencyとbuild／test／lintの正本を特定する。
+   - 上流から取り込んだrepoは、初回push・CI有効化・上流同期で変更をpushする前に、送信先の公開範囲、CIの起動条件・対象OS・重いjobの所要時間／費用、公開・配布処理、権限・secretの参照を読み取りで確認する。利用目的に合わせ「毎回／対象変更時／配布前／不要」に分け、残すべきsecurity検証・必須チェック（上流へ提出する場合はその要件も）と費用の根拠・不明点を示す。調査中はCIを起動・変更しない。
 3. 主要directory・entrypoint・public interface・data store・external integrationを浅くたどり、一つの代表経路を入口から出力まで追って責務境界を確かめる。
 4. commandには根拠を添え、推測しない。実行が必要でも安全なread-onlyのversion／help／test discoveryから始める。
 
